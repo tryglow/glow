@@ -1,5 +1,5 @@
 import type {NextAuthOptions} from 'next-auth';
-import {PrismaAdapter} from '@auth/prisma-adapter';
+import {PrismaAdapter} from '@next-auth/prisma-adapter';
 import GoogleProvider from 'next-auth/providers/google';
 import {getServerSession} from 'next-auth';
 
