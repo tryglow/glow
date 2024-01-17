@@ -49,6 +49,15 @@ export const config: Record<
       h: 6,
     },
   },
+  'spotify-playing-now': {
+    title: 'Spotify Playing Now',
+    label: 'The song you are currently playing on Spotify',
+    icon: '/ui/type-spotify-playing-now.svg',
+    drag: {
+      w: 12,
+      h: 4,
+    },
+  },
 };
 
 interface Props {

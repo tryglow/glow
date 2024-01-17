@@ -79,6 +79,7 @@ export function EditWidget() {
                       <DraggableBlockButton type="content" />
                       <DraggableBlockButton type="stack" />
                       <DraggableBlockButton type="github-commits-this-month" />
+                      <DraggableBlockButton type="spotify-playing-now" />
                     </div>
                   </div>
                 </div>

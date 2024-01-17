@@ -1,0 +1,55 @@
+/* Taken from https://samuelkraft.com/blog/animated-music-bars */
+
+.bars {
+  position: relative;
+  display: inline-flex;
+  justify-content: space-between;
+  width: 13px;
+  height: 13px;
+  margin-right: 8px;
+}
+
+.bars.animate > span {
+  transition: opacity 0.3s ease-out;
+  animation: bounce 2.2s ease infinite alternate;
+}
+
+.bars > span {
+  width: 3px;
+  height: 100%;
+  background-color: theme('colors.black');
+  border-radius: 3px;
+  transform-origin: bottom;
+  content: '';
+  transform: scaleY(0.3);
+}
+
+.bars > span:nth-of-type(2) {
+  animation-delay: -2.2s;
+}
+
+.bars > span:nth-of-type(3) {
+  animation-delay: -3.7s;
+}
+
+@keyframes bounce {
+  10% {
+    transform: scaleY(0.3);
+  }
+
+  30% {
+    transform: scaleY(1);
+  }
+
+  60% {
+    transform: scaleY(0.5);
+  }
+
+  80% {
+    transform: scaleY(0.75);
+  }
+
+  100% {
+    transform: scaleY(0.6);
+  }
+}

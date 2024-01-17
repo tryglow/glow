@@ -6,6 +6,9 @@ import {
   GitHubCommitsThisMonth,
   LoadingState as GitHubCommitsThisMonthLoadingState,
 } from './github-commits-this-month/ui';
+import SpotifyPlayingNow, {
+  LoadingState as SpotifyPlayingNowLoadingState,
+} from './spotify-playing-now/ui';
 
 export interface BlockConfig {
   x: number;
@@ -27,6 +30,12 @@ export function renderBlock(block: any, pageId: string) {
       return (
         <Suspense fallback={<GitHubCommitsThisMonthLoadingState />}>
           <GitHubCommitsThisMonth {...block.data} pageId={pageId} />
+        </Suspense>
+      );
+    case 'spotify-playing-now':
+      return (
+        <Suspense fallback={<SpotifyPlayingNowLoadingState />}>
+          <SpotifyPlayingNow {...block.data} pageId={pageId} />
         </Suspense>
       );
   }
