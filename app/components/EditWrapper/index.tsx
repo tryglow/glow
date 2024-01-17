@@ -54,7 +54,7 @@ export function EditWrapper({ layout, children, layoutProps }: Props) {
         </div>
       )
 
-      const req = await fetch('/api/page/blocks/add', {
+      await fetch('/api/page/blocks/add', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -64,7 +64,6 @@ export function EditWrapper({ layout, children, layoutProps }: Props) {
             id: newItemId,
             type: draggingItem.type,
           },
-          layout: [...layout, newItemConfig],
           pageSlug: params.slug,
         }),
       })

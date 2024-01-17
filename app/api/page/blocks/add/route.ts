@@ -17,9 +17,9 @@ export async function POST(req: Request) {
 
   const bodyData = await req.json()
 
-  const { block, pageSlug, layout } = bodyData
+  const { block, pageSlug } = bodyData
 
-  if (!block || !pageSlug || !layout) {
+  if (!block || !pageSlug) {
     return Response.json({
       error: {
         message: 'Missing required fields',
