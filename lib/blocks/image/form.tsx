@@ -1,5 +1,7 @@
 import { FormField } from '@/app/components/FormField'
+import { FormFileUpload } from '@/app/components/FormFileUpload'
 import { Form, Formik, FormikHelpers, FormikProps } from 'formik'
+import { useRouter } from 'next/navigation'
 import * as Yup from 'yup'
 
 const FormSchema = Yup.object().shape({
@@ -9,11 +11,7 @@ const FormSchema = Yup.object().shape({
 })
 
 type FormValues = {
-  title: string
-  description: string
-  avatar: {
-    src: string
-  }
+  src: string
 }
 
 interface Props {
@@ -25,6 +23,7 @@ interface Props {
 }
 
 export function EditForm({ initialValues, onSave, formRef }: Props) {
+  const router = useRouter()
   const onSubmit = async (
     values: FormValues,
     { setSubmitting }: FormikHelpers<FormValues>
@@ -33,14 +32,14 @@ export function EditForm({ initialValues, onSave, formRef }: Props) {
     onSave(values)
   }
 
+  const handleUploadComplete = () => {
+    router.refresh()
+  }
+
   return (
     <Formik
       initialValues={{
-        title: initialValues?.title ?? '',
-        description: initialValues?.description ?? '',
-        avatar: {
-          src: initialValues?.avatar?.src ?? '',
-        },
+        src: initialValues?.src ?? '',
       }}
       validationSchema={FormSchema}
       onSubmit={onSubmit}
@@ -49,9 +48,10 @@ export function EditForm({ initialValues, onSave, formRef }: Props) {
     >
       {() => (
         <Form className="w-full flex flex-col">
-          <FormField label="Title" name="title" id="title" />
-          <FormField label="Subtitle" name="description" id="description" />
-          <FormField label="Avatar URL" name="avatar.src" id="avatar.src" />
+          <FormFileUpload
+            onUploaded={handleUploadComplete}
+            initialValue={initialValues?.src}
+          />
         </Form>
       )}
     </Formik>

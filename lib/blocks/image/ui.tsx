@@ -7,7 +7,7 @@ interface Props {
 
 export const Image: FunctionComponent<Props> = ({ src }) => {
   return (
-    <CoreBlock className="relative p-0 overflow-hidden">
+    <CoreBlock className="relative !p-0 overflow-hidden">
       <img src={src} className="absolute w-full h-full object-cover" />
     </CoreBlock>
   )
