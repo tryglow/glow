@@ -48,7 +48,7 @@ export function EditForm({initialValues, onSave, formRef}: Props) {
       innerRef={formRef}
     >
       {() => (
-        <Form className="w-full flex flex-col gap-2">
+        <Form className="w-full flex flex-col">
           <FormField label="Title" name="title" id="title" />
           <FormField label="Subtitle" name="description" id="description" />
           <FormField label="Avatar URL" name="avatar.src" id="avatar.src" />

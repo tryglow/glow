@@ -1,10 +1,9 @@
 'use client';
 import {useEffect, useState} from 'react';
 
-import {Cog6ToothIcon, XMarkIcon} from '@heroicons/react/24/outline';
+import {Cog6ToothIcon} from '@heroicons/react/24/outline';
 import {useEditModeContext} from '@/app/contexts/Edit';
-import {DraggableBlockButton} from '../DraggableBlockButton';
-import {EditPageSettingsForm} from '../EditPageSettings';
+import {DraggableBlockButton, config} from '../DraggableBlockButton';
 import {useParams} from 'next/navigation';
 import {EditForm} from '../EditForm';
 import {Button} from '../Button';
@@ -102,7 +101,10 @@ export function EditWidget() {
 
             {visibleSection === 'blocks' && selectedBlock && (
               <>
-                <EditWidgetHeader title={`Editing`} label={selectedBlock.id} />
+                <EditWidgetHeader
+                  title={`Editing ${config[selectedBlock.type].title}`}
+                  label={selectedBlock.id}
+                />
 
                 {selectedBlock.id && (
                   <EditForm onBack={() => setVisibleSection('drag')} />

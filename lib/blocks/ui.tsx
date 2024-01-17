@@ -1,7 +1,11 @@
+import {Suspense} from 'react';
 import {Content} from '@/lib/blocks/content/ui';
 import {Header} from '@/lib/blocks/header/ui';
 import {Stack} from '@/lib/blocks/stack/ui';
-import {GitHubCommitsThisMonth} from './github-commits-this-month/ui';
+import {
+  GitHubCommitsThisMonth,
+  LoadingState as GitHubCommitsThisMonthLoadingState,
+} from './github-commits-this-month/ui';
 
 export interface BlockConfig {
   x: number;
@@ -20,6 +24,10 @@ export function renderBlock(block: any, pageId: string) {
     case 'stack':
       return <Stack {...block.data} pageId={pageId} />;
     case 'github-commits-this-month':
-      return <GitHubCommitsThisMonth {...block.data} pageId={pageId} />;
+      return (
+        <Suspense fallback={<GitHubCommitsThisMonthLoadingState />}>
+          <GitHubCommitsThisMonth {...block.data} pageId={pageId} />
+        </Suspense>
+      );
   }
 }
