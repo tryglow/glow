@@ -86,7 +86,10 @@ export async function POST(req: Request) {
   }
 
   const convertedImage = await sharp(await firstFileOnly.arrayBuffer())
-    .toFormat('png')
+    .resize(800)
+    .toFormat('webp', {
+      quality: 80,
+    })
     .toBuffer()
 
   const fileName = `${session.user.id}/${blockId}/${randomUUID()}`
