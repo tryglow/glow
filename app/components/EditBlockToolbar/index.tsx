@@ -42,7 +42,7 @@ export function EditBlockToolbar({ blockId, blockType }: Props) {
     <span className="isolate inline-flex rounded-md shadow-sm z-50 absolute -top-10 opacity-0 block-toolbar">
       <button
         type="button"
-        className="relative inline-flex items-center rounded-l-full bg-white-200 px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-stone-100 focus:z-10"
+        className="relative inline-flex items-center rounded-l-full bg-white px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-stone-100 focus:z-10"
         onClick={() => setSelectedBlock({ id: blockId, type: blockType })}
       >
         <PencilSquareIcon width={16} height={16} className="text-slate-700" />
