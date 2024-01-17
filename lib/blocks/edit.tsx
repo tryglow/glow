@@ -9,7 +9,7 @@ import {Blocks} from './types';
 export const editForms: Record<Blocks, JSXElementConstructor<any>> = {
   content: ContentEditForm,
   header: HeaderForm,
-  stack: null,
+  stack: HeaderForm,
   'github-commits-this-month': GithubCommitsThisMonthForm,
   'spotify-playing-now': SpotifyPlayingNowForm,
 };

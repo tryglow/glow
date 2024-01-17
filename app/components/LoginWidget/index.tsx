@@ -1,7 +1,6 @@
 'use client';
 
 import {Dialog, Transition} from '@headlessui/react';
-import {useSession} from 'next-auth/react';
 import {Fragment, useState} from 'react';
 import {LoginProviderButton} from '../LoginProviderButton';
 
@@ -58,7 +57,7 @@ export function LoginWidget() {
                     as="h3"
                     className="text-lg font-medium leading-6 text-gray-900"
                   >
-                    Let's get started!
+                    Let&apos;s get started!
                   </Dialog.Title>
                   <div className="mt-2">
                     <p className="text-sm text-gray-500">
@@ -72,10 +71,8 @@ export function LoginWidget() {
                         id: 'google',
                         name: 'Google',
                         type: 'oauth',
-                        signinUrl:
-                          'http://localhost:3000/api/auth/signin/google',
-                        callbackUrl:
-                          'http://localhost:3000/api/auth/callback/google',
+                        signinUrl: '/api/auth/signin/google',
+                        callbackUrl: '/api/auth/callback/google',
                       }}
                     />
                   </div>

@@ -1,6 +1,7 @@
 import {getServerSession} from 'next-auth';
 import {authOptions} from '@/lib/auth';
 import prisma from '@/lib/prisma';
+import {Prisma} from '@prisma/client';
 
 export async function POST(req: Request) {
   const session = await getServerSession(authOptions);
@@ -57,7 +58,9 @@ export async function POST(req: Request) {
         id: block.page.id,
       },
       data: {
-        config: block.page?.config?.filter((blck) => blck?.i !== blockId),
+        config: block.page?.config?.filter(
+          (blck) => (blck as Prisma.JsonObject)?.i !== blockId
+        ),
       },
     });
   }
