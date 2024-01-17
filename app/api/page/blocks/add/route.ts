@@ -58,19 +58,9 @@ export async function POST(req: Request) {
     },
   })
 
-  const updatedPage = await prisma.page.update({
-    where: {
-      slug: pageSlug,
-    },
-    data: {
-      config: layout,
-    },
-  })
-
   return Response.json({
     data: {
       block: newBlock,
-      layout: updatedPage.config,
     },
   })
 }

@@ -72,8 +72,6 @@ export function EditWrapper({ layout, children, layoutProps }: Props) {
         }),
       })
 
-      handleLayoutChange(newLayout)
-
       // Refresh the current route and fetch new data from the server without
       // losing client-side browser or React state.
       router.refresh()
@@ -82,6 +80,14 @@ export function EditWrapper({ layout, children, layoutProps }: Props) {
 
   const handleLayoutChange = async (newLayout: Layout[]) => {
     setLayout(newLayout)
+
+    const checkIfLayoutContainsTmpBlocks = newLayout.find(
+      (block) => block.i === 'tmp-block'
+    )
+
+    if (checkIfLayoutContainsTmpBlocks) {
+      return
+    }
 
     try {
       const req = await fetch('/api/page/config/update', {

@@ -45,8 +45,8 @@ export const config: Record<
     label: 'A list of items',
     icon: '/ui/type-stack.svg',
     drag: {
-      w: 5,
-      h: 9,
+      w: 6,
+      h: 8,
     },
   },
   'github-commits-this-month': {
@@ -87,7 +87,7 @@ export function DraggableBlockButton({ type }: Props) {
       onDragStart={(e) => {
         setDraggingItem({
           // TODO - use a real ID
-          i: 'another-item',
+          i: 'tmp-block',
           w: blockConfig.drag.w,
           h: blockConfig.drag.h,
           type,
