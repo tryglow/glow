@@ -46,7 +46,7 @@ export const authOptions: NextAuthOptions = {
 
         if (!usersFirstPage) {
           // Could give the user a nice onboarding experience here
-          const randomPageSlug = await generateSlug({words: 2});
+          const randomPageSlug = await generateSlug();
           const headerSectionId = randomUUID();
           const userFirstPage = await prisma.page.create({
             data: {
