@@ -1,9 +1,9 @@
 interface Props {
-  label: string;
-  htmlFor: string;
+  label: string
+  htmlFor: string
 }
 
-export function FormLabel({label, htmlFor}: Props) {
+export function FormLabel({ label, htmlFor }: Props) {
   return (
     <label
       htmlFor={htmlFor}
@@ -11,5 +11,5 @@ export function FormLabel({label, htmlFor}: Props) {
     >
       {label}
     </label>
-  );
+  )
 }

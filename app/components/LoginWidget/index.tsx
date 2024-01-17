@@ -1,18 +1,18 @@
-'use client';
+'use client'
 
-import {Dialog, Transition} from '@headlessui/react';
-import {Fragment, useState} from 'react';
-import {LoginProviderButton} from '../LoginProviderButton';
+import { Dialog, Transition } from '@headlessui/react'
+import { Fragment, useState } from 'react'
+import { LoginProviderButton } from '../LoginProviderButton'
 
 export function LoginWidget() {
-  let [isOpen, setIsOpen] = useState(false);
+  let [isOpen, setIsOpen] = useState(false)
 
   function closeModal() {
-    setIsOpen(false);
+    setIsOpen(false)
   }
 
   function openModal() {
-    setIsOpen(true);
+    setIsOpen(true)
   }
 
   return (
@@ -83,5 +83,5 @@ export function LoginWidget() {
         </Dialog>
       </Transition>
     </>
-  );
+  )
 }

@@ -1,10 +1,10 @@
-'use client';
+'use client'
 
-import {ClientSafeProvider, signIn} from 'next-auth/react';
-import {ReactNode} from 'react';
+import { ClientSafeProvider, signIn } from 'next-auth/react'
+import { ReactNode } from 'react'
 
 interface Props {
-  provider: ClientSafeProvider;
+  provider: ClientSafeProvider
 }
 
 const providerIcons: Record<string, ReactNode> = {
@@ -42,9 +42,9 @@ const providerIcons: Record<string, ReactNode> = {
       ></path>
     </svg>
   ),
-};
+}
 
-export function LoginProviderButton({provider}: Props) {
+export function LoginProviderButton({ provider }: Props) {
   return (
     <button
       type="submit"
@@ -54,5 +54,5 @@ export function LoginProviderButton({provider}: Props) {
       {providerIcons[provider.id]}
       <span className="ml-3">Continue with {provider.name}</span>
     </button>
-  );
+  )
 }

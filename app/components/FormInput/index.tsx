@@ -1,19 +1,19 @@
-import clsx from 'clsx';
-import {Field} from 'formik';
-import {ReactNode} from 'react';
+import clsx from 'clsx'
+import { Field } from 'formik'
+import { ReactNode } from 'react'
 
 interface Props {
-  name: string;
-  id: string;
-  placeholder?: string;
-  type?: 'text' | 'email';
-  initialValue?: string;
-  hasError?: boolean;
-  ariaDescribedby?: string;
-  ariaInvalid?: 'true' | 'false';
-  isSelect?: boolean;
-  children?: ReactNode;
-  prefix?: string;
+  name: string
+  id: string
+  placeholder?: string
+  type?: 'text' | 'email'
+  initialValue?: string
+  hasError?: boolean
+  ariaDescribedby?: string
+  ariaInvalid?: 'true' | 'false'
+  isSelect?: boolean
+  children?: ReactNode
+  prefix?: string
 }
 
 export function FormInput({
@@ -44,7 +44,7 @@ export function FormInput({
     >
       {isSelect ? children : undefined}
     </Field>
-  );
+  )
 }
 
 export function FormInputWithPrefix({
@@ -76,5 +76,5 @@ export function FormInputWithPrefix({
         {isSelect ? children : undefined}
       </Field>
     </div>
-  );
+  )
 }

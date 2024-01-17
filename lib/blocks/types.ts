@@ -3,4 +3,4 @@ export type Blocks =
   | 'content'
   | 'stack'
   | 'github-commits-this-month'
-  | 'spotify-playing-now';
+  | 'spotify-playing-now'

@@ -1,15 +1,19 @@
-import './globals.css';
-import './react-grid-layout.scss';
+import './globals.css'
+import './react-grid-layout.scss'
 
-import {Analytics} from '@vercel/analytics/react';
-import {Toaster} from 'react-hot-toast';
+import { Analytics } from '@vercel/analytics/react'
+import { Toaster } from 'react-hot-toast'
 
 export const metadata = {
   title: 'Pulse',
   description: 'Your personal site builder',
-};
+}
 
-export default function RootLayout({children}: {children: React.ReactNode}) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode
+}) {
   return (
     <html lang="en">
       <body className="bg-system-bg-primary">
@@ -18,5 +22,5 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
       </body>
       <Analytics />
     </html>
-  );
+  )
 }

@@ -1,28 +1,28 @@
-import {getServerSession} from 'next-auth';
-import {authOptions} from '@/lib/auth';
-import prisma from '@/lib/prisma';
-import {isForbiddenSlug} from '@/lib/slugs';
+import { getServerSession } from 'next-auth'
+import { authOptions } from '@/lib/auth'
+import prisma from '@/lib/prisma'
+import { isForbiddenSlug } from '@/lib/slugs'
 
 export async function POST(req: Request) {
-  const session = await getServerSession(authOptions);
+  const session = await getServerSession(authOptions)
 
   if (!session) {
     return Response.json({
       message: 'error',
       data: null,
-    });
+    })
   }
 
-  const bodyData = await req.json();
+  const bodyData = await req.json()
 
-  const {currentPageSlug, pageSlug, metaTitle, published} = bodyData;
+  const { currentPageSlug, pageSlug, metaTitle, published } = bodyData
 
   if (!pageSlug || !metaTitle) {
     return Response.json({
       error: {
         message: 'Missing required fields',
       },
-    });
+    })
   }
 
   if (currentPageSlug !== pageSlug) {
@@ -30,7 +30,7 @@ export async function POST(req: Request) {
       where: {
         slug: pageSlug,
       },
-    });
+    })
 
     if (isForbiddenSlug(pageSlug)) {
       return Response.json({
@@ -38,7 +38,7 @@ export async function POST(req: Request) {
           message: 'Slug is forbidden',
           field: 'pageSlug',
         },
-      });
+      })
     }
 
     if (existingPage) {
@@ -47,7 +47,7 @@ export async function POST(req: Request) {
           message: 'Page with this slug already exists',
           field: 'pageSlug',
         },
-      });
+      })
     }
   }
 
@@ -56,14 +56,14 @@ export async function POST(req: Request) {
       userId: session.user.id,
       slug: currentPageSlug,
     },
-  });
+  })
 
   if (!page) {
     return Response.json({
       error: {
         message: 'Page not found',
       },
-    });
+    })
   }
 
   const updatedPage = await prisma.page.update({
@@ -78,11 +78,11 @@ export async function POST(req: Request) {
     select: {
       id: true,
     },
-  });
+  })
 
   return Response.json({
     data: {
       page: updatedPage,
     },
-  });
+  })
 }

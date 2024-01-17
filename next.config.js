@@ -6,8 +6,8 @@ const nextConfig = {
         source: '/',
         destination: '/home',
       },
-    ];
+    ]
   },
-};
+}
 
-module.exports = nextConfig;
+module.exports = nextConfig

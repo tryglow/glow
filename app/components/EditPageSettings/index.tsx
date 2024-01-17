@@ -1,40 +1,40 @@
-'use client';
+'use client'
 
-import {Form, Formik, FormikHelpers} from 'formik';
-import * as Yup from 'yup';
-import {Switch} from '@headlessui/react';
+import { Form, Formik, FormikHelpers } from 'formik'
+import * as Yup from 'yup'
+import { Switch } from '@headlessui/react'
 
-import clsx from 'clsx';
+import clsx from 'clsx'
 
-import {FormField} from '../FormField';
-import toast from 'react-hot-toast';
-import {Button} from '../Button';
-import {useParams, useRouter} from 'next/navigation';
+import { FormField } from '../FormField'
+import toast from 'react-hot-toast'
+import { Button } from '../Button'
+import { useParams, useRouter } from 'next/navigation'
 
 const FormSchema = Yup.object().shape({
   pageSlug: Yup.string().required('Please provide a page slug'),
   metaTitle: Yup.string().required('Please provide a page title'),
-});
+})
 
 type FormValues = {
-  pageSlug: string;
-  metaTitle: string;
-  published: boolean;
-};
-
-interface Props {
-  onBack: () => void;
-  initialValues: FormValues;
+  pageSlug: string
+  metaTitle: string
+  published: boolean
 }
 
-export function EditPageSettingsForm({onBack, initialValues}: Props) {
-  const params = useParams();
-  const router = useRouter();
+interface Props {
+  onBack: () => void
+  initialValues: FormValues
+}
+
+export function EditPageSettingsForm({ onBack, initialValues }: Props) {
+  const params = useParams()
+  const router = useRouter()
   const onSubmit = async (
     values: FormValues,
-    {setSubmitting, setFieldError}: FormikHelpers<FormValues>
+    { setSubmitting, setFieldError }: FormikHelpers<FormValues>
   ) => {
-    setSubmitting(true);
+    setSubmitting(true)
 
     try {
       const req = await fetch('/api/page/settings', {
@@ -48,32 +48,32 @@ export function EditPageSettingsForm({onBack, initialValues}: Props) {
           published: values.published,
           currentPageSlug: params.slug,
         }),
-      });
+      })
 
-      const res = await req.json();
+      const res = await req.json()
 
       if (res?.error) {
-        console.log(res.error);
-        toast.error(res.error.message);
+        console.log(res.error)
+        toast.error(res.error.message)
         if (res.error.field) {
-          setFieldError(res.error.field, res.error.message);
+          setFieldError(res.error.field, res.error.message)
         }
-        return;
+        return
       }
 
       if (req.ok) {
         if (values.pageSlug !== params.slug) {
-          router.push(`/${values.pageSlug}`);
+          router.push(`/${values.pageSlug}`)
         }
       }
 
-      toast.success('Your page settings have been updated');
+      toast.success('Your page settings have been updated')
     } catch (error) {
-      toast.error('Sorry, there was an issue updating your page settings');
+      toast.error('Sorry, there was an issue updating your page settings')
     } finally {
-      setSubmitting(false);
+      setSubmitting(false)
     }
-  };
+  }
 
   return (
     <Formik
@@ -86,7 +86,7 @@ export function EditPageSettingsForm({onBack, initialValues}: Props) {
       onSubmit={onSubmit}
       enableReinitialize
     >
-      {({isSubmitting, values, setFieldValue, errors}) => (
+      {({ isSubmitting, values, setFieldValue, errors }) => (
         <Form className="w-full flex flex-col">
           <div className="overflow-y-auto h-auto max-h-[600px] bg-stone-50">
             <div className="px-4 sm:px-6 pb-5 pt-6">
@@ -165,5 +165,5 @@ export function EditPageSettingsForm({onBack, initialValues}: Props) {
         </Form>
       )}
     </Formik>
-  );
+  )
 }

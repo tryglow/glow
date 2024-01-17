@@ -1,30 +1,30 @@
-'use client';
-import {useEffect, useState} from 'react';
+'use client'
+import { useEffect, useState } from 'react'
 
-import {Cog6ToothIcon} from '@heroicons/react/24/outline';
-import {useEditModeContext} from '@/app/contexts/Edit';
-import {DraggableBlockButton, config} from '../DraggableBlockButton';
-import {useParams} from 'next/navigation';
-import {EditForm} from '../EditForm';
-import {Button} from '../Button';
-import {EditPageSettings} from './screens/EditPageSettings';
+import { Cog6ToothIcon } from '@heroicons/react/24/outline'
+import { useEditModeContext } from '@/app/contexts/Edit'
+import { DraggableBlockButton, config } from '../DraggableBlockButton'
+import { useParams } from 'next/navigation'
+import { EditForm } from '../EditForm'
+import { Button } from '../Button'
+import { EditPageSettings } from './screens/EditPageSettings'
 
 export function EditWidget() {
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(true)
 
   const [visibleSection, setVisibleSection] = useState<
     'settings' | 'blocks' | 'drag'
-  >('drag');
+  >('drag')
 
-  const params = useParams();
+  const params = useParams()
 
-  const {layout, setSelectedBlock, selectedBlock} = useEditModeContext();
+  const { layout, setSelectedBlock, selectedBlock } = useEditModeContext()
 
   useEffect(() => {
     if (selectedBlock?.id) {
-      setVisibleSection('blocks');
+      setVisibleSection('blocks')
     }
-  }, [selectedBlock]);
+  }, [selectedBlock])
 
   const onSaveLayout = async () => {
     const newLayout = layout.map((item) => {
@@ -34,8 +34,8 @@ export function EditWidget() {
         x: item.x,
         y: item.y,
         i: item.i,
-      };
-    });
+      }
+    })
 
     try {
       const req = await fetch('/api/page/config/update', {
@@ -47,13 +47,13 @@ export function EditWidget() {
           pageSlug: params.slug,
           newLayout: newLayout,
         }),
-      });
+      })
 
-      const data = await req.json();
+      const data = await req.json()
     } catch (error) {
-      console.log(error);
+      console.log(error)
     }
-  };
+  }
 
   return (
     <div className="z-40 relative">
@@ -116,15 +116,15 @@ export function EditWidget() {
         </div>
       </div>
     </div>
-  );
+  )
 }
 
 export const EditWidgetHeader = ({
   title,
   label,
 }: {
-  title: string;
-  label: string;
+  title: string
+  label: string
 }) => {
   return (
     <div className="bg-white border-b border-stone-200 px-4 py-6 sm:px-6">
@@ -137,5 +137,5 @@ export const EditWidgetHeader = ({
         <p className="text-sm text-stone-700">{label}</p>
       </div>
     </div>
-  );
-};
+  )
+}

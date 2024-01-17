@@ -1,20 +1,20 @@
-import clsx from 'clsx';
-import {ReactNode} from 'react';
+import clsx from 'clsx'
+import { ReactNode } from 'react'
 
 interface Props {
-  label: string;
-  icon?: ReactNode;
-  onClick?: () => void;
-  type?: 'button' | 'submit';
-  variant?: 'primary' | 'secondary';
-  isLoading?: boolean;
+  label: string
+  icon?: ReactNode
+  onClick?: () => void
+  type?: 'button' | 'submit'
+  variant?: 'primary' | 'secondary'
+  isLoading?: boolean
 }
 
 const variants = {
   primary: 'bg-stone-900 text-white shadow-sm',
   secondary:
     'bg-white text-stone-900 shadow-sm ring-stone-300 hover:bg-stone-50',
-};
+}
 
 export function Button({
   label,
@@ -66,5 +66,5 @@ export function Button({
         </div>
       )}
     </button>
-  );
+  )
 }

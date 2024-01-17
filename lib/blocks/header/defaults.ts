@@ -4,4 +4,4 @@ export const defaults = {
   },
   title: 'Alex Pate',
   description: 'A generic header component to display a title',
-};
+}

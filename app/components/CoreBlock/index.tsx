@@ -1,12 +1,12 @@
-import clsx from 'clsx';
-import {ReactNode} from 'react';
+import clsx from 'clsx'
+import { ReactNode } from 'react'
 
 interface Props {
-  className?: string;
-  children: ReactNode;
+  className?: string
+  children: ReactNode
 }
 
-export function CoreBlock({className, children}: Props) {
+export function CoreBlock({ className, children }: Props) {
   return (
     <div
       className={clsx(
@@ -16,5 +16,5 @@ export function CoreBlock({className, children}: Props) {
     >
       {children}
     </div>
-  );
+  )
 }

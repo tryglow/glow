@@ -1,19 +1,19 @@
-import {notFound} from 'next/navigation';
+import { notFound } from 'next/navigation'
 
-import Grid from './grid';
-import prisma from '@/lib/prisma';
-import {getServerSession} from 'next-auth';
-import {authOptions} from '@/lib/auth';
-import {BlockConfig, renderBlock} from '@/lib/blocks/ui';
-import {EditBlockToolbar} from '../components/EditBlockToolbar';
-import {Blocks} from '@/lib/blocks/types';
+import Grid from './grid'
+import prisma from '@/lib/prisma'
+import { getServerSession } from 'next-auth'
+import { authOptions } from '@/lib/auth'
+import { BlockConfig, renderBlock } from '@/lib/blocks/ui'
+import { EditBlockToolbar } from '../components/EditBlockToolbar'
+import { Blocks } from '@/lib/blocks/types'
 
 const fetchData = async (slug: string) => {
-  let isEditMode = false;
+  let isEditMode = false
 
-  const session = await getServerSession(authOptions);
+  const session = await getServerSession(authOptions)
 
-  const user = session?.user;
+  const user = session?.user
 
   const data = await prisma.page.findUnique({
     where: {
@@ -23,33 +23,33 @@ const fetchData = async (slug: string) => {
       blocks: true,
       user: !!user,
     },
-  });
+  })
 
-  if (!data) notFound();
+  if (!data) notFound()
 
   if (user && data?.userId === user.id) {
-    isEditMode = true;
+    isEditMode = true
   }
 
   if (data.publishedAt == null && !isEditMode) {
-    return notFound();
+    return notFound()
   }
 
   return {
     data,
     isEditMode,
-  };
-};
-
-interface Params {
-  slug: string;
+  }
 }
 
-export default async function Page({params}: {params: Params}) {
-  const {slug} = params;
-  const {data, isEditMode} = await fetchData(slug);
+interface Params {
+  slug: string
+}
 
-  const config = data.config as unknown as BlockConfig[];
+export default async function Page({ params }: { params: Params }) {
+  const { slug } = params
+  const { data, isEditMode } = await fetchData(slug)
+
+  const config = data.config as unknown as BlockConfig[]
 
   return (
     <Grid layout={config} editMode={isEditMode}>
@@ -65,8 +65,8 @@ export default async function Page({params}: {params: Params}) {
 
             {renderBlock(block, data.id)}
           </section>
-        );
+        )
       })}
     </Grid>
-  );
+  )
 }

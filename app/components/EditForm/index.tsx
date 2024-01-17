@@ -1,25 +1,25 @@
-import {useEditModeContext} from '@/app/contexts/Edit';
-import {editForms} from '@/lib/blocks/edit';
-import {FormikProps} from 'formik';
+import { useEditModeContext } from '@/app/contexts/Edit'
+import { editForms } from '@/lib/blocks/edit'
+import { FormikProps } from 'formik'
 
-import {useRouter} from 'next/navigation';
-import {useEffect, useRef, useState} from 'react';
-import {Button} from '../Button';
+import { useRouter } from 'next/navigation'
+import { useEffect, useRef, useState } from 'react'
+import { Button } from '../Button'
 
 interface Props {
-  onBack: () => void;
+  onBack: () => void
 }
 
-export function EditForm({onBack}: Props) {
-  const [initialValues, setInitialValues] = useState<any>();
+export function EditForm({ onBack }: Props) {
+  const [initialValues, setInitialValues] = useState<any>()
 
-  const {selectedBlock} = useEditModeContext();
-  const router = useRouter();
+  const { selectedBlock } = useEditModeContext()
+  const router = useRouter()
 
-  const formRef = useRef<FormikProps<any>>(null);
+  const formRef = useRef<FormikProps<any>>(null)
 
   useEffect(() => {
-    if (!selectedBlock?.id) return;
+    if (!selectedBlock?.id) return
 
     const fetchInitialValues = async () => {
       try {
@@ -31,25 +31,25 @@ export function EditForm({onBack}: Props) {
               'Content-Type': 'application/json',
             },
           }
-        );
+        )
 
-        const data = await req.json();
+        const data = await req.json()
 
         if (data.data) {
-          setInitialValues(data.data.block);
+          setInitialValues(data.data.block)
         }
       } catch (error) {
         console.log(
           'There was an error fetching the page config for the edit form',
           error
-        );
+        )
       }
-    };
+    }
 
-    fetchInitialValues();
-  }, [selectedBlock]);
+    fetchInitialValues()
+  }, [selectedBlock])
 
-  if (!selectedBlock) return null;
+  if (!selectedBlock) return null
 
   const onSave = async (values: any) => {
     try {
@@ -62,20 +62,20 @@ export function EditForm({onBack}: Props) {
           blockId: selectedBlock.id,
           newData: values,
         }),
-      });
+      })
 
       if (req.ok) {
-        router.refresh();
+        router.refresh()
       }
     } catch (error) {
       console.log(
         'There was an error updating the page config for the edit form',
         error
-      );
+      )
     }
-  };
+  }
 
-  const CurrentEditForm = editForms[selectedBlock.type];
+  const CurrentEditForm = editForms[selectedBlock.type]
 
   return (
     <>
@@ -100,5 +100,5 @@ export function EditForm({onBack}: Props) {
         />
       </div>
     </>
-  );
+  )
 }

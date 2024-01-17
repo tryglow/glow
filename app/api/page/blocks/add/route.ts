@@ -1,30 +1,30 @@
-import {getServerSession} from 'next-auth';
-import {authOptions} from '@/lib/auth';
-import prisma from '@/lib/prisma';
+import { getServerSession } from 'next-auth'
+import { authOptions } from '@/lib/auth'
+import prisma from '@/lib/prisma'
 
-import {defaults} from '@/lib/blocks/defaults';
-import {Blocks} from '@/lib/blocks/types';
+import { defaults } from '@/lib/blocks/defaults'
+import { Blocks } from '@/lib/blocks/types'
 
 export async function POST(req: Request) {
-  const session = await getServerSession(authOptions);
+  const session = await getServerSession(authOptions)
 
   if (!session) {
     return Response.json({
       message: 'error',
       data: null,
-    });
+    })
   }
 
-  const bodyData = await req.json();
+  const bodyData = await req.json()
 
-  const {block, pageSlug, layout} = bodyData;
+  const { block, pageSlug, layout } = bodyData
 
   if (!block || !pageSlug || !layout) {
     return Response.json({
       error: {
         message: 'Missing required fields',
       },
-    });
+    })
   }
 
   const page = await prisma.page.findUnique({
@@ -32,17 +32,17 @@ export async function POST(req: Request) {
       userId: session.user.id,
       slug: pageSlug,
     },
-  });
+  })
 
   if (!page) {
     return Response.json({
       error: {
         message: 'Page not found',
       },
-    });
+    })
   }
 
-  const defaultData = defaults[block.type as Blocks];
+  const defaultData = defaults[block.type as Blocks]
 
   const newBlock = await prisma.block.create({
     data: {
@@ -56,7 +56,7 @@ export async function POST(req: Request) {
         },
       },
     },
-  });
+  })
 
   const updatedPage = await prisma.page.update({
     where: {
@@ -65,12 +65,12 @@ export async function POST(req: Request) {
     data: {
       config: layout,
     },
-  });
+  })
 
   return Response.json({
     data: {
       block: newBlock,
       layout: updatedPage.config,
     },
-  });
+  })
 }

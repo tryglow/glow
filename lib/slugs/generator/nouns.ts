@@ -850,4 +850,4 @@ export const nouns = [
   'zinc',
   'zipper',
   'zoo',
-];
+]

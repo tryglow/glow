@@ -1,23 +1,23 @@
-import {getServerSession} from 'next-auth';
-import {LoginWidget} from '../components/LoginWidget';
-import {authOptions} from '@/lib/auth';
+import { getServerSession } from 'next-auth'
+import { LoginWidget } from '../components/LoginWidget'
+import { authOptions } from '@/lib/auth'
 
 const fetchUserLoggedinStatus = async () => {
-  const session = await getServerSession(authOptions);
+  const session = await getServerSession(authOptions)
 
-  const user = session?.user;
+  const user = session?.user
 
   return {
     isUserLoggedIn: Boolean(user),
-  };
-};
+  }
+}
 
 export default async function PageLayout({
   children,
 }: {
-  children: React.ReactNode;
+  children: React.ReactNode
 }) {
-  const {isUserLoggedIn} = await fetchUserLoggedinStatus();
+  const { isUserLoggedIn } = await fetchUserLoggedinStatus()
   return (
     <>
       {!isUserLoggedIn && <LoginWidget />}
@@ -32,5 +32,5 @@ export default async function PageLayout({
         </span>
       </footer>
     </>
-  );
+  )
 }

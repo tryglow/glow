@@ -1,29 +1,29 @@
-'use client';
-import {EditPageSettingsForm} from '@/app/components/EditPageSettings';
-import {EditWidgetHeader} from '../..';
+'use client'
+import { EditPageSettingsForm } from '@/app/components/EditPageSettings'
+import { EditWidgetHeader } from '../..'
 
-import {useEffect, useState} from 'react';
-import {fetchPageSettings} from './action';
-import {useParams} from 'next/navigation';
-import {Page} from '@prisma/client';
+import { useEffect, useState } from 'react'
+import { fetchPageSettings } from './action'
+import { useParams } from 'next/navigation'
+import { Page } from '@prisma/client'
 
 interface Props {
-  onBack: () => void;
+  onBack: () => void
 }
 
-export function EditPageSettings({onBack}: Props) {
-  const [pageSettings, setPageSettings] = useState<Partial<Page> | null>(null);
-  const params = useParams();
+export function EditPageSettings({ onBack }: Props) {
+  const [pageSettings, setPageSettings] = useState<Partial<Page> | null>(null)
+  const params = useParams()
 
   useEffect(() => {
     const getPageSettings = async () => {
-      const data = await fetchPageSettings(params.slug as string);
+      const data = await fetchPageSettings(params.slug as string)
 
-      setPageSettings(data?.page ?? null);
-    };
+      setPageSettings(data?.page ?? null)
+    }
 
-    getPageSettings();
-  }, [params.slug]);
+    getPageSettings()
+  }, [params.slug])
 
   return (
     <>
@@ -40,5 +40,5 @@ export function EditPageSettings({onBack}: Props) {
         }}
       />
     </>
-  );
+  )
 }

@@ -1,28 +1,28 @@
-import {getServerSession} from 'next-auth';
-import {authOptions} from '@/lib/auth';
-import prisma from '@/lib/prisma';
-import {revalidatePath, revalidateTag} from 'next/cache';
+import { getServerSession } from 'next-auth'
+import { authOptions } from '@/lib/auth'
+import prisma from '@/lib/prisma'
+import { revalidatePath, revalidateTag } from 'next/cache'
 
 export async function POST(req: Request) {
-  const session = await getServerSession(authOptions);
+  const session = await getServerSession(authOptions)
 
   if (!session) {
     return Response.json({
       message: 'error',
       data: null,
-    });
+    })
   }
 
-  const bodyData = await req.json();
+  const bodyData = await req.json()
 
-  const {blockId, newData} = bodyData;
+  const { blockId, newData } = bodyData
 
   if (!blockId || !newData) {
     return Response.json({
       error: {
         message: 'Missing required fields',
       },
-    });
+    })
   }
 
   const block = await prisma.block.findUnique({
@@ -32,14 +32,14 @@ export async function POST(req: Request) {
         userId: session.user.id,
       },
     },
-  });
+  })
 
   if (!block) {
     return Response.json({
       error: {
         message: 'Block not found',
       },
-    });
+    })
   }
 
   // TODO - validate newData against schema
@@ -51,11 +51,11 @@ export async function POST(req: Request) {
     data: {
       data: newData,
     },
-  });
+  })
 
   return Response.json({
     data: {
       block: updatedBlock,
     },
-  });
+  })
 }

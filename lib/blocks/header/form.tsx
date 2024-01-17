@@ -1,37 +1,37 @@
-import {FormField} from '@/app/components/FormField';
-import {Field, Form, Formik, FormikHelpers, FormikProps} from 'formik';
-import * as Yup from 'yup';
+import { FormField } from '@/app/components/FormField'
+import { Form, Formik, FormikHelpers, FormikProps } from 'formik'
+import * as Yup from 'yup'
 
 const FormSchema = Yup.object().shape({
   title: Yup.string().required('Please provide a title'),
   description: Yup.string().required('Please provide a subtitle'),
   avatar: Yup.string().required('Please provide an avatar URL'),
-});
+})
 
 type FormValues = {
-  title: string;
-  description: string;
+  title: string
+  description: string
   avatar: {
-    src: string;
-  };
-};
-
-interface Props {
-  initialValues: FormValues;
-  onSave: (values: FormValues) => void;
-  formRef: {
-    current: FormikProps<FormValues> | null;
-  };
+    src: string
+  }
 }
 
-export function EditForm({initialValues, onSave, formRef}: Props) {
+interface Props {
+  initialValues: FormValues
+  onSave: (values: FormValues) => void
+  formRef: {
+    current: FormikProps<FormValues> | null
+  }
+}
+
+export function EditForm({ initialValues, onSave, formRef }: Props) {
   const onSubmit = async (
     values: FormValues,
-    {setSubmitting}: FormikHelpers<FormValues>
+    { setSubmitting }: FormikHelpers<FormValues>
   ) => {
-    setSubmitting(true);
-    onSave(values);
-  };
+    setSubmitting(true)
+    onSave(values)
+  }
 
   return (
     <Formik
@@ -55,5 +55,5 @@ export function EditForm({initialValues, onSave, formRef}: Props) {
         </Form>
       )}
     </Formik>
-  );
+  )
 }

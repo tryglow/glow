@@ -1,15 +1,15 @@
-import {FunctionComponent} from 'react';
+import { FunctionComponent } from 'react'
 
-import styles from './styles.module.css';
-import clsx from 'clsx';
+import styles from './styles.module.css'
+import clsx from 'clsx'
 
-import {CoreBlock} from '@/app/components/CoreBlock';
-import {requestToken} from '@/app/api/services/spotify/callback/utils';
-import prisma from '@/lib/prisma';
+import { CoreBlock } from '@/app/components/CoreBlock'
+import { requestToken } from '@/app/api/services/spotify/callback/utils'
+import prisma from '@/lib/prisma'
 
 interface SpotifyConfig {
-  accessToken: string;
-  refreshToken: string;
+  accessToken: string
+  refreshToken: string
 }
 
 function fetchPlayingNow(accessToken: string) {
@@ -20,7 +20,7 @@ function fetchPlayingNow(accessToken: string) {
     next: {
       revalidate: 500,
     },
-  });
+  })
 }
 
 function fetchRecentlyPlayed(accessToken: string) {
@@ -31,7 +31,7 @@ function fetchRecentlyPlayed(accessToken: string) {
     next: {
       revalidate: 500,
     },
-  });
+  })
 }
 
 const fetchSpotifyData = async (
@@ -39,16 +39,16 @@ const fetchSpotifyData = async (
   isRetry: boolean,
   integrationId: string
 ) => {
-  const req = await fetchPlayingNow(config.accessToken);
+  const req = await fetchPlayingNow(config.accessToken)
 
   // The access token might have expired. Try to refresh it.
   if (req.status === 401 && !isRetry) {
     const refreshTokenRequest = await requestToken({
       isRefreshToken: true,
       refreshToken: config.refreshToken,
-    });
+    })
 
-    const refreshTokenData = await refreshTokenRequest.json();
+    const refreshTokenData = await refreshTokenRequest.json()
 
     if (refreshTokenData?.access_token) {
       await prisma.integration.update({
@@ -61,7 +61,7 @@ const fetchSpotifyData = async (
             access_token: refreshTokenData.access_token,
           }),
         },
-      });
+      })
 
       fetchSpotifyData(
         {
@@ -70,28 +70,28 @@ const fetchSpotifyData = async (
         },
         true,
         integrationId
-      );
+      )
     }
   }
 
   if (req.status === 200) {
-    const data = await req.json();
+    const data = await req.json()
 
     return {
       artistName: data?.item?.artists[0]?.name,
       name: data?.item?.name,
       imageUrl: data?.item?.album?.images[0]?.url,
       isPlayingNow: true,
-    };
+    }
   }
 
   // Is this is a retry, bail out to prevent an infinite loop.
   if (isRetry) {
-    return null;
+    return null
   }
 
-  const recentlyPlayedReq = await fetchRecentlyPlayed(config.accessToken);
-  const recentlyPlayedData = await recentlyPlayedReq.json();
+  const recentlyPlayedReq = await fetchRecentlyPlayed(config.accessToken)
+  const recentlyPlayedData = await recentlyPlayedReq.json()
 
   if (recentlyPlayedData) {
     return {
@@ -99,9 +99,9 @@ const fetchSpotifyData = async (
       name: recentlyPlayedData?.items[0]?.track?.name,
       imageUrl: recentlyPlayedData?.items[0]?.track?.album?.images[0]?.url,
       isPlayingNow: false,
-    };
+    }
   }
-};
+}
 
 const fetchData = async (pageId: string) => {
   try {
@@ -116,39 +116,39 @@ const fetchData = async (pageId: string) => {
           },
         },
       },
-    });
+    })
 
     if (!data) {
-      return null;
+      return null
     }
 
-    const config = data.config as unknown as SpotifyConfig;
+    const config = data.config as unknown as SpotifyConfig
 
     if (!config.accessToken) {
       console.log(
         `Spotify accessToken or refreshToken doesn't exist: Integration ID: ${data.id}`
-      );
-      return null;
+      )
+      return null
     }
 
-    const spotifyData = await fetchSpotifyData(config, false, data.id);
-    return spotifyData;
+    const spotifyData = await fetchSpotifyData(config, false, data.id)
+    return spotifyData
   } catch (error) {
-    console.log(error);
-    return null;
+    console.log(error)
+    return null
   }
-};
+}
 
 interface Props {
-  spotifyConfig: SpotifyConfig;
-  pageId: string;
+  spotifyConfig: SpotifyConfig
+  pageId: string
 }
 
 const SpotifyPlayingNow: FunctionComponent<Props> = async ({
   spotifyConfig,
   pageId,
 }) => {
-  const data = await fetchData(pageId);
+  const data = await fetchData(pageId)
 
   return (
     <CoreBlock className="bg-gradient-to-tr from-[#1DB954] to-[#37bc66]">
@@ -178,8 +178,8 @@ const SpotifyPlayingNow: FunctionComponent<Props> = async ({
         </div>
       </div>
     </CoreBlock>
-  );
-};
+  )
+}
 
 export const LoadingState = () => {
   return (
@@ -196,7 +196,7 @@ export const LoadingState = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default SpotifyPlayingNow;
+export default SpotifyPlayingNow

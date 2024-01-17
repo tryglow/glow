@@ -1,17 +1,17 @@
-import {PlusCircleIcon} from '@heroicons/react/24/outline';
-import {FormikProps} from 'formik';
+import { PlusCircleIcon } from '@heroicons/react/24/outline'
+import { FormikProps } from 'formik'
 
-type FormValues = {};
+type FormValues = {}
 
 interface Props {
-  initialValues: FormValues;
-  onSave: (values: FormValues) => void;
+  initialValues: FormValues
+  onSave: (values: FormValues) => void
   formRef: {
-    current: FormikProps<FormValues> | null;
-  };
+    current: FormikProps<FormValues> | null
+  }
 }
 
-export function EditForm({onSave}: Props) {
+export function EditForm({ onSave }: Props) {
   return (
     <div>
       <a
@@ -23,5 +23,5 @@ export function EditForm({onSave}: Props) {
         Link Spotify Account
       </a>
     </div>
-  );
+  )
 }

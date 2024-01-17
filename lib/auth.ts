@@ -1,11 +1,11 @@
-import type {NextAuthOptions} from 'next-auth';
-import {PrismaAdapter} from '@next-auth/prisma-adapter';
-import GoogleProvider from 'next-auth/providers/google';
-import {getServerSession} from 'next-auth';
+import type { NextAuthOptions } from 'next-auth'
+import { PrismaAdapter } from '@next-auth/prisma-adapter'
+import GoogleProvider from 'next-auth/providers/google'
+import { getServerSession } from 'next-auth'
 
-import prisma from './prisma';
-import {generateSlug} from './slugs/generator/generate-slug';
-import {randomUUID} from 'crypto';
+import prisma from './prisma'
+import { generateSlug } from './slugs/generator/generate-slug'
+import { randomUUID } from 'crypto'
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -16,23 +16,23 @@ export const authOptions: NextAuthOptions = {
   ],
   secret: process.env.NEXTAUTH_SECRET,
   adapter: PrismaAdapter(prisma),
-  session: {strategy: 'jwt', maxAge: 24 * 60 * 60},
+  session: { strategy: 'jwt', maxAge: 24 * 60 * 60 },
   pages: {
     signIn: '/auth/login',
   },
   callbacks: {
-    signIn: async ({user}) => {
-      return true;
+    signIn: async ({ user }) => {
+      return true
     },
-    session: async ({session, token}) => {
-      if (!session.user) return session;
+    session: async ({ session, token }) => {
+      if (!session.user) return session
 
-      session.user.id = token.uid;
+      session.user.id = token.uid
 
-      return session;
+      return session
     },
     jwt: async (params) => {
-      const {user, token, trigger} = params;
+      const { user, token, trigger } = params
 
       if (trigger === 'signUp') {
         const usersFirstPage = await prisma.page.findFirst({
@@ -42,12 +42,12 @@ export const authOptions: NextAuthOptions = {
           select: {
             slug: true,
           },
-        });
+        })
 
         if (!usersFirstPage) {
           // Could give the user a nice onboarding experience here
-          const randomPageSlug = await generateSlug();
-          const headerSectionId = randomUUID();
+          const randomPageSlug = await generateSlug()
+          const headerSectionId = randomUUID()
           const userFirstPage = await prisma.page.create({
             data: {
               userId: user.id,
@@ -82,29 +82,29 @@ export const authOptions: NextAuthOptions = {
             select: {
               slug: true,
             },
-          });
+          })
 
           if (!userFirstPage) {
-            throw new Error('Could not create user first page');
+            throw new Error('Could not create user first page')
           }
         }
       }
 
       if (user) {
-        token.uid = user.id;
+        token.uid = user.id
       }
 
-      return token;
+      return token
     },
   },
-};
+}
 
 export const getUser = async () => {
-  const session = await getServerSession(authOptions);
+  const session = await getServerSession(authOptions)
 
   if (!session) {
-    return null;
+    return null
   }
 
-  return session.user;
-};
+  return session.user
+}

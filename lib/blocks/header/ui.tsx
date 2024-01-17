@@ -1,12 +1,12 @@
-import {FunctionComponent} from 'react';
-import Image from 'next/image';
+import { FunctionComponent } from 'react'
+import Image from 'next/image'
 
 interface Props {
-  title: string;
-  description: string;
+  title: string
+  description: string
   avatar: {
-    src: string;
-  };
+    src: string
+  }
 }
 
 export const Header: FunctionComponent<Props> = ({
@@ -30,5 +30,5 @@ export const Header: FunctionComponent<Props> = ({
       </h1>
       <p className="text-2xl text-system-label-secondary">{description}</p>
     </header>
-  );
-};
+  )
+}
