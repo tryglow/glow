@@ -18,7 +18,7 @@ function fetchPlayingNow(accessToken: string) {
       Authorization: `Bearer ${accessToken}`,
     },
     next: {
-      revalidate: 500,
+      revalidate: 60,
     },
   })
 }
@@ -29,7 +29,7 @@ function fetchRecentlyPlayed(accessToken: string) {
       Authorization: `Bearer ${accessToken}`,
     },
     next: {
-      revalidate: 500,
+      revalidate: 60,
     },
   })
 }
@@ -108,6 +108,13 @@ const fetchData = async (pageId: string) => {
     const data = await prisma.integration.findFirst({
       where: {
         type: 'spotify',
+        user: {
+          pages: {
+            some: {
+              id: pageId,
+            },
+          },
+        },
       },
       include: {
         user: {
