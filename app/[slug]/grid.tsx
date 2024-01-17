@@ -21,7 +21,7 @@ export default function Grid({ layout, children, editMode }: Props) {
     width: 624,
     rowHeight: 30,
     cols: 12,
-    margin: [10, 5],
+    margin: [10, 10],
     compactType: 'vertical',
     isResizable: editMode ? true : false,
     isDraggable: editMode ? true : false,
