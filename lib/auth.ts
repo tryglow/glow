@@ -5,6 +5,7 @@ import {getServerSession} from 'next-auth';
 
 import prisma from './prisma';
 import {generateSlug} from './slugs/generator/generate-slug';
+import {randomUUID} from 'crypto';
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -21,8 +22,6 @@ export const authOptions: NextAuthOptions = {
   },
   callbacks: {
     signIn: async ({user}) => {
-      console.log('SIGN IN', user);
-
       return true;
     },
     session: async ({session, token}) => {
@@ -48,11 +47,37 @@ export const authOptions: NextAuthOptions = {
         if (!usersFirstPage) {
           // Could give the user a nice onboarding experience here
           const randomPageSlug = await generateSlug({words: 2});
+          const headerSectionId = randomUUID();
           const userFirstPage = await prisma.page.create({
             data: {
               userId: user.id,
               slug: randomPageSlug,
-              config: [],
+              config: [
+                {
+                  h: 6,
+                  i: headerSectionId,
+                  w: 11,
+                  x: 0,
+                  y: 0,
+                  moved: false,
+                  static: false,
+                },
+              ],
+              blocks: {
+                create: {
+                  id: headerSectionId,
+                  type: 'header',
+                  config: {},
+                  data: {
+                    title: 'Welcome to my page',
+                    avatar: {
+                      src: '/demo/avatar.svg',
+                    },
+                    description:
+                      'A generic header component to display a title',
+                  },
+                },
+              },
             },
             select: {
               slug: true,

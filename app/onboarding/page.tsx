@@ -6,6 +6,11 @@ import {LoginWidget} from '../components/LoginWidget';
 
 const fetchUsersPages = async () => {
   const session = await getServerSession(authOptions);
+
+  if (!session) {
+    return null;
+  }
+
   const page = await prisma.page.findFirst({
     where: {
       userId: session?.user?.id,
