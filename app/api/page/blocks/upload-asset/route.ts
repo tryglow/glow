@@ -26,7 +26,7 @@ const s3 = new S3({
   region: process.env.AWS_REGION,
 })
 
-export const uploadTemplateFile = async (
+const uploadTemplateFile = async (
   fileBuffer: Buffer,
   fileName: string,
   fileContentType: string
