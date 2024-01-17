@@ -1,11 +1,8 @@
 'use client'
 
-import {
-  EditModeContextProvider,
-  useEditModeContext,
-} from '../../contexts/Edit'
+import { useEditModeContext } from '../../contexts/Edit'
 import { v4 as uuidv4 } from 'uuid'
-import { ReactNode, useEffect, useOptimistic, useTransition } from 'react'
+import { ReactNode, useOptimistic, useTransition } from 'react'
 import ReactGridLayout, {
   Layout,
   ReactGridLayoutProps,
