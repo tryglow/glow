@@ -1,6 +1,6 @@
 'use client';
 
-import {ReactNode} from 'react';
+import {Children, ReactNode, cloneElement} from 'react';
 import ReactGridLayout, {Layout, ReactGridLayoutProps} from 'react-grid-layout';
 
 import {EditWrapper} from '../components/EditWrapper';

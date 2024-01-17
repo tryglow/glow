@@ -9,8 +9,6 @@ export function EditForm() {
   const {selectedSectionId} = useEditModeContext();
   const router = useRouter();
 
-  if (!selectedSectionId) return null;
-
   useEffect(() => {
     if (!selectedSectionId) return;
 
@@ -42,6 +40,8 @@ export function EditForm() {
     fetchInitialValues();
   }, [selectedSectionId]);
 
+  if (!selectedSectionId) return null;
+
   const onSave = async (values: any) => {
     try {
       const req = await fetch('/api/page/sections/update-data', {
@@ -66,7 +66,7 @@ export function EditForm() {
     }
   };
 
-  const CurrentEditForm = editForms['content'];
+  const CurrentEditForm = editForms['github-commits-this-month'];
 
   return (
     <>

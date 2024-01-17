@@ -37,18 +37,28 @@ html {
 }
 .react-grid-layout {
   position: relative;
-  /* transition: height 200ms ease; */
+  transition: height 200ms ease;
 }
 .react-grid-item {
-  /* transition: all 200ms ease; */
-  /* transition-property: left, top; */
+  transition: all 200ms ease;
+  transition-property: left, top;
 }
+
+.react-grid-item:hover {
+  outline: 1px solid #eee;
+  border-radius: 24px;
+}
+
+.react-grid-item:hover .section-toolbar {
+  opacity: 1;
+}
+
 .react-grid-item img {
   pointer-events: none;
   user-select: none;
 }
 .react-grid-item.cssTransforms {
-  /* transition-property: transform; */
+  transition-property: transform;
 }
 .react-grid-item.resizing {
   z-index: 1;

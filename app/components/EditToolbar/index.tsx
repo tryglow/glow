@@ -50,7 +50,6 @@ export default function EditToolbar() {
       });
 
       const data = await req.json();
-      console.log(data);
     } catch (error) {
       console.log(error);
     }

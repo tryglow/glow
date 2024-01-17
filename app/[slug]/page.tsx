@@ -5,6 +5,8 @@ import prisma from '@/lib/prisma';
 import {getServerSession} from 'next-auth';
 import {authOptions} from '@/lib/auth';
 import {BlockConfig, renderBlock} from '@/lib/blocks/ui';
+import {PencilSquareIcon} from '@heroicons/react/24/outline';
+import {EditSectionToolbar} from '../components/EditSectionToolbar';
 
 const fetchData = async (slug: string) => {
   let isEditMode = false;
@@ -40,7 +42,7 @@ const fetchData = async (slug: string) => {
   }
 
   if (!data.config) {
-    // ...
+    console.log('This page is completely fucked, no config found');
   }
 
   return {
@@ -59,17 +61,15 @@ export default async function Page({params}: {params: Params}) {
 
   const config = data.config as unknown as BlockConfig[];
 
-  const layout = config.map((sectionConfig) => {
-    return {
-      ...sectionConfig,
-    };
-  });
-
   return (
-    <Grid layout={layout} editMode={isEditMode}>
-      {data.sections.map((section, i) => {
+    <Grid layout={config} editMode={isEditMode}>
+      {data.sections.map((section) => {
         return (
-          <section key={section.id}>{renderBlock(section, data.id)}</section>
+          <section key={section.id}>
+            {isEditMode && <EditSectionToolbar sectionId={section.id} />}
+
+            {renderBlock(section, data.id)}
+          </section>
         );
       })}
     </Grid>

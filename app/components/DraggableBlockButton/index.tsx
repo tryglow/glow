@@ -1,26 +1,53 @@
 import {useEditModeContext} from '@/app/contexts/Edit';
 import {Blocks} from '@/lib/blocks/types';
 
-const config: Record<Blocks, {title: string; label: string; icon: string}> = {
+const config: Record<
+  Blocks,
+  {
+    title: string;
+    label: string;
+    icon: string;
+    drag: {
+      h: number;
+      w: number;
+    };
+  }
+> = {
   header: {
     title: 'Header',
     label: 'A primary title and optional subtitle',
     icon: '/ui/type-header.svg',
+    drag: {
+      w: 12,
+      h: 6,
+    },
   },
   content: {
     title: 'Content',
     label: 'A block of text',
     icon: '/ui/type-content.svg',
+    drag: {
+      w: 12,
+      h: 6,
+    },
   },
   stack: {
     title: 'Stack',
     label: 'A list of items',
     icon: '/ui/type-stack.svg',
+    drag: {
+      w: 5,
+      h: 9,
+    },
   },
   'github-commits-this-month': {
     title: 'Github Commits (month)',
     label: 'The number of commits this month for a user',
     icon: '/ui/type-github-commits-this-month.svg',
+    drag: {
+      w: 6,
+      h: 6,
+    },
   },
 };
 
@@ -30,6 +57,8 @@ interface Props {
 
 export function DraggableBlockButton({type}: Props) {
   const {setDraggingItem} = useEditModeContext();
+
+  const blockConfig = config[type];
 
   return (
     <button
@@ -41,8 +70,8 @@ export function DraggableBlockButton({type}: Props) {
         setDraggingItem({
           // TODO - use a real ID
           i: 'another-item',
-          w: 12,
-          h: 6,
+          w: blockConfig.drag.w,
+          h: blockConfig.drag.h,
           type,
         });
       }}
@@ -50,13 +79,13 @@ export function DraggableBlockButton({type}: Props) {
       <img src="/ui/drag.svg" className="mr-3"></img>
       <div className="w-9 h-9 bg-gray-200 rounded-md flex items-center mr-3">
         <img
-          src={config[type].icon}
+          src={blockConfig.icon}
           className="w-9 h-9 flex-1 flex-shrink-0 mr-3"
         />
       </div>
       <div className="flex flex-col">
-        <span className="font-bold text-sm">{config[type].title}</span>
-        <span className="text-xs text-slate-600">{config[type].label}</span>
+        <span className="font-bold text-sm">{blockConfig.title}</span>
+        <span className="text-xs text-slate-600">{blockConfig.label}</span>
       </div>
     </button>
   );

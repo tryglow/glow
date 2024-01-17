@@ -3,7 +3,7 @@ import clsx from 'clsx';
 
 import {ReactNode} from 'react';
 import {FormLabel} from '../FormLabel';
-import {FormInput} from '../FormInput';
+import {FormInput, FormInputWithPrefix} from '../FormInput';
 
 interface Props {
   name: string;
@@ -14,6 +14,7 @@ interface Props {
   error?: string | undefined;
   isSelect?: boolean;
   children?: ReactNode;
+  withPrefix?: string;
 }
 
 export function FormField({
@@ -25,12 +26,14 @@ export function FormField({
   placeholder,
   error,
   type = 'text',
+  withPrefix,
 }: Props) {
+  const InputComponent = withPrefix ? FormInputWithPrefix : FormInput;
   return (
-    <div>
+    <>
       <FormLabel label={label} htmlFor={name} />
-      <div className="relative mt-2 rounded-md shadow-sm">
-        <FormInput
+      <div className="relative mt-1 rounded-md shadow-sm">
+        <InputComponent
           isSelect={isSelect}
           type={type}
           name={name}
@@ -38,9 +41,10 @@ export function FormField({
           placeholder={placeholder}
           ariaInvalid={error ? 'true' : 'false'}
           ariaDescribedby={`${name}-error`}
+          prefix={withPrefix}
         >
           {children}
-        </FormInput>
+        </InputComponent>
         {error && (
           <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
             <ExclamationCircleIcon
@@ -53,6 +57,6 @@ export function FormField({
       <p className="mt-2 text-sm text-red-600" id={`${name}-error`}>
         {error}
       </p>
-    </div>
+    </>
   );
 }

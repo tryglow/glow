@@ -56,8 +56,6 @@ const fetchGithubData = async (githubUsername: string) => {
       },
     });
 
-    console.log(res);
-
     const data = await res.json();
 
     return data;
@@ -75,7 +73,6 @@ export const GitHubCommitsThisMonth: FunctionComponent<Props> = async ({
   githubUsername,
 }) => {
   const {data} = await fetchGithubData(githubUsername);
-  console.log('DATA', data);
   const previousMonth = data?.user?.previousMonth?.totalCommitContributions;
   const thisMonth = data?.user?.thisMonth?.totalCommitContributions;
 

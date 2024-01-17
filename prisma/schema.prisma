@@ -70,16 +70,18 @@ model VerificationRequest {
 }
 
 model Page {
-  id             String    @id @default(cuid())
-  createdAt      DateTime  @default(now())
-  updatedAt      DateTime  @updatedAt
-  publishedAt    DateTime?
-  userId         String
-  user           User      @relation(fields: [userId], references: [id])
-  slug           String    @unique
-  sections_order String[]
-  config         Json
-  sections       Section[]
+  id              String    @id @default(cuid())
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  publishedAt     DateTime?
+  userId          String
+  user            User      @relation(fields: [userId], references: [id])
+  slug            String    @unique
+  sections_order  String[]
+  config          Json
+  sections        Section[]
+  metaTitle       String?
+  metaDescription String?
 }
 
 model Section {

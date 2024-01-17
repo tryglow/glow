@@ -2,7 +2,7 @@
 
 import {EditModeContextProvider, useEditModeContext} from '../../contexts/Edit';
 import {v4 as uuidv4} from 'uuid';
-import {ReactNode, useOptimistic, useTransition} from 'react';
+import {ReactNode, useEffect, useOptimistic, useTransition} from 'react';
 import ReactGridLayout, {Layout, ReactGridLayoutProps} from 'react-grid-layout';
 import {useParams, useRouter} from 'next/navigation';
 import {CoreBlock} from '../CoreBlock';
@@ -85,6 +85,28 @@ export function EditWrapper({layout, children, layoutProps}: Props) {
       return draggingItem;
     },
   };
+
+  useEffect(() => {
+    // Function to handle click event
+    const handleItemClick = (event) => {
+      event.preventDefault();
+      console.log(event);
+      const gridItemId = event.target.getAttribute('data-grid-section-id');
+      console.log('Grid item clicked:', gridItemId);
+    };
+
+    // Attaching click event listener to each grid item
+    document.querySelectorAll('[data-grid-section-id]').forEach((item) => {
+      item.addEventListener('click', handleItemClick);
+    });
+
+    // Clean up function
+    return () => {
+      document.querySelectorAll('[data-grid-section-id]').forEach((item) => {
+        item.removeEventListener('click', handleItemClick);
+      });
+    };
+  }, []);
 
   return (
     <>
