@@ -40,7 +40,6 @@ const fetchSpotifyData = async (
   integrationId: string
 ) => {
   const req = await fetchPlayingNow(config.accessToken)
-  console.log('fetchPlayingNow REQ', req)
 
   // The access token might have expired. Try to refresh it.
   if (req.status === 401 && !isRetry) {
@@ -77,7 +76,7 @@ const fetchSpotifyData = async (
 
   if (req.status === 200) {
     const data = await req.json()
-    console.log('req.status === 200', data)
+    console.log('Data last fetched:', data.timestamp)
 
     return {
       artistName: data?.item?.artists[0]?.name,
@@ -153,13 +152,8 @@ interface Props {
   pageId: string
 }
 
-const SpotifyPlayingNow: FunctionComponent<Props> = async ({
-  spotifyConfig,
-  pageId,
-}) => {
+const SpotifyPlayingNow: FunctionComponent<Props> = async ({ pageId }) => {
   const data = await fetchData(pageId)
-
-  console.log('CORE DATA', data)
 
   return (
     <CoreBlock className="bg-gradient-to-tr from-[#1DB954] to-[#37bc66]">
