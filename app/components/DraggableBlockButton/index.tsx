@@ -31,6 +31,15 @@ export const config: Record<
       h: 6,
     },
   },
+  image: {
+    title: 'Image',
+    label: 'Nothing more, nothing less',
+    icon: '/ui/type-image.svg',
+    drag: {
+      w: 8,
+      h: 8,
+    },
+  },
   stack: {
     title: 'Stack',
     label: 'A list of items',

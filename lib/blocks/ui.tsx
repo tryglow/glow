@@ -9,6 +9,7 @@ import {
 import SpotifyPlayingNow, {
   LoadingState as SpotifyPlayingNowLoadingState,
 } from './spotify-playing-now/ui'
+import { Image } from './image/ui'
 
 export interface BlockConfig {
   x: number
@@ -26,6 +27,8 @@ export function renderBlock(block: any, pageId: string) {
       return <Content {...block.data} pageId={pageId} />
     case 'stack':
       return <Stack {...block.data} pageId={pageId} />
+    case 'image':
+      return <Image {...block.data} pageId={pageId} />
     case 'github-commits-this-month':
       return (
         <Suspense fallback={<GitHubCommitsThisMonthLoadingState />}>
