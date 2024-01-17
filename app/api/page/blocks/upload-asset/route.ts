@@ -97,7 +97,7 @@ export async function POST(req: Request) {
   const assetUpload = await uploadTemplateFile(
     convertedImage,
     fileName,
-    'image/png'
+    'image/webp'
   )
 
   if (isComplete(assetUpload)) {
