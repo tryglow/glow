@@ -7,6 +7,7 @@ import ReactGridLayout, {Layout, ReactGridLayoutProps} from 'react-grid-layout';
 import {useParams, useRouter} from 'next/navigation';
 import {CoreBlock} from '../CoreBlock';
 import {EditWidget} from '../EditWidget';
+import toast from 'react-hot-toast';
 
 interface Props {
   layout: Layout[];
@@ -50,13 +51,13 @@ export function EditWrapper({layout, children, layoutProps}: Props) {
         </div>
       );
 
-      const req = await fetch('/api/page/sections/add', {
+      const req = await fetch('/api/page/blocks/add', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          section: {
+          block: {
             id: newItemId,
             type: draggingItem.type,
           },
@@ -73,8 +74,31 @@ export function EditWrapper({layout, children, layoutProps}: Props) {
     });
   };
 
-  const handleLayoutChange = (newLayout: Layout[]) => {
+  const handleLayoutChange = async (newLayout: Layout[]) => {
     setLayout(newLayout);
+
+    try {
+      const req = await fetch('/api/page/config/update', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          pageSlug: params.slug,
+          newLayout: newLayout,
+        }),
+      });
+
+      const res = await req.json();
+
+      if (res.error) {
+        toast.error(res.error.message);
+        return;
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error("Couldn't update page layout");
+    }
   };
 
   const editableLayoutProps: ReactGridLayoutProps = {
@@ -85,28 +109,6 @@ export function EditWrapper({layout, children, layoutProps}: Props) {
       return draggingItem;
     },
   };
-
-  useEffect(() => {
-    // Function to handle click event
-    const handleItemClick = (event) => {
-      event.preventDefault();
-      console.log(event);
-      const gridItemId = event.target.getAttribute('data-grid-section-id');
-      console.log('Grid item clicked:', gridItemId);
-    };
-
-    // Attaching click event listener to each grid item
-    document.querySelectorAll('[data-grid-section-id]').forEach((item) => {
-      item.addEventListener('click', handleItemClick);
-    });
-
-    // Clean up function
-    return () => {
-      document.querySelectorAll('[data-grid-section-id]').forEach((item) => {
-        item.removeEventListener('click', handleItemClick);
-      });
-    };
-  }, []);
 
   return (
     <>

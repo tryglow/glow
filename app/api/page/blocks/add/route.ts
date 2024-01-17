@@ -17,9 +17,9 @@ export async function POST(req: Request) {
 
   const bodyData = await req.json();
 
-  const {section, pageSlug, layout} = bodyData;
+  const {block, pageSlug, layout} = bodyData;
 
-  if (!section || !pageSlug || !layout) {
+  if (!block || !pageSlug || !layout) {
     return Response.json({
       error: {
         message: 'Missing required fields',
@@ -42,12 +42,12 @@ export async function POST(req: Request) {
     });
   }
 
-  const defaultData = defaults[section.type as Blocks];
+  const defaultData = defaults[block.type as Blocks];
 
-  const newSection = await prisma.section.create({
+  const newBlock = await prisma.block.create({
     data: {
-      type: section.type,
-      id: section.id,
+      type: block.type,
+      id: block.id,
       config: {},
       data: defaultData,
       page: {
@@ -69,7 +69,7 @@ export async function POST(req: Request) {
 
   return Response.json({
     data: {
-      section: newSection,
+      block: newBlock,
       layout: updatedPage.config,
     },
   });

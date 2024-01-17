@@ -77,14 +77,13 @@ model Page {
   userId          String
   user            User      @relation(fields: [userId], references: [id])
   slug            String    @unique
-  sections_order  String[]
   config          Json
-  sections        Section[]
+  blocks          Block[]
   metaTitle       String?
   metaDescription String?
 }
 
-model Section {
+model Block {
   id        String   @id @default(cuid())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

@@ -1,9 +1,10 @@
 import {getServerSession} from 'next-auth';
 import {authOptions} from '@/lib/auth';
 import prisma from '@/lib/prisma';
-import {revalidatePath, revalidateTag} from 'next/cache';
 
-export async function POST(req: Request) {
+import {NextRequest} from 'next/server';
+
+export async function GET(req: NextRequest) {
   const session = await getServerSession(authOptions);
 
   if (!session) {
@@ -13,11 +14,9 @@ export async function POST(req: Request) {
     });
   }
 
-  const bodyData = await req.json();
+  const blockId = req.nextUrl.searchParams.get('blockId');
 
-  const {sectionId, newData} = bodyData;
-
-  if (!sectionId || !newData) {
+  if (!blockId) {
     return Response.json({
       error: {
         message: 'Missing required fields',
@@ -25,37 +24,26 @@ export async function POST(req: Request) {
     });
   }
 
-  const section = await prisma.section.findUnique({
+  const block = await prisma.block.findUnique({
     where: {
-      id: sectionId,
+      id: blockId,
       page: {
         userId: session.user.id,
       },
     },
   });
 
-  if (!section) {
+  if (!block) {
     return Response.json({
       error: {
-        message: 'Section not found',
+        message: 'Block not found',
       },
     });
   }
 
-  // TODO - validate newData against schema
-
-  const updatedSection = await prisma.section.update({
-    where: {
-      id: sectionId,
-    },
-    data: {
-      data: newData,
-    },
-  });
-
   return Response.json({
     data: {
-      section: updatedSection,
+      block: block.data,
     },
   });
 }

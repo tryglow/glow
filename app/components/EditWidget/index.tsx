@@ -1,5 +1,5 @@
 'use client';
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 
 import {Cog6ToothIcon, XMarkIcon} from '@heroicons/react/24/outline';
 import {useEditModeContext} from '@/app/contexts/Edit';
@@ -19,8 +19,13 @@ export function EditWidget() {
 
   const params = useParams();
 
-  const {layout, setSelectedSectionId, selectedSectionId} =
-    useEditModeContext();
+  const {layout, setSelectedBlock, selectedBlock} = useEditModeContext();
+
+  useEffect(() => {
+    if (selectedBlock?.id) {
+      setVisibleSection('blocks');
+    }
+  }, [selectedBlock]);
 
   const onSaveLayout = async () => {
     const newLayout = layout.map((item) => {
@@ -66,7 +71,7 @@ export function EditWidget() {
               <>
                 <EditWidgetHeader
                   title="Blocks"
-                  label="Drag and drop sections to build your page, or click on a section to edit it."
+                  label="Drag and drop blocks to build your page, or click on a block to edit it."
                 />
                 <div className="overflow-y-auto h-auto max-h-[600px] bg-stone-50">
                   <div className="px-4 sm:px-6 pb-5 pt-6">
@@ -95,25 +100,14 @@ export function EditWidget() {
               </>
             )}
 
-            {false && (
-              <div className="flex flex-1 flex-col justify-between px-4 sm:px-6 pb-5 pt-6 space-y-6">
-                <select
-                  onChange={(e) => {
-                    setSelectedSectionId(e.target.value);
-                    setVisibleSection('blocks');
-                  }}
-                >
-                  <option value="" disabled defaultChecked>
-                    Select a section
-                  </option>
-                  {layout.map((item) => (
-                    <option key={item.i} value={item.i}>
-                      {item.i}
-                    </option>
-                  ))}
-                </select>
-                {selectedSectionId && <EditForm />}
-              </div>
+            {visibleSection === 'blocks' && selectedBlock && (
+              <>
+                <EditWidgetHeader title={`Editing`} label={selectedBlock.id} />
+
+                {selectedBlock.id && (
+                  <EditForm onBack={() => setVisibleSection('drag')} />
+                )}
+              </>
             )}
           </div>
         </div>

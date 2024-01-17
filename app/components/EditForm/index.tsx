@@ -1,21 +1,30 @@
 import {useEditModeContext} from '@/app/contexts/Edit';
 import {editForms} from '@/lib/blocks/edit';
-import {useRouter} from 'next/navigation';
-import {useEffect, useState} from 'react';
+import {FormikProps} from 'formik';
 
-export function EditForm() {
+import {useRouter} from 'next/navigation';
+import {useEffect, useRef, useState} from 'react';
+import {Button} from '../Button';
+
+interface Props {
+  onBack: () => void;
+}
+
+export function EditForm({onBack}: Props) {
   const [initialValues, setInitialValues] = useState<any>();
 
-  const {selectedSectionId} = useEditModeContext();
+  const {selectedBlock} = useEditModeContext();
   const router = useRouter();
 
+  const formRef = useRef<FormikProps<any>>(null);
+
   useEffect(() => {
-    if (!selectedSectionId) return;
+    if (!selectedBlock?.id) return;
 
     const fetchInitialValues = async () => {
       try {
         const req = await fetch(
-          `/api/page/sections/get-data?sectionId=${selectedSectionId}`,
+          `/api/page/blocks/get-data?blockId=${selectedBlock.id}`,
           {
             method: 'GET',
             headers: {
@@ -27,7 +36,7 @@ export function EditForm() {
         const data = await req.json();
 
         if (data.data) {
-          setInitialValues(data.data.section);
+          setInitialValues(data.data.block);
         }
       } catch (error) {
         console.log(
@@ -38,19 +47,19 @@ export function EditForm() {
     };
 
     fetchInitialValues();
-  }, [selectedSectionId]);
+  }, [selectedBlock]);
 
-  if (!selectedSectionId) return null;
+  if (!selectedBlock) return null;
 
   const onSave = async (values: any) => {
     try {
-      const req = await fetch('/api/page/sections/update-data', {
+      const req = await fetch('/api/page/blocks/update-data', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          sectionId: selectedSectionId,
+          blockId: selectedBlock.id,
           newData: values,
         }),
       });
@@ -66,14 +75,30 @@ export function EditForm() {
     }
   };
 
-  const CurrentEditForm = editForms['github-commits-this-month'];
+  const CurrentEditForm = editForms[selectedBlock.type];
 
   return (
     <>
-      <span className="font-bold font-md">
-        Editing <span className="font-mono text-xs">{selectedSectionId}</span>
-      </span>
-      <CurrentEditForm initialValues={initialValues} onSave={onSave} />
+      <div className="overflow-y-auto h-auto max-h-[600px] bg-stone-50">
+        <div className="px-4 sm:px-6 pb-5 pt-6">
+          <CurrentEditForm
+            initialValues={initialValues}
+            onSave={onSave}
+            formRef={formRef}
+          />
+        </div>
+      </div>
+
+      <div className="flex flex-shrink-0 justify-between px-4 py-4 border-t border-stone-200">
+        <Button label="← Cancel" variant="secondary" onClick={onBack} />
+        <Button
+          label="Save"
+          variant="primary"
+          type="button"
+          onClick={() => formRef?.current?.handleSubmit()}
+          isLoading={formRef?.current?.isSubmitting}
+        />
+      </div>
     </>
   );
 }

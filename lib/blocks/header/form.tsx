@@ -3,11 +3,17 @@ import {Field, Form, Formik, FormikHelpers, FormikProps} from 'formik';
 import * as Yup from 'yup';
 
 const FormSchema = Yup.object().shape({
-  githubUsername: Yup.string().required('Please provide a GitHub username'),
+  title: Yup.string().required('Please provide a title'),
+  description: Yup.string().required('Please provide a subtitle'),
+  avatar: Yup.string().required('Please provide an avatar URL'),
 });
 
 type FormValues = {
-  githubUsername: string;
+  title: string;
+  description: string;
+  avatar: {
+    src: string;
+  };
 };
 
 interface Props {
@@ -30,7 +36,11 @@ export function EditForm({initialValues, onSave, formRef}: Props) {
   return (
     <Formik
       initialValues={{
-        githubUsername: initialValues?.githubUsername,
+        title: initialValues?.title ?? '',
+        description: initialValues?.description ?? '',
+        avatar: {
+          src: initialValues?.avatar?.src ?? '',
+        },
       }}
       validationSchema={FormSchema}
       onSubmit={onSubmit}
@@ -39,11 +49,9 @@ export function EditForm({initialValues, onSave, formRef}: Props) {
     >
       {() => (
         <Form className="w-full flex flex-col gap-2">
-          <FormField
-            label="Github username"
-            name="githubUsername"
-            id="githubUsername"
-          />
+          <FormField label="Title" name="title" id="title" />
+          <FormField label="Subtitle" name="description" id="description" />
+          <FormField label="Avatar URL" name="avatar.src" id="avatar.src" />
         </Form>
       )}
     </Formik>

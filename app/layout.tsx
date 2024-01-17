@@ -1,4 +1,5 @@
 import './globals.css';
+import './react-grid-layout.scss';
 
 import {Analytics} from '@vercel/analytics/react';
 import {Toaster} from 'react-hot-toast';

@@ -1,4 +1,4 @@
-import {Field, Form, Formik, FormikHelpers} from 'formik';
+import {Field, Form, Formik, FormikHelpers, FormikProps} from 'formik';
 import * as Yup from 'yup';
 
 const FormSchema = Yup.object().shape({
@@ -14,9 +14,12 @@ type FormValues = {
 interface Props {
   initialValues: FormValues;
   onSave: (values: FormValues) => void;
+  formRef: {
+    current: FormikProps<FormValues> | null;
+  };
 }
 
-export function EditForm({initialValues, onSave}: Props) {
+export function EditForm({initialValues, onSave, formRef}: Props) {
   const onSubmit = async (
     values: FormValues,
     {setSubmitting}: FormikHelpers<FormValues>
@@ -34,6 +37,7 @@ export function EditForm({initialValues, onSave}: Props) {
       validationSchema={FormSchema}
       onSubmit={onSubmit}
       enableReinitialize={true}
+      innerRef={formRef}
     >
       {({isSubmitting, isValid, values, setFieldValue, errors}) => (
         <Form className="w-full flex flex-col gap-2">
@@ -72,21 +76,6 @@ export function EditForm({initialValues, onSave}: Props) {
                 />
               </div>
             </div>
-          </div>
-
-          <div className="mt-6 flex items-center justify-end gap-x-6">
-            <button
-              type="button"
-              className="text-sm font-semibold leading-6 text-slate-800"
-            >
-              Cancel
-            </button>
-            <button
-              type="submit"
-              className="rounded-md bg-indigo-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
-            >
-              Save
-            </button>
           </div>
         </Form>
       )}

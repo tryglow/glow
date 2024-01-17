@@ -5,8 +5,8 @@ import prisma from '@/lib/prisma';
 import {getServerSession} from 'next-auth';
 import {authOptions} from '@/lib/auth';
 import {BlockConfig, renderBlock} from '@/lib/blocks/ui';
-import {PencilSquareIcon} from '@heroicons/react/24/outline';
-import {EditSectionToolbar} from '../components/EditSectionToolbar';
+import {EditBlockToolbar} from '../components/EditBlockToolbar';
+import {Blocks} from '@/lib/blocks/types';
 
 const fetchData = async (slug: string) => {
   let isEditMode = false;
@@ -20,7 +20,7 @@ const fetchData = async (slug: string) => {
       slug,
     },
     include: {
-      sections: true,
+      blocks: true,
       user: !!user,
     },
   });
@@ -31,18 +31,8 @@ const fetchData = async (slug: string) => {
     isEditMode = true;
   }
 
-  if (!data.sections || data.sections.length === 0) {
-    console.log('Page exists, but no sections found for page', {
-      extra: {
-        pageSlug: data.slug,
-        pageId: data.id,
-      },
-    });
+  if (data.publishedAt == null && !isEditMode) {
     return notFound();
-  }
-
-  if (!data.config) {
-    console.log('This page is completely fucked, no config found');
   }
 
   return {
@@ -63,12 +53,17 @@ export default async function Page({params}: {params: Params}) {
 
   return (
     <Grid layout={config} editMode={isEditMode}>
-      {data.sections.map((section) => {
+      {data.blocks.map((block) => {
         return (
-          <section key={section.id}>
-            {isEditMode && <EditSectionToolbar sectionId={section.id} />}
+          <section key={block.id}>
+            {isEditMode && (
+              <EditBlockToolbar
+                blockId={block.id}
+                blockType={block.type as Blocks}
+              />
+            )}
 
-            {renderBlock(section, data.id)}
+            {renderBlock(block, data.id)}
           </section>
         );
       })}
