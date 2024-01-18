@@ -3,7 +3,7 @@
 import { useEditModeContext } from '@/app/contexts/Edit'
 import { Blocks } from '@/lib/blocks/types'
 import { PencilSquareIcon, TrashIcon } from '@heroicons/react/24/outline'
-import toast from 'react-hot-toast'
+import { useToast } from '@/components/ui/use-toast'
 
 interface Props {
   blockId: string
@@ -12,6 +12,7 @@ interface Props {
 
 export function EditBlockToolbar({ blockId, blockType }: Props) {
   const { setSelectedBlock } = useEditModeContext()
+  const { toast } = useToast()
 
   const handleDeleteBlock = async (blockId: string) => {
     try {
@@ -28,14 +29,22 @@ export function EditBlockToolbar({ blockId, blockType }: Props) {
       const res = await req.json()
 
       if (res.error) {
-        toast.error(res.error.message)
-        return
+        toast({
+          variant: 'error',
+          title: 'Something went wrong',
+          description: res.error.message,
+        })
       }
 
-      toast.success('Block deleted')
+      toast({
+        title: 'Block deleted',
+      })
     } catch (error) {
       console.log(error)
-      toast.error("Couldn't delete block")
+      toast({
+        variant: 'error',
+        title: "We couldn't delete the block",
+      })
     }
   }
   return (

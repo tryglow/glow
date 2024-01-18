@@ -10,7 +10,7 @@ import ReactGridLayout, {
 import { useParams, useRouter } from 'next/navigation'
 import { CoreBlock } from '../CoreBlock'
 import { EditWidget } from '../EditWidget'
-import toast from 'react-hot-toast'
+import { useToast } from '@/components/ui/use-toast'
 
 interface Props {
   layout: Layout[]
@@ -22,6 +22,7 @@ export function EditWrapper({ layout, children, layoutProps }: Props) {
   const { draggingItem, setLayout } = useEditModeContext()
   const router = useRouter()
   const params = useParams()
+  const { toast } = useToast()
   const [isPending, startTransition] = useTransition()
   const [optimisticItems, addOptimisticItem] = useOptimistic(
     children,
@@ -100,12 +101,20 @@ export function EditWrapper({ layout, children, layoutProps }: Props) {
       const res = await req.json()
 
       if (res.error) {
-        toast.error(res.error.message)
+        toast({
+          variant: 'error',
+          title: 'Something went wrong',
+          description: res.error.message,
+        })
         return
       }
     } catch (error) {
       console.log(error)
-      toast.error("Couldn't update page layout")
+      toast({
+        variant: 'error',
+        title: 'Something went wrong',
+        description: "We couldn't update your page layout",
+      })
     }
   }
 

@@ -7,9 +7,9 @@ import { Switch } from '@headlessui/react'
 import clsx from 'clsx'
 
 import { FormField } from '../FormField'
-import toast from 'react-hot-toast'
 import { Button } from '../Button'
 import { useParams, useRouter } from 'next/navigation'
+import { useToast } from '@/components/ui/use-toast'
 
 const FormSchema = Yup.object().shape({
   pageSlug: Yup.string().required('Please provide a page slug'),
@@ -30,6 +30,8 @@ interface Props {
 export function EditPageSettingsForm({ onBack, initialValues }: Props) {
   const params = useParams()
   const router = useRouter()
+  const { toast } = useToast()
+
   const onSubmit = async (
     values: FormValues,
     { setSubmitting, setFieldError }: FormikHelpers<FormValues>
@@ -54,7 +56,12 @@ export function EditPageSettingsForm({ onBack, initialValues }: Props) {
 
       if (res?.error) {
         console.log(res.error)
-        toast.error(res.error.message)
+        toast({
+          variant: 'error',
+          title: 'Something went wrong',
+          description: res.error.message,
+        })
+
         if (res.error.field) {
           setFieldError(res.error.field, res.error.message)
         }
@@ -67,9 +74,15 @@ export function EditPageSettingsForm({ onBack, initialValues }: Props) {
         }
       }
 
-      toast.success('Your page settings have been updated')
+      toast({
+        title: 'Your page settings have been updated',
+      })
     } catch (error) {
-      toast.error('Sorry, there was an issue updating your page settings')
+      toast({
+        variant: 'error',
+        title: 'Something went wrong',
+        description: 'Sorry, there was an issue updating your page settings',
+      })
     } finally {
       setSubmitting(false)
     }
