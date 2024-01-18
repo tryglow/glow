@@ -67,6 +67,15 @@ export const config: Record<
       h: 4,
     },
   },
+  'twitter-latest-tweet': {
+    title: 'Latest tweet',
+    label: 'The latest tweet from your connected Twitter account',
+    icon: '/ui/type-twitter-latest-tweet.svg',
+    drag: {
+      w: 12,
+      h: 4,
+    },
+  },
 }
 
 interface Props {

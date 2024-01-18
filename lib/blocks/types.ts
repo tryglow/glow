@@ -5,3 +5,4 @@ export type Blocks =
   | 'image'
   | 'github-commits-this-month'
   | 'spotify-playing-now'
+  | 'twitter-latest-tweet'

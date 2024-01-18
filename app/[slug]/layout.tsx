@@ -36,9 +36,9 @@ export default async function PageLayout({
             <path
               fill="#000"
               fillOpacity={0.1}
-              fill-rule="evenodd"
+              fillRule="evenodd"
               d="M76.4539 239.092C142.477 239.092 196 185.57 196 119.546 196 53.5226 142.477 0 76.4539 0v43.0922C34.2296 43.0922.0000037 77.3217 0 119.546-.0000037 161.77 34.2296 196 76.4539 196v43.092ZM76.454 196c42.224 0 76.454-34.23 76.454-76.454 0-42.2242-34.23-76.4538-76.454-76.4538V196Z"
-              clip-rule="evenodd"
+              clipRule="evenodd"
             />
           </svg>
         </Link>

@@ -4,6 +4,7 @@ import { EditForm as GithubCommitsThisMonthForm } from './github-commits-this-mo
 import { EditForm as HeaderForm } from './header/form'
 import { EditForm as ImageForm } from './image/form'
 import { EditForm as SpotifyPlayingNowForm } from './spotify-playing-now/form'
+import { EditForm as TwitterLatestTweetForm } from './twitter-latest-tweet/form'
 
 import { Blocks } from './types'
 
@@ -14,4 +15,5 @@ export const editForms: Record<Blocks, JSXElementConstructor<any>> = {
   image: ImageForm,
   'github-commits-this-month': GithubCommitsThisMonthForm,
   'spotify-playing-now': SpotifyPlayingNowForm,
+  'twitter-latest-tweet': TwitterLatestTweetForm,
 }
