@@ -2,10 +2,7 @@ import { FunctionComponent } from 'react'
 import { formatDistance } from 'date-fns'
 
 import { CoreBlock } from '@/app/components/CoreBlock'
-import {
-  refreshLongLivedToken,
-  requestToken,
-} from '@/app/api/services/instagram/callback/utils'
+import { refreshLongLivedToken } from '@/app/api/services/instagram/callback/utils'
 import prisma from '@/lib/prisma'
 import Link from 'next/link'
 
@@ -173,6 +170,10 @@ const InstagramLatestPost: FunctionComponent<Props> = async ({ pageId }) => {
         addSuffix: true,
       })
     : null
+
+  if (!data) {
+    return <CoreBlock>Configure Instagram first</CoreBlock>
+  }
 
   return (
     <CoreBlock className="relative !p-0 overflow-hidden">
