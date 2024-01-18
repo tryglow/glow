@@ -76,6 +76,15 @@ export const config: Record<
       h: 4,
     },
   },
+  'instagram-latest-post': {
+    title: 'Latest Instagram post',
+    label: 'The latest post from your connected Instagram account',
+    icon: '/ui/type-instagram-latest-post.svg',
+    drag: {
+      w: 12,
+      h: 4,
+    },
+  },
 }
 
 interface Props {

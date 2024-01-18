@@ -11,6 +11,7 @@ import SpotifyPlayingNow, {
 } from './spotify-playing-now/ui'
 import { Image } from './image/ui'
 import TwitterLatestTweet from './twitter-latest-tweet/ui'
+import InstagramLatestPost from './instagram-latest-post/ui'
 
 export interface BlockConfig {
   x: number
@@ -32,6 +33,8 @@ export function renderBlock(block: any, pageId: string) {
       return <Image {...block.data} pageId={pageId} />
     case 'twitter-latest-tweet':
       return <TwitterLatestTweet {...block.data} pageId={pageId} />
+    case 'instagram-latest-post':
+      return <InstagramLatestPost {...block.data} pageId={pageId} />
     case 'github-commits-this-month':
       return (
         <Suspense fallback={<GitHubCommitsThisMonthLoadingState />}>

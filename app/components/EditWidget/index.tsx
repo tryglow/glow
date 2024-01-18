@@ -81,6 +81,7 @@ export function EditWidget() {
                       <DraggableBlockButton type="image" />
                       <DraggableBlockButton type="github-commits-this-month" />
                       <DraggableBlockButton type="spotify-playing-now" />
+                      <DraggableBlockButton type="instagram-latest-post" />
                     </div>
                   </div>
                 </div>
