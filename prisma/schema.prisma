@@ -13,7 +13,7 @@ datasource db {
 }
 
 model Account {
-  id                String   @id @default(cuid())
+  id                String   @id @default(uuid())
   userId            String
   type              String
   provider          String
@@ -34,7 +34,7 @@ model Account {
 }
 
 model User {
-  id            String        @id @default(cuid())
+  id            String        @id @default(uuid())
   name          String?
   email         String?       @unique
   emailVerified DateTime?
@@ -47,7 +47,7 @@ model User {
 }
 
 model Page {
-  id              String    @id @default(cuid())
+  id              String    @id @default(uuid())
   createdAt       DateTime  @default(now())
   updatedAt       DateTime  @updatedAt
   publishedAt     DateTime?
@@ -61,7 +61,7 @@ model Page {
 }
 
 model Block {
-  id        String   @id @default(cuid())
+  id        String   @id @default(uuid())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   page      Page     @relation(fields: [pageId], references: [id])
@@ -72,7 +72,7 @@ model Block {
 }
 
 model Integration {
-  id        String   @id @default(cuid())
+  id        String   @id @default(uuid())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   userId    String
