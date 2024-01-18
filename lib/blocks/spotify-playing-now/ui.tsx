@@ -76,7 +76,9 @@ const fetchSpotifyData = async (
 
   if (req.status === 200) {
     const data = await req.json()
-    console.log('Data last fetched:', data.timestamp)
+
+    const timestampDate = new Date(data.timestamp)
+    console.log('Data last fetched:', timestampDate.toLocaleString())
 
     return {
       artistName: data?.item?.artists[0]?.name,
