@@ -1,10 +1,11 @@
 import { useEditModeContext } from '@/app/contexts/Edit'
+import { Button } from '@/components/ui/button'
 import { editForms } from '@/lib/blocks/edit'
 import { FormikProps } from 'formik'
+import { Loader2 } from 'lucide-react'
 
 import { useRouter } from 'next/navigation'
 import { useEffect, useRef, useState } from 'react'
-import { Button } from '../Button'
 
 interface Props {
   onBack: () => void
@@ -90,14 +91,15 @@ export function EditForm({ onBack }: Props) {
       </div>
 
       <div className="flex flex-shrink-0 justify-between px-4 py-4 border-t border-stone-200">
-        <Button label="← Cancel" variant="secondary" onClick={onBack} />
-        <Button
-          label="Save"
-          variant="primary"
-          type="button"
-          onClick={() => formRef?.current?.handleSubmit()}
-          isLoading={formRef?.current?.isSubmitting}
-        />
+        <Button variant="secondary" onClick={onBack}>
+          ← Cancel
+        </Button>
+        <Button type="button" onClick={() => formRef?.current?.handleSubmit()}>
+          {formRef?.current?.isSubmitting && (
+            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+          )}
+          Save
+        </Button>
       </div>
     </>
   )

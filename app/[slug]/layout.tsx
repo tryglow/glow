@@ -1,27 +1,28 @@
-import { getServerSession } from 'next-auth'
-import { LoginWidget } from '../components/LoginWidget'
-import { authOptions } from '@/lib/auth'
-import Link from 'next/link'
+import { getServerSession } from 'next-auth';
+import { LoginWidget } from '../components/LoginWidget';
+import { authOptions } from '@/lib/auth';
+import Link from 'next/link';
+import { UserWidget } from '../components/UserWidget';
 
 const fetchUserLoggedinStatus = async () => {
-  const session = await getServerSession(authOptions)
+  const session = await getServerSession(authOptions);
 
-  const user = session?.user
+  const user = session?.user;
 
   return {
-    isUserLoggedIn: Boolean(user),
-  }
-}
+    user,
+  };
+};
 
 export default async function PageLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
-  const { isUserLoggedIn } = await fetchUserLoggedinStatus()
+  const { user } = await fetchUserLoggedinStatus();
   return (
     <>
-      {!isUserLoggedIn && <LoginWidget />}
+      {user ? <UserWidget user={user} /> : <LoginWidget />}
 
       <div className="w-full max-w-2xl mx-auto px-3 md:px-6 gap-3 pt-16 pb-8">
         {children}
@@ -44,5 +45,5 @@ export default async function PageLayout({
         </Link>
       </footer>
     </>
-  )
+  );
 }

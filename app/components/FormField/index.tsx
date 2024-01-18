@@ -4,6 +4,7 @@ import clsx from 'clsx'
 import { ReactNode } from 'react'
 import { FormLabel } from '../FormLabel'
 import { FormInput, FormInputWithPrefix } from '../FormInput'
+import { Label } from '@/components/ui/label'
 
 interface Props {
   name: string
@@ -31,7 +32,7 @@ export function FormField({
   const InputComponent = withPrefix ? FormInputWithPrefix : FormInput
   return (
     <>
-      <FormLabel label={label} htmlFor={name} />
+      <Label htmlFor={name}>{label}</Label>
       <div className="relative mt-1 rounded-md shadow-sm">
         <InputComponent
           isSelect={isSelect}

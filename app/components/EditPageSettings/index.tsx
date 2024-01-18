@@ -2,14 +2,14 @@
 
 import { Form, Formik, FormikHelpers } from 'formik'
 import * as Yup from 'yup'
-import { Switch } from '@headlessui/react'
-
-import clsx from 'clsx'
 
 import { FormField } from '../FormField'
-import { Button } from '../Button'
 import { useParams, useRouter } from 'next/navigation'
 import { useToast } from '@/components/ui/use-toast'
+import { Button } from '@/components/ui/button'
+import { Loader2 } from 'lucide-react'
+import { Switch } from '@/components/ui/switch'
+import { Label } from '@/components/ui/label'
 
 const FormSchema = Yup.object().shape({
   pageSlug: Yup.string().required('Please provide a page slug'),
@@ -125,55 +125,34 @@ export function EditPageSettingsForm({ onBack, initialValues }: Props) {
                 </div>
 
                 <div className="mt-4">
-                  <Switch.Group
-                    as="div"
-                    className="flex items-center justify-between"
-                  >
-                    <span className="flex flex-grow flex-col">
-                      <Switch.Label
-                        as="span"
-                        className="text-sm font-medium leading-6 text-stone-900"
-                        passive
-                      >
-                        Published
-                      </Switch.Label>
-                      <Switch.Description
-                        as="span"
-                        className="text-sm text-stone-500"
-                      >
-                        Disabling this will turn your page into a draft and only
-                        you will be able to see it.
-                      </Switch.Description>
-                    </span>
+                  <div className="flex items-center space-x-2">
                     <Switch
+                      id="airplane-mode"
                       checked={values.published}
                       onChange={(ev) => setFieldValue('published', ev)}
-                      className={clsx(
-                        values.published ? 'bg-stone-900' : 'bg-stone-300',
-                        'relative inline-flex ml-4 h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2'
-                      )}
-                    >
-                      <span
-                        aria-hidden="true"
-                        className={clsx(
-                          values.published ? 'translate-x-5' : 'translate-x-0',
-                          'pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out'
-                        )}
-                      />
-                    </Switch>
-                  </Switch.Group>
+                    />
+                    <label>
+                      {' '}
+                      Disabling this will turn your page into a draft and only
+                      you will be able to see it.
+                    </label>
+
+                    <Label htmlFor="airplane-mode">Published</Label>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
           <div className="flex flex-shrink-0 justify-between px-4 py-4 border-t border-stone-200">
-            <Button label="← Cancel" variant="secondary" onClick={onBack} />
-            <Button
-              label="Save"
-              variant="primary"
-              type="submit"
-              isLoading={isSubmitting}
-            />
+            <Button variant="secondary" onClick={onBack}>
+              ← Cancel
+            </Button>
+            <Button type="submit">
+              {isSubmitting && (
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              )}
+              Save
+            </Button>
           </div>
         </Form>
       )}

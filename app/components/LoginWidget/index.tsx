@@ -12,10 +12,12 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog'
+import { useState } from 'react'
 
 export function LoginWidget() {
+  const [open, setOpen] = useState(false)
   return (
-    <AlertDialog>
+    <AlertDialog open={open} onOpenChange={setOpen}>
       <AlertDialogTrigger asChild className="fixed top-2 right-2">
         <Button type="button">Log in or sign up</Button>
       </AlertDialogTrigger>

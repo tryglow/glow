@@ -6,8 +6,8 @@ import { useEditModeContext } from '@/app/contexts/Edit'
 import { DraggableBlockButton, config } from '../DraggableBlockButton'
 import { useParams } from 'next/navigation'
 import { EditForm } from '../EditForm'
-import { Button } from '../Button'
 import { EditPageSettings } from './screens/EditPageSettings'
+import { Button } from '@/components/ui/button'
 
 export function EditWidget() {
   const [open, setOpen] = useState(true)
@@ -72,7 +72,7 @@ export function EditWidget() {
                   title="Blocks"
                   label="Drag and drop blocks to build your page, or click on a block to edit it."
                 />
-                <div className="overflow-y-auto h-auto max-h-[600px] bg-stone-50">
+                <div className="overflow-y-auto h-auto max-h-[500px] bg-stone-50">
                   <div className="px-4 sm:px-6 pb-5 pt-6">
                     <div className="space-y-3 flex flex-col">
                       <DraggableBlockButton type="header" />
@@ -87,17 +87,16 @@ export function EditWidget() {
                 </div>
                 <div className="flex flex-shrink-0 justify-between px-4 py-4 border-t border-stone-200">
                   <Button
-                    label="Page Settings"
                     variant="secondary"
                     onClick={() => setVisibleSection('settings')}
-                    icon={
-                      <Cog6ToothIcon
-                        width={20}
-                        height={20}
-                        className="text-slate-700"
-                      />
-                    }
-                  />
+                  >
+                    <Cog6ToothIcon
+                      width={20}
+                      height={20}
+                      className="text-slate-700 mr-2"
+                    />
+                    Page Settings
+                  </Button>
                 </div>
               </>
             )}
