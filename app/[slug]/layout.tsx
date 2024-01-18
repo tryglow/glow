@@ -28,7 +28,7 @@ export default async function PageLayout({
 
       <footer className="w-full max-w-2xl mx-auto text-center py-6 border-t border-gray-200">
         <span className="text-system-label-secondary/50 text-xs">
-          Powered by Pulse (name TBC)
+          Powered by onedash
         </span>
       </footer>
     </>

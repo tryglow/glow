@@ -5,7 +5,7 @@ import { Analytics } from '@vercel/analytics/react'
 import { Toaster } from 'react-hot-toast'
 
 export const metadata = {
-  title: 'Pulse',
+  title: 'Onedash - Your personal site builder',
   description: 'Your personal site builder',
 }
 

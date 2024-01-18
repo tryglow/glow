@@ -34,7 +34,7 @@ const uploadTemplateFile = async (
   return await new Upload({
     client: s3,
     params: {
-      Bucket: `${process.env.NEXT_PUBLIC_APP_ENV}.pulse.user-uploads`,
+      Bucket: `${process.env.NEXT_PUBLIC_APP_ENV}.onedash.user-uploads`,
       Key: fileName,
       ContentType: fileContentType,
       Body: fileBuffer,

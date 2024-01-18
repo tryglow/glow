@@ -93,7 +93,7 @@ export function EditPageSettingsForm({ onBack, initialValues }: Props) {
               <div className="border-b border-white/10 pb-12">
                 <div>
                   <FormField
-                    withPrefix="unda.sh/"
+                    withPrefix="oneda.sh/"
                     label="Slug"
                     name="pageSlug"
                     placeholder="your-page"
