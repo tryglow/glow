@@ -168,9 +168,11 @@ interface Props {
 const InstagramLatestPost: FunctionComponent<Props> = async ({ pageId }) => {
   const data = await fetchData(pageId)
 
-  const formattedDate = formatDistance(data?.timestamp, new Date(), {
-    addSuffix: true,
-  })
+  const formattedDate = data?.timestamp
+    ? formatDistance(data?.timestamp, new Date(), {
+        addSuffix: true,
+      })
+    : null
 
   return (
     <CoreBlock className="relative !p-0 overflow-hidden">
