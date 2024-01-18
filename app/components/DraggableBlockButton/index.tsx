@@ -113,11 +113,8 @@ export function DraggableBlockButton({ type }: Props) {
       }}
     >
       <img src="/ui/drag.svg" className="mr-3" width={9} height={15}></img>
-      <div className="w-9 h-9 bg-stone-100 rounded-md flex items-center mr-3">
-        <img
-          src={blockConfig.icon}
-          className="w-9 h-9 flex-1 flex-shrink-0 mr-3"
-        />
+      <div className="w-9 h-9 bg-stone-100 rounded-md flex items-center mr-3 flex-shrink-0">
+        <img src={blockConfig.icon} className="w-9 h-9" />
       </div>
       <div className="flex flex-col">
         <span className="font-bold text-sm">{blockConfig.title}</span>
