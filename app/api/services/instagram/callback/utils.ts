@@ -29,3 +29,46 @@ export async function requestToken({ code }: { code: string }) {
     body: new URLSearchParams(options),
   })
 }
+
+export async function requestLongLivedToken({
+  accessToken,
+}: {
+  accessToken: string
+}) {
+  if (!process.env.INSTAGRAM_CLIENT_SECRET) {
+    throw new Error('Missing INSTAGRAM_CLIENT_SECRET')
+  }
+
+  const options = {
+    grant_type: 'ig_exchange_token',
+    client_secret: process.env.INSTAGRAM_CLIENT_SECRET,
+    access_token: accessToken,
+  }
+
+  const qs = new URLSearchParams(options).toString()
+
+  return fetch(`https://graph.instagram.com/access_token?${qs}`, {
+    method: 'GET',
+  })
+}
+
+export async function refreshLongLivedToken({
+  accessToken,
+}: {
+  accessToken: string
+}) {
+  if (!process.env.INSTAGRAM_CLIENT_SECRET) {
+    throw new Error('Missing INSTAGRAM_CLIENT_SECRET')
+  }
+
+  const options = {
+    grant_type: 'ig_refresh_token',
+    access_token: accessToken,
+  }
+
+  const qs = new URLSearchParams(options).toString()
+
+  return fetch(`https://graph.instagram.com/refresh_access_token?${qs}`, {
+    method: 'GET',
+  })
+}

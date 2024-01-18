@@ -1,4 +1,4 @@
-import { requestToken } from './utils'
+import { requestLongLivedToken, requestToken } from './utils'
 import prisma from '@/lib/prisma'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth'
@@ -35,14 +35,18 @@ export async function GET(request: Request) {
 
     const data = (await res.json()) as InstagramTokenResponse
 
-    // Should then exchange for a long-lived token
+    const longLivedTokenResponse = await requestLongLivedToken({
+      accessToken: data.access_token,
+    })
+
+    const longLivedToken = await longLivedTokenResponse.json()
 
     await prisma.integration.create({
       data: {
         userId: session.user.id,
         type: 'instagram',
         config: {
-          accessToken: data.access_token,
+          accessToken: longLivedToken.access_token,
           instagramUserId: data.user_id,
         },
       },

@@ -2,7 +2,10 @@ import { FunctionComponent } from 'react'
 import { formatDistance } from 'date-fns'
 
 import { CoreBlock } from '@/app/components/CoreBlock'
-import { requestToken } from '@/app/api/services/instagram/callback/utils'
+import {
+  refreshLongLivedToken,
+  requestToken,
+} from '@/app/api/services/instagram/callback/utils'
 import prisma from '@/lib/prisma'
 import Link from 'next/link'
 
@@ -45,8 +48,8 @@ const fetchInstagramData = async (
 
   // The access token might have expired. Try to refresh it.
   if (req.status === 401 && !isRetry) {
-    const refreshTokenRequest = await requestToken({
-      code: config.accessToken,
+    const refreshTokenRequest = await refreshLongLivedToken({
+      accessToken: config.accessToken,
     })
 
     const refreshTokenData = await refreshTokenRequest.json()
