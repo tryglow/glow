@@ -1,7 +1,7 @@
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth'
 import prisma from '@/lib/prisma'
-import { isForbiddenSlug } from '@/lib/slugs'
+import { isForbiddenSlug, isReservedSlug } from '@/lib/slugs'
 
 export async function POST(req: Request) {
   const session = await getServerSession(authOptions)
@@ -36,6 +36,15 @@ export async function POST(req: Request) {
       return Response.json({
         error: {
           message: 'Slug is forbidden',
+          field: 'pageSlug',
+        },
+      })
+    }
+
+    if (isReservedSlug(pageSlug)) {
+      return Response.json({
+        error: {
+          message: 'Slug is reserved - reach out on twitter to request this',
           field: 'pageSlug',
         },
       })

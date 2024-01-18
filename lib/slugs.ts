@@ -822,3 +822,13 @@ const FORBIDDEN_REGEXP = new RegExp(
 export function isForbiddenSlug(slug: string): boolean {
   return !!slug.match(FORBIDDEN_REGEXP)
 }
+
+export function isReservedSlug(slug: string): boolean {
+  const reservedSlugs = ['alex', 'tom', 'will', 'william', 'jack']
+
+  if (reservedSlugs.includes(slug.toLowerCase())) {
+    return true
+  }
+
+  return false
+}
