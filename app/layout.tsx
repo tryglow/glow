@@ -1,10 +1,11 @@
+import { Metadata } from 'next'
 import './globals.css'
 import './react-grid-layout.scss'
 
 import { Analytics } from '@vercel/analytics/react'
 import { Toaster } from 'react-hot-toast'
 
-export const metadata = {
+export const metadata: Metadata = {
   title: 'Onedash - Your personal site builder',
   description: 'Your personal site builder',
 }
