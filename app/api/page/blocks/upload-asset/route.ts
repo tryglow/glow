@@ -92,7 +92,7 @@ export async function POST(req: Request) {
     })
     .toBuffer()
 
-  const fileName = `${session.user.id}/${blockId}/${randomUUID()}`
+  const fileName = `${blockId}/${randomUUID()}`
 
   const assetUpload = await uploadTemplateFile(
     convertedImage,
