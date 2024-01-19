@@ -27,6 +27,7 @@ interface Props {
 
 export function UserWidget({ user, usersPages }: Props) {
   const [showNewTeamDialog, setShowNewTeamDialog] = useState(false);
+  console.log(user);
   return (
     <>
       <DropdownMenu>
@@ -37,7 +38,9 @@ export function UserWidget({ user, usersPages }: Props) {
           >
             <Avatar className="h-10 w-10">
               <AvatarImage src={user.image} alt={user.name} />
-              <AvatarFallback>SC</AvatarFallback>
+              <AvatarFallback>
+                {user.name?.slice(0, 1).toUpperCase()}
+              </AvatarFallback>
             </Avatar>
           </Button>
         </DropdownMenuTrigger>
