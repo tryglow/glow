@@ -22,8 +22,8 @@ import { CreatePageForm } from './form';
 
 interface Props {
   open: boolean;
-  onOpenChange: (open: boolean) => void;
-  onClose: () => void;
+  onOpenChange?: (open: boolean) => void;
+  onClose?: () => void;
 }
 
 export function NewPageDialog({ open, onOpenChange, onClose }: Props) {

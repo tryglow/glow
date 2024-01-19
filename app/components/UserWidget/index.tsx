@@ -12,17 +12,20 @@ import {
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
-import { User } from '@prisma/client';
+import { Page, User } from '@prisma/client';
 import { signOut } from 'next-auth/react';
 import { PlusCircledIcon } from '@radix-ui/react-icons';
 import { useState } from 'react';
 import { NewPageDialog } from '../NewPageDialog';
+import Link from 'next/link';
+import { MAX_PAGES_PER_USER } from '@/lib/page';
 
 interface Props {
   user: User;
+  usersPages: Page[];
 }
 
-export function UserWidget({ user }: Props) {
+export function UserWidget({ user, usersPages }: Props) {
   const [showNewTeamDialog, setShowNewTeamDialog] = useState(false);
   return (
     <>
@@ -49,8 +52,13 @@ export function UserWidget({ user }: Props) {
           </DropdownMenuLabel>
           <DropdownMenuSeparator />
           <DropdownMenuGroup>
-            <DropdownMenuItem>Profile</DropdownMenuItem>
-            <DropdownMenuItem>Invites</DropdownMenuItem>
+            {usersPages.map((page) => {
+              return (
+                <DropdownMenuItem key={page.id}>
+                  <Link href={`/${page.slug}`}>/{page.slug}</Link>
+                </DropdownMenuItem>
+              );
+            })}
           </DropdownMenuGroup>
           <DropdownMenuSeparator />
           <DropdownMenuGroup>

@@ -1,34 +1,34 @@
-'use client'
+'use client';
 
-import { useEditModeContext } from '../../contexts/Edit'
-import { v4 as uuidv4 } from 'uuid'
-import { ReactNode, useOptimistic, useTransition } from 'react'
+import { useEditModeContext } from '../../contexts/Edit';
+import { v4 as uuidv4 } from 'uuid';
+import { ReactNode, useOptimistic, useTransition } from 'react';
 import ReactGridLayout, {
   Layout,
   ReactGridLayoutProps,
-} from 'react-grid-layout'
-import { useParams, useRouter } from 'next/navigation'
-import { CoreBlock } from '../CoreBlock'
-import { EditWidget } from '../EditWidget'
-import { useToast } from '@/components/ui/use-toast'
+} from 'react-grid-layout';
+import { useParams, useRouter } from 'next/navigation';
+import { CoreBlock } from '../CoreBlock';
+import { EditWidget } from '../EditWidget';
+import { useToast } from '@/components/ui/use-toast';
 
 interface Props {
-  layout: Layout[]
-  children: ReactNode
-  layoutProps: ReactGridLayoutProps
+  layout: Layout[];
+  children: ReactNode;
+  layoutProps: ReactGridLayoutProps;
 }
 
 export function EditWrapper({ layout, children, layoutProps }: Props) {
-  const { draggingItem, setLayout } = useEditModeContext()
-  const router = useRouter()
-  const params = useParams()
-  const { toast } = useToast()
-  const [isPending, startTransition] = useTransition()
+  const { draggingItem, setLayout } = useEditModeContext();
+  const router = useRouter();
+  const params = useParams();
+  const { toast } = useToast();
+  const [isPending, startTransition] = useTransition();
   const [optimisticItems, addOptimisticItem] = useOptimistic(
     children,
     // @ts-ignore
     (state, newItem) => [...state, newItem]
-  )
+  );
 
   const onDrop = async (
     newLayout: Layout[],
@@ -36,9 +36,9 @@ export function EditWrapper({ layout, children, layoutProps }: Props) {
     _event: Event
   ) => {
     // Get the last item from the newLayout
-    const lastItem = newLayout[newLayout.length - 1]
+    const lastItem = newLayout[newLayout.length - 1];
 
-    const newItemId = uuidv4()
+    const newItemId = uuidv4();
 
     const newItemConfig = {
       h: draggingItem.h,
@@ -46,14 +46,14 @@ export function EditWrapper({ layout, children, layoutProps }: Props) {
       w: draggingItem.w,
       x: lastItem.x,
       y: lastItem.y,
-    }
+    };
 
     startTransition(async () => {
       addOptimisticItem(
         <div key={newItemId} data-grid={newItemConfig} className="w-full h-14">
           <CoreBlock>Loading...</CoreBlock>
         </div>
-      )
+      );
 
       await fetch('/api/page/blocks/add', {
         method: 'POST',
@@ -67,23 +67,23 @@ export function EditWrapper({ layout, children, layoutProps }: Props) {
           },
           pageSlug: params.slug,
         }),
-      })
+      });
 
       // Refresh the current route and fetch new data from the server without
       // losing client-side browser or React state.
-      router.refresh()
-    })
-  }
+      router.refresh();
+    });
+  };
 
   const handleLayoutChange = async (newLayout: Layout[]) => {
-    setLayout(newLayout)
+    setLayout(newLayout);
 
     const checkIfLayoutContainsTmpBlocks = newLayout.find(
       (block) => block.i === 'tmp-block'
-    )
+    );
 
     if (checkIfLayoutContainsTmpBlocks) {
-      return
+      return;
     }
 
     try {
@@ -96,36 +96,36 @@ export function EditWrapper({ layout, children, layoutProps }: Props) {
           pageSlug: params.slug,
           newLayout: newLayout,
         }),
-      })
+      });
 
-      const res = await req.json()
+      const res = await req.json();
 
       if (res.error) {
         toast({
           variant: 'error',
           title: 'Something went wrong',
           description: res.error.message,
-        })
-        return
+        });
+        return;
       }
     } catch (error) {
-      console.log(error)
+      console.log(error);
       toast({
         variant: 'error',
         title: 'Something went wrong',
         description: "We couldn't update your page layout",
-      })
+      });
     }
-  }
+  };
 
   const editableLayoutProps: ReactGridLayoutProps = {
     ...layoutProps,
     onDrop,
     onLayoutChange: handleLayoutChange,
     onDropDragOver: (event: Event) => {
-      return draggingItem
+      return draggingItem;
     },
-  }
+  };
 
   return (
     <>
@@ -134,5 +134,5 @@ export function EditWrapper({ layout, children, layoutProps }: Props) {
       </ReactGridLayout>
       <EditWidget />
     </>
-  )
+  );
 }

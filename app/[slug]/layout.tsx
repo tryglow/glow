@@ -3,14 +3,22 @@ import { LoginWidget } from '../components/LoginWidget';
 import { authOptions } from '@/lib/auth';
 import Link from 'next/link';
 import { UserWidget } from '../components/UserWidget';
+import prisma from '@/lib/prisma';
 
 const fetchUserLoggedinStatus = async () => {
   const session = await getServerSession(authOptions);
 
   const user = session?.user;
 
+  const pages = await prisma.page.findMany({
+    where: {
+      userId: user?.id,
+    },
+  });
+
   return {
     user,
+    pages,
   };
 };
 
@@ -19,10 +27,10 @@ export default async function PageLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const { user } = await fetchUserLoggedinStatus();
+  const { user, pages } = await fetchUserLoggedinStatus();
   return (
     <>
-      {user ? <UserWidget user={user} /> : <LoginWidget />}
+      {user ? <UserWidget user={user} usersPages={pages} /> : <LoginWidget />}
 
       <div className="w-full max-w-2xl mx-auto px-3 md:px-6 gap-3 pt-16 pb-8">
         {children}

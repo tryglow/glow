@@ -1,17 +1,24 @@
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 import prisma from '@/lib/prisma';
-import { isForbiddenSlug, isReservedSlug } from '@/lib/slugs';
-import { createNewPage } from '@/lib/page';
+import { isForbiddenSlug, isReservedSlug, regexSlug } from '@/lib/slugs';
+import { MAX_PAGES_PER_USER, createNewPage } from '@/lib/page';
 
 export async function POST(req: Request) {
   const session = await getServerSession(authOptions);
 
   if (!session) {
-    return Response.json({
-      message: 'error',
-      data: null,
-    });
+    return Response.json(
+      {
+        error: {
+          message: 'Unauthorized',
+          label: 'Sorry, you must be logged in to do that.',
+        },
+      },
+      {
+        status: 401,
+      }
+    );
   }
 
   const bodyData = await req.json();
@@ -31,6 +38,15 @@ export async function POST(req: Request) {
       slug,
     },
   });
+
+  if (!slug.match(regexSlug)) {
+    return Response.json({
+      error: {
+        message: 'Slug is invalid',
+        field: 'pageSlug',
+      },
+    });
+  }
 
   if (isForbiddenSlug(slug)) {
     return Response.json({
@@ -55,6 +71,21 @@ export async function POST(req: Request) {
       error: {
         message: 'Page with this slug already exists',
         field: 'pageSlug',
+      },
+    });
+  }
+
+  const usersPages = await prisma.page.findMany({
+    where: {
+      userId: session.user.id,
+    },
+  });
+
+  if (usersPages.length >= MAX_PAGES_PER_USER) {
+    return Response.json({
+      error: {
+        message: 'You have reached the maximum number of pages',
+        label: 'Sorry, you can only create 2 pages per account.',
       },
     });
   }

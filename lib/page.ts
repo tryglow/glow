@@ -1,6 +1,8 @@
 import { randomUUID } from 'crypto';
 import prisma from './prisma';
 
+export const MAX_PAGES_PER_USER = 2;
+
 export function createNewPage(userId: string, pageSlug: string) {
   const headerSectionId = randomUUID();
 
