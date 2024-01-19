@@ -18,7 +18,6 @@ import { PlusCircledIcon } from '@radix-ui/react-icons';
 import { useState } from 'react';
 import { NewPageDialog } from '../NewPageDialog';
 import Link from 'next/link';
-import { MAX_PAGES_PER_USER } from '@/lib/page';
 
 interface Props {
   user: User;
