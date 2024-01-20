@@ -1,7 +1,7 @@
-import { FunctionComponent } from 'react'
-import { formatISO, sub } from 'date-fns'
-import clsx from 'clsx'
-import { CoreBlock } from '@/app/components/CoreBlock'
+import { FunctionComponent } from 'react';
+import { formatISO, sub } from 'date-fns';
+import clsx from 'clsx';
+import { CoreBlock } from '@/app/components/CoreBlock';
 
 const GithubLogo = () => {
   return (
@@ -13,22 +13,22 @@ const GithubLogo = () => {
         fill="currentColor"
       />
     </svg>
-  )
-}
+  );
+};
 
 const fetchGithubData = async (githubUsername: string) => {
-  const currentDate = new Date()
+  const currentDate = new Date();
   const oneMonthAgo = formatISO(
     sub(currentDate, {
       months: 1,
     })
-  )
+  );
 
   const twoMonthsAgo = formatISO(
     sub(currentDate, {
       months: 2,
     })
-  )
+  );
 
   try {
     const res = await fetch('https://api.github.com/graphql', {
@@ -41,8 +41,8 @@ const fetchGithubData = async (githubUsername: string) => {
             user(login: "${githubUsername}") {
               name
               thisMonth: contributionsCollection(from: "${oneMonthAgo}", to: "${formatISO(
-                currentDate
-              )}") {
+          currentDate
+        )}") {
                 totalCommitContributions
               }
               previousMonth: contributionsCollection(from: "${twoMonthsAgo}", to: "${oneMonthAgo}") {
@@ -54,31 +54,34 @@ const fetchGithubData = async (githubUsername: string) => {
       headers: {
         Authorization: `bearer ${process.env.GITHUB_AUTH_TOKEN}`,
       },
-    })
+    });
 
-    const data = await res.json()
+    const data = await res.json();
 
-    return data
+    return data.data;
   } catch (error) {
-    console.log('Issue fetching GitHub data', error)
-    return null
+    console.log('Issue fetching GitHub data', error);
+    return null;
   }
-}
+};
 
 interface Props {
-  githubUsername: string
+  githubUsername: string;
 }
 
 export const GitHubCommitsThisMonth: FunctionComponent<Props> = async ({
   githubUsername,
 }) => {
-  const { data } = await fetchGithubData(githubUsername)
-  const previousMonth = data?.user?.previousMonth?.totalCommitContributions
-  const thisMonth = data?.user?.thisMonth?.totalCommitContributions
+  const data = await fetchGithubData(githubUsername);
+
+  if (!data) return <LoadingState />;
+
+  const previousMonth = data?.user?.previousMonth?.totalCommitContributions;
+  const thisMonth = data?.user?.thisMonth?.totalCommitContributions;
 
   const percentageDifference = Math.round(
     ((thisMonth - previousMonth) / previousMonth) * 100
-  )
+  );
 
   return (
     <CoreBlock>
@@ -110,8 +113,8 @@ export const GitHubCommitsThisMonth: FunctionComponent<Props> = async ({
         </div>
       </div>
     </CoreBlock>
-  )
-}
+  );
+};
 
 export const LoadingState = () => {
   return (
@@ -132,5 +135,5 @@ export const LoadingState = () => {
         </div>
       </div>
     </CoreBlock>
-  )
-}
+  );
+};
