@@ -1,19 +1,28 @@
-import { notFound } from 'next/navigation'
+import { notFound } from 'next/navigation';
 
-import Grid from './grid'
-import prisma from '@/lib/prisma'
-import { getServerSession } from 'next-auth'
-import { authOptions } from '@/lib/auth'
-import { BlockConfig, renderBlock } from '@/lib/blocks/ui'
-import { EditBlockToolbar } from '../components/EditBlockToolbar'
-import { Blocks } from '@/lib/blocks/types'
+import Grid from './grid';
+import prisma from '@/lib/prisma';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '@/lib/auth';
+import { BlockConfig, renderBlock } from '@/lib/blocks/ui';
+import { EditBlockToolbar } from '../components/EditBlockToolbar';
+import { Blocks } from '@/lib/blocks/types';
+
+export const DANGEROUSLY_FORCE_USER = {
+  id: '5fdb0664-062c-43fc-9dec-a76f480ad188',
+  email: 'alex@alexpate.uk',
+  name: 'Alex Pate',
+  image:
+    'https://lh3.googleusercontent.com/a/ACg8ocLJpNysI8HHy1JJhJCtYsQs1JzfQ0YydO47g4EWdOoWwW0A=s96-c',
+};
 
 const fetchData = async (slug: string) => {
-  let isEditMode = false
+  let isEditMode = false;
 
-  const session = await getServerSession(authOptions)
+  const session = await getServerSession(authOptions);
 
-  const user = session?.user
+  // const user = session?.user
+  const user = DANGEROUSLY_FORCE_USER;
 
   const data = await prisma.page.findUnique({
     where: {
@@ -23,33 +32,33 @@ const fetchData = async (slug: string) => {
       blocks: true,
       user: !!user,
     },
-  })
+  });
 
-  if (!data) notFound()
+  if (!data) notFound();
 
   if (user && data?.userId === user.id) {
-    isEditMode = true
+    isEditMode = true;
   }
 
   if (data.publishedAt == null && !isEditMode) {
-    return notFound()
+    return notFound();
   }
 
   return {
     data,
     isEditMode,
-  }
-}
+  };
+};
 
 interface Params {
-  slug: string
+  slug: string;
 }
 
 export default async function Page({ params }: { params: Params }) {
-  const { slug } = params
-  const { data, isEditMode } = await fetchData(slug)
+  const { slug } = params;
+  const { data, isEditMode } = await fetchData(slug);
 
-  const config = data.config as unknown as BlockConfig[]
+  const config = data.config as unknown as BlockConfig[];
 
   return (
     <Grid layout={config} editMode={isEditMode}>
@@ -65,8 +74,8 @@ export default async function Page({ params }: { params: Params }) {
 
             {renderBlock(block, data.id)}
           </section>
-        )
+        );
       })}
     </Grid>
-  )
+  );
 }

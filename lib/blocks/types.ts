@@ -7,3 +7,5 @@ export type Blocks =
   | 'spotify-playing-now'
   | 'twitter-latest-tweet'
   | 'instagram-latest-post'
+  | 'map'
+  | 'link-box';

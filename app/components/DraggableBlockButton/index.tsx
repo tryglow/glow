@@ -1,16 +1,16 @@
-import { useEditModeContext } from '@/app/contexts/Edit'
-import { Blocks } from '@/lib/blocks/types'
+import { useEditModeContext } from '@/app/contexts/Edit';
+import { Blocks } from '@/lib/blocks/types';
 
 export const config: Record<
   Blocks,
   {
-    title: string
-    label: string
-    icon: string
+    title: string;
+    label: string;
+    icon: string;
     drag: {
-      h: number
-      w: number
-    }
+      h: number;
+      w: number;
+    };
   }
 > = {
   header: {
@@ -85,16 +85,34 @@ export const config: Record<
       h: 4,
     },
   },
-}
+  map: {
+    title: 'Map',
+    label: 'A map with a pin',
+    icon: '/ui/type-map.svg',
+    drag: {
+      w: 12,
+      h: 6,
+    },
+  },
+  'link-box': {
+    title: 'Link Box',
+    label: 'Display a nicely formatted link',
+    icon: '/ui/type-link-box.svg',
+    drag: {
+      w: 6,
+      h: 6,
+    },
+  },
+};
 
 interface Props {
-  type: Blocks
+  type: Blocks;
 }
 
 export function DraggableBlockButton({ type }: Props) {
-  const { setDraggingItem } = useEditModeContext()
+  const { setDraggingItem } = useEditModeContext();
 
-  const blockConfig = config[type]
+  const blockConfig = config[type];
 
   return (
     <button
@@ -109,7 +127,7 @@ export function DraggableBlockButton({ type }: Props) {
           w: blockConfig.drag.w,
           h: blockConfig.drag.h,
           type,
-        })
+        });
       }}
     >
       <img src="/ui/drag.svg" className="mr-3" width={9} height={15}></img>
@@ -121,5 +139,5 @@ export function DraggableBlockButton({ type }: Props) {
         <span className="text-xs text-slate-600">{blockConfig.label}</span>
       </div>
     </button>
-  )
+  );
 }

@@ -1,48 +1,50 @@
-import { getServerSession } from 'next-auth'
-import { authOptions } from '@/lib/auth'
-import prisma from '@/lib/prisma'
+import { getServerSession } from 'next-auth';
+import { authOptions } from '@/lib/auth';
+import prisma from '@/lib/prisma';
 
-import { defaults } from '@/lib/blocks/defaults'
-import { Blocks } from '@/lib/blocks/types'
+import { defaults } from '@/lib/blocks/defaults';
+import { Blocks } from '@/lib/blocks/types';
+import { DANGEROUSLY_FORCE_USER } from '@/app/[slug]/page';
 
 export async function POST(req: Request) {
-  const session = await getServerSession(authOptions)
+  const session = await getServerSession(authOptions);
 
-  if (!session) {
-    return Response.json({
-      message: 'error',
-      data: null,
-    })
-  }
+  // if (!session) {
+  //   return Response.json({
+  //     message: 'error',
+  //     data: null,
+  //   })
+  // }
 
-  const bodyData = await req.json()
+  const bodyData = await req.json();
 
-  const { block, pageSlug } = bodyData
+  const { block, pageSlug } = bodyData;
 
   if (!block || !pageSlug) {
     return Response.json({
       error: {
         message: 'Missing required fields',
       },
-    })
+    });
   }
 
   const page = await prisma.page.findUnique({
     where: {
-      userId: session.user.id,
+      // userId: session.user.id,
+      userId: DANGEROUSLY_FORCE_USER.id,
       slug: pageSlug,
     },
-  })
+  });
 
   if (!page) {
     return Response.json({
       error: {
         message: 'Page not found',
       },
-    })
+    });
   }
 
-  const defaultData = defaults[block.type as Blocks]
+  const defaultData = defaults[block.type as Blocks];
 
   const newBlock = await prisma.block.create({
     data: {
@@ -56,11 +58,11 @@ export async function POST(req: Request) {
         },
       },
     },
-  })
+  });
 
   return Response.json({
     data: {
       block: newBlock,
     },
-  })
+  });
 }
