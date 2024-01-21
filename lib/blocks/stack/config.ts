@@ -1,4 +1,16 @@
-export const defaults = {
+export interface StackBlockConfig {
+  title: string;
+  label: string;
+  items: {
+    title: string;
+    label: string;
+    icon: {
+      src: string;
+    };
+  }[];
+}
+
+export const defaults: StackBlockConfig = {
   title: 'Stack',
   label: 'My apps & tools',
   items: [
@@ -24,4 +36,4 @@ export const defaults = {
       },
     },
   ],
-}
+};

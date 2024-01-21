@@ -1,13 +1,9 @@
-import { FunctionComponent } from 'react'
+import { FunctionComponent } from 'react';
 
-import { CoreBlock } from '@/app/components/CoreBlock'
-import { requestToken } from '@/app/api/services/twitter/callback/utils'
-import prisma from '@/lib/prisma'
-
-interface TwitterConfig {
-  accessToken: string
-  twitterUserId: string
-}
+import { CoreBlock } from '@/app/components/CoreBlock';
+import { requestToken } from '@/app/api/services/twitter/callback/utils';
+import prisma from '@/lib/prisma';
+import { TwitterIntegrationConfig } from './config';
 
 function fetchLatestTweet(accessToken: string, twitterUserId: string) {
   return fetch(`https://api.twitter.com/2/users/${twitterUserId}/tweets`, {
@@ -17,28 +13,28 @@ function fetchLatestTweet(accessToken: string, twitterUserId: string) {
     next: {
       revalidate: 60,
     },
-  })
+  });
 }
 
 const fetchTwitterData = async (
-  config: TwitterConfig,
+  config: TwitterIntegrationConfig,
   isRetry: boolean,
   integrationId: string
 ) => {
-  const req = await fetchLatestTweet(config.accessToken, config.twitterUserId)
+  const req = await fetchLatestTweet(config.accessToken, config.twitterUserId);
 
-  const data = await req.json()
+  const data = await req.json();
 
-  console.log('Request Latest Tweet', data)
+  console.log('Request Latest Tweet', data);
 
   // The access token might have expired. Try to refresh it.
   if (req.status === 401 && !isRetry) {
     const refreshTokenRequest = await requestToken({
       isRefreshToken: true,
       code: config.accessToken,
-    })
+    });
 
-    const refreshTokenData = await refreshTokenRequest.json()
+    const refreshTokenData = await refreshTokenRequest.json();
 
     if (refreshTokenData?.access_token) {
       await prisma.integration.update({
@@ -50,7 +46,7 @@ const fetchTwitterData = async (
             accessToken: refreshTokenData.access_token,
           }),
         },
-      })
+      });
 
       fetchTwitterData(
         {
@@ -59,25 +55,25 @@ const fetchTwitterData = async (
         },
         true,
         integrationId
-      )
+      );
     }
   }
 
   if (req.status === 200) {
-    const data = await req.json()
+    const data = await req.json();
 
-    console.log('Tweet 200', data)
+    console.log('Tweet 200', data);
 
     return {
       fakeData: true,
-    }
+    };
   }
 
   // Is this is a retry, bail out to prevent an infinite loop.
   if (isRetry) {
-    return null
+    return null;
   }
-}
+};
 
 const fetchData = async (pageId: string) => {
   try {
@@ -99,42 +95,43 @@ const fetchData = async (pageId: string) => {
           },
         },
       },
-    })
+    });
 
-    console.log('Twitter Integration', twitterIntegration)
+    console.log('Twitter Integration', twitterIntegration);
 
     if (!twitterIntegration) {
-      return null
+      return null;
     }
 
-    const config = twitterIntegration.config as unknown as TwitterConfig
+    const config =
+      twitterIntegration.config as unknown as TwitterIntegrationConfig;
 
     if (!config.accessToken) {
       console.log(
         `Twitter accessToken or refreshToken doesn't exist: Integration ID: ${twitterIntegration.id}`
-      )
-      return null
+      );
+      return null;
     }
 
     const twitterData = await fetchTwitterData(
       config,
       false,
       twitterIntegration.id
-    )
-    return twitterData
+    );
+    return twitterData;
   } catch (error) {
-    console.log(error)
-    return null
+    console.log(error);
+    return null;
   }
-}
+};
 
 interface Props {
-  twitterConfig: TwitterConfig
-  pageId: string
+  twitterConfig: TwitterIntegrationConfig;
+  pageId: string;
 }
 
 const TwitterLatestTweet: FunctionComponent<Props> = async ({ pageId }) => {
-  const data = await fetchData(pageId)
+  const data = await fetchData(pageId);
 
   return (
     <CoreBlock className="bg-gradient-to-tr from-[#1DB954] to-[#37bc66]">
@@ -156,8 +153,8 @@ const TwitterLatestTweet: FunctionComponent<Props> = async ({ pageId }) => {
         </div>
       </div>
     </CoreBlock>
-  )
-}
+  );
+};
 
 export const LoadingState = () => {
   return (
@@ -174,7 +171,7 @@ export const LoadingState = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default TwitterLatestTweet
+export default TwitterLatestTweet;

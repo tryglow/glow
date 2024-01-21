@@ -1,15 +1,11 @@
-import { FunctionComponent } from 'react'
-import { formatDistance } from 'date-fns'
+import { FunctionComponent } from 'react';
+import { formatDistance } from 'date-fns';
 
-import { CoreBlock } from '@/app/components/CoreBlock'
-import { refreshLongLivedToken } from '@/app/api/services/instagram/callback/utils'
-import prisma from '@/lib/prisma'
-import Link from 'next/link'
-
-interface InstagramConfig {
-  accessToken: string
-  instagramUserId: string
-}
+import { CoreBlock } from '@/app/components/CoreBlock';
+import { refreshLongLivedToken } from '@/app/api/services/instagram/callback/utils';
+import prisma from '@/lib/prisma';
+import Link from 'next/link';
+import { InstagramIntegrationConfig } from './types';
 
 function fetchLatestInstagramPost(
   accessToken: string,
@@ -19,9 +15,9 @@ function fetchLatestInstagramPost(
     limit: '1',
     fields: 'id,media_url,permalink,username,timestamp,caption',
     access_token: accessToken,
-  }
+  };
 
-  const qs = new URLSearchParams(options).toString()
+  const qs = new URLSearchParams(options).toString();
 
   return fetch(`https://graph.instagram.com/${instagramUserId}/media?${qs}`, {
     headers: {
@@ -30,26 +26,26 @@ function fetchLatestInstagramPost(
     next: {
       revalidate: 60,
     },
-  })
+  });
 }
 
 const fetchInstagramData = async (
-  config: InstagramConfig,
+  config: InstagramIntegrationConfig,
   isRetry: boolean,
   integrationId: string
 ) => {
   const req = await fetchLatestInstagramPost(
     config.accessToken,
     config.instagramUserId
-  )
+  );
 
   // The access token might have expired. Try to refresh it.
   if (req.status === 401 && !isRetry) {
     const refreshTokenRequest = await refreshLongLivedToken({
       accessToken: config.accessToken,
-    })
+    });
 
-    const refreshTokenData = await refreshTokenRequest.json()
+    const refreshTokenData = await refreshTokenRequest.json();
 
     if (refreshTokenData?.access_token) {
       await prisma.integration.update({
@@ -61,7 +57,7 @@ const fetchInstagramData = async (
             accessToken: refreshTokenData.access_token,
           }),
         },
-      })
+      });
 
       fetchInstagramData(
         {
@@ -70,12 +66,12 @@ const fetchInstagramData = async (
         },
         true,
         integrationId
-      )
+      );
     }
   }
 
   if (req.status === 200) {
-    const data = await req.json()
+    const data = await req.json();
 
     return {
       imageUrl: data.data[0].media_url,
@@ -83,14 +79,14 @@ const fetchInstagramData = async (
       username: data.data[0].username,
       timestamp: data.data[0].timestamp,
       caption: data.data[0].caption,
-    }
+    };
   }
 
   // Is this is a retry, bail out to prevent an infinite loop.
   if (isRetry) {
-    return null
+    return null;
   }
-}
+};
 
 const fetchData = async (pageId: string) => {
   try {
@@ -112,32 +108,33 @@ const fetchData = async (pageId: string) => {
           },
         },
       },
-    })
+    });
 
     if (!instagramIntegration) {
-      return null
+      return null;
     }
 
-    const config = instagramIntegration.config as unknown as InstagramConfig
+    const config =
+      instagramIntegration.config as unknown as InstagramIntegrationConfig;
 
     if (!config.accessToken) {
       console.log(
         `Instagram accessToken or refreshToken doesn't exist: Integration ID: ${instagramIntegration.id}`
-      )
-      return null
+      );
+      return null;
     }
 
     const instagramData = await fetchInstagramData(
       config,
       false,
       instagramIntegration.id
-    )
-    return instagramData
+    );
+    return instagramData;
   } catch (error) {
-    console.log(error)
-    return null
+    console.log(error);
+    return null;
   }
-}
+};
 
 const InstagramLogo = () => {
   return (
@@ -155,24 +152,30 @@ const InstagramLogo = () => {
       <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
       <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
     </svg>
-  )
-}
+  );
+};
+
 interface Props {
-  twitterConfig: InstagramConfig
-  pageId: string
+  pageId: string;
 }
 
 const InstagramLatestPost: FunctionComponent<Props> = async ({ pageId }) => {
-  const data = await fetchData(pageId)
+  const data = await fetchData(pageId);
 
   const formattedDate = data?.timestamp
     ? formatDistance(data?.timestamp, new Date(), {
         addSuffix: true,
       })
-    : null
+    : null;
 
   if (!data) {
-    return <CoreBlock>Configure Instagram first</CoreBlock>
+    return (
+      <CoreBlock className="flex items-center justify-center">
+        <span className="text-sm text-stone-500 text-center">
+          Edit this block to connect your Instagram account.
+        </span>
+      </CoreBlock>
+    );
   }
 
   return (
@@ -193,7 +196,7 @@ const InstagramLatestPost: FunctionComponent<Props> = async ({ pageId }) => {
         </Link>
       </div>
     </CoreBlock>
-  )
-}
+  );
+};
 
-export default InstagramLatestPost
+export default InstagramLatestPost;

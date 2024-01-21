@@ -6,11 +6,7 @@ import clsx from 'clsx';
 import { CoreBlock } from '@/app/components/CoreBlock';
 import { requestToken } from '@/app/api/services/spotify/callback/utils';
 import prisma from '@/lib/prisma';
-
-interface SpotifyConfig {
-  accessToken: string;
-  refreshToken: string;
-}
+import { SpotifyIntegrationConfig } from './config';
 
 function fetchPlayingNow(accessToken: string) {
   return fetch('https://api.spotify.com/v1/me/player/currently-playing', {
@@ -35,7 +31,7 @@ function fetchRecentlyPlayed(accessToken: string) {
 }
 
 const fetchSpotifyData = async (
-  config: SpotifyConfig,
+  config: SpotifyIntegrationConfig,
   isRetry: boolean,
   integrationId: string
 ) => {
@@ -132,7 +128,7 @@ const fetchData = async (pageId: string) => {
       return null;
     }
 
-    const config = data.config as unknown as SpotifyConfig;
+    const config = data.config as unknown as SpotifyIntegrationConfig;
 
     if (!config.accessToken) {
       console.log(
@@ -150,7 +146,7 @@ const fetchData = async (pageId: string) => {
 };
 
 interface Props {
-  spotifyConfig: SpotifyConfig;
+  spotifyConfig: SpotifyIntegrationConfig;
   pageId: string;
 }
 

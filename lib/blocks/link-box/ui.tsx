@@ -1,17 +1,11 @@
 import { CoreBlock } from '@/app/components/CoreBlock';
 import Link from 'next/link';
+import { LinkBoxBlockConfig } from './types';
 
-interface Props {
-  title: string;
-  label: string;
-  icon: string;
-  link: string;
-}
-
-export function LinkBox({ title, label, link }: Props) {
+export function LinkBox({ title, label, link }: LinkBoxBlockConfig) {
   return (
     <CoreBlock>
-      <Link href={link}>
+      <Link href={link} target="_blank" rel="noopener noreferrer">
         <div className="flex flex-col gap-2">
           <div className="w-12 h-12 rounded-md bg-gray-600"></div>
           <div className="flex flex-col">

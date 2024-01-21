@@ -1,15 +1,8 @@
-import { FunctionComponent } from 'react'
-import Image from 'next/image'
+import { FunctionComponent } from 'react';
+import Image from 'next/image';
+import { HeaderBlockConfig } from './types';
 
-interface Props {
-  title: string
-  description: string
-  avatar: {
-    src: string
-  }
-}
-
-export const Header: FunctionComponent<Props> = ({
+export const Header: FunctionComponent<HeaderBlockConfig> = ({
   title,
   description,
   avatar,
@@ -30,5 +23,5 @@ export const Header: FunctionComponent<Props> = ({
       </h1>
       <p className="text-2xl text-system-label-secondary">{description}</p>
     </header>
-  )
-}
+  );
+};

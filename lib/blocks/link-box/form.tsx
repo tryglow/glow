@@ -1,33 +1,19 @@
 import { FormField } from '@/app/components/FormField';
 import { Form, Formik, FormikHelpers, FormikProps } from 'formik';
-import * as Yup from 'yup';
-
-const FormSchema = Yup.object().shape({
-  title: Yup.string().required('Please provide a title'),
-  label: Yup.string(),
-  link: Yup.string().required('Please provide a link'),
-  icon: Yup.string(),
-});
-
-type FormValues = {
-  icon: string;
-  link: string;
-  title: string;
-  label: string;
-};
+import { LinkBoxBlockConfig, LinkBoxSchema } from './config';
 
 interface Props {
-  initialValues: FormValues;
-  onSave: (values: FormValues) => void;
+  initialValues: LinkBoxBlockConfig;
+  onSave: (values: LinkBoxBlockConfig) => void;
   formRef: {
-    current: FormikProps<FormValues> | null;
+    current: FormikProps<LinkBoxBlockConfig> | null;
   };
 }
 
 export function EditForm({ initialValues, onSave, formRef }: Props) {
   const onSubmit = async (
-    values: FormValues,
-    { setSubmitting }: FormikHelpers<FormValues>
+    values: LinkBoxBlockConfig,
+    { setSubmitting }: FormikHelpers<LinkBoxBlockConfig>
   ) => {
     setSubmitting(true);
     onSave(values);
@@ -41,13 +27,13 @@ export function EditForm({ initialValues, onSave, formRef }: Props) {
         label: initialValues?.label,
         icon: initialValues?.icon,
       }}
-      validationSchema={FormSchema}
+      validationSchema={LinkBoxSchema}
       onSubmit={onSubmit}
       enableReinitialize={true}
       innerRef={formRef}
     >
       {() => (
-        <Form className="w-full flex flex-col gap-2">
+        <Form className="w-full flex flex-col gap-1">
           <FormField label="Title" name="title" id="title" />
           <FormField label="Label" name="label" id="label" />
           <FormField label="Link" name="link" id="link" />

@@ -7,10 +7,8 @@ import {
 } from 'formik';
 
 import { useEffect, useRef, useState } from 'react';
-import * as Yup from 'yup';
 import { useLoadScript } from '@react-google-maps/api';
-import { Label } from '@/components/ui/label';
-import { Input } from '@/components/ui/input';
+import { MapBlockConfig } from './config';
 
 declare global {
   namespace google.maps.places {
@@ -20,15 +18,11 @@ declare global {
   }
 }
 
-type FormValues = {
-  coords: string;
-};
-
 interface Props {
-  initialValues: FormValues;
-  onSave: (values: FormValues) => void;
+  initialValues: MapBlockConfig;
+  onSave: (values: MapBlockConfig) => void;
   formRef: {
-    current: FormikProps<FormValues> | null;
+    current: FormikProps<MapBlockConfig> | null;
   };
 }
 
@@ -38,15 +32,9 @@ export function EditForm({ initialValues, onSave, formRef }: Props) {
     libraries: ['places'],
   });
 
-  console.log('Is Loaded', isLoaded);
-
-  const handleChange = (ev) => {
-    console.log('Handle Change', ev);
-  };
-
   const handleSubmit = async (
-    values: FormValues,
-    { setSubmitting }: FormikHelpers<FormValues>
+    values: MapBlockConfig,
+    { setSubmitting }: FormikHelpers<MapBlockConfig>
   ) => {
     setSubmitting(true);
     onSave(values);
@@ -67,18 +55,14 @@ export function EditForm({ initialValues, onSave, formRef }: Props) {
     >
       {() => (
         <Form className="w-full flex flex-col gap-2">
-          <GoogleMapsAutoCompleteInput onNewLocation={handleChange} />
+          <GoogleMapsAutoCompleteInput />
         </Form>
       )}
     </Formik>
   );
 }
 
-const GoogleMapsAutoCompleteInput = ({
-  onNewLocation,
-}: {
-  onNewLocation: (coords: any) => void;
-}) => {
+const GoogleMapsAutoCompleteInput = () => {
   const { submitForm, setFieldValue } = useFormikContext();
   const [input, setInput] = useState('');
   const [predictions, setPredictions] = useState<

@@ -1,37 +1,23 @@
-import { FormField } from '@/app/components/FormField'
-import { Form, Formik, FormikHelpers, FormikProps } from 'formik'
-import * as Yup from 'yup'
-
-const FormSchema = Yup.object().shape({
-  title: Yup.string().required('Please provide a title'),
-  description: Yup.string().required('Please provide a subtitle'),
-  avatar: Yup.string().required('Please provide an avatar URL'),
-})
-
-type FormValues = {
-  title: string
-  description: string
-  avatar: {
-    src: string
-  }
-}
+import { FormField } from '@/app/components/FormField';
+import { Form, Formik, FormikHelpers, FormikProps } from 'formik';
+import { HeaderBlockConfig, HeaderSchema } from './config';
 
 interface Props {
-  initialValues: FormValues
-  onSave: (values: FormValues) => void
+  initialValues: HeaderBlockConfig;
+  onSave: (values: HeaderBlockConfig) => void;
   formRef: {
-    current: FormikProps<FormValues> | null
-  }
+    current: FormikProps<HeaderBlockConfig> | null;
+  };
 }
 
 export function EditForm({ initialValues, onSave, formRef }: Props) {
   const onSubmit = async (
-    values: FormValues,
-    { setSubmitting }: FormikHelpers<FormValues>
+    values: HeaderBlockConfig,
+    { setSubmitting }: FormikHelpers<HeaderBlockConfig>
   ) => {
-    setSubmitting(true)
-    onSave(values)
-  }
+    setSubmitting(true);
+    onSave(values);
+  };
 
   return (
     <Formik
@@ -42,7 +28,7 @@ export function EditForm({ initialValues, onSave, formRef }: Props) {
           src: initialValues?.avatar?.src ?? '',
         },
       }}
-      validationSchema={FormSchema}
+      validationSchema={HeaderSchema}
       onSubmit={onSubmit}
       enableReinitialize={true}
       innerRef={formRef}
@@ -55,5 +41,5 @@ export function EditForm({ initialValues, onSave, formRef }: Props) {
         </Form>
       )}
     </Formik>
-  )
+  );
 }

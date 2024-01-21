@@ -1,7 +1,9 @@
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 import prisma from '@/lib/prisma';
-import { revalidatePath, revalidateTag } from 'next/cache';
+import { blocksConfig } from '@/lib/blocks/config';
+import { Blocks } from '@/lib/blocks/types';
+import { ValidationError } from 'yup';
 
 export async function POST(req: Request) {
   const session = await getServerSession(authOptions);
@@ -44,20 +46,45 @@ export async function POST(req: Request) {
     });
   }
 
-  // TODO - validate newData against schema
+  const schema = blocksConfig[block.type as Blocks].schema;
 
-  const updatedBlock = await prisma.block.update({
-    where: {
-      id: blockId,
-    },
-    data: {
-      data: newData,
-    },
-  });
+  if (!schema) {
+    return Response.json({
+      error: {
+        message: 'Block schema not found',
+      },
+    });
+  }
 
-  return Response.json({
-    data: {
-      block: updatedBlock,
-    },
-  });
+  try {
+    const parsedData = await schema.validate(newData, { strict: true });
+
+    const updatedBlock = await prisma.block.update({
+      where: {
+        id: blockId,
+      },
+      data: {
+        data: parsedData,
+      },
+    });
+
+    return Response.json({
+      data: {
+        block: updatedBlock,
+      },
+    });
+  } catch (error) {
+    if (error instanceof ValidationError) {
+      return Response.json({
+        error: {
+          message: error.message,
+        },
+      });
+    }
+    return Response.json({
+      error: {
+        message: 'Something went wrong',
+      },
+    });
+  }
 }

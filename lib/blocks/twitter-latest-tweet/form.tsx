@@ -1,14 +1,13 @@
-import { PlusCircleIcon } from '@heroicons/react/24/outline'
-import { FormikProps } from 'formik'
-
-type FormValues = {}
+import { PlusCircleIcon } from '@heroicons/react/24/outline';
+import { FormikProps } from 'formik';
+import { TwitterLatestTweetBlockConfig } from './config';
 
 interface Props {
-  initialValues: FormValues
-  onSave: (values: FormValues) => void
+  initialValues: TwitterLatestTweetBlockConfig;
+  onSave: (values: TwitterLatestTweetBlockConfig) => void;
   formRef: {
-    current: FormikProps<FormValues> | null
-  }
+    current: FormikProps<TwitterLatestTweetBlockConfig> | null;
+  };
 }
 
 export function EditForm({ onSave }: Props) {
@@ -23,5 +22,5 @@ export function EditForm({ onSave }: Props) {
         Link Twitter Account
       </a>
     </div>
-  )
+  );
 }

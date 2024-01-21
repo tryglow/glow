@@ -2,6 +2,7 @@ import { FunctionComponent } from 'react';
 import { formatISO, sub } from 'date-fns';
 import clsx from 'clsx';
 import { CoreBlock } from '@/app/components/CoreBlock';
+import { GithubCommitsThisMonthBlockConfig } from './types';
 
 const GithubLogo = () => {
   return (
@@ -65,13 +66,9 @@ const fetchGithubData = async (githubUsername: string) => {
   }
 };
 
-interface Props {
-  githubUsername: string;
-}
-
-export const GitHubCommitsThisMonth: FunctionComponent<Props> = async ({
-  githubUsername,
-}) => {
+export const GitHubCommitsThisMonth: FunctionComponent<
+  GithubCommitsThisMonthBlockConfig
+> = async ({ githubUsername }) => {
   const data = await fetchGithubData(githubUsername);
 
   if (!data) return <LoadingState />;

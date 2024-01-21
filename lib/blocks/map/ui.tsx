@@ -1,16 +1,9 @@
 import { FunctionComponent } from 'react';
 import { CoreBlock } from '@/app/components/CoreBlock';
 import { MapboxMap } from './ui-client';
+import { MapBlockConfig } from './config';
 
-interface Props {
-  pageId: string;
-  coords: {
-    long: number;
-    lat: number;
-  };
-}
-
-const Map: FunctionComponent<Props> = async ({ pageId, coords }) => {
+const Map: FunctionComponent<MapBlockConfig> = async ({ coords }) => {
   return (
     <CoreBlock className="relative !p-0 overflow-hidden">
       <MapboxMap

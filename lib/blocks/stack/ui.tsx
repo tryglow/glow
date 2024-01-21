@@ -1,19 +1,12 @@
-import { CoreBlock } from '@/app/components/CoreBlock'
-import { FunctionComponent } from 'react'
+import { CoreBlock } from '@/app/components/CoreBlock';
+import { FunctionComponent } from 'react';
+import { StackBlockConfig } from './config';
 
-interface Props {
-  title: string
-  label: string
-  items: {
-    title: string
-    label: string
-    icon: {
-      src: string
-    }
-  }[]
-}
-
-export const Stack: FunctionComponent<Props> = ({ title, label, items }) => {
+export const Stack: FunctionComponent<StackBlockConfig> = ({
+  title,
+  label,
+  items,
+}) => {
   return (
     <CoreBlock>
       <h2 className="text-2xl font-medium text-system-label-primary">
@@ -39,9 +32,9 @@ export const Stack: FunctionComponent<Props> = ({ title, label, items }) => {
                 </p>
               </div>
             </div>
-          )
+          );
         })}
       </div>
     </CoreBlock>
-  )
-}
+  );
+};

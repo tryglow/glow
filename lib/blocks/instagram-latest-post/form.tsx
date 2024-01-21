@@ -1,27 +1,26 @@
-import { PlusCircleIcon } from '@heroicons/react/24/outline'
-import { FormikProps } from 'formik'
-
-type FormValues = {}
+import { PlusCircleIcon } from '@heroicons/react/24/outline';
+import { FormikProps } from 'formik';
+import { Button } from '@/components/ui/button';
+import Link from 'next/link';
+import { InstagramLatestPostBlockConfig } from './config';
 
 interface Props {
-  initialValues: FormValues
-  onSave: (values: FormValues) => void
+  initialValues: InstagramLatestPostBlockConfig;
+  onSave: (values: InstagramLatestPostBlockConfig) => void;
   formRef: {
-    current: FormikProps<FormValues> | null
-  }
+    current: FormikProps<InstagramLatestPostBlockConfig> | null;
+  };
 }
 
-export function EditForm({ onSave }: Props) {
+export function EditForm(props: Props) {
   return (
-    <div>
-      <a
-        target="_blank"
-        href="/api/services/instagram"
-        className="inline-flex items-center rounded-md bg-white px-4 py-3 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
-      >
-        <PlusCircleIcon className="w-6 h-6 inline-block mr-1" />
-        Link Instagram Account
-      </a>
+    <div className="flex justify-center">
+      <Button asChild>
+        <Link target="_blank" href="/api/services/instagram">
+          <PlusCircleIcon className="w-6 h-6 inline-block mr-1" />
+          Link Instagram Account
+        </Link>
+      </Button>
     </div>
-  )
+  );
 }

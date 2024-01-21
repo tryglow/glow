@@ -1,17 +1,16 @@
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 import prisma from '@/lib/prisma';
-import { DANGEROUSLY_FORCE_USER } from '@/app/[slug]/page';
 
 export async function POST(req: Request) {
   const session = await getServerSession(authOptions);
 
-  // if (!session) {
-  //   return Response.json({
-  //     message: 'error',
-  //     data: null,
-  //   })
-  // }
+  if (!session) {
+    return Response.json({
+      message: 'error',
+      data: null,
+    });
+  }
 
   const bodyData = await req.json();
 
@@ -27,8 +26,7 @@ export async function POST(req: Request) {
 
   const page = await prisma.page.findUnique({
     where: {
-      // userId: session.user.id,
-      userId: DANGEROUSLY_FORCE_USER.id,
+      userId: session.user.id,
       slug: pageSlug,
     },
   });

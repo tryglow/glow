@@ -1,6 +1,7 @@
 'use client';
 import React, { useEffect, useRef } from 'react';
 import mapboxgl from 'mapbox-gl';
+import { MapBlockConfig } from './config';
 
 if (!process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN) {
   throw Error('Mapbox access token not found in environment variables');
@@ -8,13 +9,9 @@ if (!process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN) {
 
 mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN;
 
-interface Props {
+type Props = {
   className?: string;
-  coords: {
-    long: number;
-    lat: number;
-  };
-}
+} & MapBlockConfig;
 
 export function MapboxMap({ className, coords }: Props) {
   const mapContainerRef = useRef<HTMLDivElement | null>(null);

@@ -9,17 +9,15 @@ import { EditForm as InstagramLatestPostForm } from './instagram-latest-post/for
 import { EditForm as MapForm } from './map/form';
 import { EditForm as LinkBoxForm } from './link-box/form';
 
-import { Blocks } from './types';
-
-export const editForms: Record<Blocks, JSXElementConstructor<any>> = {
+export const editForms: Record<string, JSXElementConstructor<any>> = {
+  'link-box': LinkBoxForm,
+  stack: HeaderForm,
   content: ContentEditForm,
   header: HeaderForm,
-  stack: HeaderForm,
   image: ImageForm,
   'github-commits-this-month': GithubCommitsThisMonthForm,
   'spotify-playing-now': SpotifyPlayingNowForm,
   'twitter-latest-tweet': TwitterLatestTweetForm,
   'instagram-latest-post': InstagramLatestPostForm,
   map: MapForm,
-  'link-box': LinkBoxForm,
 };

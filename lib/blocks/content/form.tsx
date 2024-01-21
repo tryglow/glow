@@ -1,33 +1,24 @@
-import { FormField } from '@/app/components/FormField'
-import { Field, Form, Formik, FormikHelpers, FormikProps } from 'formik'
-import * as Yup from 'yup'
+import { FormField } from '@/app/components/FormField';
+import { Form, Formik, FormikHelpers, FormikProps } from 'formik';
 
-const FormSchema = Yup.object().shape({
-  pageSlug: Yup.string(),
-  content: Yup.string().required('Please provide some content'),
-})
-
-type FormValues = {
-  title: string
-  content: string
-}
+import { ContentBlockConfig, ContentSchema } from './config';
 
 interface Props {
-  initialValues: FormValues
-  onSave: (values: FormValues) => void
+  initialValues: ContentBlockConfig;
+  onSave: (values: ContentBlockConfig) => void;
   formRef: {
-    current: FormikProps<FormValues> | null
-  }
+    current: FormikProps<ContentBlockConfig> | null;
+  };
 }
 
 export function EditForm({ initialValues, onSave, formRef }: Props) {
   const onSubmit = async (
-    values: FormValues,
-    { setSubmitting }: FormikHelpers<FormValues>
+    values: ContentBlockConfig,
+    { setSubmitting }: FormikHelpers<ContentBlockConfig>
   ) => {
-    setSubmitting(true)
-    onSave(values)
-  }
+    setSubmitting(true);
+    onSave(values);
+  };
 
   return (
     <Formik
@@ -35,7 +26,7 @@ export function EditForm({ initialValues, onSave, formRef }: Props) {
         title: initialValues?.title ?? '',
         content: initialValues?.content ?? '',
       }}
-      validationSchema={FormSchema}
+      validationSchema={ContentSchema}
       onSubmit={onSubmit}
       enableReinitialize={true}
       innerRef={formRef}
@@ -57,5 +48,5 @@ export function EditForm({ initialValues, onSave, formRef }: Props) {
         </Form>
       )}
     </Formik>
-  )
+  );
 }
