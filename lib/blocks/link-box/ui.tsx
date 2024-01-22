@@ -1,6 +1,6 @@
 import { CoreBlock } from '@/app/components/CoreBlock';
 import Link from 'next/link';
-import { LinkBoxBlockConfig } from './types';
+import { LinkBoxBlockConfig } from './config';
 
 export function LinkBox({ title, label, link }: LinkBoxBlockConfig) {
   return (

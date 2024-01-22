@@ -2,7 +2,7 @@ import { FunctionComponent } from 'react';
 import { formatISO, sub } from 'date-fns';
 import clsx from 'clsx';
 import { CoreBlock } from '@/app/components/CoreBlock';
-import { GithubCommitsThisMonthBlockConfig } from './types';
+import { GithubCommitsThisMonthBlockConfig } from './config';
 
 const GithubLogo = () => {
   return (

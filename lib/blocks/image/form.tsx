@@ -2,7 +2,7 @@ import { FormFileUpload } from '@/app/components/FormFileUpload';
 import { Form, Formik, FormikHelpers, FormikProps } from 'formik';
 import { useRouter } from 'next/navigation';
 import * as Yup from 'yup';
-import { ImageBlockConfig } from './types';
+import { ImageBlockConfig } from './config';
 
 const FormSchema = Yup.object().shape({
   title: Yup.string().required('Please provide a title'),

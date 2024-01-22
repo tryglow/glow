@@ -5,7 +5,7 @@ import { CoreBlock } from '@/app/components/CoreBlock';
 import { refreshLongLivedToken } from '@/app/api/services/instagram/callback/utils';
 import prisma from '@/lib/prisma';
 import Link from 'next/link';
-import { InstagramIntegrationConfig } from './types';
+import { InstagramIntegrationConfig } from './config';
 
 function fetchLatestInstagramPost(
   accessToken: string,

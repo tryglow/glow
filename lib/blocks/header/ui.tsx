@@ -1,6 +1,6 @@
 import { FunctionComponent } from 'react';
 import Image from 'next/image';
-import { HeaderBlockConfig } from './types';
+import { HeaderBlockConfig } from './config';
 
 export const Header: FunctionComponent<HeaderBlockConfig> = ({
   title,

@@ -1,6 +1,6 @@
 import { CoreBlock } from '@/app/components/CoreBlock';
 import { FunctionComponent } from 'react';
-import { ImageBlockConfig } from './types';
+import { ImageBlockConfig } from './config';
 
 export const Image: FunctionComponent<ImageBlockConfig> = ({ src }) => {
   return (

@@ -1,21 +1,20 @@
-import { ExclamationCircleIcon } from '@heroicons/react/20/solid'
-import clsx from 'clsx'
+import { ExclamationCircleIcon } from '@heroicons/react/20/solid';
 
-import { ReactNode } from 'react'
-import { FormLabel } from '../FormLabel'
-import { FormInput, FormInputWithPrefix } from '../FormInput'
-import { Label } from '@/components/ui/label'
+import { ReactNode } from 'react';
+
+import { FormInput, FormInputWithPrefix } from '../FormInput';
+import { Label } from '@/components/ui/label';
 
 interface Props {
-  name: string
-  id: string
-  label: string
-  placeholder?: string
-  type?: 'text' | 'email'
-  error?: string | undefined
-  isSelect?: boolean
-  children?: ReactNode
-  withPrefix?: string
+  name: string;
+  id: string;
+  label: string;
+  placeholder?: string;
+  type?: 'text' | 'email';
+  error?: string | undefined;
+  isSelect?: boolean;
+  children?: ReactNode;
+  withPrefix?: string;
 }
 
 export function FormField({
@@ -29,7 +28,7 @@ export function FormField({
   type = 'text',
   withPrefix,
 }: Props) {
-  const InputComponent = withPrefix ? FormInputWithPrefix : FormInput
+  const InputComponent = withPrefix ? FormInputWithPrefix : FormInput;
   return (
     <>
       <Label htmlFor={name}>{label}</Label>
@@ -59,5 +58,5 @@ export function FormField({
         {error}
       </p>
     </>
-  )
+  );
 }
