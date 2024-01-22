@@ -1,7 +1,7 @@
-'use client'
+'use client';
 
-import { LoginProviderButton } from '../LoginProviderButton'
-import { Button } from '@/components/ui/button'
+import { LoginProviderButton } from '../LoginProviderButton';
+import { Button } from '@/components/ui/button';
 
 import {
   AlertDialog,
@@ -11,16 +11,18 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from '@/components/ui/alert-dialog'
-import { useState } from 'react'
+} from '@/components/ui/alert-dialog';
+import { useState } from 'react';
 
-export function LoginWidget() {
-  const [open, setOpen] = useState(false)
+interface Props {
+  trigger: React.ReactNode;
+}
+
+export function LoginWidget({ trigger }: Props) {
+  const [open, setOpen] = useState(false);
   return (
     <AlertDialog open={open} onOpenChange={setOpen}>
-      <AlertDialogTrigger asChild className="fixed top-2 right-2">
-        <Button type="button">Log in or sign up</Button>
-      </AlertDialogTrigger>
+      <AlertDialogTrigger asChild>{trigger}</AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>Let&apos;s get started!</AlertDialogTitle>
@@ -41,5 +43,5 @@ export function LoginWidget() {
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
-  )
+  );
 }

@@ -8,10 +8,11 @@ import { EditForm as TwitterLatestTweetForm } from './twitter-latest-tweet/form'
 import { EditForm as InstagramLatestPostForm } from './instagram-latest-post/form';
 import { EditForm as MapForm } from './map/form';
 import { EditForm as LinkBoxForm } from './link-box/form';
+import { EditForm as StackForm } from './stack/form';
 
 export const editForms: Record<string, JSXElementConstructor<any>> = {
   'link-box': LinkBoxForm,
-  stack: HeaderForm,
+  stack: StackForm,
   content: ContentEditForm,
   header: HeaderForm,
   image: ImageForm,

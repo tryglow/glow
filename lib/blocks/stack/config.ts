@@ -1,3 +1,5 @@
+import * as Yup from 'yup';
+
 export interface StackBlockConfig {
   title: string;
   label: string;
@@ -37,3 +39,18 @@ export const defaults: StackBlockConfig = {
     },
   ],
 };
+
+export const StackSchema = Yup.object().shape({
+  title: Yup.string().required('Please provide a title'),
+  label: Yup.string().required('Please provide a label'),
+  avatar: Yup.string().required('Please provide an avatar URL'),
+  items: Yup.array().of(
+    Yup.object().shape({
+      title: Yup.string().required('Please provide a title'),
+      label: Yup.string().required('Please provide a label'),
+      icon: Yup.object().shape({
+        src: Yup.string().required('Please provide an icon URL'),
+      }),
+    })
+  ),
+});

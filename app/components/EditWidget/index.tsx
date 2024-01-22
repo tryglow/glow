@@ -107,7 +107,6 @@ export function EditWidget() {
               <>
                 <EditWidgetHeader
                   title={`Editing ${config[selectedBlock.type].title}`}
-                  label={selectedBlock.id}
                 />
 
                 {selectedBlock.id && (
@@ -127,7 +126,7 @@ export const EditWidgetHeader = ({
   label,
 }: {
   title: string;
-  label: string;
+  label?: string;
 }) => {
   return (
     <div className="bg-white border-b border-stone-200 px-4 py-6 sm:px-6">
@@ -136,9 +135,11 @@ export const EditWidgetHeader = ({
           {title}
         </h2>
       </div>
-      <div className="mt-1">
-        <p className="text-sm text-stone-700">{label}</p>
-      </div>
+      {label && (
+        <div className="mt-1">
+          <p className="text-sm text-stone-700">{label}</p>
+        </div>
+      )}
     </div>
   );
 };

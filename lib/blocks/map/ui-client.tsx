@@ -22,9 +22,9 @@ export function MapboxMap({ className, coords }: Props) {
     // Initialize map when component mounts
     const map = new mapboxgl.Map({
       container: mapContainerRef.current,
-      style: 'mapbox://styles/mapbox/streets-v11', // Specify the map style
+      style: 'mapbox://styles/mapbox/streets-v12', // Specify the map style
       center: [coords.long, coords.lat], // Specify the initial map center coordinates
-      zoom: 14, // Specify the initial zoom level
+      zoom: 12, // Specify the initial zoom level
       interactive: false,
     });
 

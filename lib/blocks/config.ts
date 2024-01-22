@@ -1,4 +1,4 @@
-import { defaults as stackDefaults } from './stack/config';
+import { StackSchema, defaults as stackDefaults } from './stack/config';
 import { HeaderSchema, defaults as headerDefaults } from './header/config';
 import { ContentSchema, defaults as contentDefaults } from './content/config';
 import { ImageSchema, defaults as imageDefaults } from './image/config';
@@ -28,7 +28,7 @@ export const blocksConfig: Record<
   },
   stack: {
     defaults: stackDefaults,
-    schema: null,
+    schema: StackSchema,
   },
   content: {
     defaults: contentDefaults,
