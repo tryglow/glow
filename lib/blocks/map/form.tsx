@@ -9,6 +9,22 @@ import {
 import { useEffect, useRef, useState } from 'react';
 import { useLoadScript } from '@react-google-maps/api';
 import { MapBlockConfig } from './config';
+import { CaretSortIcon, CheckIcon } from '@radix-ui/react-icons';
+import { cn } from '@/lib/utils';
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+} from '@/components/ui/command';
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@/components/ui/popover';
+import { Button } from '@/components/ui/button';
 
 declare global {
   namespace google.maps.places {
@@ -63,8 +79,9 @@ export function EditForm({ initialValues, onSave, formRef }: Props) {
 }
 
 const GoogleMapsAutoCompleteInput = () => {
-  const { submitForm, setFieldValue } = useFormikContext();
+  const { submitForm, setFieldValue, values } = useFormikContext();
   const [input, setInput] = useState('');
+  const [open, setOpen] = useState(false);
   const [predictions, setPredictions] = useState<
     google.maps.places.QueryAutocompletePrediction[]
   >([]);
@@ -123,6 +140,33 @@ const GoogleMapsAutoCompleteInput = () => {
       }
     );
   };
+
+  return (
+    <Command className="rounded-lg border shadow-md">
+      <CommandInput
+        className="border-0"
+        onChangeCapture={(e) => setInput(e.target.value)}
+      />
+
+      <CommandList>
+        <CommandEmpty>Search for a place</CommandEmpty>
+        <CommandGroup>
+          {predictions.map((prediction) => (
+            <CommandItem
+              key={prediction.description}
+              value={prediction.description}
+              onSelect={(currentValue) => {
+                handleSelect(prediction.description);
+                setOpen(false);
+              }}
+            >
+              {prediction.description}
+            </CommandItem>
+          ))}
+        </CommandGroup>
+      </CommandList>
+    </Command>
+  );
 
   return (
     <div>
