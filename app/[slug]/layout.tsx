@@ -4,6 +4,7 @@ import { authOptions } from '@/lib/auth';
 import Link from 'next/link';
 import { UserWidget } from '../components/UserWidget';
 import prisma from '@/lib/prisma';
+import { Button } from '@/components/ui/button';
 
 const fetchUserLoggedinStatus = async () => {
   const session = await getServerSession(authOptions);
@@ -35,7 +36,13 @@ export default async function PageLayout({
           <UserWidget user={user} usersPages={pages} />
         </div>
       ) : (
-        <LoginWidget />
+        <LoginWidget
+          trigger={
+            <Button variant="ghost" className="fixed top-3 right-3">
+              Get started
+            </Button>
+          }
+        />
       )}
 
       <div className="w-full max-w-2xl mx-auto px-3 md:px-6 gap-3 pt-16 pb-8">

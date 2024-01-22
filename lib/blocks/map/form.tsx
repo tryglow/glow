@@ -6,7 +6,7 @@ import {
   useFormikContext,
 } from 'formik';
 
-import { useEffect, useRef, useState } from 'react';
+import { ChangeEvent, useEffect, useRef, useState } from 'react';
 import { useLoadScript } from '@react-google-maps/api';
 import { MapBlockConfig } from './config';
 import { CaretSortIcon, CheckIcon } from '@radix-ui/react-icons';
@@ -145,7 +145,9 @@ const GoogleMapsAutoCompleteInput = () => {
     <Command className="rounded-lg border shadow-md">
       <CommandInput
         className="border-0"
-        onChangeCapture={(e) => setInput(e.target.value)}
+        onChangeCapture={(e: ChangeEvent<HTMLInputElement>) =>
+          setInput(e.target.value)
+        }
       />
 
       <CommandList>
@@ -166,23 +168,5 @@ const GoogleMapsAutoCompleteInput = () => {
         </CommandGroup>
       </CommandList>
     </Command>
-  );
-
-  return (
-    <div>
-      <input
-        type="text"
-        value={input}
-        onChange={(e) => setInput(e.target.value)}
-        placeholder="Search places..."
-      />
-      <ul>
-        {predictions.map((prediction, index) => (
-          <li key={index} onClick={() => handleSelect(prediction.description)}>
-            {prediction.description}
-          </li>
-        ))}
-      </ul>
-    </div>
   );
 };
