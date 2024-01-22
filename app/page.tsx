@@ -2,13 +2,14 @@ import { Button } from '@/components/ui/button';
 import MarketingNavigation from './components/MarketingNavigation';
 import { LoginWidget } from './components/LoginWidget';
 import MarketingFooter from './components/MarketingFooter';
+import Image from 'next/image';
 
 export default function LandingPage() {
   return (
     <>
       <MarketingNavigation />
       <main>
-        <section className="py-24 md:py-48">
+        <section className="py-24 md:pt-48 md:pb-32">
           <div className="container mx-auto px-4 flex flex-col justify-center items-center">
             <div className="flex flex-col justify-center md:items-center max-w-4xl text-left md:text-center">
               <h1 className="text-2xl md:text-6xl font-medium">
@@ -28,6 +29,16 @@ export default function LandingPage() {
                 }
               />
             </div>
+          </div>
+        </section>
+        <section className="border-b border-stone-200">
+          <div className="container mx-auto">
+            <Image
+              src="/landing-page-ui@2x.png"
+              alt="Some example pages built with onedash"
+              width={1400}
+              height={731}
+            />
           </div>
         </section>
       </main>
