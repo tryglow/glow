@@ -1,7 +1,6 @@
 'use client';
 
 import { LoginProviderButton } from '../LoginProviderButton';
-import { Button } from '@/components/ui/button';
 
 import {
   AlertDialog,

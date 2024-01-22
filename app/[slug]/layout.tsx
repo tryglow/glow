@@ -30,7 +30,13 @@ export default async function PageLayout({
   const { user, pages } = await fetchUserLoggedinStatus();
   return (
     <>
-      {user ? <UserWidget user={user} usersPages={pages} /> : <LoginWidget />}
+      {user ? (
+        <div className="fixed top-10 left-10">
+          <UserWidget user={user} usersPages={pages} />
+        </div>
+      ) : (
+        <LoginWidget />
+      )}
 
       <div className="w-full max-w-2xl mx-auto px-3 md:px-6 gap-3 pt-16 pb-8">
         {children}

@@ -1,21 +1,11 @@
 'use client';
 
-import { useState } from 'react';
+import { ReactNode, useState } from 'react';
 import { Dialog } from '@headlessui/react';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 
-import { LoginProviderButton } from '../LoginProviderButton';
 import { Button } from '@/components/ui/button';
 
-import {
-  AlertDialog,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from '@/components/ui/alert-dialog';
 import Link from 'next/link';
 import { LoginWidget } from '../LoginWidget';
 
@@ -25,9 +15,12 @@ const navigation = [
   { name: 'Integrations', href: '#' },
 ];
 
-export default function MarketingNavigation() {
+interface Props {
+  children: ReactNode;
+}
+
+export default function MarketingNavigation({ children }: Props) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [loginDialogOpen, setLoginDialogOpen] = useState(false);
 
   return (
     <>
@@ -59,15 +52,7 @@ export default function MarketingNavigation() {
             })}
           </div>
           <div className="flex flex-1 items-center justify-end gap-x-3">
-            <LoginWidget
-              trigger={
-                <Button variant="ghost" className="hidden lg:block">
-                  Log in
-                </Button>
-              }
-            />
-
-            <LoginWidget trigger={<Button>Create Page</Button>} />
+            {children}
           </div>
           <div className="flex lg:hidden">
             <button
