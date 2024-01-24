@@ -1,21 +1,22 @@
-import { Upload } from '@aws-sdk/lib-storage'
 import {
-  S3,
   type AbortMultipartUploadCommandOutput,
   CompleteMultipartUploadCommandOutput,
-} from '@aws-sdk/client-s3'
-import { getServerSession } from 'next-auth'
-import { authOptions } from '@/lib/auth'
-import prisma from '@/lib/prisma'
-import { randomUUID } from 'crypto'
-import sharp from 'sharp'
+  S3,
+} from '@aws-sdk/client-s3';
+import { Upload } from '@aws-sdk/lib-storage';
+import { randomUUID } from 'crypto';
+import { getServerSession } from 'next-auth';
+import sharp from 'sharp';
+
+import { authOptions } from '@/lib/auth';
+import prisma from '@/lib/prisma';
 
 function isComplete(
   output:
     | CompleteMultipartUploadCommandOutput
     | AbortMultipartUploadCommandOutput
 ): output is CompleteMultipartUploadCommandOutput {
-  return (output as CompleteMultipartUploadCommandOutput).ETag !== undefined
+  return (output as CompleteMultipartUploadCommandOutput).ETag !== undefined;
 }
 
 const s3 = new S3({
@@ -24,7 +25,7 @@ const s3 = new S3({
     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY as string,
   },
   region: process.env.AWS_REGION,
-})
+});
 
 const uploadTemplateFile = async (
   fileBuffer: Buffer,
@@ -39,25 +40,25 @@ const uploadTemplateFile = async (
       ContentType: fileContentType,
       Body: fileBuffer,
     },
-  }).done()
-}
+  }).done();
+};
 
 export async function POST(req: Request) {
-  const session = await getServerSession(authOptions)
+  const session = await getServerSession(authOptions);
 
   if (!session) {
     return Response.json({
       error: {
         message: 'Unauthorized',
       },
-    })
+    });
   }
 
-  const formData = await req.formData()
-  const files = formData.getAll('file') as File[]
-  const blockId = formData.get('blockId') as string
+  const formData = await req.formData();
+  const files = formData.getAll('file') as File[];
+  const blockId = formData.get('blockId') as string;
 
-  const firstFileOnly = files[0]
+  const firstFileOnly = files[0];
 
   if (!firstFileOnly || !blockId) {
     // RETURN AN ERROR
@@ -65,7 +66,7 @@ export async function POST(req: Request) {
       error: {
         message: 'Missing required fields',
       },
-    })
+    });
   }
 
   const block = await prisma.block.findUnique({
@@ -75,14 +76,14 @@ export async function POST(req: Request) {
         userId: session.user.id,
       },
     },
-  })
+  });
 
   if (!block) {
     return Response.json({
       error: {
         message: 'Block not found',
       },
-    })
+    });
   }
 
   const convertedImage = await sharp(await firstFileOnly.arrayBuffer())
@@ -90,18 +91,23 @@ export async function POST(req: Request) {
     .toFormat('webp', {
       quality: 80,
     })
-    .toBuffer()
+    .toBuffer();
 
-  const fileName = `${blockId}/${randomUUID()}`
+  const fileName = `${blockId}/${randomUUID()}`;
 
   const assetUpload = await uploadTemplateFile(
     convertedImage,
     fileName,
     'image/webp'
-  )
+  );
 
   if (isComplete(assetUpload)) {
-    const fileLocation = `https://s3.${process.env.AWS_REGION}.amazonaws.com/${assetUpload.Bucket}/${assetUpload.Key}`
+    const fileLocation =
+      process.env.NEXT_PUBLIC_APP_ENV === 'development'
+        ? `https://cdn.dev.oneda.sh/${assetUpload.Key}`
+        : `https://cdn.oneda.sh/${assetUpload.Key}`;
+
+    // const fileLocation = `https://s3.${process.env.AWS_REGION}.amazonaws.com/${assetUpload.Bucket}/${assetUpload.Key}`
 
     await prisma.block.update({
       where: {
@@ -112,7 +118,7 @@ export async function POST(req: Request) {
           src: fileLocation,
         },
       },
-    })
-    return Response.json({ message: 'success', url: fileLocation })
+    });
+    return Response.json({ message: 'success', url: fileLocation });
   }
 }

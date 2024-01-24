@@ -9,8 +9,8 @@ export interface MapBlockConfig {
 
 export const defaults: MapBlockConfig = {
   coords: {
-    long: -0.2985,
-    lat: 51.7732,
+    long: 103.8591065,
+    lat: 1.2837575,
   },
 };
 

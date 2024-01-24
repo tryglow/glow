@@ -1,17 +1,9 @@
-'use client';
-
 import { FunctionComponent, Suspense } from 'react';
 
 import { CoreBlock } from '@/app/components/CoreBlock';
 
 import { BlockProps } from '../ui';
-import { SpotifyIntegrationConfig } from './config';
 import { SpotifyPlayingNowServerUI } from './ui-server';
-
-interface Props {
-  spotifyConfig: SpotifyIntegrationConfig;
-  pageId: string;
-}
 
 export const SpotifyPlayingNow: FunctionComponent<BlockProps> = ({
   pageId,

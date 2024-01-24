@@ -1,6 +1,6 @@
 'use client';
 
-import mapboxgl from 'mapbox-gl';
+import mapboxgl, { Map } from 'mapbox-gl';
 import React, { useEffect, useRef } from 'react';
 
 import { MapBlockConfig } from './config';
@@ -17,12 +17,13 @@ type Props = {
 
 export function MapboxMap({ className, coords }: Props) {
   const mapContainerRef = useRef<HTMLDivElement | null>(null);
+  const mapBoxRef = useRef<Map | null>(null);
 
   useEffect(() => {
     if (!mapContainerRef.current) return;
 
     // Initialize map when component mounts
-    const map = new mapboxgl.Map({
+    mapBoxRef.current = new mapboxgl.Map({
       container: mapContainerRef.current,
       style: 'mapbox://styles/mapbox/streets-v12', // Specify the map style
       center: [coords.long, coords.lat], // Specify the initial map center coordinates
@@ -31,8 +32,22 @@ export function MapboxMap({ className, coords }: Props) {
     });
 
     // Clean up on unmount
-    return () => map.remove();
+    return () => mapBoxRef.current?.remove();
   }, [coords]); // Empty dependency array ensures map only initialized once
+
+  useEffect(() => {
+    if (!mapBoxRef.current || !mapContainerRef.current) return;
+
+    const resizer = new ResizeObserver(
+      debounce(() => mapBoxRef.current?.resize(), 10)
+    );
+
+    resizer.observe(mapContainerRef.current);
+
+    return () => {
+      resizer.disconnect();
+    };
+  }, []);
 
   return (
     <div
@@ -41,4 +56,16 @@ export function MapboxMap({ className, coords }: Props) {
       style={{ width: '100%', height: '100%' }}
     />
   );
+}
+
+function debounce<F extends (...args: any[]) => void>(
+  func: F,
+  waitFor: number
+): (this: ThisParameterType<F>, ...args: Parameters<F>) => void {
+  let timeoutId: number | undefined;
+
+  return function (this: ThisParameterType<F>, ...args: Parameters<F>) {
+    clearTimeout(timeoutId);
+    timeoutId = window.setTimeout(() => func.apply(this, args), waitFor);
+  };
 }

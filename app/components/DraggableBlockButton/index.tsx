@@ -127,7 +127,7 @@ export function DraggableBlockButton({ type }: Props) {
         <img src={blockConfig.icon} className="w-9 h-9" />
       </div>
       <div className="flex flex-col">
-        <span className="font-bold text-sm">{blockConfig.title}</span>
+        <span className="font-semibold text-sm">{blockConfig.title}</span>
         <span className="text-xs text-slate-600">{blockConfig.label}</span>
       </div>
     </button>
