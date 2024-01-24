@@ -1,42 +1,43 @@
-'use client'
+'use client';
 
-import { Form, Formik, FormikHelpers } from 'formik'
-import * as Yup from 'yup'
+import { Form, Formik, FormikHelpers } from 'formik';
+import { Loader2 } from 'lucide-react';
+import { useParams, useRouter } from 'next/navigation';
+import * as Yup from 'yup';
 
-import { FormField } from '../FormField'
-import { useParams, useRouter } from 'next/navigation'
-import { useToast } from '@/components/ui/use-toast'
-import { Button } from '@/components/ui/button'
-import { Loader2 } from 'lucide-react'
-import { Switch } from '@/components/ui/switch'
-import { Label } from '@/components/ui/label'
+import { Button } from '@/components/ui/button';
+import { Label } from '@/components/ui/label';
+import { Switch } from '@/components/ui/switch';
+import { useToast } from '@/components/ui/use-toast';
+
+import { FormField } from '../FormField';
 
 const FormSchema = Yup.object().shape({
   pageSlug: Yup.string().required('Please provide a page slug'),
   metaTitle: Yup.string().required('Please provide a page title'),
-})
+});
 
 type FormValues = {
-  pageSlug: string
-  metaTitle: string
-  published: boolean
-}
+  pageSlug: string;
+  metaTitle: string;
+  published: boolean;
+};
 
 interface Props {
-  onBack: () => void
-  initialValues: FormValues
+  onBack: () => void;
+  initialValues: FormValues;
 }
 
 export function EditPageSettingsForm({ onBack, initialValues }: Props) {
-  const params = useParams()
-  const router = useRouter()
-  const { toast } = useToast()
+  const params = useParams();
+  const router = useRouter();
+  const { toast } = useToast();
 
   const onSubmit = async (
     values: FormValues,
     { setSubmitting, setFieldError }: FormikHelpers<FormValues>
   ) => {
-    setSubmitting(true)
+    setSubmitting(true);
 
     try {
       const req = await fetch('/api/page/settings', {
@@ -50,43 +51,43 @@ export function EditPageSettingsForm({ onBack, initialValues }: Props) {
           published: values.published,
           currentPageSlug: params.slug,
         }),
-      })
+      });
 
-      const res = await req.json()
+      const res = await req.json();
 
       if (res?.error) {
-        console.log(res.error)
+        console.log(res.error);
         toast({
           variant: 'error',
           title: 'Something went wrong',
           description: res.error.message,
-        })
+        });
 
         if (res.error.field) {
-          setFieldError(res.error.field, res.error.message)
+          setFieldError(res.error.field, res.error.message);
         }
-        return
+        return;
       }
 
       if (req.ok) {
         if (values.pageSlug !== params.slug) {
-          router.push(`/${values.pageSlug}`)
+          router.push(`/${values.pageSlug}`);
         }
       }
 
       toast({
         title: 'Your page settings have been updated',
-      })
+      });
     } catch (error) {
       toast({
         variant: 'error',
         title: 'Something went wrong',
         description: 'Sorry, there was an issue updating your page settings',
-      })
+      });
     } finally {
-      setSubmitting(false)
+      setSubmitting(false);
     }
-  }
+  };
 
   return (
     <Formik
@@ -125,19 +126,19 @@ export function EditPageSettingsForm({ onBack, initialValues }: Props) {
                 </div>
 
                 <div className="mt-4">
-                  <div className="flex items-center space-x-2">
+                  <Label htmlFor="published">Published</Label>
+                  <div className="flex flex-col">
                     <Switch
-                      id="airplane-mode"
+                      id="published"
                       checked={values.published}
-                      onChange={(ev) => setFieldValue('published', ev)}
+                      onCheckedChange={(newVal) =>
+                        setFieldValue('published', newVal)
+                      }
                     />
-                    <label>
-                      {' '}
+                    <label className="text-sm mt-3">
                       Disabling this will turn your page into a draft and only
                       you will be able to see it.
                     </label>
-
-                    <Label htmlFor="airplane-mode">Published</Label>
                   </div>
                 </div>
               </div>
@@ -157,5 +158,5 @@ export function EditPageSettingsForm({ onBack, initialValues }: Props) {
         </Form>
       )}
     </Formik>
-  )
+  );
 }
