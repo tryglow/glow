@@ -7,7 +7,18 @@ const nextConfig = {
     },
   ],
   images: {
-    domains: ['cdn.dev.oneda.sh', 'cdn.oneda.sh'],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'cdn.dev.oneda.sh',
+        port: '',
+      },
+      {
+        protocol: 'https',
+        hostname: 'cdn.oneda.sh',
+        port: '',
+      },
+    ],
   },
 };
 
