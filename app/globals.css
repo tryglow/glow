@@ -67,10 +67,6 @@
 }
 
 @layer base {
-  :root {
-    font-family: 'Saans Trial', sans-serif;
-  }
-
   * {
     @apply border-border;
     -webkit-font-smoothing: antialiased;

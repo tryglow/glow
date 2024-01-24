@@ -1,10 +1,16 @@
+import { Analytics } from '@vercel/analytics/react';
 import { Metadata } from 'next';
+import localFont from 'next/font/local';
+
+import { Toaster } from '@/components/ui/toaster';
 
 import './globals.css';
 import './react-grid-layout.scss';
 
-import { Analytics } from '@vercel/analytics/react';
-import { Toaster } from '@/components/ui/toaster';
+const saans = localFont({
+  src: './saans-font.woff2',
+  display: 'swap',
+});
 
 export const metadata: Metadata = {
   title: 'Onedash - Your personal site builder',
@@ -17,7 +23,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="en" className={saans.className}>
       <body className="bg-system-bg-primary">
         {children}
         <Toaster />

@@ -23,7 +23,7 @@ export const SpotifyPlayingNowServerUI: FunctionComponent<Props> = async ({
       />
 
       <div className="flex flex-col justify-center">
-        <p className="text-sm text-system-bg-primary uppercase font-medium">
+        <p className="text-sm text-system-bg-primary uppercase font-bold">
           <span
             className={clsx(styles.bars, data?.isPlayingNow && styles.animate)}
           >

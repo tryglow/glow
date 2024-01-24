@@ -31,7 +31,7 @@ export async function GithubServerUI({
               fill="currentColor"
             />
           </svg>
-          <span className="uppercase font-semibold text-xs tracking-wider">
+          <span className="uppercase font-bold text-xs tracking-wider">
             Commits this month
           </span>
         </div>

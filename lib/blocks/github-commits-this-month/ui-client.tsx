@@ -23,7 +23,7 @@ export const LoadingState = () => {
     <div className="flex justify-between">
       <div className="flex flex-col">
         <div className="flex items-center gap-2 text-system-label-secondary mb-7">
-          <span className="uppercase font-semibold text-xs tracking-wider">
+          <span className="uppercase font-bold text-xs tracking-wider">
             Commits this month
           </span>
         </div>
