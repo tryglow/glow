@@ -16,9 +16,6 @@ export const Stack: FunctionComponent<BlockProps> = (props) => {
     fetcher
   );
 
-  console.log('data', data);
-  console.log('error', error);
-
   if (!data) return null;
 
   return (
