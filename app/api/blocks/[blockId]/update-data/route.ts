@@ -71,8 +71,6 @@ export async function POST(
       },
     });
 
-    console.log('Updated', updatedBlock);
-
     return Response.json({
       data: {
         block: updatedBlock,

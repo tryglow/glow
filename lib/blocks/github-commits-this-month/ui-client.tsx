@@ -1,5 +1,3 @@
-'use client';
-
 import { FunctionComponent, Suspense } from 'react';
 
 import { CoreBlock } from '@/app/components/CoreBlock';

@@ -1,5 +1,3 @@
-'use server';
-
 import clsx from 'clsx';
 
 import { GithubCommitsThisMonthBlockConfig } from './config';

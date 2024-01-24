@@ -18,7 +18,7 @@ export const Header: FunctionComponent<BlockProps> = (props) => {
   );
 
   return (
-    <CoreBlock {...props}>
+    <CoreBlock {...props} isFrameless>
       <header className="py-4">
         {data?.avatar?.src && (
           <Image

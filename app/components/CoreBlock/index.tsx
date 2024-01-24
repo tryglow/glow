@@ -10,6 +10,7 @@ import { EditBlockToolbar } from '../EditBlockToolbar';
 interface Props extends BlockProps {
   className?: string;
   children: ReactNode;
+  isFrameless?: boolean;
 }
 
 export function CoreBlock({
@@ -18,11 +19,14 @@ export function CoreBlock({
   isEditable,
   className,
   children,
+  isFrameless,
 }: Props) {
   return (
     <div
       className={clsx(
-        'bg-system-bg-primary border-system-bg-secondary border p-6 rounded-3xl h-full shadow-md overflow-hidden relative',
+        'h-full overflow-hidden relative',
+        !isFrameless &&
+          'bg-system-bg-primary border-system-bg-secondary border p-6 rounded-3xl shadow-md ',
         className
       )}
     >

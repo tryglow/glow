@@ -44,7 +44,15 @@ const fetchSpotifyData = async (
 
     const refreshTokenData = await refreshTokenRequest.json();
 
+    console.log(refreshTokenData);
+
     if (refreshTokenData?.access_token) {
+      console.log('Updating Spotify integration', integrationId);
+      console.log(
+        'Updating Spotify integration refreshTokenData',
+        refreshTokenData
+      );
+
       await prisma.integration.update({
         where: {
           id: integrationId,
@@ -137,7 +145,6 @@ export const fetchData = async (pageId: string) => {
     }
 
     const spotifyData = await fetchSpotifyData(config, false, data.id);
-    console.log('Spotify Data', spotifyData);
     return spotifyData;
   } catch (error) {
     console.log(error);

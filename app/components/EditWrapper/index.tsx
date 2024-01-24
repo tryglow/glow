@@ -1,14 +1,7 @@
 'use client';
 
 import { useParams, useRouter } from 'next/navigation';
-import {
-  Children,
-  ReactNode,
-  cloneElement,
-  useEffect,
-  useOptimistic,
-  useTransition,
-} from 'react';
+import { ReactNode, useEffect, useOptimistic, useTransition } from 'react';
 import ReactGridLayout, {
   Layout,
   ReactGridLayoutProps,
@@ -65,8 +58,6 @@ export function EditWrapper({ children, layoutProps }: Props) {
     // Get the last item from the newLayout
     const lastItem = newLayout[newLayout.length - 1];
     // setLayout(newLayout);
-
-    console.log('Last Item', lastItem);
 
     const newItemId = uuidv4();
 

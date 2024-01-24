@@ -51,7 +51,7 @@ export function renderBlock(block: any, pageId: string, isEditMode: boolean) {
       return (
         <GitHubCommitsThisMonth
           {...sharedProps}
-          githubUsername={block.config.githubUsername}
+          githubUsername={block.data.githubUsername}
         />
       );
     case 'spotify-playing-now':
