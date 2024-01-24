@@ -1,5 +1,6 @@
 'use client';
 
+import dynamic from 'next/dynamic';
 import useSWR from 'swr';
 
 import { CoreBlock } from '@/app/components/CoreBlock';
@@ -8,7 +9,13 @@ import { fetcher } from '@/lib/fetch';
 
 import { BlockProps } from '../ui';
 import { MapBlockConfig } from './config';
-import { MapboxMap } from './ui-client';
+import { Props as DynamicMapboxMapProps } from './ui-client';
+
+// Dynamically import MapboxMap
+const DynamicMapboxMap = dynamic<DynamicMapboxMapProps>(
+  () => import('./ui-client').then((mod) => mod.MapboxMap),
+  { ssr: false }
+);
 
 export function Map(props: BlockProps) {
   const { data } = useSWR<MapBlockConfig>(
@@ -20,7 +27,7 @@ export function Map(props: BlockProps) {
 
   return (
     <CoreBlock className="relative !p-0 overflow-hidden" {...props}>
-      <MapboxMap
+      <DynamicMapboxMap
         className="absolute w-full h-full object-cover"
         coords={data?.coords}
       />

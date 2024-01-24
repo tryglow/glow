@@ -11,7 +11,7 @@ if (!process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN) {
 
 mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN;
 
-type Props = {
+export type Props = {
   className?: string;
 } & MapBlockConfig;
 
