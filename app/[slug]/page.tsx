@@ -1,3 +1,4 @@
+import type { Metadata, ResolvingMetadata } from 'next';
 import { getServerSession } from 'next-auth';
 import { notFound } from 'next/navigation';
 
@@ -40,6 +41,22 @@ const fetchData = async (slug: string) => {
     isEditMode,
   };
 };
+
+export async function generateMetadata(
+  { params }: { params: { slug: string } },
+  parent: ResolvingMetadata
+): Promise<Metadata> {
+  const pageSlug = params.slug;
+
+  const { data } = await fetchData(pageSlug);
+
+  const parentMeta = await parent;
+
+  return {
+    title: data.metaTitle || parentMeta.title?.absolute,
+    description: data.metaDescription || parentMeta.description,
+  };
+}
 
 interface Params {
   slug: string;
