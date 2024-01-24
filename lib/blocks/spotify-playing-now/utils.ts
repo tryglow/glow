@@ -85,7 +85,7 @@ const fetchSpotifyData = async (
     return {
       artistName: data?.item?.artists[0]?.name,
       name: data?.item?.name,
-      imageUrl: data?.item?.album?.images[0]?.url,
+      imageUrl: data?.item?.album?.images[2]?.url,
       isPlayingNow: true,
     };
   }
@@ -102,7 +102,7 @@ const fetchSpotifyData = async (
     return {
       artistName: recentlyPlayedData?.items[0]?.track?.artists[0]?.name,
       name: recentlyPlayedData?.items[0]?.track?.name,
-      imageUrl: recentlyPlayedData?.items[0]?.track?.album?.images[0]?.url,
+      imageUrl: recentlyPlayedData?.items[0]?.track?.album?.images[2]?.url,
       isPlayingNow: false,
     };
   }
