@@ -31,19 +31,21 @@ export function EditForm({
       onSubmit={onSubmit}
       enableReinitialize={true}
     >
-      {({ isSubmitting }) => (
+      {({ isSubmitting, errors }) => (
         <Form className="w-full flex flex-col">
           <FormField
             label="Title"
             name="title"
             id="title"
             placeholder="A title"
+            error={errors.title}
           />
           <FormField
             label="Content"
             name="content"
             id="content"
             placeholder="Some content"
+            error={errors.content}
           />
           <div className="flex flex-shrink-0 justify-between py-4 border-t border-stone-200">
             <Button variant="secondary" onClick={onClose}>

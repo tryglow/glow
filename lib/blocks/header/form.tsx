@@ -2,6 +2,7 @@ import { Form, Formik, FormikHelpers } from 'formik';
 import { Loader2 } from 'lucide-react';
 
 import { FormField } from '@/app/components/FormField';
+import { FormFileUpload } from '@/app/components/FormFileUpload';
 
 import { Button } from '@/components/ui/button';
 
@@ -12,6 +13,7 @@ export function EditForm({
   initialValues,
   onSave,
   onClose,
+  blockId,
 }: EditFormProps<HeaderBlockConfig>) {
   const onSubmit = async (
     values: HeaderBlockConfig,
@@ -34,11 +36,27 @@ export function EditForm({
       onSubmit={onSubmit}
       enableReinitialize={true}
     >
-      {({ isSubmitting }) => (
+      {({ isSubmitting, setFieldValue, errors }) => (
         <Form className="w-full flex flex-col">
-          <FormField label="Title" name="title" id="title" />
-          <FormField label="Subtitle" name="description" id="description" />
-          <FormField label="Avatar URL" name="avatar.src" id="avatar.src" />
+          <FormField
+            label="Title"
+            name="title"
+            id="title"
+            error={errors.title}
+          />
+          <FormField
+            label="Subtitle"
+            name="description"
+            id="description"
+            error={errors.description}
+          />
+
+          <FormFileUpload
+            onUploaded={(url) => setFieldValue('avatar.src', url)}
+            initialValue={initialValues?.avatar?.src}
+            blockId={blockId}
+          />
+
           <div className="flex flex-shrink-0 justify-between py-4 border-t border-stone-200">
             <Button type="button" variant="secondary" onClick={onClose}>
               ← Cancel

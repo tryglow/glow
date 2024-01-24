@@ -6,6 +6,9 @@ const nextConfig = {
       destination: '/i/landing-page',
     },
   ],
+  images: {
+    domains: ['cdn.dev.oneda.sh', 'cdn.oneda.sh'],
+  },
 };
 
 module.exports = nextConfig;
