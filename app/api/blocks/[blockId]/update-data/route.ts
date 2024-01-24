@@ -1,11 +1,15 @@
 import { getServerSession } from 'next-auth';
-import { authOptions } from '@/lib/auth';
-import prisma from '@/lib/prisma';
-import { blocksConfig } from '@/lib/blocks/config';
-import { Blocks } from '@/lib/blocks/types';
 import { ValidationError } from 'yup';
 
-export async function POST(req: Request) {
+import { authOptions } from '@/lib/auth';
+import { blocksConfig } from '@/lib/blocks/config';
+import { Blocks } from '@/lib/blocks/types';
+import prisma from '@/lib/prisma';
+
+export async function POST(
+  req: Request,
+  { params }: { params: { blockId: string } }
+) {
   const session = await getServerSession(authOptions);
 
   if (!session) {
@@ -16,10 +20,9 @@ export async function POST(req: Request) {
   }
 
   const bodyData = await req.json();
+  const blockId = params.blockId;
 
-  const { blockId, newData } = bodyData;
-
-  console.log('New Data', newData);
+  const { newData } = bodyData;
 
   if (!blockId || !newData) {
     return Response.json({
@@ -67,6 +70,8 @@ export async function POST(req: Request) {
         data: parsedData,
       },
     });
+
+    console.log('Updated', updatedBlock);
 
     return Response.json({
       data: {

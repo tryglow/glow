@@ -1,6 +1,8 @@
 'use client';
-import React, { useEffect, useRef } from 'react';
+
 import mapboxgl from 'mapbox-gl';
+import React, { useEffect, useRef } from 'react';
+
 import { MapBlockConfig } from './config';
 
 if (!process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN) {
@@ -30,7 +32,7 @@ export function MapboxMap({ className, coords }: Props) {
 
     // Clean up on unmount
     return () => map.remove();
-  }, []); // Empty dependency array ensures map only initialized once
+  }, [coords]); // Empty dependency array ensures map only initialized once
 
   return (
     <div

@@ -1,20 +1,21 @@
+import { FieldArray, Form, Formik, FormikHelpers } from 'formik';
+import { Loader2 } from 'lucide-react';
+
 import { FormField } from '@/app/components/FormField';
-import { FieldArray, Form, Formik, FormikHelpers, FormikProps } from 'formik';
-import { StackBlockConfig, StackSchema } from './config';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import { FormFileUpload } from '@/app/components/FormFileUpload';
 
-interface Props {
-  initialValues: StackBlockConfig;
-  onSave: (values: StackBlockConfig) => void;
-  formRef: {
-    current: FormikProps<StackBlockConfig> | null;
-  };
-}
+import { Button } from '@/components/ui/button';
+import { Label } from '@/components/ui/label';
 
-export function EditForm({ initialValues, onSave, formRef }: Props) {
+import { EditFormProps } from '../types';
+import { StackBlockConfig, StackSchema } from './config';
+
+export function EditForm({
+  initialValues,
+  onSave,
+  onClose,
+  blockId,
+}: EditFormProps<StackBlockConfig>) {
   const onSubmit = async (
     values: StackBlockConfig,
     { setSubmitting }: FormikHelpers<StackBlockConfig>
@@ -33,9 +34,8 @@ export function EditForm({ initialValues, onSave, formRef }: Props) {
       validationSchema={StackSchema}
       onSubmit={onSubmit}
       enableReinitialize={true}
-      innerRef={formRef}
     >
-      {({ values, setFieldValue }) => (
+      {({ values, setFieldValue, isSubmitting }) => (
         <Form className="w-full flex flex-col">
           <FormField label="Title" name="title" id="title" />
           <FormField label="Label" name="label" id="label" />
@@ -68,6 +68,7 @@ export function EditForm({ initialValues, onSave, formRef }: Props) {
                           onUploaded={(val) =>
                             setFieldValue(`items.${index}.icon`, val)
                           }
+                          blockId={blockId}
                         />
                         <Button
                           variant="ghost"
@@ -90,6 +91,17 @@ export function EditForm({ initialValues, onSave, formRef }: Props) {
               </>
             )}
           </FieldArray>
+          <div className="flex flex-shrink-0 justify-between py-4 border-t border-stone-200">
+            <Button variant="secondary" onClick={onClose}>
+              ← Cancel
+            </Button>
+            <Button type="submit">
+              {isSubmitting && (
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              )}
+              Save
+            </Button>
+          </div>
         </Form>
       )}
     </Formik>

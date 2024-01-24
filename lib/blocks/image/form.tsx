@@ -1,25 +1,19 @@
+import { Form, Formik, FormikHelpers } from 'formik';
+import { Loader2 } from 'lucide-react';
+
 import { FormFileUpload } from '@/app/components/FormFileUpload';
-import { Form, Formik, FormikHelpers, FormikProps } from 'formik';
-import { useRouter } from 'next/navigation';
-import * as Yup from 'yup';
-import { ImageBlockConfig } from './config';
 
-const FormSchema = Yup.object().shape({
-  title: Yup.string().required('Please provide a title'),
-  description: Yup.string().required('Please provide a subtitle'),
-  avatar: Yup.string().required('Please provide an avatar URL'),
-});
+import { Button } from '@/components/ui/button';
 
-interface Props {
-  initialValues: ImageBlockConfig;
-  onSave: (values: ImageBlockConfig) => void;
-  formRef: {
-    current: FormikProps<ImageBlockConfig> | null;
-  };
-}
+import { EditFormProps } from '../types';
+import { ImageBlockConfig, ImageSchema } from './config';
 
-export function EditForm({ initialValues, onSave, formRef }: Props) {
-  const router = useRouter();
+export function EditForm({
+  initialValues,
+  onSave,
+  onClose,
+  blockId,
+}: EditFormProps<ImageBlockConfig>) {
   const onSubmit = async (
     values: ImageBlockConfig,
     { setSubmitting }: FormikHelpers<ImageBlockConfig>
@@ -28,26 +22,33 @@ export function EditForm({ initialValues, onSave, formRef }: Props) {
     onSave(values);
   };
 
-  const handleUploadComplete = () => {
-    router.refresh();
-  };
-
   return (
     <Formik
       initialValues={{
         src: initialValues?.src ?? '',
       }}
-      validationSchema={FormSchema}
+      validationSchema={ImageSchema}
       onSubmit={onSubmit}
       enableReinitialize={true}
-      innerRef={formRef}
     >
-      {() => (
+      {({ isSubmitting, setValues, errors }) => (
         <Form className="w-full flex flex-col">
           <FormFileUpload
-            onUploaded={handleUploadComplete}
+            onUploaded={(url) => setValues({ src: url })}
             initialValue={initialValues?.src}
+            blockId={blockId}
           />
+          <div className="flex flex-shrink-0 justify-between py-4 border-t border-stone-200">
+            <Button variant="secondary" onClick={onClose}>
+              ← Cancel
+            </Button>
+            <Button type="submit">
+              {isSubmitting && (
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              )}
+              Save
+            </Button>
+          </div>
         </Form>
       )}
     </Formik>

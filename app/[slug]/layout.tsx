@@ -6,6 +6,8 @@ import { UserWidget } from '../components/UserWidget';
 import prisma from '@/lib/prisma';
 import { Button } from '@/components/ui/button';
 
+export const dynamic = 'force-dynamic';
+
 const fetchUserLoggedinStatus = async () => {
   const session = await getServerSession(authOptions);
 

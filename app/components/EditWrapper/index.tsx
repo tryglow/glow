@@ -1,34 +1,61 @@
 'use client';
 
-import { useEditModeContext } from '../../contexts/Edit';
-import { v4 as uuidv4 } from 'uuid';
-import { ReactNode, useOptimistic, useTransition } from 'react';
+import { useParams, useRouter } from 'next/navigation';
+import {
+  Children,
+  ReactNode,
+  cloneElement,
+  useEffect,
+  useOptimistic,
+  useTransition,
+} from 'react';
 import ReactGridLayout, {
   Layout,
   ReactGridLayoutProps,
 } from 'react-grid-layout';
-import { useParams, useRouter } from 'next/navigation';
+import useSWR from 'swr';
+import { v4 as uuidv4 } from 'uuid';
+
+import { fetcher } from '@/lib/fetch';
+
+import { useToast } from '@/components/ui/use-toast';
+
+import { useEditModeContext } from '../../contexts/Edit';
 import { CoreBlock } from '../CoreBlock';
 import { EditWidget } from '../EditWidget';
-import { useToast } from '@/components/ui/use-toast';
 
 interface Props {
   layout: Layout[];
-  children: ReactNode;
+  children: ReactNode[];
   layoutProps: ReactGridLayoutProps;
 }
 
-export function EditWrapper({ layout, children, layoutProps }: Props) {
+export function EditWrapper({ children, layoutProps }: Props) {
   const { draggingItem, setLayout } = useEditModeContext();
   const router = useRouter();
   const params = useParams();
   const { toast } = useToast();
-  const [isPending, startTransition] = useTransition();
-  const [optimisticItems, addOptimisticItem] = useOptimistic(
-    children,
-    // @ts-ignore
-    (state, newItem) => [...state, newItem]
+  const { data: layout, mutate: mutateLayout } = useSWR<Layout[]>(
+    `/api/pages/${params.slug}/layout`,
+    fetcher
   );
+
+  const [isPending, startTransition] = useTransition();
+  const [optimisticItems, setOptimisticItems] =
+    useOptimistic<ReactNode[]>(children);
+
+  useEffect(() => {
+    if (!optimisticItems) return;
+
+    const filteredItems = (optimisticItems as ReactNode[])?.filter(
+      (item: any) => {
+        return layout?.some((layoutItem) => layoutItem.i === item.key);
+      }
+    );
+
+    setOptimisticItems(filteredItems);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [layout]);
 
   const onDrop = async (
     newLayout: Layout[],
@@ -37,6 +64,9 @@ export function EditWrapper({ layout, children, layoutProps }: Props) {
   ) => {
     // Get the last item from the newLayout
     const lastItem = newLayout[newLayout.length - 1];
+    // setLayout(newLayout);
+
+    console.log('Last Item', lastItem);
 
     const newItemId = uuidv4();
 
@@ -49,11 +79,19 @@ export function EditWrapper({ layout, children, layoutProps }: Props) {
     };
 
     startTransition(async () => {
-      addOptimisticItem(
+      setOptimisticItems([
+        ...optimisticItems,
         <div key={newItemId} data-grid={newItemConfig} className="w-full h-14">
-          <CoreBlock>Loading...</CoreBlock>
-        </div>
-      );
+          <CoreBlock
+            blockId={newItemId}
+            blockType="default"
+            pageId="tmp-unknown"
+            isEditable={false}
+          >
+            Loading...
+          </CoreBlock>
+        </div>,
+      ]);
 
       await fetch('/api/page/blocks/add', {
         method: 'POST',
@@ -76,7 +114,9 @@ export function EditWrapper({ layout, children, layoutProps }: Props) {
   };
 
   const handleLayoutChange = async (newLayout: Layout[]) => {
-    setLayout(newLayout);
+    if (newLayout.length === 0) {
+      return;
+    }
 
     const checkIfLayoutContainsTmpBlocks = newLayout.find(
       (block) => block.i === 'tmp-block'
@@ -108,6 +148,12 @@ export function EditWrapper({ layout, children, layoutProps }: Props) {
         });
         return;
       }
+
+      toast({
+        title: 'Layout saved',
+      });
+
+      mutateLayout(newLayout);
     } catch (error) {
       console.log(error);
       toast({
@@ -125,6 +171,8 @@ export function EditWrapper({ layout, children, layoutProps }: Props) {
     onDropDragOver: (event: Event) => {
       return draggingItem;
     },
+    draggableCancel: '.noDrag',
+    useCSSTransforms: true,
   };
 
   return (

@@ -1,16 +1,9 @@
-import {
-  Form,
-  Formik,
-  FormikHelpers,
-  FormikProps,
-  useFormikContext,
-} from 'formik';
-
-import { ChangeEvent, useEffect, useRef, useState } from 'react';
 import { useLoadScript } from '@react-google-maps/api';
-import { MapBlockConfig } from './config';
-import { CaretSortIcon, CheckIcon } from '@radix-ui/react-icons';
-import { cn } from '@/lib/utils';
+import { Form, Formik, FormikHelpers, useFormikContext } from 'formik';
+import { Loader2 } from 'lucide-react';
+import { ChangeEvent, useEffect, useRef, useState } from 'react';
+
+import { Button } from '@/components/ui/button';
 import {
   Command,
   CommandEmpty,
@@ -19,12 +12,9 @@ import {
   CommandItem,
   CommandList,
 } from '@/components/ui/command';
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from '@/components/ui/popover';
-import { Button } from '@/components/ui/button';
+
+import { EditFormProps } from '../types';
+import { MapBlockConfig } from './config';
 
 declare global {
   namespace google.maps.places {
@@ -34,15 +24,11 @@ declare global {
   }
 }
 
-interface Props {
-  initialValues: MapBlockConfig;
-  onSave: (values: MapBlockConfig) => void;
-  formRef: {
-    current: FormikProps<MapBlockConfig> | null;
-  };
-}
-
-export function EditForm({ initialValues, onSave, formRef }: Props) {
+export function EditForm({
+  initialValues,
+  onSave,
+  onClose,
+}: EditFormProps<MapBlockConfig>) {
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY ?? '',
     libraries: ['places'],
@@ -67,11 +53,22 @@ export function EditForm({ initialValues, onSave, formRef }: Props) {
       }}
       onSubmit={handleSubmit}
       enableReinitialize={true}
-      innerRef={formRef}
     >
-      {() => (
+      {({ values, isSubmitting }) => (
         <Form className="w-full flex flex-col gap-2">
           <GoogleMapsAutoCompleteInput />
+
+          <div className="flex flex-shrink-0 justify-between py-4 border-t border-stone-200">
+            <Button variant="secondary" onClick={onClose}>
+              ← Cancel
+            </Button>
+            <Button type="submit">
+              {isSubmitting && (
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              )}
+              Save
+            </Button>
+          </div>
         </Form>
       )}
     </Formik>
@@ -79,7 +76,7 @@ export function EditForm({ initialValues, onSave, formRef }: Props) {
 }
 
 const GoogleMapsAutoCompleteInput = () => {
-  const { submitForm, setFieldValue, values } = useFormikContext();
+  const { submitForm, setFieldValue } = useFormikContext();
   const [input, setInput] = useState('');
   const [open, setOpen] = useState(false);
   const [predictions, setPredictions] = useState<
@@ -129,7 +126,7 @@ const GoogleMapsAutoCompleteInput = () => {
             long: firstResult.location.lng(),
           };
 
-          setFieldValue('coords', coords);
+          await setFieldValue('coords', coords);
 
           await submitForm();
         } else {

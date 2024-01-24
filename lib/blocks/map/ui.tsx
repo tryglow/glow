@@ -1,17 +1,29 @@
-import { FunctionComponent } from 'react';
-import { CoreBlock } from '@/app/components/CoreBlock';
-import { MapboxMap } from './ui-client';
-import { MapBlockConfig } from './config';
+'use client';
 
-const Map: FunctionComponent<MapBlockConfig> = async ({ coords }) => {
+import useSWR from 'swr';
+
+import { CoreBlock } from '@/app/components/CoreBlock';
+
+import { fetcher } from '@/lib/fetch';
+
+import { BlockProps } from '../ui';
+import { MapBlockConfig } from './config';
+import { MapboxMap } from './ui-client';
+
+export function Map(props: BlockProps) {
+  const { data } = useSWR<MapBlockConfig>(
+    `/api/blocks/${props.blockId}`,
+    fetcher
+  );
+
+  if (!data?.coords) return null;
+
   return (
-    <CoreBlock className="relative !p-0 overflow-hidden">
+    <CoreBlock className="relative !p-0 overflow-hidden" {...props}>
       <MapboxMap
         className="absolute w-full h-full object-cover"
-        coords={coords}
+        coords={data?.coords}
       />
     </CoreBlock>
   );
-};
-
-export default Map;
+}

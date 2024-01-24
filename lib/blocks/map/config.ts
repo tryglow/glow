@@ -1,3 +1,5 @@
+import * as Yup from 'yup';
+
 export interface MapBlockConfig {
   coords: {
     long: number;
@@ -11,3 +13,10 @@ export const defaults: MapBlockConfig = {
     lat: 51.7732,
   },
 };
+
+export const MapSchema = Yup.object().shape({
+  coords: Yup.object().shape({
+    long: Yup.number().required('Please provide a longitude'),
+    lat: Yup.number().required('Please provide a latitude'),
+  }),
+});

@@ -1,12 +1,14 @@
+'use server';
+
+import clsx from 'clsx';
 import { FunctionComponent } from 'react';
 
-import styles from './styles.module.css';
-import clsx from 'clsx';
-
-import { CoreBlock } from '@/app/components/CoreBlock';
 import { requestToken } from '@/app/api/services/spotify/callback/utils';
+
 import prisma from '@/lib/prisma';
+
 import { SpotifyIntegrationConfig } from './config';
+import styles from './styles.module.css';
 
 function fetchPlayingNow(accessToken: string) {
   return fetch('https://api.spotify.com/v1/me/player/currently-playing', {
@@ -52,10 +54,10 @@ const fetchSpotifyData = async (
           id: integrationId,
         },
         data: {
-          config: JSON.stringify({
+          config: {
             refreshToken: refreshTokenData.refresh_token,
             accessToken: refreshTokenData.access_token,
-          }),
+          },
         },
       });
 
@@ -128,6 +130,10 @@ const fetchData = async (pageId: string) => {
       return null;
     }
 
+    if (!data.config) {
+      return null;
+    }
+
     const config = data.config as unknown as SpotifyIntegrationConfig;
 
     if (!config.accessToken) {
@@ -138,6 +144,7 @@ const fetchData = async (pageId: string) => {
     }
 
     const spotifyData = await fetchSpotifyData(config, false, data.id);
+    console.log('Spotify Data', spotifyData);
     return spotifyData;
   } catch (error) {
     console.log(error);
@@ -146,60 +153,36 @@ const fetchData = async (pageId: string) => {
 };
 
 interface Props {
-  spotifyConfig: SpotifyIntegrationConfig;
   pageId: string;
 }
 
-const SpotifyPlayingNow: FunctionComponent<Props> = async ({ pageId }) => {
+export const SpotifyPlayingNowServerUI: FunctionComponent<Props> = async ({
+  pageId,
+}) => {
   const data = await fetchData(pageId);
 
   return (
-    <CoreBlock className="bg-gradient-to-tr from-[#1DB954] to-[#37bc66]">
-      <div className="flex gap-3">
-        <img
-          src={data?.imageUrl}
-          className="w-16 h-16 object-cover rounded-xl"
-          alt=""
-        />
+    <div className="flex gap-3">
+      <img
+        src={data?.imageUrl}
+        className="w-16 h-16 object-cover rounded-xl"
+        alt=""
+      />
 
-        <div className="flex flex-col justify-center">
-          <p className="text-sm text-system-bg-primary uppercase font-medium">
-            <span
-              className={clsx(
-                styles.bars,
-                data?.isPlayingNow && styles.animate
-              )}
-            >
-              <span />
-              <span />
-              <span />
-            </span>
-            {data?.isPlayingNow ? 'Playing Now' : 'Recently Played'}
-          </p>
-          <p className="text-md text-white font-bold">{data?.name}</p>
-          <p className="text-sm text-white">{data?.artistName}</p>
-        </div>
-      </div>
-    </CoreBlock>
-  );
-};
-
-export const LoadingState = () => {
-  return (
-    <div className="bg-system-bg-primary bg-gradient-to-tr from-[#1DB954] to-[#37bc66] border-system-bg-secondary border p-6 rounded-3xl">
-      <div className="flex gap-3">
-        <div className="w-16 h-16 object-cover rounded-xl bg-white/20" />
-
-        <div className="flex flex-col justify-center">
-          <p className="text-sm text-system-bg-primary uppercase font-medium">
-            ------
-          </p>
-          <p className="text-md text-white font-bold">----</p>
-          <p className="text-sm text-white">---</p>
-        </div>
+      <div className="flex flex-col justify-center">
+        <p className="text-sm text-system-bg-primary uppercase font-medium">
+          <span
+            className={clsx(styles.bars, data?.isPlayingNow && styles.animate)}
+          >
+            <span />
+            <span />
+            <span />
+          </span>
+          {data?.isPlayingNow ? 'Playing Now' : 'Recently Played'}
+        </p>
+        <p className="text-md text-white font-bold">{data?.name}</p>
+        <p className="text-sm text-white">{data?.artistName}</p>
       </div>
     </div>
   );
 };
-
-export default SpotifyPlayingNow;

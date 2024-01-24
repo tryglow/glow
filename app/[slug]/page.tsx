@@ -1,12 +1,12 @@
+import { getServerSession } from 'next-auth';
 import { notFound } from 'next/navigation';
 
-import Grid from './grid';
-import prisma from '@/lib/prisma';
-import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 import { BlockConfig, renderBlock } from '@/lib/blocks/ui';
-import { EditBlockToolbar } from '../components/EditBlockToolbar';
-import { Blocks } from '@/lib/blocks/types';
+import prisma from '@/lib/prisma';
+
+import { SWRProvider } from '../components/SWRProvider';
+import Grid from './grid';
 
 const fetchData = async (slug: string) => {
   let isEditMode = false;
@@ -51,22 +51,31 @@ export default async function Page({ params }: { params: Params }) {
 
   const config = data.config as unknown as BlockConfig[];
 
-  return (
-    <Grid layout={config} editMode={isEditMode}>
-      {data.blocks.map((block) => {
-        return (
-          <section key={block.id}>
-            {isEditMode && (
-              <EditBlockToolbar
-                blockId={block.id}
-                blockType={block.type as Blocks}
-              />
-            )}
+  const initialData: Record<string, any> = {};
 
-            {renderBlock(block, data.id)}
-          </section>
-        );
-      })}
-    </Grid>
+  data.blocks.forEach((block) => {
+    initialData[`/api/blocks/${block.id}`] = block.data;
+  });
+
+  initialData[`/api/pages/${slug}/layout`] = config;
+
+  return (
+    <SWRProvider
+      value={{
+        fallback: initialData,
+      }}
+    >
+      <Grid layout={config} editMode={isEditMode}>
+        {data.blocks
+          .filter((block) => config.find((conf) => conf.i === block.id))
+          .map((block) => {
+            return (
+              <section key={block.id}>
+                {renderBlock(block, data.id, isEditMode)}
+              </section>
+            );
+          })}
+      </Grid>
+    </SWRProvider>
   );
 }

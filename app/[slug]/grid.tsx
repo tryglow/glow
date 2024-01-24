@@ -1,18 +1,18 @@
-'use client'
+'use client';
 
-import { ReactNode } from 'react'
+import { ReactNode } from 'react';
 import ReactGridLayout, {
   Layout,
   ReactGridLayoutProps,
-} from 'react-grid-layout'
+} from 'react-grid-layout';
 
-import { EditWrapper } from '../components/EditWrapper'
-import { EditModeContextProvider } from '../contexts/Edit'
+import { EditWrapper } from '../components/EditWrapper';
+import { EditModeContextProvider } from '../contexts/Edit';
 
 interface Props {
-  layout: Layout[]
-  children: ReactNode
-  editMode?: boolean
+  layout: Layout[];
+  children: ReactNode[];
+  editMode?: boolean;
 }
 
 export default function Grid({ layout, children, editMode }: Props) {
@@ -26,7 +26,7 @@ export default function Grid({ layout, children, editMode }: Props) {
     isResizable: editMode ? true : false,
     isDraggable: editMode ? true : false,
     isDroppable: editMode ? true : false,
-  }
+  };
 
   if (editMode) {
     return (
@@ -35,12 +35,12 @@ export default function Grid({ layout, children, editMode }: Props) {
           {children}
         </EditWrapper>
       </EditModeContextProvider>
-    )
+    );
   }
 
   return (
     <ReactGridLayout layout={layout} {...layoutProps}>
       {children}
     </ReactGridLayout>
-  )
+  );
 }

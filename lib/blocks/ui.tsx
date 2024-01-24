@@ -1,19 +1,14 @@
-import { Suspense } from 'react';
 import { Content } from '@/lib/blocks/content/ui';
 import { Header } from '@/lib/blocks/header/ui';
 import { Stack } from '@/lib/blocks/stack/ui';
-import {
-  GitHubCommitsThisMonth,
-  LoadingState as GitHubCommitsThisMonthLoadingState,
-} from './github-commits-this-month/ui';
-import SpotifyPlayingNow, {
-  LoadingState as SpotifyPlayingNowLoadingState,
-} from './spotify-playing-now/ui';
+
+import { GitHubCommitsThisMonth } from './github-commits-this-month/ui-client';
 import { Image } from './image/ui';
-import TwitterLatestTweet from './twitter-latest-tweet/ui';
-import InstagramLatestPost from './instagram-latest-post/ui';
-import Map from './map/ui';
+import InstagramLatestPost from './instagram-latest-post/ui-client';
 import { LinkBox } from './link-box/ui';
+import { Map } from './map/ui';
+import SpotifyPlayingNow from './spotify-playing-now/ui-client';
+import { Blocks } from './types';
 
 export interface BlockConfig {
   x: number;
@@ -23,35 +18,47 @@ export interface BlockConfig {
   i: string;
 }
 
-export function renderBlock(block: any, pageId: string) {
+export interface BlockProps {
+  blockId: string;
+  blockType: Blocks | 'default';
+  isEditable: boolean;
+  pageId: string;
+}
+
+export function renderBlock(block: any, pageId: string, isEditMode: boolean) {
+  const sharedProps = {
+    blockId: block.id,
+    blockType: block.type,
+    isEditable: isEditMode,
+    pageId,
+  };
+
   switch (block.type) {
     case 'header':
-      return <Header {...block.data} pageId={pageId} />;
+      return <Header {...sharedProps} />;
     case 'content':
-      return <Content {...block.data} pageId={pageId} />;
+      return <Content {...sharedProps} />;
     case 'stack':
-      return <Stack {...block.data} pageId={pageId} />;
+      return <Stack {...sharedProps} />;
     case 'image':
-      return <Image {...block.data} pageId={pageId} />;
-    case 'twitter-latest-tweet':
-      return <TwitterLatestTweet {...block.data} pageId={pageId} />;
+      return (
+        // eslint-disable-next-line jsx-a11y/alt-text
+        <Image {...sharedProps} />
+      );
     case 'instagram-latest-post':
-      return <InstagramLatestPost {...block.data} pageId={pageId} />;
+      return <InstagramLatestPost {...sharedProps} />;
     case 'github-commits-this-month':
       return (
-        <Suspense fallback={<GitHubCommitsThisMonthLoadingState />}>
-          <GitHubCommitsThisMonth {...block.data} pageId={pageId} />
-        </Suspense>
+        <GitHubCommitsThisMonth
+          {...sharedProps}
+          githubUsername={block.config.githubUsername}
+        />
       );
     case 'spotify-playing-now':
-      return (
-        <Suspense fallback={<SpotifyPlayingNowLoadingState />}>
-          <SpotifyPlayingNow {...block.data} pageId={pageId} />
-        </Suspense>
-      );
+      return <SpotifyPlayingNow {...sharedProps} />;
     case 'map':
-      return <Map {...block.data} pageId={pageId} />;
+      return <Map {...sharedProps} />;
     case 'link-box':
-      return <LinkBox {...block.data} pageId={pageId} />;
+      return <LinkBox {...sharedProps} />;
   }
 }

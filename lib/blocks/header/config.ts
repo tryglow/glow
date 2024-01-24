@@ -19,5 +19,7 @@ export const defaults: HeaderBlockConfig = {
 export const HeaderSchema = Yup.object().shape({
   title: Yup.string().required('Please provide a title'),
   description: Yup.string().required('Please provide a subtitle'),
-  avatar: Yup.string().required('Please provide an avatar URL'),
+  avatar: Yup.object().shape({
+    src: Yup.string().required('Please provide an avatar URL'),
+  }),
 });

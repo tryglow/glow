@@ -1,30 +1,24 @@
 'use client';
-import { useEffect, useState } from 'react';
 
 import { Cog6ToothIcon } from '@heroicons/react/24/outline';
-import { useEditModeContext } from '@/app/contexts/Edit';
-import { DraggableBlockButton, config } from '../DraggableBlockButton';
 import { useParams } from 'next/navigation';
-import { EditForm } from '../EditForm';
-import { EditPageSettings } from './screens/EditPageSettings';
+import { useState } from 'react';
+
+import { useEditModeContext } from '@/app/contexts/Edit';
+
 import { Button } from '@/components/ui/button';
 
-export function EditWidget() {
-  const [open, setOpen] = useState(true);
+import { DraggableBlockButton, config } from '../DraggableBlockButton';
+import { EditPageSettings } from './screens/EditPageSettings';
 
+export function EditWidget() {
   const [visibleSection, setVisibleSection] = useState<
     'settings' | 'blocks' | 'drag'
   >('drag');
 
   const params = useParams();
 
-  const { layout, setSelectedBlock, selectedBlock } = useEditModeContext();
-
-  useEffect(() => {
-    if (selectedBlock?.id) {
-      setVisibleSection('blocks');
-    }
-  }, [selectedBlock]);
+  const { layout } = useEditModeContext();
 
   const onSaveLayout = async () => {
     const newLayout = layout.map((item) => {
@@ -100,18 +94,6 @@ export function EditWidget() {
                     Page Settings
                   </Button>
                 </div>
-              </>
-            )}
-
-            {visibleSection === 'blocks' && selectedBlock && (
-              <>
-                <EditWidgetHeader
-                  title={`Editing ${config[selectedBlock.type].title}`}
-                />
-
-                {selectedBlock.id && (
-                  <EditForm onBack={() => setVisibleSection('drag')} />
-                )}
               </>
             )}
           </div>

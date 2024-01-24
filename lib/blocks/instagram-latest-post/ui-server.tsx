@@ -1,10 +1,13 @@
-import { FunctionComponent } from 'react';
-import { formatDistance } from 'date-fns';
+'use server';
 
-import { CoreBlock } from '@/app/components/CoreBlock';
-import { refreshLongLivedToken } from '@/app/api/services/instagram/callback/utils';
-import prisma from '@/lib/prisma';
+import { formatDistance } from 'date-fns';
 import Link from 'next/link';
+import { FunctionComponent } from 'react';
+
+import { refreshLongLivedToken } from '@/app/api/services/instagram/callback/utils';
+
+import prisma from '@/lib/prisma';
+
 import { InstagramIntegrationConfig } from './config';
 
 function fetchLatestInstagramPost(
@@ -155,11 +158,9 @@ const InstagramLogo = () => {
   );
 };
 
-interface Props {
+export const InstagramLatestPostServerUI: FunctionComponent<{
   pageId: string;
-}
-
-const InstagramLatestPost: FunctionComponent<Props> = async ({ pageId }) => {
+}> = async ({ pageId }) => {
   const data = await fetchData(pageId);
 
   const formattedDate = data?.timestamp
@@ -170,16 +171,14 @@ const InstagramLatestPost: FunctionComponent<Props> = async ({ pageId }) => {
 
   if (!data) {
     return (
-      <CoreBlock className="flex items-center justify-center">
-        <span className="text-sm text-stone-500 text-center">
-          Edit this block to connect your Instagram account.
-        </span>
-      </CoreBlock>
+      <span className="text-sm text-stone-500 text-center">
+        Edit this block to connect your Instagram account.
+      </span>
     );
   }
 
   return (
-    <CoreBlock className="relative !p-0 overflow-hidden">
+    <>
       <img
         src={data?.imageUrl}
         className="absolute w-full h-full object-cover"
@@ -195,8 +194,6 @@ const InstagramLatestPost: FunctionComponent<Props> = async ({ pageId }) => {
           <InstagramLogo />
         </Link>
       </div>
-    </CoreBlock>
+    </>
   );
 };
-
-export default InstagramLatestPost;

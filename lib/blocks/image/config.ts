@@ -9,7 +9,5 @@ export const defaults: ImageBlockConfig = {
 };
 
 export const ImageSchema = Yup.object().shape({
-  title: Yup.string().required('Please provide a title'),
-  description: Yup.string().required('Please provide a subtitle'),
-  avatar: Yup.string().required('Please provide an avatar URL'),
+  src: Yup.string().required('Please provide an image URL.'),
 });

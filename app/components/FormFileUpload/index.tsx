@@ -1,61 +1,60 @@
-'use client'
+'use client';
 
-import { useEditModeContext } from '@/app/contexts/Edit'
-import { PhotoIcon } from '@heroicons/react/24/solid'
-import { ChangeEvent, useEffect, useState } from 'react'
+import { PhotoIcon } from '@heroicons/react/24/solid';
+import { ChangeEvent, useEffect, useState } from 'react';
 
 interface Props {
-  onUploaded: (url: string) => void
-  initialValue?: string
+  onUploaded: (url: string) => void;
+  initialValue?: string;
+  blockId: string;
 }
 
-export function FormFileUpload({ onUploaded, initialValue }: Props) {
-  const [uploadedFileUrl, setUploadedFileUrl] = useState<string | null>(null)
-  const { selectedBlock } = useEditModeContext()
+export function FormFileUpload({ onUploaded, initialValue, blockId }: Props) {
+  const [uploadedFileUrl, setUploadedFileUrl] = useState<string | null>(null);
 
   useEffect(() => {
     if (initialValue) {
-      setUploadedFileUrl(initialValue)
+      setUploadedFileUrl(initialValue);
     }
-  }, [initialValue])
+  }, [initialValue]);
   const handleUpload = async (ev: ChangeEvent<HTMLInputElement>) => {
-    ev.preventDefault()
+    ev.preventDefault();
 
-    const firstFile = ev.target?.files?.[0]
+    const firstFile = ev.target?.files?.[0];
 
-    if (!firstFile || !selectedBlock?.id) {
-      return
+    if (!firstFile || !blockId) {
+      return;
     }
 
     if (firstFile.size > 10 * 1024 * 1024) {
-      alert('File too large. Please upload a file smaller than 10MB.')
-      return
+      alert('File too large. Please upload a file smaller than 10MB.');
+      return;
     }
 
     if (!firstFile.type.startsWith('image/')) {
-      alert('Please upload an image file.')
-      return
+      alert('Please upload an image file.');
+      return;
     }
 
-    const body = new FormData()
+    const body = new FormData();
 
-    body.append('file', firstFile, firstFile.name)
-    body.append('blockId', selectedBlock.id)
+    body.append('file', firstFile, firstFile.name);
+    body.append('blockId', blockId);
 
     const response = await fetch('/api/page/blocks/upload-asset', {
       method: 'POST',
       body,
-    })
-    const responseData = await response.json()
+    });
+    const responseData = await response.json();
 
     if (!response.ok) {
-      alert(responseData.message)
-      return
+      alert(responseData.message);
+      return;
     }
 
-    onUploaded(responseData.url)
-    setUploadedFileUrl(responseData.url)
-  }
+    onUploaded(responseData.url);
+    setUploadedFileUrl(responseData.url);
+  };
 
   return (
     <>
@@ -97,5 +96,5 @@ export function FormFileUpload({ onUploaded, initialValue }: Props) {
         </div>
       </div>
     </>
-  )
+  );
 }

@@ -5,7 +5,13 @@ export type Blocks =
   | 'image'
   | 'github-commits-this-month'
   | 'spotify-playing-now'
-  | 'twitter-latest-tweet'
   | 'instagram-latest-post'
   | 'map'
   | 'link-box';
+
+export interface EditFormProps<T> {
+  initialValues: T;
+  onSave: (values: T) => void;
+  onClose: () => void;
+  blockId: string;
+}
