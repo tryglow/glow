@@ -164,6 +164,7 @@ export function EditWrapper({ children, layoutProps }: Props) {
     },
     draggableCancel: '.noDrag',
     useCSSTransforms: true,
+    compactType: undefined,
   };
 
   return (

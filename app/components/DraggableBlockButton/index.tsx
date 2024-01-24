@@ -114,7 +114,6 @@ export function DraggableBlockButton({ type }: Props) {
       unselectable="on"
       onDragStart={(e) => {
         setDraggingItem({
-          // TODO - use a real ID
           i: 'tmp-block',
           w: blockConfig.drag.w,
           h: blockConfig.drag.h,
