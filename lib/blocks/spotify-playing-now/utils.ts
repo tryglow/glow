@@ -44,10 +44,10 @@ const fetchSpotifyData = async (
 
     const refreshTokenData = await refreshTokenRequest.json();
 
-    console.log(refreshTokenData);
+    console.log('refreshTokenData', refreshTokenData);
 
     if (refreshTokenData?.access_token) {
-      console.log('Updating Spotify integration', integrationId);
+      console.log('utils.ts, Updating Spotify integration', integrationId);
       console.log(
         'Updating Spotify integration refreshTokenData',
         refreshTokenData
