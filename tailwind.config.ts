@@ -20,6 +20,21 @@ const config = {
     },
     extend: {
       colors: {
+        sys: {
+          bg: {
+            base: 'rgb(var(--color-sys-bg-base))',
+            primary: 'rgb(var(--color-sys-bg-primary))',
+            secondary: 'rgb(var(--color-sys-bg-secondary))',
+          },
+          label: {
+            primary: 'rgb(var(--color-sys-label-primary))',
+            secondary: 'rgb(var(--color-sys-label-secondary))',
+            tertiary: 'rgb(var(--color-sys-label-tertiary))',
+            quaternary: 'rgb(var(--color-sys-label-quaternary))',
+            positive: 'rgb(var(--color-sys-label-positive))',
+            negative: 'rgb(var(--color-sys-label-negative))',
+          },
+        },
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',
         ring: 'hsl(var(--ring))',

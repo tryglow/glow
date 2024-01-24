@@ -26,7 +26,7 @@ export function CoreBlock({
       className={clsx(
         'h-full overflow-hidden relative',
         !isFrameless &&
-          'bg-system-bg-primary border-system-bg-secondary border p-6 rounded-3xl shadow-md ',
+          'bg-sys-bg-primary border-system-bg-secondary border p-6 rounded-3xl shadow-md ',
         className
       )}
     >

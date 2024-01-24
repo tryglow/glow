@@ -29,12 +29,10 @@ export const Header: FunctionComponent<BlockProps> = (props) => {
             className="mb-6 rounded-lg"
           />
         )}
-        <h1 className="font-bold text-4xl mb-1 text-system-label-primary">
+        <h1 className="font-bold text-4xl mb-1 text-sys-label-primary">
           {data?.title}
         </h1>
-        <p className="text-2xl text-system-label-secondary">
-          {data?.description}
-        </p>
+        <p className="text-2xl text-sys-label-secondary">{data?.description}</p>
       </header>
     </CoreBlock>
   );

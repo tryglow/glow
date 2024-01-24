@@ -24,7 +24,7 @@ export const SpotifyPlayingNow: FunctionComponent<BlockProps> = ({
 
 export const LoadingState = () => {
   return (
-    <div className="bg-system-bg-primary bg-gradient-to-tr from-[#1DB954] to-[#37bc66] border-system-bg-secondary border p-6 rounded-3xl">
+    <div className="bg-system-bg-primary bg-gradient-to-tr from-[#0daa44] to-[#5acd83] border-system-bg-secondary border p-6 rounded-3xl">
       <div className="flex gap-3">
         <div className="w-16 h-16 object-cover rounded-xl bg-white/20" />
 

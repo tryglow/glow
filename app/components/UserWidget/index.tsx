@@ -1,24 +1,25 @@
 'use client';
 
+import { Page } from '@prisma/client';
+import { PlusCircledIcon } from '@radix-ui/react-icons';
+import { User } from 'next-auth';
+import { signOut } from 'next-auth/react';
+import Link from 'next/link';
+import { useState } from 'react';
+
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
   DropdownMenuContent,
+  DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-  DropdownMenuGroup,
 } from '@/components/ui/dropdown-menu';
 
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Button } from '@/components/ui/button';
-import { Page } from '@prisma/client';
-import { signOut } from 'next-auth/react';
-import { PlusCircledIcon } from '@radix-ui/react-icons';
-import { useState } from 'react';
 import { NewPageDialog } from '../NewPageDialog';
-import Link from 'next/link';
-import { User } from 'next-auth';
 
 interface Props {
   user: User;

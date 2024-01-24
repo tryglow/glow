@@ -1,10 +1,13 @@
 import { getServerSession } from 'next-auth';
-import { LoginWidget } from '../components/LoginWidget';
-import { authOptions } from '@/lib/auth';
 import Link from 'next/link';
-import { UserWidget } from '../components/UserWidget';
+
+import { authOptions } from '@/lib/auth';
 import prisma from '@/lib/prisma';
+
 import { Button } from '@/components/ui/button';
+
+import { LoginWidget } from '../components/LoginWidget';
+import { UserWidget } from '../components/UserWidget';
 
 export const dynamic = 'force-dynamic';
 

@@ -4,6 +4,43 @@
 
 @layer base {
   :root {
+    /* --color-sys-bg-primary: 28 28 30;
+    --color-sys-bg-secondary: 60 60 60;
+
+    --color-sys-label-primary: 255 255 255;
+    --color-sys-label-secondary: 200 200 200;
+    --color-sys-label-tertiary: 255 255 255;
+    --color-sys-label-quaternary: 255 255 255;
+    --color-sys-label-positive: 22 163 74;
+    --color-sys-label-negative: 220 38 38; */
+  }
+
+  /* :root {
+    --color-sys-bg-primary: 255 255 255;
+    --color-sys-bg-secondary: 230 230 230;
+
+    --color-sys-label-primary: 28 28 30;
+    --color-sys-label-secondary: 40 40 40;
+    --color-sys-label-tertiary: 255 255 255;
+    --color-sys-label-quaternary: 255 255 255;
+    --color-sys-label-positive: 22 163 74;
+    --color-sys-label-negative: 220 38 38;
+  } */
+
+  :root {
+    --color-sys-bg-base: 245 245 244;
+    --color-sys-bg-primary: 255 255 255;
+    --color-sys-bg-secondary: 230 230 230;
+
+    --color-sys-label-primary: 28 28 30;
+    --color-sys-label-secondary: 40 40 40;
+    --color-sys-label-tertiary: 255 255 255;
+    --color-sys-label-quaternary: 255 255 255;
+    --color-sys-label-positive: 22 163 74;
+    --color-sys-label-negative: 220 38 38;
+  }
+
+  :root {
     --background: 0 0% 100%;
     --foreground: 20 14.3% 4.1%;
 
@@ -71,7 +108,8 @@
     @apply border-border;
     -webkit-font-smoothing: antialiased;
   }
+
   body {
-    @apply bg-background text-foreground;
+    background-color: rgb(var(--color-sys-bg-base));
   }
 }
