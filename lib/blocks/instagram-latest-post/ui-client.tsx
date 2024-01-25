@@ -10,7 +10,7 @@ export const InstagramLatestPost: FunctionComponent<
   BlockProps & InstagramLatestPostBlockConfig
 > = ({ pageId, ...otherProps }) => {
   return (
-    <CoreBlock pageId={pageId} {...otherProps}>
+    <CoreBlock pageId={pageId} {...otherProps} className="p-0">
       <Suspense fallback={<LoadingState />}>
         <InstagramLatestPostServerUI pageId={pageId} />
       </Suspense>
