@@ -1,4 +1,5 @@
 import { getServerSession } from 'next-auth';
+import { redirect } from 'next/navigation';
 import { NextResponse } from 'next/server';
 
 import { authOptions } from '@/lib/auth';
@@ -64,7 +65,9 @@ export async function GET(request: Request) {
       });
     }
 
-    return NextResponse.json({ json });
+    return NextResponse.redirect(
+      `${process.env.NEXTAUTH_URL}/i/integration-callback/spotify`
+    );
   } catch (error) {
     console.error('Error getting token', error);
 
