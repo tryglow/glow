@@ -21,7 +21,7 @@ type FormValues = {
   pageSlug: string;
   metaTitle: string;
   published: boolean;
-  theme: string;
+  themeId: string;
 };
 
 interface Props {
@@ -51,7 +51,7 @@ export function EditPageSettingsForm({ onBack, initialValues }: Props) {
           metaTitle: values.metaTitle,
           published: values.published,
           currentPageSlug: params.slug,
-          theme: values.theme,
+          theme: values.themeId,
         }),
       });
 
@@ -97,7 +97,7 @@ export function EditPageSettingsForm({ onBack, initialValues }: Props) {
         pageSlug: initialValues.pageSlug,
         metaTitle: initialValues.metaTitle,
         published: initialValues.published,
-        theme: initialValues.theme,
+        themeId: initialValues.themeId,
       }}
       validationSchema={FormSchema}
       onSubmit={onSubmit}
@@ -130,10 +130,10 @@ export function EditPageSettingsForm({ onBack, initialValues }: Props) {
                 <div className="mt-4">
                   <FormField
                     label="Page theme"
-                    name="theme"
+                    name="themeId"
                     placeholder="Select a theme"
-                    id="theme"
-                    error={errors.theme}
+                    id="themeId"
+                    error={errors.themeId}
                   />
                 </div>
 

@@ -1,5 +1,4 @@
 import { getServerSession } from 'next-auth';
-import { redirect } from 'next/navigation';
 import { NextResponse } from 'next/server';
 
 import { authOptions } from '@/lib/auth';

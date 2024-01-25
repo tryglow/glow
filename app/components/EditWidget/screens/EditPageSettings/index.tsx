@@ -39,6 +39,7 @@ export function EditPageSettings({ onBack }: Props) {
           metaTitle: pageSettings?.metaTitle ?? '',
           pageSlug: pageSettings?.slug ?? '',
           published: pageSettings?.publishedAt ? true : false,
+          themeId: pageSettings?.themeId ?? 'default',
         }}
       />
     </>
