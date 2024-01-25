@@ -5,7 +5,7 @@ import { SVGProps } from 'react';
 import { GithubCommitsThisMonthBlockConfig } from './config';
 import { fetchGithubData } from './utils';
 
-const GithubLogo = (props: SVGProps<any>) => {
+export const GithubLogo = (props: SVGProps<any>) => {
   return (
     <svg
       viewBox="0 0 98 96"

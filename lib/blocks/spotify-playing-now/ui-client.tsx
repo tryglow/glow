@@ -2,8 +2,10 @@ import { FunctionComponent, Suspense } from 'react';
 
 import { CoreBlock } from '@/app/components/CoreBlock';
 
+import { Skeleton } from '@/components/ui/skeleton';
+
 import { BlockProps } from '../ui';
-import { SpotifyPlayingNowServerUI } from './ui-server';
+import { SpotifyLogo, SpotifyPlayingNowServerUI } from './ui-server';
 
 export const SpotifyPlayingNow: FunctionComponent<BlockProps> = ({
   pageId,
@@ -24,18 +26,14 @@ export const SpotifyPlayingNow: FunctionComponent<BlockProps> = ({
 
 export const LoadingState = () => {
   return (
-    <div className="bg-system-bg-primary bg-gradient-to-tr from-[#0A0B0D] to-[#402650] border-system-bg-secondary border p-6 rounded-3xl">
-      <div className="flex gap-3">
-        <div className="w-16 h-16 object-cover rounded-xl bg-white/20" />
+    <div className="flex gap-3">
+      <Skeleton className="w-16 h-16 rounded-xl bg-white/10" />
 
-        <div className="flex flex-col justify-center">
-          <p className="text-sm text-sys-bg-primary uppercase font-medium">
-            ------
-          </p>
-          <p className="text-md text-white font-bold">----</p>
-          <p className="text-sm text-white">---</p>
-        </div>
+      <div className="flex flex-col justify-center gap-3">
+        <Skeleton className="h-4 w-[250px] bg-white/10" />
+        <Skeleton className="h-3 w-[200px] bg-white/10" />
       </div>
+      <SpotifyLogo />
     </div>
   );
 };

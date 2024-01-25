@@ -2,9 +2,11 @@ import { FunctionComponent, Suspense } from 'react';
 
 import { CoreBlock } from '@/app/components/CoreBlock';
 
+import { Skeleton } from '@/components/ui/skeleton';
+
 import { BlockProps } from '../ui';
 import { GithubCommitsThisMonthBlockConfig } from './config';
-import { GithubServerUI } from './ui-server';
+import { GithubLogo, GithubServerUI } from './ui-server';
 
 export const GitHubCommitsThisMonth: FunctionComponent<
   BlockProps & GithubCommitsThisMonthBlockConfig
@@ -28,11 +30,10 @@ export const LoadingState = () => {
           </span>
         </div>
         <div className="flex items-center gap-4">
-          <span className="text-sys-label-primary text-4xl font-medium">
-            --
-          </span>
+          <Skeleton className="h-10 w-6" />
         </div>
       </div>
+      <GithubLogo className="absolute right-6 bottom-6" />
     </div>
   );
 };

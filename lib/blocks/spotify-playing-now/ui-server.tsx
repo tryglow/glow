@@ -9,7 +9,7 @@ interface Props {
   pageId: string;
 }
 
-const SpotifyLogo = () => {
+export const SpotifyLogo = () => {
   return (
     <svg
       width={24}
