@@ -4,14 +4,14 @@ import { FunctionComponent } from 'react';
 
 import { fetchData } from './utils';
 
-const InstagramLogo = () => {
+export const InstagramLogo = ({ stroke = '#fff' }) => {
   return (
     <svg
       width="24"
       height="24"
       viewBox="0 0 24 24"
       fill="none"
-      stroke="#fff"
+      stroke={stroke}
       strokeWidth="2"
       strokeLinecap="round"
       strokeLinejoin="round"
