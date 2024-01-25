@@ -39,15 +39,15 @@ const InstagramLogo = () => {
           gradientUnits="userSpaceOnUse"
         />
         <linearGradient id="b">
-          <stop offset="0" stop-color="#3771c8" />
-          <stop offset=".128" stop-color="#3771c8" />
-          <stop offset="1" stop-color="#60f" stop-opacity="0" />
+          <stop offset="0" stopColor="#3771c8" />
+          <stop offset=".128" stopColor="#3771c8" />
+          <stop offset="1" stopColor="#60f" stopOpacity="0" />
         </linearGradient>
         <linearGradient id="a">
-          <stop offset="0" stop-color="#fd5" />
-          <stop offset=".1" stop-color="#fd5" />
-          <stop offset=".5" stop-color="#ff543e" />
-          <stop offset="1" stop-color="#c837ab" />
+          <stop offset="0" stopColor="#fd5" />
+          <stop offset=".1" stopColor="#fd5" />
+          <stop offset=".5" stopColor="#ff543e" />
+          <stop offset="1" stopColor="#c837ab" />
         </linearGradient>
       </defs>
       <path
