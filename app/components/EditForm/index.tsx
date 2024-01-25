@@ -1,4 +1,3 @@
-import { useRouter } from 'next/navigation';
 import useSWR from 'swr';
 
 import { editForms } from '@/lib/blocks/edit';
@@ -14,7 +13,6 @@ interface Props {
 }
 
 export function EditForm({ onClose, blockId, blockType }: Props) {
-  const router = useRouter();
   const { data: initialValues, mutate } = useSWR(
     `/api/blocks/${blockId}`,
     fetcher
@@ -34,7 +32,6 @@ export function EditForm({ onClose, blockId, blockType }: Props) {
 
       if (req.ok) {
         mutate(values);
-        // onClose();
         toast({
           title: 'Saved!',
           description: 'Your changes have been saved.',

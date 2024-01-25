@@ -1,3 +1,4 @@
+import { Integration } from '@prisma/client';
 import type { Metadata, ResolvingMetadata } from 'next';
 import { getServerSession } from 'next-auth';
 import { notFound } from 'next/navigation';
@@ -26,6 +27,16 @@ const fetchData = async (slug: string) => {
     },
   });
 
+  let integrations: any = [];
+
+  if (user) {
+    integrations = await prisma.integration.findMany({
+      where: {
+        userId: user.id,
+      },
+    });
+  }
+
   if (!data) notFound();
 
   if (user && data?.userId === user.id) {
@@ -38,6 +49,7 @@ const fetchData = async (slug: string) => {
 
   return {
     data,
+    integrations,
     isEditMode,
   };
 };
@@ -62,19 +74,25 @@ interface Params {
   slug: string;
 }
 
+export type InitialDataUsersIntegrations = Pick<
+  Integration,
+  'id' | 'createdAt' | 'type'
+>[];
+
 export default async function Page({ params }: { params: Params }) {
   const { slug } = params;
-  const { data, isEditMode } = await fetchData(slug);
+  const { data, integrations, isEditMode } = await fetchData(slug);
 
   const config = data.config as unknown as BlockConfig[];
 
-  const initialData: Record<string, any> = {};
+  const initialData: Record<string, any> = {
+    [`/api/pages/${slug}/layout`]: config,
+    '/api/user/integrations': integrations,
+  };
 
   data.blocks.forEach((block) => {
     initialData[`/api/blocks/${block.id}`] = block.data;
   });
-
-  initialData[`/api/pages/${slug}/layout`] = config;
 
   return (
     <SWRProvider

@@ -20,6 +20,6 @@ export const HeaderSchema = Yup.object().shape({
   title: Yup.string().required('Please provide a title'),
   description: Yup.string().required('Please provide a subtitle'),
   avatar: Yup.object().shape({
-    src: Yup.string().required('Please provide an avatar URL'),
+    src: Yup.string(),
   }),
 });

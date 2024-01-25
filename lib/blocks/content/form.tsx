@@ -32,7 +32,7 @@ export function EditForm({
       enableReinitialize={true}
     >
       {({ isSubmitting, errors }) => (
-        <Form className="w-full flex flex-col">
+        <Form className="w-full flex flex-col gap-2">
           <FormField
             label="Title"
             name="title"

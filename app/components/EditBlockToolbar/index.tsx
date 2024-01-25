@@ -108,13 +108,12 @@ export function EditBlockToolbar({ blockId, blockType }: Props) {
           <SheetHeader className="border-b border-stone-200 pb-2 mb-4">
             <SheetTitle>Editing {config[blockType].title}</SheetTitle>
           </SheetHeader>
-          <SheetDescription>
-            <EditForm
-              onClose={() => setOpen(false)}
-              blockId={blockId}
-              blockType={blockType}
-            />
-          </SheetDescription>
+
+          <EditForm
+            onClose={() => setOpen(false)}
+            blockId={blockId}
+            blockType={blockType}
+          />
         </SheetContent>
       </Sheet>
     </>

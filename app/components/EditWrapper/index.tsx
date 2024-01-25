@@ -1,7 +1,13 @@
 'use client';
 
 import { useParams, useRouter } from 'next/navigation';
-import { ReactNode, useEffect, useOptimistic, useTransition } from 'react';
+import {
+  ReactNode,
+  useEffect,
+  useOptimistic,
+  useState,
+  useTransition,
+} from 'react';
 import ReactGridLayout, {
   Layout,
   ReactGridLayoutProps,
@@ -14,8 +20,8 @@ import { fetcher } from '@/lib/fetch';
 import { useToast } from '@/components/ui/use-toast';
 
 import { useEditModeContext } from '../../contexts/Edit';
+import { BlockSheet } from '../BlockSheet';
 import { CoreBlock } from '../CoreBlock';
-import { EditWidget } from '../EditWidget';
 
 interface Props {
   layout: Layout[];
@@ -34,6 +40,7 @@ export function EditWrapper({ children, layoutProps }: Props) {
   );
 
   const [isPending, startTransition] = useTransition();
+
   const [optimisticItems, setOptimisticItems] =
     useOptimistic<ReactNode[]>(children);
 
@@ -162,6 +169,7 @@ export function EditWrapper({ children, layoutProps }: Props) {
     onDropDragOver: (event: Event) => {
       return draggingItem;
     },
+
     draggableCancel: '.noDrag',
     useCSSTransforms: true,
     compactType: undefined,
@@ -172,7 +180,7 @@ export function EditWrapper({ children, layoutProps }: Props) {
       <ReactGridLayout layout={layout} {...editableLayoutProps}>
         {optimisticItems}
       </ReactGridLayout>
-      <EditWidget />
+      <BlockSheet />
     </>
   );
 }
