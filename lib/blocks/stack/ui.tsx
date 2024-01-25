@@ -11,7 +11,7 @@ import { BlockProps } from '../ui';
 import { StackBlockConfig } from './config';
 
 export const Stack: FunctionComponent<BlockProps> = (props) => {
-  const { data, error } = useSWR<StackBlockConfig>(
+  const { data } = useSWR<StackBlockConfig>(
     `/api/blocks/${props.blockId}`,
     fetcher
   );

@@ -87,8 +87,11 @@ export default async function Page({ params }: { params: Params }) {
 
   const initialData: Record<string, any> = {
     [`/api/pages/${slug}/layout`]: config,
-    '/api/user/integrations': integrations,
   };
+
+  if (isEditMode) {
+    initialData['/api/user/integrations'] = integrations;
+  }
 
   data.blocks.forEach((block) => {
     initialData[`/api/blocks/${block.id}`] = block.data;
