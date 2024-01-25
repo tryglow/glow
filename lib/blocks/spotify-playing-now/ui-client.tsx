@@ -29,7 +29,7 @@ export const LoadingState = () => {
         <div className="w-16 h-16 object-cover rounded-xl bg-white/20" />
 
         <div className="flex flex-col justify-center">
-          <p className="text-sm text-system-bg-primary uppercase font-medium">
+          <p className="text-sm text-sys-bg-primary uppercase font-medium">
             ------
           </p>
           <p className="text-md text-white font-bold">----</p>

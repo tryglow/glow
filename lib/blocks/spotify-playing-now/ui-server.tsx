@@ -15,7 +15,7 @@ const SpotifyLogo = () => {
       width={24}
       height={24}
       viewBox="0 0 496 512"
-      className="absolute right-4 bottom-4"
+      className="absolute right-6 bottom-6"
     >
       <path
         fill="#1ed760"

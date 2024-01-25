@@ -56,7 +56,7 @@ export default async function PageLayout({
 
       <footer className="w-full max-w-2xl mx-auto text-center py-6 border-t border-gray-200">
         <Link href="/" className="flex flex-col items-center">
-          <span className="text-system-label-secondary/50 text-xs">
+          <span className="text-sys-label-secondary/50 text-xs">
             Powered by onedash
           </span>
           <svg viewBox="0 0 196 240" width={20} fill="none" className="mt-4">

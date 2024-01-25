@@ -19,10 +19,10 @@ export const Content: FunctionComponent<BlockProps> = (props) => {
   return (
     <CoreBlock {...props} isFrameless>
       <div className="py-4 h-full overflow-hidden">
-        <h2 className="text-2xl font-medium text-system-label-primary">
+        <h2 className="text-2xl font-medium text-sys-label-primary">
           {data?.title}
         </h2>
-        <p className="text-lg text-system-label-secondary">{data?.content}</p>
+        <p className="text-lg text-sys-label-secondary">{data?.content}</p>
       </div>
     </CoreBlock>
   );

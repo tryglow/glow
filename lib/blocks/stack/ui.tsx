@@ -20,10 +20,10 @@ export const Stack: FunctionComponent<BlockProps> = (props) => {
 
   return (
     <CoreBlock {...props}>
-      <h2 className="text-2xl font-medium text-system-label-primary">
+      <h2 className="text-2xl font-medium text-sys-label-primary">
         {data?.title}
       </h2>
-      <p className="text-md text-system-label-secondary">{data?.label}</p>
+      <p className="text-md text-sys-label-secondary">{data?.label}</p>
 
       <div className="flex flex-col gap-6 mt-6">
         {data?.items.map((item) => {
@@ -35,12 +35,10 @@ export const Stack: FunctionComponent<BlockProps> = (props) => {
                 className="w-10 h-10 rounded-md"
               />
               <div className="flex flex-col">
-                <h3 className="font-medium text-system-label-primary text-lg mb-0">
+                <h3 className="font-medium text-sys-label-primary text-lg mb-0">
                   {item.title}
                 </h3>
-                <p className="text-system-label-secondary -mt-1">
-                  {item.label}
-                </p>
+                <p className="text-sys-label-secondary -mt-1">{item.label}</p>
               </div>
             </div>
           );
