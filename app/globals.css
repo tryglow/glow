@@ -113,3 +113,7 @@
     background-color: rgb(var(--color-sys-bg-base));
   }
 }
+
+.mapboxgl-control-container {
+  display: none !important;
+}

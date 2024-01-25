@@ -1,6 +1,7 @@
 'use client';
 
 import mapboxgl, { Map } from 'mapbox-gl';
+import 'mapbox-gl/dist/mapbox-gl.css';
 import React, { useEffect, useRef } from 'react';
 
 import { MapBlockConfig } from './config';
