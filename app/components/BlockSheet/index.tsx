@@ -50,24 +50,23 @@ export function BlockSheet() {
                 Add Blocks
               </SheetTitle>
             </SheetHeader>
-            <SheetDescription>
-              <div
-                className="overflow-y-auto h-auto"
-                style={{ maxHeight: 'calc(100vh - 90px)' }}
-              >
-                <div className="space-y-3 flex flex-col">
-                  <DraggableBlockButton type="header" />
-                  <DraggableBlockButton type="content" />
-                  <DraggableBlockButton type="stack" />
-                  <DraggableBlockButton type="image" />
-                  <DraggableBlockButton type="map" />
-                  <DraggableBlockButton type="github-commits-this-month" />
-                  <DraggableBlockButton type="spotify-playing-now" />
-                  <DraggableBlockButton type="instagram-latest-post" />
-                  <DraggableBlockButton type="link-box" />
-                </div>
+
+            <div
+              className="overflow-y-auto h-auto"
+              style={{ maxHeight: 'calc(100vh - 90px)' }}
+            >
+              <div className="space-y-3 flex flex-col">
+                <DraggableBlockButton type="header" />
+                <DraggableBlockButton type="content" />
+                <DraggableBlockButton type="stack" />
+                <DraggableBlockButton type="image" />
+                <DraggableBlockButton type="map" />
+                <DraggableBlockButton type="github-commits-this-month" />
+                <DraggableBlockButton type="spotify-playing-now" />
+                <DraggableBlockButton type="instagram-latest-post" />
+                <DraggableBlockButton type="link-box" />
               </div>
-            </SheetDescription>
+            </div>
           </SheetContent>
         </Sheet>
       </div>

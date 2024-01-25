@@ -12,6 +12,7 @@ import ReactGridLayout, {
   Layout,
   ReactGridLayoutProps,
 } from 'react-grid-layout';
+import { start } from 'repl';
 import useSWR from 'swr';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -53,7 +54,9 @@ export function EditWrapper({ children, layoutProps }: Props) {
       }
     );
 
-    setOptimisticItems(filteredItems);
+    startTransition(() => {
+      setOptimisticItems(filteredItems);
+    });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [layout]);
 
