@@ -1,13 +1,7 @@
 'use client';
 
 import clsx from 'clsx';
-import { LinkProps } from 'next/link';
-import {
-  AnchorHTMLAttributes,
-  JSXElementConstructor,
-  ReactElement,
-  ReactNode,
-} from 'react';
+import { AnchorHTMLAttributes, JSXElementConstructor, ReactNode } from 'react';
 
 import { BlockProps } from '@/lib/blocks/ui';
 
