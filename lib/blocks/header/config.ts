@@ -10,10 +10,10 @@ export interface HeaderBlockConfig {
 
 export const defaults: HeaderBlockConfig = {
   avatar: {
-    src: '/demo/avatar.svg',
+    src: 'https://cdn.oneda.sh/default-data/avatar.svg',
   },
-  title: 'Alex Pate',
-  description: 'A generic header component to display a title',
+  title: 'Hello World',
+  description: 'Welcome to your new page',
 };
 
 export const HeaderSchema = Yup.object().shape({

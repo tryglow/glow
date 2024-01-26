@@ -1,4 +1,6 @@
 import { randomUUID } from 'crypto';
+
+import { defaults as headerDefaults } from './blocks/header/config';
 import prisma from './prisma';
 
 export const MAX_PAGES_PER_USER = 2;
@@ -26,13 +28,7 @@ export function createNewPage(userId: string, pageSlug: string) {
           id: headerSectionId,
           type: 'header',
           config: {},
-          data: {
-            title: 'Get started with your new page',
-            avatar: {
-              src: '/demo/avatar.svg',
-            },
-            description: 'A generic header component to display a title',
-          },
+          data: headerDefaults as any,
         },
       },
     },
