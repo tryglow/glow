@@ -192,14 +192,13 @@ export function EditWrapper({ children, layoutProps }: Props) {
     }
   };
 
-  const editableLayoutProps: any = {
+  const editableLayoutProps: ResponsiveProps = {
     ...layoutProps,
     onDrop,
     onLayoutChange: handleLayoutChange,
     onDropDragOver: (event: Event) => {
       return draggingItem;
     },
-
     draggableCancel: '.noDrag',
     useCSSTransforms: true,
     compactType: undefined,
@@ -210,11 +209,11 @@ export function EditWrapper({ children, layoutProps }: Props) {
       <ResponsiveReactGridLayout
         {...editableLayoutProps}
         layouts={{
-          lg: layout?.sm,
-          md: layout?.sm,
-          sm: layout?.sm,
-          xs: layout?.sm,
-          xxs: layout?.xss,
+          lg: layout?.sm ?? [],
+          md: layout?.sm ?? [],
+          sm: layout?.sm ?? [],
+          xs: layout?.sm ?? [],
+          xxs: layout?.xss ?? [],
         }}
       >
         {optimisticItems}
