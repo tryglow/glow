@@ -91,8 +91,8 @@ export const config: Record<
     label: 'Display a nicely formatted link',
     icon: '/ui/type-link-box.svg',
     drag: {
-      w: 6,
-      h: 6,
+      w: 12,
+      h: 2,
     },
   },
 };
