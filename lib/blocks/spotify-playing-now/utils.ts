@@ -6,8 +6,6 @@ import prisma from '@/lib/prisma';
 
 import { SpotifyIntegrationConfig } from './config';
 
-export const revalidate = 60;
-
 function fetchPlayingNow(accessToken: string) {
   return fetch('https://api.spotify.com/v1/me/player/currently-playing', {
     headers: {
