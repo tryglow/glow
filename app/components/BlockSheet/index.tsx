@@ -39,7 +39,7 @@ export function BlockSheet() {
       <div
         className="fixed h-screen w-60 bg-gradient-to-r from-transparent to-black/10 right-0 top-0 flex items-center justify-center"
         onMouseOver={() => setOpen(true)}
-        // onMouseLeave={() => setOpen(false)}
+        onMouseLeave={() => setOpen(false)}
       >
         <div className="text-black font-4xl font-bold">+ New block</div>
         <Sheet open={open} onOpenChange={setOpen}>
