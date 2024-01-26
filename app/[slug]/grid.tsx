@@ -19,7 +19,7 @@ export default function Grid({ layout, children, editMode }: Props) {
   const layoutProps: ReactGridLayoutProps = {
     useCSSTransforms: true,
     width: 624,
-    rowHeight: 30,
+    rowHeight: 32,
     cols: 12,
     margin: [10, 10],
     compactType: 'vertical',

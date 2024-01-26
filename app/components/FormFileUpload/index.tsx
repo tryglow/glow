@@ -1,7 +1,6 @@
 'use client';
 
 import { PhotoIcon } from '@heroicons/react/24/solid';
-import { set } from 'date-fns';
 import { ChangeEvent, useEffect, useState } from 'react';
 
 import { Button } from '@/components/ui/button';
@@ -10,9 +9,15 @@ interface Props {
   onUploaded: (url: string) => void;
   initialValue?: string;
   blockId: string;
+  label?: string;
 }
 
-export function FormFileUpload({ onUploaded, initialValue, blockId }: Props) {
+export function FormFileUpload({
+  onUploaded,
+  initialValue,
+  blockId,
+  label = 'Asset',
+}: Props) {
   const [uploadedFileUrl, setUploadedFileUrl] = useState<string | null>(null);
 
   useEffect(() => {
@@ -70,7 +75,7 @@ export function FormFileUpload({ onUploaded, initialValue, blockId }: Props) {
         htmlFor="cover-photo"
         className="block text-sm font-medium leading-6 text-gray-900"
       >
-        Asset
+        {label}
       </label>
       {uploadedFileUrl && (
         <div className="flex items-center gap-2">
