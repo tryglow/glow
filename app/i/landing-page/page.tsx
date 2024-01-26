@@ -1,8 +1,29 @@
-import { LoginWidget } from '@/app/components/LoginWidget';
-import { Button } from '@/components/ui/button';
 import Image from 'next/image';
 
+import { LoginWidget } from '@/app/components/LoginWidget';
+
+import { Button } from '@/components/ui/button';
+
 export default function LandingPage() {
+  return (
+    <main className="bg-gradient-to-b from-white to-stone-100 min-h-screen">
+      <section className="py-24 md:pt-48 md:pb-32">
+        <div className="container mx-auto px-4 flex flex-col justify-center items-center">
+          <div className="flex flex-col justify-center md:items-center max-w-4xl text-left md:text-center">
+            <h1 className="text-2xl md:text-6xl font-medium">oneda.sh</h1>
+
+            <LoginWidget
+              trigger={
+                <Button size="xl" className="mt-5">
+                  Get started
+                </Button>
+              }
+            />
+          </div>
+        </div>
+      </section>
+    </main>
+  );
   return (
     <main className="bg-gradient-to-b from-white to-stone-100">
       <section className="py-24 md:pt-48 md:pb-32">

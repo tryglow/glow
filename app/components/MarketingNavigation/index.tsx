@@ -1,12 +1,12 @@
 'use client';
 
-import { ReactNode, useState } from 'react';
 import { Dialog } from '@headlessui/react';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
+import Link from 'next/link';
+import { ReactNode, useState } from 'react';
 
 import { Button } from '@/components/ui/button';
 
-import Link from 'next/link';
 import { LoginWidget } from '../LoginWidget';
 
 const navigation = [
@@ -42,7 +42,7 @@ export default function MarketingNavigation({ children }: Props) {
               <span className="font-medium">oneda.sh</span>
             </Link>
           </div>
-          <div className="hidden lg:flex lg:gap-x-2">
+          {/* <div className="hidden lg:flex lg:gap-x-2">
             {navigation.map((item) => {
               return (
                 <Button variant="ghost" asChild key={item.name}>
@@ -50,7 +50,7 @@ export default function MarketingNavigation({ children }: Props) {
                 </Button>
               );
             })}
-          </div>
+          </div> */}
           <div className="flex flex-1 items-center justify-end gap-x-3">
             {children}
           </div>
@@ -101,7 +101,7 @@ export default function MarketingNavigation({ children }: Props) {
             </div>
             <div className="mt-6 flow-root">
               <div className="-my-6 divide-y divide-gray-500/10">
-                <div className="space-y-2 py-6">
+                {/* <div className="space-y-2 py-6">
                   {navigation.map((item) => (
                     <a
                       key={item.name}
@@ -111,7 +111,7 @@ export default function MarketingNavigation({ children }: Props) {
                       {item.name}
                     </a>
                   ))}
-                </div>
+                </div> */}
                 <div className="py-6">
                   <a
                     href="#"
