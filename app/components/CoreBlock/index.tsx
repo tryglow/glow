@@ -1,7 +1,13 @@
 'use client';
 
 import clsx from 'clsx';
-import { ReactNode } from 'react';
+import { LinkProps } from 'next/link';
+import {
+  AnchorHTMLAttributes,
+  JSXElementConstructor,
+  ReactElement,
+  ReactNode,
+} from 'react';
 
 import { BlockProps } from '@/lib/blocks/ui';
 
@@ -11,6 +17,8 @@ interface Props extends BlockProps {
   className?: string;
   children: ReactNode;
   isFrameless?: boolean;
+  component?: string | JSXElementConstructor<any>;
+  linkProps?: AnchorHTMLAttributes<HTMLAnchorElement>;
 }
 
 export function CoreBlock({
@@ -20,20 +28,23 @@ export function CoreBlock({
   className,
   children,
   isFrameless,
+  component: Component = 'div',
+  linkProps,
 }: Props) {
   return (
-    <div
+    <Component
       className={clsx(
         'h-full overflow-hidden relative',
         !isFrameless &&
           'bg-sys-bg-primary border-system-bg-secondary border p-6 rounded-3xl shadow-md ',
         className
       )}
+      {...linkProps}
     >
       {children}
       {isEditable && blockType !== 'default' && (
         <EditBlockToolbar blockId={blockId} blockType={blockType} />
       )}
-    </div>
+    </Component>
   );
 }
