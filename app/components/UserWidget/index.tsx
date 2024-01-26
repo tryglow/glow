@@ -1,5 +1,6 @@
 'use client';
 
+import { Cog6ToothIcon } from '@heroicons/react/24/outline';
 import { Page } from '@prisma/client';
 import { PlusCircledIcon } from '@radix-ui/react-icons';
 import { User } from 'next-auth';
@@ -19,6 +20,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 
+import { EditPageSettingsDialog } from '../EditPageSettingsDialog';
 import { NewPageDialog } from '../NewPageDialog';
 
 interface Props {
@@ -28,6 +30,8 @@ interface Props {
 
 export function UserWidget({ user, usersPages }: Props) {
   const [showNewTeamDialog, setShowNewTeamDialog] = useState(false);
+  const [showEditPageSettingsDialog, setShowEditPageSettingsDialog] =
+    useState(false);
   return (
     <>
       <DropdownMenu>
@@ -64,6 +68,15 @@ export function UserWidget({ user, usersPages }: Props) {
           </DropdownMenuGroup>
           <DropdownMenuSeparator />
           <DropdownMenuGroup>
+            <DropdownMenuItem
+              onClick={() => setShowEditPageSettingsDialog(true)}
+            >
+              <Cog6ToothIcon className="mr-2 h-5 w-5" />
+              Page Settings
+            </DropdownMenuItem>
+          </DropdownMenuGroup>
+          <DropdownMenuSeparator />
+          <DropdownMenuGroup>
             <DropdownMenuItem onClick={() => setShowNewTeamDialog(true)}>
               <PlusCircledIcon className="mr-2 h-5 w-5" />
               New Page
@@ -77,6 +90,11 @@ export function UserWidget({ user, usersPages }: Props) {
         open={showNewTeamDialog}
         onOpenChange={setShowNewTeamDialog}
         onClose={() => setShowNewTeamDialog(false)}
+      />
+      <EditPageSettingsDialog
+        open={showEditPageSettingsDialog}
+        onOpenChange={setShowEditPageSettingsDialog}
+        onClose={() => setShowEditPageSettingsDialog(false)}
       />
     </>
   );

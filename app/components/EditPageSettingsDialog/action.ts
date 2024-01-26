@@ -1,13 +1,15 @@
-'use server'
-import { getServerSession } from 'next-auth'
-import { authOptions } from '@/lib/auth'
-import prisma from '@/lib/prisma'
+'use server';
+
+import { getServerSession } from 'next-auth';
+
+import { authOptions } from '@/lib/auth';
+import prisma from '@/lib/prisma';
 
 export const fetchPageSettings = async (slug: string) => {
-  const session = await getServerSession(authOptions)
+  const session = await getServerSession(authOptions);
 
   if (!session) {
-    return null
+    return null;
   }
 
   const page = await prisma.page.findUnique({
@@ -22,9 +24,9 @@ export const fetchPageSettings = async (slug: string) => {
       metaTitle: true,
       metaDescription: true,
     },
-  })
+  });
 
   return {
     page,
-  }
-}
+  };
+};
