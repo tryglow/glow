@@ -11,6 +11,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 import { fetcher } from '@/lib/fetch';
 
+import { Skeleton } from '@/components/ui/skeleton';
 import { useToast } from '@/components/ui/use-toast';
 
 import { useEditModeContext } from '../../contexts/Edit';
@@ -82,7 +83,13 @@ export function EditWrapper({ children, layoutProps }: Props) {
             pageId="tmp-unknown"
             isEditable={false}
           >
-            Loading...
+            <div className="flex items-center space-x-4">
+              <Skeleton className="h-12 w-12 rounded-full" />
+              <div className="space-y-2">
+                <Skeleton className="h-4 w-[150px]" />
+                <Skeleton className="h-4 w-[100px]" />
+              </div>
+            </div>
           </CoreBlock>
         </div>,
       ]);
