@@ -108,7 +108,36 @@ export function EditWrapper({ children, layoutProps }: Props) {
   };
 
   const handleLayoutChange = async (newLayout: Layout[]) => {
-    if (newLayout.length === 0) {
+    if (newLayout.length === 0 || !layout) {
+      return;
+    }
+
+    /**
+     * handleLayoutChange is called quite often, so we need to make sure that
+     * the layout has actually changed before we send a request to the server.
+     *
+     * I have a feeling that this might cause some issues in the future, but
+     * for now it works.
+     */
+    const sortAndNormalizeLayout = (layout: Layout[]) => {
+      return layout
+        .sort((a, b) => a.i.localeCompare(b.i))
+        .map((obj) =>
+          Object.keys(obj)
+            .sort()
+            .reduce((result: Layout, key: string) => {
+              // @ts-ignore
+              result[key] = obj[key];
+              return result;
+            }, {} as Layout)
+        );
+    };
+
+    const sortedNewLayout = JSON.stringify(sortAndNormalizeLayout(newLayout));
+    const sortedLayout = JSON.stringify(sortAndNormalizeLayout(layout));
+
+    // Both layouts are the same, so we can skip the request
+    if (sortedNewLayout === sortedLayout) {
       return;
     }
 
