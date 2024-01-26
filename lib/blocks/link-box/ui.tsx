@@ -5,16 +5,11 @@ import useSWR from 'swr';
 
 import { CoreBlock } from '@/app/components/CoreBlock';
 
-import { fetcher } from '@/lib/fetch';
-
 import { BlockProps } from '../ui';
 import { LinkBoxBlockConfig } from './config';
 
 export function LinkBox(props: BlockProps) {
-  const { data } = useSWR<LinkBoxBlockConfig>(
-    `/api/blocks/${props.blockId}`,
-    fetcher
-  );
+  const { data } = useSWR<LinkBoxBlockConfig>(`/api/blocks/${props.blockId}`);
 
   if (props.isEditable) {
     return (

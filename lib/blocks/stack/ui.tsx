@@ -5,16 +5,11 @@ import useSWR from 'swr';
 
 import { CoreBlock } from '@/app/components/CoreBlock';
 
-import { fetcher } from '@/lib/fetch';
-
 import { BlockProps } from '../ui';
 import { StackBlockConfig } from './config';
 
 export const Stack: FunctionComponent<BlockProps> = (props) => {
-  const { data } = useSWR<StackBlockConfig>(
-    `/api/blocks/${props.blockId}`,
-    fetcher
-  );
+  const { data } = useSWR<StackBlockConfig>(`/api/blocks/${props.blockId}`);
 
   if (!data) return null;
 

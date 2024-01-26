@@ -5,8 +5,6 @@ import useSWR from 'swr';
 
 import { CoreBlock } from '@/app/components/CoreBlock';
 
-import { fetcher } from '@/lib/fetch';
-
 import { BlockProps } from '../ui';
 import { MapBlockConfig } from './config';
 import { Props as DynamicMapboxMapProps } from './ui-client';
@@ -18,10 +16,7 @@ const DynamicMapboxMap = dynamic<DynamicMapboxMapProps>(
 );
 
 export function Map(props: BlockProps) {
-  const { data } = useSWR<MapBlockConfig>(
-    `/api/blocks/${props.blockId}`,
-    fetcher
-  );
+  const { data } = useSWR<MapBlockConfig>(`/api/blocks/${props.blockId}`);
 
   if (!data?.coords) return null;
 

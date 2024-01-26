@@ -2,7 +2,6 @@ import useSWR from 'swr';
 
 import { editForms } from '@/lib/blocks/edit';
 import { Blocks } from '@/lib/blocks/types';
-import { fetcher } from '@/lib/fetch';
 
 import { toast } from '@/components/ui/use-toast';
 
@@ -13,10 +12,7 @@ interface Props {
 }
 
 export function EditForm({ onClose, blockId, blockType }: Props) {
-  const { data: initialValues, mutate } = useSWR(
-    `/api/blocks/${blockId}`,
-    fetcher
-  );
+  const { data: initialValues, mutate } = useSWR(`/api/blocks/${blockId}`);
 
   const onSave = async (values: any) => {
     try {

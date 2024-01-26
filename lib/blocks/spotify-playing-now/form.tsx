@@ -3,8 +3,6 @@ import useSWR from 'swr';
 
 import { InitialDataUsersIntegrations } from '@/app/[slug]/page';
 
-import { fetcher } from '@/lib/fetch';
-
 import { Button } from '@/components/ui/button';
 
 import { EditFormProps } from '../types';
@@ -24,8 +22,7 @@ const SpotifyLogo = () => {
 
 export function EditForm({}: EditFormProps<{}>) {
   const { data: usersIntegrations } = useSWR<InitialDataUsersIntegrations>(
-    `/api/user/integrations`,
-    fetcher
+    `/api/user/integrations`
   );
 
   const spotifyIntegrations = usersIntegrations?.filter(

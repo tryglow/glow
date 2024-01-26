@@ -9,8 +9,6 @@ import ReactGridLayout, {
 import useSWR from 'swr';
 import { v4 as uuidv4 } from 'uuid';
 
-import { fetcher } from '@/lib/fetch';
-
 import { Skeleton } from '@/components/ui/skeleton';
 import { useToast } from '@/components/ui/use-toast';
 
@@ -30,8 +28,7 @@ export function EditWrapper({ children, layoutProps }: Props) {
   const params = useParams();
   const { toast } = useToast();
   const { data: layout, mutate: mutateLayout } = useSWR<Layout[]>(
-    `/api/pages/${params.slug}/layout`,
-    fetcher
+    `/api/pages/${params.slug}/layout`
   );
 
   const [isPending, startTransition] = useTransition();

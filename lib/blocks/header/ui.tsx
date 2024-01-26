@@ -6,16 +6,11 @@ import useSWR from 'swr';
 
 import { CoreBlock } from '@/app/components/CoreBlock';
 
-import { fetcher } from '@/lib/fetch';
-
 import { BlockProps } from '../ui';
 import { HeaderBlockConfig } from './config';
 
 export const Header: FunctionComponent<BlockProps> = (props) => {
-  const { data } = useSWR<HeaderBlockConfig>(
-    `/api/blocks/${props.blockId}`,
-    fetcher
-  );
+  const { data } = useSWR<HeaderBlockConfig>(`/api/blocks/${props.blockId}`);
 
   return (
     <CoreBlock {...props} isFrameless>

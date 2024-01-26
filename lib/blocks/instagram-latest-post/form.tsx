@@ -3,8 +3,6 @@ import useSWR from 'swr';
 
 import { InitialDataUsersIntegrations } from '@/app/[slug]/page';
 
-import { fetcher } from '@/lib/fetch';
-
 import { Button } from '@/components/ui/button';
 
 const InstagramLogo = () => {
@@ -70,8 +68,7 @@ const InstagramLogo = () => {
 
 export function EditForm() {
   const { data: usersIntegrations } = useSWR<InitialDataUsersIntegrations>(
-    `/api/user/integrations`,
-    fetcher
+    `/api/user/integrations`
   );
 
   const instagramIntegrations = usersIntegrations?.filter(

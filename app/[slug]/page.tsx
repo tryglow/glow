@@ -101,6 +101,9 @@ export default async function Page({ params }: { params: Params }) {
     <SWRProvider
       value={{
         fallback: initialData,
+        revalidateOnFocus: isEditMode,
+        revalidateOnReconnect: isEditMode,
+        revalidateIfStale: isEditMode,
       }}
     >
       <Grid layout={config} editMode={isEditMode}>
