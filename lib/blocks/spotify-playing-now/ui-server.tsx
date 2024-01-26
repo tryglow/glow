@@ -55,7 +55,11 @@ export const SpotifyPlayingNowServerUI: FunctionComponent<Props> = async ({
         <p className="text-md text-white font-bold">{data?.name}</p>
         <p className="text-sm text-white">{data?.artistName}</p>
       </div>
-      <Link href={data?.hyperlink} target="_blank" rel="noopener noreferrer">
+      <Link
+        href={data?.hyperlink ?? ''}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
         <SpotifyLogo />
       </Link>
     </div>

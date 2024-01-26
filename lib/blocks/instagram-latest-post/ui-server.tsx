@@ -57,7 +57,7 @@ export const InstagramLatestPostServerUI: FunctionComponent<{
           </span>
           <span className="text-white/70 text-sm">Posted {formattedDate}</span>
         </span>
-        <Link target="_blank" rel="noopener noreferrer" href={data?.link}>
+        <Link target="_blank" rel="noopener noreferrer" href={data?.link ?? ''}>
           <InstagramLogo />
         </Link>
       </div>

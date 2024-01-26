@@ -36,11 +36,7 @@ export function LinkBox(props: BlockProps) {
 
   return (
     <CoreBlock {...props}>
-      <Link
-        href={data?.link as string}
-        target="_blank"
-        rel="noopener noreferrer"
-      >
+      <Link href={data?.link ?? ''} target="_blank" rel="noopener noreferrer">
         <div className="flex flex-col gap-2">
           <div className="w-12 h-12 rounded-md bg-gray-600"></div>
           <div className="flex flex-col">
