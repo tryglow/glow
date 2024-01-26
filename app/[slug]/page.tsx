@@ -2,13 +2,14 @@ import { Integration } from '@prisma/client';
 import type { Metadata, ResolvingMetadata } from 'next';
 import { getServerSession } from 'next-auth';
 import { notFound } from 'next/navigation';
+import { Layout } from 'react-grid-layout';
 
 import { authOptions } from '@/lib/auth';
 import { BlockConfig, renderBlock } from '@/lib/blocks/ui';
 import prisma from '@/lib/prisma';
 
 import { SWRProvider } from '../components/SWRProvider';
-import Grid from './grid';
+import Grid, { PageConfig } from './grid';
 
 const fetchData = async (slug: string) => {
   let isEditMode = false;
@@ -47,9 +48,22 @@ const fetchData = async (slug: string) => {
     return notFound();
   }
 
+  const smallLayout = (data.config as unknown as Layout[])?.map(
+    (layoutItem: Layout) => ({
+      ...layoutItem,
+      w: 12,
+    })
+  );
+
+  const layout = {
+    sm: data.config,
+    xss: smallLayout,
+  };
+
   return {
     data,
     integrations,
+    layout,
     isEditMode,
   };
 };
@@ -81,12 +95,12 @@ export type InitialDataUsersIntegrations = Pick<
 
 export default async function Page({ params }: { params: Params }) {
   const { slug } = params;
-  const { data, integrations, isEditMode } = await fetchData(slug);
+  const { data, layout, integrations, isEditMode } = await fetchData(slug);
 
-  const config = data.config as unknown as BlockConfig[];
+  const pageLayout = layout as unknown as PageConfig;
 
   const initialData: Record<string, any> = {
-    [`/api/pages/${slug}/layout`]: config,
+    [`/api/pages/${slug}/layout`]: layout,
   };
 
   if (isEditMode) {
@@ -106,9 +120,9 @@ export default async function Page({ params }: { params: Params }) {
         revalidateIfStale: isEditMode,
       }}
     >
-      <Grid layout={config} editMode={isEditMode}>
+      <Grid layout={pageLayout} editMode={isEditMode}>
         {data.blocks
-          .filter((block) => config.find((conf) => conf.i === block.id))
+          .filter((block) => pageLayout.sm?.find((conf) => conf.i === block.id))
           .map((block) => {
             return (
               <section key={block.id}>

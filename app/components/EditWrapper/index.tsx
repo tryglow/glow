@@ -2,12 +2,11 @@
 
 import { useParams, useRouter } from 'next/navigation';
 import { ReactNode, useEffect, useOptimistic, useTransition } from 'react';
-import ReactGridLayout, {
-  Layout,
-  ReactGridLayoutProps,
-} from 'react-grid-layout';
+import { Layout, ResponsiveProps } from 'react-grid-layout';
 import useSWR from 'swr';
 import { v4 as uuidv4 } from 'uuid';
+
+import { PageConfig, ResponsiveReactGridLayout } from '@/app/[slug]/grid';
 
 import { Skeleton } from '@/components/ui/skeleton';
 import { useToast } from '@/components/ui/use-toast';
@@ -17,9 +16,8 @@ import { BlockSheet } from '../BlockSheet';
 import { CoreBlock } from '../CoreBlock';
 
 interface Props {
-  layout: Layout[];
   children: ReactNode[];
-  layoutProps: ReactGridLayoutProps;
+  layoutProps: ResponsiveProps;
 }
 
 export function EditWrapper({ children, layoutProps }: Props) {
@@ -27,7 +25,7 @@ export function EditWrapper({ children, layoutProps }: Props) {
   const router = useRouter();
   const params = useParams();
   const { toast } = useToast();
-  const { data: layout, mutate: mutateLayout } = useSWR<Layout[]>(
+  const { data: layout, mutate: mutateLayout } = useSWR<PageConfig>(
     `/api/pages/${params.slug}/layout`
   );
 
@@ -41,7 +39,7 @@ export function EditWrapper({ children, layoutProps }: Props) {
 
     const filteredItems = (optimisticItems as ReactNode[])?.filter(
       (item: any) => {
-        return layout?.some((layoutItem) => layoutItem.i === item.key);
+        return layout?.sm?.some((layoutItem) => layoutItem.i === item.key);
       }
     );
 
@@ -138,7 +136,7 @@ export function EditWrapper({ children, layoutProps }: Props) {
     };
 
     const sortedNewLayout = JSON.stringify(sortAndNormalizeLayout(newLayout));
-    const sortedLayout = JSON.stringify(sortAndNormalizeLayout(layout));
+    const sortedLayout = JSON.stringify(sortAndNormalizeLayout(layout.sm));
 
     // Both layouts are the same, so we can skip the request
     if (sortedNewLayout === sortedLayout) {
@@ -180,7 +178,10 @@ export function EditWrapper({ children, layoutProps }: Props) {
         title: 'Layout saved',
       });
 
-      mutateLayout(newLayout);
+      mutateLayout({
+        ...layout,
+        sm: newLayout,
+      });
     } catch (error) {
       console.log(error);
       toast({
@@ -191,7 +192,7 @@ export function EditWrapper({ children, layoutProps }: Props) {
     }
   };
 
-  const editableLayoutProps: ReactGridLayoutProps = {
+  const editableLayoutProps: any = {
     ...layoutProps,
     onDrop,
     onLayoutChange: handleLayoutChange,
@@ -206,9 +207,18 @@ export function EditWrapper({ children, layoutProps }: Props) {
 
   return (
     <>
-      <ReactGridLayout layout={layout} {...editableLayoutProps}>
+      <ResponsiveReactGridLayout
+        {...editableLayoutProps}
+        layouts={{
+          lg: layout?.sm,
+          md: layout?.sm,
+          sm: layout?.sm,
+          xs: layout?.sm,
+          xxs: layout?.xss,
+        }}
+      >
         {optimisticItems}
-      </ReactGridLayout>
+      </ResponsiveReactGridLayout>
       <BlockSheet />
     </>
   );

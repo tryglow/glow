@@ -6,6 +6,8 @@ import { useState } from 'react';
 import { Layout } from 'react-grid-layout';
 import useSWR from 'swr';
 
+import { PageConfig } from '@/app/[slug]/grid';
+
 import { Blocks } from '@/lib/blocks/types';
 
 import {
@@ -32,7 +34,7 @@ export function EditBlockToolbar({ blockId, blockType }: Props) {
 
   const [open, setOpen] = useState(false);
   const { mutate } = useSWR(`/api/blocks/${blockId}`);
-  const { data: layout, mutate: mutateLayout } = useSWR<Layout[]>(
+  const { data: layout, mutate: mutateLayout } = useSWR<PageConfig>(
     `/api/pages/${slug}/layout`
   );
 
@@ -62,11 +64,14 @@ export function EditBlockToolbar({ blockId, blockType }: Props) {
       mutate();
 
       if (layout) {
-        const newLayout = layout.filter((item) => {
+        const newLayout = layout.sm.filter((item) => {
           return item.i !== blockId;
         });
 
-        mutateLayout(newLayout);
+        mutateLayout({
+          ...layout,
+          sm: newLayout,
+        });
       }
 
       router.refresh();
