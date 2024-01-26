@@ -5,11 +5,18 @@ import { notFound } from 'next/navigation';
 import { Layout } from 'react-grid-layout';
 
 import { authOptions } from '@/lib/auth';
-import { BlockConfig, renderBlock } from '@/lib/blocks/ui';
+import { renderBlock } from '@/lib/blocks/ui';
 import prisma from '@/lib/prisma';
 
 import { SWRProvider } from '../components/SWRProvider';
 import Grid, { PageConfig } from './grid';
+
+// export const dynamic = 'force-dynamic';
+// export const revalidate = 0;
+// export const dynamicParams = true;
+
+export const revalidate = 60;
+export const dynamicParams = true;
 
 const fetchData = async (slug: string) => {
   let isEditMode = false;
@@ -54,6 +61,8 @@ const fetchData = async (slug: string) => {
       w: 12,
     })
   );
+
+  console.log('Page Generated', new Date().toLocaleString());
 
   const layout = {
     sm: data.config,

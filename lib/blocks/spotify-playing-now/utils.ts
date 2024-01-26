@@ -1,4 +1,4 @@
-'use server';
+'server-only';
 
 import { requestToken } from '@/app/api/services/spotify/callback/utils';
 
@@ -6,13 +6,16 @@ import prisma from '@/lib/prisma';
 
 import { SpotifyIntegrationConfig } from './config';
 
+export const revalidate = 0;
+export const dynamic = 'force-dynamic';
+
 function fetchPlayingNow(accessToken: string) {
   return fetch('https://api.spotify.com/v1/me/player/currently-playing', {
     headers: {
       Authorization: `Bearer ${accessToken}`,
     },
     next: {
-      revalidate: 60,
+      revalidate: 0,
     },
   });
 }
@@ -23,7 +26,7 @@ function fetchRecentlyPlayed(accessToken: string) {
       Authorization: `Bearer ${accessToken}`,
     },
     next: {
-      revalidate: 60,
+      revalidate: 0,
     },
   });
 }
@@ -53,22 +56,25 @@ const fetchSpotifyData = async (
         refreshTokenData
       );
 
-      await prisma.integration.update({
+      const updatedIntegration = await prisma.integration.update({
         where: {
           id: integrationId,
         },
         data: {
           config: {
-            refreshToken: refreshTokenData.refresh_token,
+            refreshToken: refreshTokenData.refresh_token ?? config.refreshToken,
             accessToken: refreshTokenData.access_token,
           },
         },
       });
 
+      const updatedConfig =
+        updatedIntegration.config as unknown as SpotifyIntegrationConfig;
+
       fetchSpotifyData(
         {
-          accessToken: refreshTokenData.access_token,
-          refreshToken: config.refreshToken,
+          accessToken: updatedConfig.accessToken,
+          refreshToken: updatedConfig.refreshToken,
         },
         true,
         integrationId
@@ -80,7 +86,10 @@ const fetchSpotifyData = async (
     const data = await req.json();
 
     const timestampDate = new Date(data.timestamp);
-    console.log('Data last fetched:', timestampDate.toLocaleString());
+    console.log(
+      'Playing Now Data last fetched:',
+      timestampDate.toLocaleString()
+    );
 
     return {
       artistName: data?.item?.artists[0]?.name,
