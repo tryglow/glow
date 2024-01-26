@@ -20,21 +20,21 @@ export const defaults: StackBlockConfig = {
       title: 'Notion',
       label: 'Productivity',
       icon: {
-        src: '/demo/notion.jpeg',
+        src: 'https://cdn.oneda.sh/default-data/notion.jpeg',
       },
     },
     {
       title: 'Vercel',
       label: 'Engineering',
       icon: {
-        src: '/demo/vercel.jpeg',
+        src: 'https://cdn.oneda.sh/default-data/vercel.jpeg',
       },
     },
     {
       title: 'Figma',
       label: 'Design',
       icon: {
-        src: '/demo/figma.jpeg',
+        src: 'https://cdn.oneda.sh/default-data/figma.jpeg',
       },
     },
   ],
@@ -43,14 +43,15 @@ export const defaults: StackBlockConfig = {
 export const StackSchema = Yup.object().shape({
   title: Yup.string().required('Please provide a title'),
   label: Yup.string().required('Please provide a label'),
-  avatar: Yup.string().required('Please provide an avatar URL'),
-  items: Yup.array().of(
-    Yup.object().shape({
-      title: Yup.string().required('Please provide a title'),
-      label: Yup.string().required('Please provide a label'),
-      icon: Yup.object().shape({
-        src: Yup.string().required('Please provide an icon URL'),
-      }),
-    })
-  ),
+  items: Yup.array()
+    .min(1, 'Please add atleast one item')
+    .of(
+      Yup.object().shape({
+        title: Yup.string().required('Please provide a title'),
+        label: Yup.string().required('Please provide a label'),
+        icon: Yup.object().shape({
+          src: Yup.string().required('Please provide an icon URL'),
+        }),
+      })
+    ),
 });

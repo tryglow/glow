@@ -1,9 +1,9 @@
 import { ExclamationCircleIcon } from '@heroicons/react/20/solid';
-
 import { ReactNode } from 'react';
 
-import { FormInput, FormInputWithPrefix } from '../FormInput';
 import { Label } from '@/components/ui/label';
+
+import { FormInput, FormInputWithPrefix } from '../FormInput';
 
 interface Props {
   name: string;
@@ -30,7 +30,7 @@ export function FormField({
 }: Props) {
   const InputComponent = withPrefix ? FormInputWithPrefix : FormInput;
   return (
-    <>
+    <div>
       <Label htmlFor={name}>{label}</Label>
       <div className="relative mt-1 rounded-md shadow-sm">
         <InputComponent
@@ -57,6 +57,6 @@ export function FormField({
       <p className="mt-2 text-sm text-red-600" id={`${name}-error`}>
         {error}
       </p>
-    </>
+    </div>
   );
 }

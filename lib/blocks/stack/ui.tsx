@@ -21,7 +21,7 @@ export const Stack: FunctionComponent<BlockProps> = (props) => {
       <p className="text-md text-sys-label-secondary">{data?.label}</p>
 
       <div className="flex flex-col gap-6 mt-6">
-        {data?.items.map((item) => {
+        {data?.items?.map((item) => {
           return (
             <div key={item.title} className="flex items-center gap-4">
               <img
