@@ -157,7 +157,7 @@ export function EditPageSettingsForm({ onBack, initialValues }: Props) {
             </div>
           </div>
           <div className="flex flex-shrink-0 justify-between px-4 py-4 border-t border-stone-200">
-            <Button variant="secondary" onClick={onBack}>
+            <Button type="button" variant="secondary" onClick={onBack}>
               ← Cancel
             </Button>
             <Button type="submit">
