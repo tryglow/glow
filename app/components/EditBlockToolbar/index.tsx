@@ -3,7 +3,6 @@
 import { PencilSquareIcon, TrashIcon } from '@heroicons/react/24/outline';
 import { useParams, useRouter } from 'next/navigation';
 import { useState } from 'react';
-import { Layout } from 'react-grid-layout';
 import useSWR from 'swr';
 
 import { PageConfig } from '@/app/[slug]/grid';
