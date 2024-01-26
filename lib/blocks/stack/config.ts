@@ -14,27 +14,27 @@ export interface StackBlockConfig {
 
 export const defaults: StackBlockConfig = {
   title: 'Stack',
-  label: 'My apps & tools',
+  label: 'Some cool tools',
   items: [
-    {
-      title: 'Notion',
-      label: 'Productivity',
-      icon: {
-        src: 'https://cdn.oneda.sh/default-data/notion.jpeg',
-      },
-    },
-    {
-      title: 'Vercel',
-      label: 'Engineering',
-      icon: {
-        src: 'https://cdn.oneda.sh/default-data/vercel.jpeg',
-      },
-    },
     {
       title: 'Figma',
       label: 'Design',
       icon: {
         src: 'https://cdn.oneda.sh/default-data/figma.jpeg',
+      },
+    },
+    {
+      title: 'Amie',
+      label: 'Productivity',
+      icon: {
+        src: 'https://cdn.oneda.sh/default-data/amie.jpg',
+      },
+    },
+    {
+      title: 'Warp',
+      label: 'Engineering',
+      icon: {
+        src: 'https://cdn.oneda.sh/default-data/warp.png',
       },
     },
   ],

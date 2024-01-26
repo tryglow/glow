@@ -6,6 +6,7 @@ import { PlusCircledIcon } from '@radix-ui/react-icons';
 import { User } from 'next-auth';
 import { signOut } from 'next-auth/react';
 import Link from 'next/link';
+import { useParams } from 'next/navigation';
 import { useState } from 'react';
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -32,6 +33,7 @@ export function UserWidget({ user, usersPages }: Props) {
   const [showNewTeamDialog, setShowNewTeamDialog] = useState(false);
   const [showEditPageSettingsDialog, setShowEditPageSettingsDialog] =
     useState(false);
+
   return (
     <>
       <DropdownMenu>

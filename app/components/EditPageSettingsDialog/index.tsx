@@ -26,6 +26,8 @@ export function EditPageSettingsDialog({ open, onOpenChange, onClose }: Props) {
   const params = useParams();
 
   useEffect(() => {
+    if (!params.slug) return;
+
     const getPageSettings = async () => {
       const data = await fetchPageSettings(params.slug as string);
 
