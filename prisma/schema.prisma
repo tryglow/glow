@@ -45,6 +45,7 @@ model User {
   pages         Page[]
   Integration   Integration[]
   Theme         Theme[]
+  isAdmin       Boolean       @default(false)
 }
 
 model Page {

@@ -1,8 +1,9 @@
 import { getServerSession } from 'next-auth';
+
 import { authOptions } from '@/lib/auth';
+import { MAX_PAGES_PER_USER, createNewPage } from '@/lib/page';
 import prisma from '@/lib/prisma';
 import { isForbiddenSlug, isReservedSlug, regexSlug } from '@/lib/slugs';
-import { MAX_PAGES_PER_USER, createNewPage } from '@/lib/page';
 
 export async function POST(req: Request) {
   const session = await getServerSession(authOptions);
@@ -79,15 +80,30 @@ export async function POST(req: Request) {
     where: {
       userId: session.user.id,
     },
+    include: {
+      user: {
+        select: {
+          isAdmin: true,
+        },
+      },
+    },
+  });
+
+  const user = await prisma.user.findUnique({
+    where: {
+      id: session.user.id,
+    },
   });
 
   if (usersPages.length >= MAX_PAGES_PER_USER) {
-    return Response.json({
-      error: {
-        message: 'You have reached the maximum number of pages',
-        label: 'Sorry, you can only create 2 pages per account.',
-      },
-    });
+    if (!user?.isAdmin) {
+      return Response.json({
+        error: {
+          message: 'You have reached the maximum number of pages',
+          label: 'Sorry, you can only create 2 pages per account.',
+        },
+      });
+    }
   }
 
   const newPage = await createNewPage(session.user.id, slug);
