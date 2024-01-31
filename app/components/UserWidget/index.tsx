@@ -30,6 +30,7 @@ interface Props {
 }
 
 export function UserWidget({ user, usersPages }: Props) {
+  const params = useParams();
   const [showNewTeamDialog, setShowNewTeamDialog] = useState(false);
   const [showEditPageSettingsDialog, setShowEditPageSettingsDialog] =
     useState(false);
@@ -62,22 +63,26 @@ export function UserWidget({ user, usersPages }: Props) {
           <DropdownMenuGroup>
             {usersPages.map((page) => {
               return (
-                <DropdownMenuItem key={page.id}>
+                <DropdownMenuItem asChild key={page.id}>
                   <Link href={`/${page.slug}`}>/{page.slug}</Link>
                 </DropdownMenuItem>
               );
             })}
           </DropdownMenuGroup>
           <DropdownMenuSeparator />
-          <DropdownMenuGroup>
-            <DropdownMenuItem
-              onClick={() => setShowEditPageSettingsDialog(true)}
-            >
-              <Cog6ToothIcon className="mr-2 h-5 w-5" />
-              Page Settings
-            </DropdownMenuItem>
-          </DropdownMenuGroup>
-          <DropdownMenuSeparator />
+          {params.slug && (
+            <>
+              <DropdownMenuGroup>
+                <DropdownMenuItem
+                  onClick={() => setShowEditPageSettingsDialog(true)}
+                >
+                  <Cog6ToothIcon className="mr-2 h-5 w-5" />
+                  Page Settings
+                </DropdownMenuItem>
+              </DropdownMenuGroup>
+              <DropdownMenuSeparator />
+            </>
+          )}
           <DropdownMenuGroup>
             <DropdownMenuItem onClick={() => setShowNewTeamDialog(true)}>
               <PlusCircledIcon className="mr-2 h-5 w-5" />
