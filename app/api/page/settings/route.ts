@@ -16,7 +16,14 @@ export async function POST(req: Request) {
 
   const bodyData = await req.json();
 
-  const { currentPageSlug, pageSlug, metaTitle, theme, published } = bodyData;
+  const {
+    currentPageSlug,
+    pageSlug,
+    metaTitle,
+    theme,
+    published,
+    backgroundImage,
+  } = bodyData;
 
   if (!pageSlug || !metaTitle) {
     return Response.json({
@@ -84,7 +91,8 @@ export async function POST(req: Request) {
       metaTitle,
       slug: pageSlug,
       publishedAt: published ? new Date() : null,
-      theme,
+      themeId: theme,
+      backgroundImage,
     },
     select: {
       id: true,

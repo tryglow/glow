@@ -62,6 +62,7 @@ model Page {
   metaDescription String?
   themeId         String?
   theme           Theme?    @relation(fields: [themeId], references: [id])
+  backgroundImage String?
 }
 
 model Block {
@@ -91,9 +92,12 @@ model Theme {
   updatedAt           DateTime @updatedAt
   createdById         String
   createdBy           User     @relation(fields: [createdById], references: [id])
+  colorBgBase         String   @default("rgba(255 255 255 / 1)")
   colorBgPrimary      String
   colorBgSecondary    String
+  colorBorderPrimary  String
   colorLabelPrimary   String
   colorLabelSecondary String
+  colorLabelTertiary  String
   pages               Page[]
 }

@@ -9,7 +9,6 @@ import { getServerSession } from 'next-auth';
 import sharp from 'sharp';
 
 import { authOptions } from '@/lib/auth';
-import prisma from '@/lib/prisma';
 
 function isComplete(
   output:
@@ -43,6 +42,8 @@ const uploadTemplateFile = async (
   }).done();
 };
 
+const assetContexts = ['pageBackgroundImage', 'blockAsset'];
+
 export async function POST(req: Request) {
   const session = await getServerSession(authOptions);
 
@@ -56,11 +57,12 @@ export async function POST(req: Request) {
 
   const formData = await req.formData();
   const files = formData.getAll('file') as File[];
-  const blockId = formData.get('blockId') as string;
+  const referenceId = formData.get('referenceId') as string;
+  const context = formData.get('assetContext') as string;
 
   const firstFileOnly = files[0];
 
-  if (!firstFileOnly || !blockId) {
+  if (!firstFileOnly || !referenceId) {
     // RETURN AN ERROR
     return Response.json({
       error: {
@@ -69,31 +71,33 @@ export async function POST(req: Request) {
     });
   }
 
-  const block = await prisma.block.findUnique({
-    where: {
-      id: blockId,
-      page: {
-        userId: session.user.id,
-      },
-    },
-  });
-
-  if (!block) {
+  if (!assetContexts.includes(context)) {
     return Response.json({
       error: {
-        message: 'Block not found',
+        message: 'Invalid asset context',
       },
     });
   }
 
-  const convertedImage = await sharp(await firstFileOnly.arrayBuffer())
-    .resize(800)
-    .toFormat('webp', {
-      quality: 80,
-    })
-    .toBuffer();
+  let convertedImage: Buffer | undefined;
 
-  const fileName = `${blockId}/${randomUUID()}`;
+  if (context === 'pageBackgroundImage') {
+    convertedImage = await sharp(await firstFileOnly.arrayBuffer())
+      .resize(1200, 800)
+      .toFormat('webp', {
+        quality: 80,
+      })
+      .toBuffer();
+  } else {
+    convertedImage = await sharp(await firstFileOnly.arrayBuffer())
+      .resize(800)
+      .toFormat('webp', {
+        quality: 80,
+      })
+      .toBuffer();
+  }
+
+  const fileName = `${referenceId}/${randomUUID()}`;
 
   const assetUpload = await uploadTemplateFile(
     convertedImage,
@@ -109,16 +113,6 @@ export async function POST(req: Request) {
 
     // const fileLocation = `https://s3.${process.env.AWS_REGION}.amazonaws.com/${assetUpload.Bucket}/${assetUpload.Key}`
 
-    await prisma.block.update({
-      where: {
-        id: blockId,
-      },
-      data: {
-        data: {
-          src: fileLocation,
-        },
-      },
-    });
     return Response.json({ message: 'success', url: fileLocation });
   }
 }

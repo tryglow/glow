@@ -5,6 +5,8 @@ import { Loader2 } from 'lucide-react';
 import { useParams, useRouter } from 'next/navigation';
 import * as Yup from 'yup';
 
+import { defaultThemes } from '@/lib/page';
+
 import { Button } from '@/components/ui/button';
 import { DialogFooter } from '@/components/ui/dialog';
 import { Label } from '@/components/ui/label';
@@ -12,6 +14,7 @@ import { Switch } from '@/components/ui/switch';
 import { useToast } from '@/components/ui/use-toast';
 
 import { FormField } from '../FormField';
+import { FormFileUpload } from '../FormFileUpload';
 
 const FormSchema = Yup.object().shape({
   pageSlug: Yup.string().required('Please provide a page slug'),
@@ -22,14 +25,17 @@ type FormValues = {
   pageSlug: string;
   metaTitle: string;
   published: boolean;
+  themeId: string;
+  backgroundImage: string;
 };
 
 interface Props {
   onCancel: () => void;
   initialValues: FormValues;
+  pageId: string;
 }
 
-export function EditPageSettings({ onCancel, initialValues }: Props) {
+export function EditPageSettings({ onCancel, initialValues, pageId }: Props) {
   const params = useParams();
   const router = useRouter();
   const { toast } = useToast();
@@ -51,6 +57,8 @@ export function EditPageSettings({ onCancel, initialValues }: Props) {
           metaTitle: values.metaTitle,
           published: values.published,
           currentPageSlug: params.slug,
+          themeId: params.themeId,
+          backgroundImage: values.backgroundImage,
         }),
       });
 
@@ -96,6 +104,8 @@ export function EditPageSettings({ onCancel, initialValues }: Props) {
         pageSlug: initialValues.pageSlug,
         metaTitle: initialValues.metaTitle,
         published: initialValues.published,
+        themeId: initialValues.themeId,
+        backgroundImage: initialValues.backgroundImage,
       }}
       validationSchema={FormSchema}
       onSubmit={onSubmit}
@@ -121,6 +131,35 @@ export function EditPageSettings({ onCancel, initialValues }: Props) {
                 placeholder="Hello world"
                 id="metaTitle"
                 error={errors.metaTitle}
+              />
+            </div>
+
+            <div className="mt-4">
+              <FormField
+                isSelect
+                label="Page theme (experimental)"
+                name="themeId"
+                placeholder=""
+                id="themeId"
+                error={errors.themeId}
+              >
+                {defaultThemes.map((theme) => {
+                  return (
+                    <option value={theme.id} key={theme.id}>
+                      {theme.name}
+                    </option>
+                  );
+                })}
+              </FormField>
+            </div>
+
+            <div className="mt-4">
+              <FormFileUpload
+                onUploaded={(url) => setFieldValue('backgroundImage', url)}
+                initialValue={initialValues?.backgroundImage}
+                referenceId={`page_${pageId}`}
+                label="Background image"
+                assetContext="pageBackgroundImage"
               />
             </div>
 

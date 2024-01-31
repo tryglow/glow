@@ -52,7 +52,10 @@ export function EditPageSettingsDialog({ open, onOpenChange, onClose }: Props) {
             metaTitle: pageSettings?.metaTitle ?? '',
             pageSlug: pageSettings?.slug ?? '',
             published: pageSettings?.publishedAt ? true : false,
+            themeId: pageSettings?.themeId ?? '',
+            backgroundImage: pageSettings?.backgroundImage ?? '',
           }}
+          pageId={pageSettings?.id ?? ''}
         />
       </DialogContent>
     </Dialog>

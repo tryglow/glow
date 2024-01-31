@@ -23,6 +23,8 @@ export const fetchPageSettings = async (slug: string) => {
       slug: true,
       metaTitle: true,
       metaDescription: true,
+      backgroundImage: true,
+      themeId: true,
     },
   });
 

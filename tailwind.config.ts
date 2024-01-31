@@ -22,17 +22,18 @@ const config = {
       colors: {
         sys: {
           bg: {
-            base: 'rgb(var(--color-sys-bg-base))',
-            primary: 'rgb(var(--color-sys-bg-primary))',
-            secondary: 'rgb(var(--color-sys-bg-secondary))',
+            base: 'var(--color-sys-bg-base)',
+            primary: 'var(--color-sys-bg-primary)',
+            secondary: 'var(--color-sys-bg-secondary)',
+            border: 'var(--color-sys-bg-border)',
           },
           label: {
-            primary: 'rgb(var(--color-sys-label-primary))',
-            secondary: 'rgb(var(--color-sys-label-secondary))',
-            tertiary: 'rgb(var(--color-sys-label-tertiary))',
-            quaternary: 'rgb(var(--color-sys-label-quaternary))',
-            positive: 'rgb(var(--color-sys-label-positive))',
-            negative: 'rgb(var(--color-sys-label-negative))',
+            primary: 'var(--color-sys-label-primary)',
+            secondary: 'var(--color-sys-label-secondary)',
+            tertiary: 'var(--color-sys-label-tertiary)',
+            quaternary: 'var(--color-sys-label-quaternary)',
+            positive: 'var(--color-sys-label-positive)',
+            negative: 'var(--color-sys-label-negative)',
           },
         },
         border: 'hsl(var(--border))',

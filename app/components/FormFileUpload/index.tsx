@@ -9,16 +9,18 @@ import { Button } from '@/components/ui/button';
 interface Props {
   onUploaded: (url: string) => void;
   initialValue?: string;
-  blockId: string;
+  referenceId: string;
   label?: string;
   isCondensed?: boolean;
+  assetContext: 'pageBackgroundImage' | 'blockAsset';
 }
 
 export function FormFileUpload({
   onUploaded,
   initialValue,
-  blockId,
+  referenceId,
   label = 'Asset',
+  assetContext,
   isCondensed = false,
 }: Props) {
   const [uploadedFileUrl, setUploadedFileUrl] = useState<string | null>(null);
@@ -33,7 +35,7 @@ export function FormFileUpload({
 
     const firstFile = ev.target?.files?.[0];
 
-    if (!firstFile || !blockId) {
+    if (!firstFile || !referenceId) {
       return;
     }
 
@@ -50,7 +52,8 @@ export function FormFileUpload({
     const body = new FormData();
 
     body.append('file', firstFile, firstFile.name);
-    body.append('blockId', blockId);
+    body.append('referenceId', referenceId);
+    body.append('assetContext', assetContext);
 
     const response = await fetch('/api/page/blocks/upload-asset', {
       method: 'POST',

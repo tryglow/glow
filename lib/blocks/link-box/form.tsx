@@ -55,8 +55,9 @@ export function EditForm({
           <FormFileUpload
             onUploaded={(url) => setFieldValue('icon.src', url)}
             initialValue={initialValues?.icon?.src}
-            blockId={blockId}
+            referenceId={`block_${blockId}`}
             label="Icon"
+            assetContext="blockAsset"
           />
           {errors.icon?.src && (
             <p className="mt-2 text-sm text-red-600" id={`icon-src-error`}>
