@@ -12,6 +12,7 @@ export function createNewPage(userId: string, pageSlug: string) {
     data: {
       userId,
       slug: pageSlug,
+      publishedAt: new Date(),
       config: [
         {
           h: 6,
