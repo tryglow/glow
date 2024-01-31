@@ -39,7 +39,7 @@ export default function MarketingNavigation({ children }: Props) {
                   clipRule="evenodd"
                 />
               </svg>
-              <span className="font-medium">oneda.sh</span>
+              <span className="font-medium">Glow</span>
             </Link>
           </div>
           {/* <div className="hidden lg:flex lg:gap-x-2">
@@ -86,7 +86,7 @@ export default function MarketingNavigation({ children }: Props) {
                     clipRule="evenodd"
                   />
                 </svg>
-                <span className="font-medium">oneda.sh</span>
+                <span className="font-medium">Glow</span>
               </Link>
               <LoginWidget trigger={<Button>Create Page</Button>} />
 

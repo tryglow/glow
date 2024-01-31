@@ -52,7 +52,7 @@ export default function MarketingFooter() {
           ))}
         </div>
         <p className="mt-10 text-center text-xs leading-5 text-gray-500">
-          &copy; 2024 oneda.sh - With love from Italy
+          &copy; 2024 Glow
         </p>
       </div>
     </footer>

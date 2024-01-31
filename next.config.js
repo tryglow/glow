@@ -10,12 +10,12 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: 'cdn.dev.oneda.sh',
+        hostname: 'cdn.dev.glow.as',
         port: '',
       },
       {
         protocol: 'https',
-        hostname: 'cdn.oneda.sh',
+        hostname: 'cdn.glow.as',
         port: '',
       },
     ],

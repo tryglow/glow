@@ -104,8 +104,8 @@ export async function POST(req: Request) {
   if (isComplete(assetUpload)) {
     const fileLocation =
       process.env.NEXT_PUBLIC_APP_ENV === 'development'
-        ? `https://cdn.dev.oneda.sh/${assetUpload.Key}`
-        : `https://cdn.oneda.sh/${assetUpload.Key}`;
+        ? `https://cdn.dev.glow.as/${assetUpload.Key}`
+        : `https://cdn.glow.as/${assetUpload.Key}`;
 
     // const fileLocation = `https://s3.${process.env.AWS_REGION}.amazonaws.com/${assetUpload.Bucket}/${assetUpload.Key}`
 

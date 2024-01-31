@@ -1,15 +1,17 @@
 'use client';
 
 import { Form, Formik, FormikHelpers } from 'formik';
+import { Loader2 } from 'lucide-react';
+import { useParams, useRouter } from 'next/navigation';
 import * as Yup from 'yup';
 
-import { FormField } from '../FormField';
-import { useParams, useRouter } from 'next/navigation';
-import { useToast } from '@/components/ui/use-toast';
-import { Button } from '@/components/ui/button';
-import { Loader2 } from 'lucide-react';
-import { DialogFooter } from '@/components/ui/dialog';
 import { regexSlug } from '@/lib/slugs';
+
+import { Button } from '@/components/ui/button';
+import { DialogFooter } from '@/components/ui/dialog';
+import { useToast } from '@/components/ui/use-toast';
+
+import { FormField } from '../FormField';
 
 const FormSchema = Yup.object().shape({
   pageSlug: Yup.string()
@@ -102,7 +104,7 @@ export function CreatePageForm({ onCancel }: Props) {
           <div className="border-b border-white/10 pb-12">
             <div>
               <FormField
-                withPrefix="oneda.sh/"
+                withPrefix="glow.as/"
                 label="Slug"
                 name="pageSlug"
                 placeholder="your-page"

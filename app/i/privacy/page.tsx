@@ -3,7 +3,7 @@ export default function LegalPrivacyPage() {
     <div className="bg-white px-6 py-32 lg:px-8">
       <div className="mx-auto max-w-3xl text-base leading-7 text-gray-700">
         <p className="text-base font-semibold leading-7 text-indigo-600">
-          oneda.sh
+          Glow
         </p>
         <h1 className="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
           Privacy Policy
@@ -14,13 +14,13 @@ export default function LegalPrivacyPage() {
         <div className="mt-10 max-w-2xl prose">
           <h2>1. Introduction</h2>
           <p>
-            Welcome to onedash. We are committed to protecting your personal
+            Welcome to Glow. We are committed to protecting your personal
             information and your right to privacy. If you have any questions or
             concerns about this privacy policy, or our practices with regards to
-            your personal information, please contact us at hello@oneda.sh.
+            your personal information, please contact us at support@glow.as.
           </p>
           <p>
-            When you visit our web app oneda.sh and use our services, you trust
+            When you visit our web app glow.as and use our services, you trust
             us with your personal information. In this privacy policy, we seek
             to explain to you in the clearest way possible what information we
             collect, how we use it, and what rights you have in relation to it.
@@ -76,8 +76,8 @@ export default function LegalPrivacyPage() {
           <p>
             If you are a resident of the European Economic Area (EEA), you have
             certain rights under the General Data Protection Regulation (GDPR).
-            onedash aims to take reasonable steps to allow you to correct,
-            amend, delete, or limit the use of your Personal Data.
+            Glow aims to take reasonable steps to allow you to correct, amend,
+            delete, or limit the use of your Personal Data.
           </p>
           <h2>7. CCPA Privacy Rights</h2>
           <p>
@@ -99,10 +99,10 @@ export default function LegalPrivacyPage() {
           <h2>10. Contact Us</h2>
           <p>
             If you have any questions or suggestions about our Privacy Policy,
-            do not hesitate to contact us at hello@oneda.sh
+            do not hesitate to contact us at support@glow.as
           </p>
         </div>
       </div>
     </div>
-  )
+  );
 }

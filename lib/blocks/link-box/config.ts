@@ -11,9 +11,9 @@ export interface LinkBoxBlockConfig {
 
 export const defaults: LinkBoxBlockConfig = {
   icon: {
-    src: 'https://cdn.oneda.sh/default-data/x-logo.png',
+    src: 'https://cdn.glow.as/default-data/x-logo.png',
   },
-  link: 'https://x.com/oneda_sh',
+  link: 'https://x.com/tryglow',
   title: 'X',
   label: 'Follow us on X',
 };

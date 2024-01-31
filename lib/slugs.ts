@@ -833,6 +833,7 @@ export function isReservedSlug(slug: string): boolean {
     'fabi',
     'fabiana',
     'onedash',
+    'glow',
   ];
 
   if (reservedSlugs.includes(slug.toLowerCase())) {

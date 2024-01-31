@@ -20,21 +20,21 @@ export const defaults: StackBlockConfig = {
       title: 'Figma',
       label: 'Design',
       icon: {
-        src: 'https://cdn.oneda.sh/default-data/figma.jpeg',
+        src: 'https://cdn.glow.as/default-data/figma.jpeg',
       },
     },
     {
       title: 'Amie',
       label: 'Productivity',
       icon: {
-        src: 'https://cdn.oneda.sh/default-data/amie.jpg',
+        src: 'https://cdn.glow.as/default-data/amie.jpg',
       },
     },
     {
       title: 'Warp',
       label: 'Engineering',
       icon: {
-        src: 'https://cdn.oneda.sh/default-data/warp.png',
+        src: 'https://cdn.glow.as/default-data/warp.png',
       },
     },
   ],

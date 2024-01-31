@@ -13,7 +13,7 @@ const saans = localFont({
 });
 
 export const metadata: Metadata = {
-  title: 'Onedash - Your personal site builder',
+  title: 'Glow - Your personal site builder',
   description: 'Your personal site builder',
 };
 

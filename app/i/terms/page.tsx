@@ -3,7 +3,7 @@ export default function LegalTermsPage() {
     <div className="bg-white px-6 py-32 lg:px-8">
       <div className="mx-auto max-w-3xl text-base leading-7 text-gray-700">
         <p className="text-base font-semibold leading-7 text-indigo-600">
-          oneda.sh
+          Glow
         </p>
         <h1 className="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
           Terms of Service
@@ -13,11 +13,11 @@ export default function LegalTermsPage() {
         </p>
         <div className="mt-10 max-w-2xl prose">
           <h2>1. Introduction</h2>
-          <p>Welcome to onedash (“Company”, “we”, “our”, “us”)!</p>
+          <p>Welcome to Glow (“Company”, “we”, “our”, “us”)!</p>
           <p>
             These Terms of Service (“Terms”, “Terms of Service”) govern your use
-            of our web application located at oneda.sh (together or individually
-            “Service”) operated by onedash.
+            of our web application located at glow.as (together or individually
+            “Service”) operated by Glow.
           </p>
           <p>
             Our Privacy Policy also governs your use of our Service and explains
@@ -32,7 +32,7 @@ export default function LegalTermsPage() {
           <p>
             If you do not agree with (or cannot comply with) Agreements, then
             you may not use the Service, but please let us know by emailing at
-            hello@oneda.sh so we can try to find a solution. These Terms apply
+            support@glow.as so we can try to find a solution. These Terms apply
             to all visitors, users and others who wish to access or use Service.
           </p>
           <h2>2. Communications</h2>
@@ -41,7 +41,7 @@ export default function LegalTermsPage() {
             marketing or promotional materials and other information we may
             send. However, you may opt out of receiving any, or all, of these
             communications from us by following the unsubscribe link or by
-            emailing at hello@oneda.sh.
+            emailing at support@glow.as.
           </p>
           <h2>3. Purchases</h2>
           <p>
@@ -62,11 +62,11 @@ export default function LegalTermsPage() {
           </p>
           <h2>5. Content</h2>
           <p>
-            Content found on or through this Service are the property of
-            oneda.sh or used with permission. You may not distribute, modify,
-            transmit, reuse, download, repost, copy, or use said Content,
-            whether in whole or in part, for commercial purposes or for personal
-            gain, without express advance written permission from us.
+            Content found on or through this Service are the property of Glow or
+            used with permission. You may not distribute, modify, transmit,
+            reuse, download, repost, copy, or use said Content, whether in whole
+            or in part, for commercial purposes or for personal gain, without
+            express advance written permission from us.
           </p>
           <h2>6. Prohibited Uses</h2>
           <p>
@@ -118,11 +118,11 @@ export default function LegalTermsPage() {
           <p>
             Service and its original content (excluding Content provided by
             users), features and functionality are and will remain the exclusive
-            property of onedash and its licensors.
+            property of Glow and its licensors.
           </p>
           <h2>11. Error Reporting and Feedback</h2>
           <p>
-            You may provide us directly at hello@oneda.sh with information and
+            You may provide us directly at support@glow.as with information and
             feedback concerning errors, suggestions for improvements, ideas,
             problems, complaints, and other matters related to our Service.
           </p>
@@ -168,11 +168,11 @@ export default function LegalTermsPage() {
           <h2>18. Contact Us</h2>
           <p>
             Please send your feedback, comments, requests for technical support
-            by email: hello@oneda.sh.
+            by email: support@glow.as.
           </p>
-          <p>onedash - oneda.sh</p>
+          <p>Glow - glow.as</p>
         </div>
       </div>
     </div>
-  )
+  );
 }

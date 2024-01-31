@@ -10,7 +10,7 @@ export default function LandingPage() {
       <section className="py-24 md:pt-48 md:pb-32">
         <div className="container mx-auto px-4 flex flex-col justify-center items-center">
           <div className="flex flex-col justify-center md:items-center max-w-4xl text-left md:text-center">
-            <h1 className="text-2xl md:text-6xl font-medium">oneda.sh</h1>
+            <h1 className="text-2xl md:text-6xl font-medium">Glow</h1>
 
             <LoginWidget
               trigger={
@@ -34,8 +34,7 @@ export default function LandingPage() {
               The Dynamic Link in Bio.
             </h1>
             <span className="text-lg md:text-xl font-normal mt-3">
-              Onedash is the link in bio that stays up-to-date with your
-              content.
+              Glow is the link in bio that stays up-to-date with your content.
             </span>
 
             <LoginWidget
@@ -52,7 +51,7 @@ export default function LandingPage() {
         <div className="container mx-auto">
           <Image
             src="/landing-page-ui@2x.png"
-            alt="Some example pages built with onedash"
+            alt="Some example pages built with glow"
             width={1400}
             height={731}
           />

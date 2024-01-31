@@ -10,7 +10,7 @@ export interface HeaderBlockConfig {
 
 export const defaults: HeaderBlockConfig = {
   avatar: {
-    src: 'https://cdn.oneda.sh/default-data/avatar.svg',
+    src: 'https://cdn.glow.as/default-data/avatar.svg',
   },
   title: 'Hello World',
   description: 'Welcome to your new page',
