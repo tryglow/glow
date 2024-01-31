@@ -1,6 +1,6 @@
 'use client';
 
-import { LoginProviderButton } from '../LoginProviderButton';
+import { useState } from 'react';
 
 import {
   AlertDialog,
@@ -11,7 +11,8 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
-import { useState } from 'react';
+
+import { LoginProviderButton } from '../LoginProviderButton';
 
 interface Props {
   trigger: React.ReactNode;
@@ -30,6 +31,16 @@ export function LoginWidget({ trigger }: Props) {
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
+          <LoginProviderButton
+            provider={{
+              id: 'twitter',
+              name: 'Twitter',
+              type: 'oauth',
+              signinUrl: '/api/auth/signin/twitter',
+              callbackUrl: '/api/auth/callback/twitter',
+            }}
+            className="mt-2 md:mt-0"
+          />
           <LoginProviderButton
             provider={{
               id: 'google',
