@@ -43,9 +43,7 @@ export default async function PageLayout({
       ) : (
         <LoginWidget
           trigger={
-            <Button variant="ghost" className="fixed top-3 right-3">
-              Get started
-            </Button>
+            <Button className="fixed z-50 top-3 right-3">Create a Page</Button>
           }
         />
       )}
