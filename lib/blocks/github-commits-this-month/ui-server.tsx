@@ -68,7 +68,7 @@ export async function GithubServerUI({
         target="_blank"
         rel="noopener noreferrer"
       >
-        <GithubLogo className="absolute right-6 bottom-6" />
+        <GithubLogo className="absolute right-6 bottom-6 text-sys-label-primary" />
       </Link>
     </div>
   );
