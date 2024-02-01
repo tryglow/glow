@@ -33,7 +33,8 @@ export async function GithubServerUI({
   const thisMonth = data?.user?.thisMonth?.totalCommitContributions;
 
   const percentageDifference = Math.round(
-    ((thisMonth - previousMonth) / previousMonth) * 100
+    ((thisMonth - previousMonth) / (previousMonth === 0 ? 1 : previousMonth)) *
+      100
   );
 
   return (
