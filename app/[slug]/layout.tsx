@@ -56,8 +56,6 @@ export default async function PageLayout({
     backgroundImage?: string;
   };
 
-  console.log('Psfsfage Theme', backgroundImage);
-
   return (
     <>
       {user ? (

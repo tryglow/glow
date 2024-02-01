@@ -88,7 +88,7 @@ export async function generateMetadata(
   const parentMeta = await parent;
 
   return {
-    title: data.metaTitle || parentMeta.title?.absolute,
+    title: `${data.metaTitle} - Glow` || parentMeta.title?.absolute,
     description: data.metaDescription || parentMeta.description,
   };
 }

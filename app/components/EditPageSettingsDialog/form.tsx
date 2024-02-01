@@ -5,7 +5,7 @@ import { Loader2 } from 'lucide-react';
 import { useParams, useRouter } from 'next/navigation';
 import * as Yup from 'yup';
 
-import { defaultThemes } from '@/lib/page';
+import { defaultThemes } from '@/lib/theme';
 
 import { Button } from '@/components/ui/button';
 import { DialogFooter } from '@/components/ui/dialog';
@@ -45,6 +45,7 @@ export function EditPageSettings({ onCancel, initialValues, pageId }: Props) {
     { setSubmitting, setFieldError }: FormikHelpers<FormValues>
   ) => {
     setSubmitting(true);
+    console.log('ThemeID', values.themeId);
 
     try {
       const req = await fetch('/api/page/settings', {
@@ -57,7 +58,7 @@ export function EditPageSettings({ onCancel, initialValues, pageId }: Props) {
           metaTitle: values.metaTitle,
           published: values.published,
           currentPageSlug: params.slug,
-          themeId: params.themeId,
+          themeId: values.themeId,
           backgroundImage: values.backgroundImage,
         }),
       });
@@ -158,14 +159,15 @@ export function EditPageSettings({ onCancel, initialValues, pageId }: Props) {
                 onUploaded={(url) => setFieldValue('backgroundImage', url)}
                 initialValue={initialValues?.backgroundImage}
                 referenceId={pageId}
-                label="Background image"
+                label="Background image (experimental)"
                 assetContext="pageBackgroundImage"
+                isCondensed
               />
             </div>
 
             <div className="mt-4">
               <Label htmlFor="published">Published</Label>
-              <div className="flex flex-col">
+              <div className="flex flex-col md:flex-row items-center mt-3">
                 <Switch
                   id="published"
                   checked={values.published}
@@ -173,7 +175,7 @@ export function EditPageSettings({ onCancel, initialValues, pageId }: Props) {
                     setFieldValue('published', newVal)
                   }
                 />
-                <label className="text-sm mt-3">
+                <label className="text-sm mt-3 md:mt-0 md:ml-3 max-w-80">
                   Disabling this will turn your page into a draft and only you
                   will be able to see it.
                 </label>

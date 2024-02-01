@@ -4,41 +4,8 @@
 
 @layer base {
   :root {
-    /* --color-sys-bg-primary: 28 28 30;
-    --color-sys-bg-secondary: 60 60 60;
-
-    --color-sys-label-primary: 255 255 255;
-    --color-sys-label-secondary: 200 200 200;
-    --color-sys-label-tertiary: 255 255 255;
-    --color-sys-label-quaternary: 255 255 255;
-    --color-sys-label-positive: 22 163 74;
-    --color-sys-label-negative: 220 38 38; */
-  }
-
-  /* :root {
-    --color-sys-bg-primary: 255 255 255;
-    --color-sys-bg-secondary: 230 230 230;
-
-    --color-sys-label-primary: 28 28 30;
-    --color-sys-label-secondary: 40 40 40;
-    --color-sys-label-tertiary: 255 255 255;
-    --color-sys-label-quaternary: 255 255 255;
-    --color-sys-label-positive: 22 163 74;
-    --color-sys-label-negative: 220 38 38;
-  } */
-
-  :root {
-    --color-sys-bg-base: rgba(245 245 244);
-    --color-sys-bg-primary: rgba(255 255 255);
-    --color-sys-bg-secondary: rgba(230 230 230);
-    --color-sys-bg-border: rgba(234 234 234);
-
-    --color-sys-label-primary: rgba(28 28 30);
-    --color-sys-label-secondary: rgba(40 40 40);
-    --color-sys-label-tertiary: rgba(255 255 255);
-    --color-sys-label-quaternary: rgba(255 255 255);
-    --color-sys-label-positive: rgba(22 163 74);
-    --color-sys-label-negative: rgba(220 38 38);
+    --color-sys-label-positive: 142.13deg 76.22% 36.27%;
+    --color-sys-label-negative: 0deg 72.22% 50.59%;
   }
 
   :root {
@@ -108,10 +75,6 @@
   * {
     @apply border-border;
     -webkit-font-smoothing: antialiased;
-  }
-
-  body {
-    background-color: var(--color-sys-bg-base);
   }
 }
 

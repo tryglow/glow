@@ -20,7 +20,7 @@ export async function POST(req: Request) {
     currentPageSlug,
     pageSlug,
     metaTitle,
-    theme,
+    themeId,
     published,
     backgroundImage,
   } = bodyData;
@@ -91,7 +91,7 @@ export async function POST(req: Request) {
       metaTitle,
       slug: pageSlug,
       publishedAt: published ? new Date() : null,
-      themeId: theme,
+      themeId,
       backgroundImage,
     },
     select: {

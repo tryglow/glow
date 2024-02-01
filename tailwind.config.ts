@@ -22,18 +22,19 @@ const config = {
       colors: {
         sys: {
           bg: {
-            base: 'var(--color-sys-bg-base)',
-            primary: 'var(--color-sys-bg-primary)',
-            secondary: 'var(--color-sys-bg-secondary)',
-            border: 'var(--color-sys-bg-border)',
+            base: 'hsl(var(--color-sys-bg-base) / <alpha-value>)',
+            primary: 'hsl(var(--color-sys-bg-primary) / <alpha-value>)',
+            secondary: 'hsl(var(--color-sys-bg-secondary) / <alpha-value>)',
+            border: 'hsl(var(--color-sys-bg-border) / <alpha-value>)',
           },
           label: {
-            primary: 'var(--color-sys-label-primary)',
-            secondary: 'var(--color-sys-label-secondary)',
-            tertiary: 'var(--color-sys-label-tertiary)',
-            quaternary: 'var(--color-sys-label-quaternary)',
-            positive: 'var(--color-sys-label-positive)',
-            negative: 'var(--color-sys-label-negative)',
+            primary: 'hsl(var(--color-sys-label-primary) / <alpha-value>)',
+            secondary: 'hsl(var(--color-sys-label-secondary) / <alpha-value>)',
+            tertiary: 'hsl(var(--color-sys-label-tertiary) / <alpha-value>)',
+            quaternary:
+              'hsl(var(--color-sys-label-quaternary) / <alpha-value>)',
+            positive: 'hsl(var(--color-sys-label-positive) / <alpha-value>)',
+            negative: 'hsl(var(--color-sys-label-negative) / <alpha-value>)',
           },
         },
         border: 'hsl(var(--border))',
