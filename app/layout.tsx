@@ -13,8 +13,26 @@ const saans = localFont({
 });
 
 export const metadata: Metadata = {
-  title: 'Glow - Your personal site builder',
-  description: 'Your personal site builder',
+  title: 'Glow - The dynamic link-in-bio',
+  description: 'The dynamic link-in-bio',
+  openGraph: {
+    images: [
+      {
+        url: 'https://glow.as/og.png',
+      },
+    ],
+    type: 'website',
+    url: 'https://glow.as',
+    title: 'Glow',
+    description: 'The dynamic link-in-bio',
+    siteName: 'Glow',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    site: '@tryglow',
+    creator: '@tryglow',
+    images: 'https://glow.as/og.png',
+  },
 };
 
 export default function RootLayout({
