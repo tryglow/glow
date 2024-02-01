@@ -93,7 +93,7 @@ export function EditForm({
                                 setFieldValue(`items.${index}.icon.src`, val)
                               }
                               initialValue={values.items[index].icon.src}
-                              referenceId={`block_${blockId}`}
+                              referenceId={blockId}
                               isCondensed
                               assetContext="blockAsset"
                             />

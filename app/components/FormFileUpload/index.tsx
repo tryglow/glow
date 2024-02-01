@@ -4,6 +4,8 @@ import { PhotoIcon } from '@heroicons/react/24/solid';
 import clsx from 'clsx';
 import { ChangeEvent, useEffect, useState } from 'react';
 
+import { AssetContexts } from '@/lib/asset';
+
 import { Button } from '@/components/ui/button';
 
 interface Props {
@@ -12,7 +14,7 @@ interface Props {
   referenceId: string;
   label?: string;
   isCondensed?: boolean;
-  assetContext: 'pageBackgroundImage' | 'blockAsset';
+  assetContext: AssetContexts;
 }
 
 export function FormFileUpload({
@@ -55,10 +57,11 @@ export function FormFileUpload({
     body.append('referenceId', referenceId);
     body.append('assetContext', assetContext);
 
-    const response = await fetch('/api/page/blocks/upload-asset', {
+    const response = await fetch('/api/page/asset/upload', {
       method: 'POST',
       body,
     });
+
     const responseData = await response.json();
 
     if (!response.ok) {

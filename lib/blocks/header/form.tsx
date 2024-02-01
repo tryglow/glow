@@ -54,7 +54,7 @@ export function EditForm({
           <FormFileUpload
             onUploaded={(url) => setFieldValue('avatar.src', url)}
             initialValue={initialValues?.avatar?.src}
-            referenceId={`block_${blockId}`}
+            referenceId={blockId}
             assetContext="blockAsset"
           />
 

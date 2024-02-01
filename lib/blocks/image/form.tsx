@@ -36,7 +36,7 @@ export function EditForm({
           <FormFileUpload
             onUploaded={(url) => setValues({ src: url })}
             initialValue={initialValues?.src}
-            referenceId={`block_${blockId}`}
+            referenceId={blockId}
             assetContext="blockAsset"
           />
           <div className="flex flex-shrink-0 justify-between py-4 border-t border-stone-200">
