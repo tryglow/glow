@@ -17,7 +17,7 @@ export const defaultThemes = [
   },
 ];
 
-const defaultThemeSeeds = {
+export const defaultThemeSeeds = {
   Default: {
     id: '00441c91-6762-44d8-8110-2b5616825bd9',
     colorBgPrimary: '0 0% 100%',
@@ -44,9 +44,9 @@ const defaultThemeSeeds = {
     colorBgSecondary: '0 0% 90.20%',
     colorLabelPrimary: '0 0% 100%',
     colorLabelSecondary: '0 0% 98.04%',
-    colorBorderPrimary: '0 0% 29%',
+    colorBorderPrimary: '0 0% 16.07%',
     colorLabelTertiary: '0 0% 98.04%',
-    colorBgBase: '0 0% 100%',
+    colorBgBase: '0 0% 0%',
   },
   Forest: {
     id: '4c47b21f-9183-4e7a-be6c-6ee4fabae92a',

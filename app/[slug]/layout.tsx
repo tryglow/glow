@@ -4,6 +4,7 @@ import Link from 'next/link';
 
 import { authOptions } from '@/lib/auth';
 import prisma from '@/lib/prisma';
+import { defaultThemeSeeds } from '@/lib/theme';
 
 import { Button } from '@/components/ui/button';
 
@@ -51,10 +52,16 @@ export default async function PageLayout({
 }) {
   const { user, pages } = await fetchUserLoggedinStatus();
 
+  let renderTheme: Partial<Theme> = defaultThemeSeeds.Default;
+
   const { theme, backgroundImage } = (await fetchPageTheme(params.slug)) as {
     theme: Theme | null;
     backgroundImage?: string;
   };
+
+  if (theme?.id) {
+    renderTheme = theme;
+  }
 
   return (
     <>
@@ -97,20 +104,18 @@ export default async function PageLayout({
           }`}
         </style>
       )}
-      {theme && (
-        <style>
-          {`:root {
-          --color-sys-bg-base: ${theme.colorBgBase};
-          --color-sys-bg-primary: ${theme.colorBgPrimary};
-          --color-sys-bg-secondary: ${theme.colorBgSecondary};
-          --color-sys-bg-border: ${theme.colorBorderPrimary};
+      <style>
+        {`:root {
+          --color-sys-bg-base: ${renderTheme.colorBgBase};
+          --color-sys-bg-primary: ${renderTheme.colorBgPrimary};
+          --color-sys-bg-secondary: ${renderTheme.colorBgSecondary};
+          --color-sys-bg-border: ${renderTheme.colorBorderPrimary};
           
-          --color-sys-label-primary: ${theme.colorLabelPrimary};
-          --color-sys-label-secondary: ${theme.colorLabelSecondary};
-          --color-sys-label-tertiary: ${theme.colorLabelTertiary};
+          --color-sys-label-primary: ${renderTheme.colorLabelPrimary};
+          --color-sys-label-secondary: ${renderTheme.colorLabelSecondary};
+          --color-sys-label-tertiary: ${renderTheme.colorLabelTertiary};
         }`}
-        </style>
-      )}
+      </style>
     </>
   );
 }
