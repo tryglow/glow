@@ -15,6 +15,7 @@ const saans = localFont({
 export const metadata: Metadata = {
   title: 'Glow - The dynamic link-in-bio',
   description: 'The dynamic link-in-bio',
+  metadataBase: new URL('https://glow.as'),
   openGraph: {
     images: [
       {
