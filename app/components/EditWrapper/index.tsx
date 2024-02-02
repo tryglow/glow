@@ -2,12 +2,20 @@
 
 import dynamic from 'next/dynamic';
 import { useParams, useRouter } from 'next/navigation';
-import { ReactNode, useEffect, useOptimistic, useTransition } from 'react';
-import { Layout, ResponsiveProps } from 'react-grid-layout';
+import {
+  ReactNode,
+  useCallback,
+  useEffect,
+  useOptimistic,
+  useTransition,
+} from 'react';
+import { Layout, Layouts, ResponsiveProps } from 'react-grid-layout';
 import useSWR from 'swr';
 import { v4 as uuidv4 } from 'uuid';
 
 import { PageConfig, ResponsiveReactGridLayout } from '@/app/[slug]/grid';
+
+import { debounce } from '@/lib/utils';
 
 import { Skeleton } from '@/components/ui/skeleton';
 import { useToast } from '@/components/ui/use-toast';
@@ -115,8 +123,22 @@ export function EditWrapper({ children, layoutProps }: Props) {
     });
   };
 
-  const handleLayoutChange = async (newLayout: Layout[]) => {
+  const handleLayoutChange = async (
+    newLayout: Layout[],
+    currentLayouts: Layouts
+  ) => {
     if (newLayout.length === 0 || !layout) {
+      return;
+    }
+
+    /**
+     * We don't support editing on smaller breakpoints yet, so we can skip saving
+     * the layout if the user is on a smaller breakpoint. This also fixes an issue
+     * where the large layout is overwritten if the user resizes their window
+     * whilst in edit mode.
+     */
+
+    if (window.innerWidth <= 505) {
       return;
     }
 
@@ -185,7 +207,7 @@ export function EditWrapper({ children, layoutProps }: Props) {
       });
 
       mutateLayout({
-        ...layout,
+        xss: currentLayouts.xss,
         sm: newLayout,
       });
     } catch (error) {
