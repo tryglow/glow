@@ -7,7 +7,8 @@ export type Blocks =
   | 'spotify-playing-now'
   | 'instagram-latest-post'
   | 'map'
-  | 'link-box';
+  | 'link-box'
+  | 'link-bar';
 
 export interface EditFormProps<T> {
   initialValues: T;

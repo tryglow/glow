@@ -1,3 +1,4 @@
+import { RectangleGroupIcon } from '@heroicons/react/24/outline';
 import { useEffect, useState } from 'react';
 
 import {
@@ -58,6 +59,7 @@ export function BlockSheet() {
                 <DraggableBlockButton type="header" />
                 <DraggableBlockButton type="content" />
                 <DraggableBlockButton type="link-box" />
+                <DraggableBlockButton type="link-bar" />
                 <DraggableBlockButton type="stack" />
                 <DraggableBlockButton type="image" />
                 <DraggableBlockButton type="map" />

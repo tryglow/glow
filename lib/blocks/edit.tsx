@@ -5,12 +5,14 @@ import { EditForm as GithubCommitsThisMonthForm } from './github-commits-this-mo
 import { EditForm as HeaderForm } from './header/form';
 import { EditForm as ImageForm } from './image/form';
 import { EditForm as InstagramLatestPostForm } from './instagram-latest-post/form';
+import { EditForm as LinkBarForm } from './link-bar/form';
 import { EditForm as LinkBoxForm } from './link-box/form';
 import { EditForm as MapForm } from './map/form';
 import { EditForm as SpotifyPlayingNowForm } from './spotify-playing-now/form';
 import { EditForm as StackForm } from './stack/form';
+import { Blocks } from './types';
 
-export const editForms: Record<string, JSXElementConstructor<any>> = {
+export const editForms: Record<Blocks, JSXElementConstructor<any>> = {
   'link-box': LinkBoxForm,
   stack: StackForm,
   content: ContentEditForm,
@@ -20,4 +22,5 @@ export const editForms: Record<string, JSXElementConstructor<any>> = {
   'spotify-playing-now': SpotifyPlayingNowForm,
   'instagram-latest-post': InstagramLatestPostForm,
   map: MapForm,
+  'link-bar': LinkBarForm,
 };

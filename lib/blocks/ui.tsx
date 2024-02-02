@@ -5,6 +5,7 @@ import { Stack } from '@/lib/blocks/stack/ui';
 import { GitHubCommitsThisMonth } from './github-commits-this-month/ui-client';
 import { Image } from './image/ui';
 import InstagramLatestPost from './instagram-latest-post/ui-client';
+import { LinkBar } from './link-bar/ui';
 import { LinkBox } from './link-box/ui';
 import { Map } from './map/ui';
 import SpotifyPlayingNow from './spotify-playing-now/ui-client';
@@ -60,5 +61,7 @@ export function renderBlock(block: any, pageId: string, isEditMode: boolean) {
       return <Map {...sharedProps} />;
     case 'link-box':
       return <LinkBox {...sharedProps} />;
+    case 'link-bar':
+      return <LinkBar {...sharedProps} />;
   }
 }

@@ -8,6 +8,7 @@ import {
 import { HeaderSchema, defaults as headerDefaults } from './header/config';
 import { ImageSchema, defaults as imageDefaults } from './image/config';
 import { defaults as instagramLatestPostDefaults } from './instagram-latest-post/config';
+import { LinkBarSchema, defaults as linkBarDefaults } from './link-bar/config';
 import { defaults as linkBoxDefaults } from './link-box/config';
 import { LinkBoxSchema } from './link-box/config';
 import { MapSchema, defaults as mapDefaults } from './map/config';
@@ -16,7 +17,7 @@ import { StackSchema, defaults as stackDefaults } from './stack/config';
 import { Blocks } from './types';
 
 export const blocksConfig: Record<
-  Exclude<Blocks, 'default'>,
+  Blocks,
   {
     schema: Yup.Schema | null;
     defaults: any;
@@ -57,5 +58,9 @@ export const blocksConfig: Record<
   map: {
     defaults: mapDefaults,
     schema: MapSchema,
+  },
+  'link-bar': {
+    defaults: linkBarDefaults,
+    schema: LinkBarSchema,
   },
 };

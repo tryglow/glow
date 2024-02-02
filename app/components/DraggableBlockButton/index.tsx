@@ -95,6 +95,15 @@ export const config: Record<
       h: 2,
     },
   },
+  'link-bar': {
+    title: 'Link Bar',
+    label: 'A row of links to social media',
+    icon: '/ui/type-link-bar.svg',
+    drag: {
+      w: 12,
+      h: 2,
+    },
+  },
 };
 
 interface Props {
