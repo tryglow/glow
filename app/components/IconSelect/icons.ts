@@ -28,6 +28,24 @@ export const icons: Icon[] = [
     value: 'https://cdn.glow.as/default-data/icons/dribbble.svg',
   },
   {
+    label: 'Sketch',
+    subLabel: 'Grayscale',
+    value: 'https://cdn.glow.as/default-data/icons/sketch-bw.svg',
+  },
+  {
+    label: 'Figma',
+    value: 'https://cdn.glow.as/default-data/icons/figma.svg',
+  },
+  {
+    label: 'Polywork',
+    value: 'https://cdn.glow.as/default-data/icons/polywork.svg',
+  },
+  {
+    label: 'Figma',
+    subLabel: 'Grayscale',
+    value: 'https://cdn.glow.as/default-data/icons/figma-bw.svg',
+  },
+  {
     label: 'Facebook',
     subLabel: 'Grayscale',
     value: 'https://cdn.glow.as/default-data/icons/facebook-bw.svg',
@@ -170,4 +188,12 @@ export const icons: Icon[] = [
     label: 'X',
     value: 'https://cdn.glow.as/default-data/icons/twitter-x.svg',
   },
-];
+].sort((a, b) => {
+  if (a.label < b.label) {
+    return -1;
+  }
+  if (a.label > b.label) {
+    return 1;
+  }
+  return 0;
+});
