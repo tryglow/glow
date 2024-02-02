@@ -1,5 +1,8 @@
-import { RectangleGroupIcon } from '@heroicons/react/24/outline';
+import { MagnifyingGlassIcon } from '@radix-ui/react-icons';
 import { useEffect, useState } from 'react';
+
+import { Blocks } from '@/lib/blocks/types';
+import { cn } from '@/lib/utils';
 
 import {
   Sheet,
@@ -26,8 +29,34 @@ const BlockIcon = () => {
   );
 };
 
+const blocks: Blocks[] = [
+  'header',
+  'content',
+  'link-box',
+  'link-bar',
+  'stack',
+  'image',
+  'map',
+  'github-commits-this-month',
+  'spotify-playing-now',
+  'instagram-latest-post',
+];
+
 export function BlockSheet() {
   const [open, setOpen] = useState(false);
+  const [search, setSearch] = useState('');
+
+  const [filteredBlocks, setFilteredBlocks] = useState(blocks);
+
+  useEffect(() => {
+    if (search === '') {
+      setFilteredBlocks(blocks);
+    }
+
+    setFilteredBlocks(
+      blocks.filter((block) => block.includes(search.toLowerCase()))
+    );
+  }, [search]);
 
   useEffect(() => {
     if (open) {
@@ -51,21 +80,27 @@ export function BlockSheet() {
               </SheetTitle>
             </SheetHeader>
 
+            <div className="flex items-center border-b mb-3">
+              <MagnifyingGlassIcon className="mr-2 h-4 w-4 shrink-0 opacity-50" />
+              <input
+                type="text"
+                className={cn(
+                  'flex h-10 w-full border-0 ring-0 focus:ring-0 rounded-md bg-transparent py-3 text-sm outline-none placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50'
+                )}
+                placeholder="Filter blocks"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+              />
+            </div>
+
             <div
               className="overflow-y-auto h-auto"
               style={{ maxHeight: 'calc(100vh - 90px)' }}
             >
               <div className="space-y-3 flex flex-col">
-                <DraggableBlockButton type="header" />
-                <DraggableBlockButton type="content" />
-                <DraggableBlockButton type="link-box" />
-                <DraggableBlockButton type="link-bar" />
-                <DraggableBlockButton type="stack" />
-                <DraggableBlockButton type="image" />
-                <DraggableBlockButton type="map" />
-                <DraggableBlockButton type="github-commits-this-month" />
-                <DraggableBlockButton type="spotify-playing-now" />
-                <DraggableBlockButton type="instagram-latest-post" />
+                {filteredBlocks.map((block) => {
+                  return <DraggableBlockButton key={block} type={block} />;
+                })}
               </div>
             </div>
           </SheetContent>
