@@ -3,7 +3,7 @@ import { randomUUID } from 'crypto';
 import { defaults as headerDefaults } from './blocks/header/config';
 import prisma from './prisma';
 
-export const MAX_PAGES_PER_USER = 2;
+export const MAX_PAGES_PER_USER = 10;
 
 export function createNewPage(userId: string, pageSlug: string) {
   const headerSectionId = randomUUID();

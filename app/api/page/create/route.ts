@@ -100,7 +100,7 @@ export async function POST(req: Request) {
       return Response.json({
         error: {
           message: 'You have reached the maximum number of pages',
-          label: 'Sorry, you can only create 2 pages per account.',
+          label: 'Sorry, you can only create 10 pages per account.',
         },
       });
     }
