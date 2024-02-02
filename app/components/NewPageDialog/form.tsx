@@ -99,36 +99,42 @@ export function CreatePageForm({ onCancel }: Props) {
       onSubmit={onSubmit}
       enableReinitialize
     >
-      {({ isSubmitting, values, setFieldValue, errors }) => (
-        <Form className="w-full flex flex-col">
-          <div className="border-b border-white/10 pb-12">
-            <div>
-              <FormField
-                withPrefix="glow.as/"
-                label="Slug"
-                name="pageSlug"
-                placeholder="your-page"
-                id="pageSlug"
-                error={errors.pageSlug}
-              />
+      {({ isSubmitting, values, errors, touched }) => {
+        return (
+          <Form className="w-full flex flex-col">
+            <div className="border-b border-white/10 pb-12">
+              <div>
+                <FormField
+                  withPrefix="glow.as/"
+                  label="Slug"
+                  name="pageSlug"
+                  placeholder="your-page"
+                  id="pageSlug"
+                  error={
+                    touched.pageSlug && values.pageSlug !== ''
+                      ? errors.pageSlug
+                      : undefined
+                  }
+                />
+              </div>
             </div>
-          </div>
 
-          <DialogFooter>
-            {onCancel && (
-              <Button variant="secondary" onClick={onCancel}>
-                ← Cancel
-              </Button>
-            )}
-            <Button type="submit">
-              {isSubmitting && (
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+            <DialogFooter>
+              {onCancel && (
+                <Button variant="secondary" onClick={onCancel}>
+                  ← Cancel
+                </Button>
               )}
-              Create Page
-            </Button>
-          </DialogFooter>
-        </Form>
-      )}
+              <Button type="submit">
+                {isSubmitting && (
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                )}
+                Create Page
+              </Button>
+            </DialogFooter>
+          </Form>
+        );
+      }}
     </Formik>
   );
 }
