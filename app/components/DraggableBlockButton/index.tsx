@@ -1,3 +1,5 @@
+import { HeadObjectCommand } from '@aws-sdk/client-s3';
+
 import { useEditModeContext } from '@/app/contexts/Edit';
 
 import { Blocks } from '@/lib/blocks/types';
@@ -117,11 +119,15 @@ export function DraggableBlockButton({ type }: Props) {
 
   return (
     <button
+      id="hello"
       type="button"
       className="w-full bg-white border border-stone-200 rounded-md flex items-center justify-start text-left px-3 py-3 shadow-none hover:shadow-md transition-shadow cursor-move"
       draggable={true}
       unselectable="on"
       onDragStart={(e) => {
+        // This is needed to make the drag work in Firefox
+        e.dataTransfer.setData('text/plain', '');
+
         setDraggingItem({
           i: 'tmp-block',
           w: blockConfig.drag.w,

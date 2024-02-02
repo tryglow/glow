@@ -65,12 +65,11 @@ export function EditWrapper({ children, layoutProps }: Props) {
 
   const onDrop = async (
     newLayout: Layout[],
-    layoutItem: Layout,
+    layoutItem: any,
     _event: Event
   ) => {
     // Get the last item from the newLayout
-    const lastItem = newLayout[newLayout.length - 1];
-    // setLayout(newLayout);
+    const lastItem = layoutItem;
 
     const newItemId = uuidv4();
 
@@ -224,9 +223,7 @@ export function EditWrapper({ children, layoutProps }: Props) {
     ...layoutProps,
     onDrop,
     onLayoutChange: handleLayoutChange,
-    onDropDragOver: (event: Event) => {
-      return draggingItem;
-    },
+    droppingItem: draggingItem,
     draggableCancel: '.noDrag',
     useCSSTransforms: true,
     compactType: undefined,

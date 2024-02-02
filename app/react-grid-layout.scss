@@ -35,18 +35,20 @@
     z-index: 30;
     will-change: transform;
     box-shadow: theme('boxShadow.2xl');
+    transform-origin: left top;
 
     > div {
       transform: scale(1.05);
     }
 
     ~ .react-grid-placeholder {
-      background: hsl(var(--color-sys-bg-primary), darken);
+      background: theme('colors.sys.bg.primary' / 90%) !important;
     }
   }
 
   &.dropping {
-    visibility: hidden;
+    background: theme('colors.sys.bg.primary' / 50%) !important;
+    // visibility: hidden;
   }
 
   &.react-grid-placeholder {
