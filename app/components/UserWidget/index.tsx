@@ -98,11 +98,13 @@ export function UserWidget({ user, usersPages }: Props) {
         onOpenChange={setShowNewTeamDialog}
         onClose={() => setShowNewTeamDialog(false)}
       />
-      <EditPageSettingsDialog
-        open={showEditPageSettingsDialog}
-        onOpenChange={setShowEditPageSettingsDialog}
-        onClose={() => setShowEditPageSettingsDialog(false)}
-      />
+      {showEditPageSettingsDialog && (
+        <EditPageSettingsDialog
+          open={true}
+          onOpenChange={setShowEditPageSettingsDialog}
+          onClose={() => setShowEditPageSettingsDialog(false)}
+        />
+      )}
     </>
   );
 }

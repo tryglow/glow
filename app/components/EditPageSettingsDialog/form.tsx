@@ -45,7 +45,6 @@ export function EditPageSettings({ onCancel, initialValues, pageId }: Props) {
     { setSubmitting, setFieldError }: FormikHelpers<FormValues>
   ) => {
     setSubmitting(true);
-    console.log('ThemeID', values.themeId);
 
     try {
       const req = await fetch('/api/page/settings', {
@@ -88,6 +87,8 @@ export function EditPageSettings({ onCancel, initialValues, pageId }: Props) {
       toast({
         title: 'Your page settings have been updated',
       });
+      router.refresh();
+      onCancel();
     } catch (error) {
       toast({
         variant: 'error',
