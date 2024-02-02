@@ -13,7 +13,7 @@ export const defaults: LinkBarBlockConfig = {
   links: [
     {
       link: 'https://x.com/tryglow',
-      icon: { src: 'https://cdn.glow.as/default-data/icons/twitter-bw.svg' },
+      icon: { src: 'https://cdn.glow.as/default-data/icons/twitter.svg' },
     },
   ],
 };
