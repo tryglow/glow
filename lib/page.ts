@@ -5,14 +5,20 @@ import prisma from './prisma';
 
 export const MAX_PAGES_PER_USER = 10;
 
-export function createNewPage(userId: string, pageSlug: string) {
+interface NewPageInput {
+  slug: string;
+  themeId: string;
+}
+
+export function createNewPage(userId: string, input: NewPageInput) {
   const headerSectionId = randomUUID();
 
   return prisma.page.create({
     data: {
       userId,
-      slug: pageSlug,
+      slug: input.slug,
       publishedAt: new Date(),
+      themeId: input.themeId,
       metaTitle: 'Hello World',
       config: [
         {

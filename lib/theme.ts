@@ -1,4 +1,6 @@
-export const defaultThemes = [
+export type DefaultThemeNames = 'Default' | 'Purple' | 'Black' | 'Forest';
+
+export const defaultThemes: { id: string; name: DefaultThemeNames }[] = [
   {
     id: '00441c91-6762-44d8-8110-2b5616825bd9',
     name: 'Default',
@@ -17,7 +19,7 @@ export const defaultThemes = [
   },
 ];
 
-export const defaultThemeSeeds = {
+export const defaultThemeSeeds: Record<DefaultThemeNames, any> = {
   Default: {
     id: '00441c91-6762-44d8-8110-2b5616825bd9',
     colorBgPrimary: '0 0% 100%',

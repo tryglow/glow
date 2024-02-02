@@ -2,13 +2,17 @@
 
 import { Form, Formik, FormikHelpers } from 'formik';
 import { Loader2 } from 'lucide-react';
-import { useParams, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import * as Yup from 'yup';
 
 import { regexSlug } from '@/lib/slugs';
+import { DefaultThemeNames, defaultThemeSeeds } from '@/lib/theme';
 
 import { Button } from '@/components/ui/button';
 import { DialogFooter } from '@/components/ui/dialog';
+import { Label } from '@/components/ui/label';
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
+import { SelectLabel } from '@/components/ui/select';
 import { useToast } from '@/components/ui/use-toast';
 
 import { FormField } from '../FormField';
@@ -21,10 +25,12 @@ const FormSchema = Yup.object().shape({
       regexSlug,
       'Please only use lowercase letters, numbers, dashes and underscores'
     ),
+  themeId: Yup.string(),
 });
 
 type FormValues = {
   pageSlug: string;
+  themeId: string;
 };
 
 interface Props {
@@ -49,6 +55,7 @@ export function CreatePageForm({ onCancel }: Props) {
         },
         body: JSON.stringify({
           slug: values.pageSlug,
+          themeId: values.themeId,
         }),
       });
 
@@ -94,12 +101,13 @@ export function CreatePageForm({ onCancel }: Props) {
     <Formik
       initialValues={{
         pageSlug: '',
+        themeId: defaultThemeSeeds.Default.id,
       }}
       validationSchema={FormSchema}
       onSubmit={onSubmit}
       enableReinitialize
     >
-      {({ isSubmitting, values, errors, touched }) => {
+      {({ isSubmitting, values, errors, touched, setFieldValue }) => {
         return (
           <Form className="w-full flex flex-col">
             <div className="border-b border-white/10 pb-12">
@@ -116,6 +124,40 @@ export function CreatePageForm({ onCancel }: Props) {
                       : undefined
                   }
                 />
+              </div>
+
+              <div className="mt-4">
+                <Label>Select a theme</Label>
+                <RadioGroup
+                  onValueChange={(val) => setFieldValue('themeId', val)}
+                  defaultValue={values.themeId}
+                  className="grid max-w-md grid-cols-2 gap-4 pt-2"
+                >
+                  {Object.entries(defaultThemeSeeds).map(
+                    ([themeName, themeValues]) => {
+                      return (
+                        <Label
+                          key={themeName}
+                          className="[&:has([data-state=checked])>div]:border-primary"
+                        >
+                          <RadioGroupItem
+                            value={themeValues.id}
+                            className="sr-only"
+                          />
+
+                          <div className="items-center rounded-md border-2 border-muted p-1 hover:border-accent">
+                            <PageThemePreview
+                              themeName={themeName as DefaultThemeNames}
+                            />
+                          </div>
+                          <span className="block w-full p-2 text-center font-medium">
+                            {themeName}
+                          </span>
+                        </Label>
+                      );
+                    }
+                  )}
+                </RadioGroup>
               </div>
             </div>
 
@@ -138,3 +180,49 @@ export function CreatePageForm({ onCancel }: Props) {
     </Formik>
   );
 }
+
+export const PageThemePreview = ({
+  themeName,
+}: {
+  themeName: DefaultThemeNames;
+}) => {
+  const selectedTheme = defaultThemeSeeds[themeName];
+
+  return (
+    <div
+      className="space-y-2 rounded-sm p-2"
+      style={{ backgroundColor: `hsl(${selectedTheme.colorBgBase})` }}
+    >
+      <div
+        className="flex items-center space-x-2 rounded-md p-2 shadow-sm"
+        style={{ backgroundColor: `hsl(${selectedTheme.colorBgPrimary})` }}
+      >
+        <div
+          className="h-4 w-4 rounded-full"
+          style={{ backgroundColor: `hsl(${selectedTheme.colorLabelPrimary})` }}
+        />
+        <div
+          className="h-2 w-[100px] rounded-lg"
+          style={{
+            backgroundColor: `hsl(${selectedTheme.colorLabelSecondary})`,
+          }}
+        />
+      </div>
+      <div
+        className="space-y-2 rounded-md p-2 shadow-sm"
+        style={{ backgroundColor: `hsl(${selectedTheme.colorBgPrimary})` }}
+      >
+        <div
+          className="h-2 w-[80px] rounded-lg"
+          style={{ backgroundColor: `hsl(${selectedTheme.colorLabelPrimary})` }}
+        />
+        <div
+          className="h-2 w-[100px] rounded-lg"
+          style={{
+            backgroundColor: `hsl(${selectedTheme.colorLabelSecondary})`,
+          }}
+        />
+      </div>
+    </div>
+  );
+};

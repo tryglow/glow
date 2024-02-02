@@ -24,7 +24,7 @@ export async function POST(req: Request) {
 
   const bodyData = await req.json();
 
-  const { slug } = bodyData;
+  const { slug, themeId } = bodyData;
 
   if (!slug) {
     return Response.json({
@@ -106,7 +106,7 @@ export async function POST(req: Request) {
     }
   }
 
-  const newPage = await createNewPage(session.user.id, slug);
+  const newPage = await createNewPage(session.user.id, { slug, themeId });
 
   if (newPage) {
     return Response.json({
