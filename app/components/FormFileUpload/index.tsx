@@ -32,6 +32,7 @@ export function FormFileUpload({
       setUploadedFileUrl(initialValue);
     }
   }, [initialValue]);
+
   const handleUpload = async (ev: ChangeEvent<HTMLInputElement>) => {
     ev.preventDefault();
 
