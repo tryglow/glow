@@ -1,5 +1,6 @@
 'use client';
 
+import dynamic from 'next/dynamic';
 import { useParams, useRouter } from 'next/navigation';
 import { ReactNode, useEffect, useOptimistic, useTransition } from 'react';
 import { Layout, ResponsiveProps } from 'react-grid-layout';
@@ -12,8 +13,13 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { useToast } from '@/components/ui/use-toast';
 
 import { useEditModeContext } from '../../contexts/Edit';
-import { BlockSheet } from '../BlockSheet';
 import { CoreBlock } from '../CoreBlock';
+
+// Dynamically import BlockSheet
+const DynamicBlockSheet = dynamic(
+  () => import('../BlockSheet').then((mod) => mod.BlockSheet),
+  { ssr: false }
+);
 
 interface Props {
   children: ReactNode[];
@@ -218,7 +224,7 @@ export function EditWrapper({ children, layoutProps }: Props) {
       >
         {optimisticItems}
       </ResponsiveReactGridLayout>
-      <BlockSheet />
+      <DynamicBlockSheet />
     </>
   );
 }
