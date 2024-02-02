@@ -37,7 +37,7 @@ export const InstagramLatestPostServerUI: FunctionComponent<{
   if (!data) {
     return (
       <div className="flex items-center justify-center h-full">
-        <span className="text-sm text-stone-500 text-center">
+        <span className="text-sm text-sys-label-secondary text-center">
           Edit this block to connect your Instagram account.
         </span>
       </div>
