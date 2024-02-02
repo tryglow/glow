@@ -21,7 +21,7 @@ interface Props {
 }
 
 export function EditWrapper({ children, layoutProps }: Props) {
-  const { draggingItem, setLayout } = useEditModeContext();
+  const { draggingItem } = useEditModeContext();
   const router = useRouter();
   const params = useParams();
   const { toast } = useToast();
