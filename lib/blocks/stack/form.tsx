@@ -1,19 +1,13 @@
-import {
-  FieldArray,
-  Form,
-  Formik,
-  FormikErrors,
-  FormikHelpers,
-  FormikValues,
-  getIn,
-} from 'formik';
+import { FieldArray, Form, Formik, FormikHelpers, getIn } from 'formik';
 import { Loader2 } from 'lucide-react';
 
 import { FormField } from '@/app/components/FormField';
 import { FormFileUpload } from '@/app/components/FormFileUpload';
+import { IconSelect } from '@/app/components/IconSelect';
 
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 import { EditFormProps } from '../types';
 import { StackBlockConfig, StackSchema } from './config';
@@ -66,10 +60,22 @@ export function EditForm({
                     {values?.items?.map((item, index) => {
                       const itemErrors = getIn(errors, `items[${index}]`);
 
+                      const initialUploadedIcon = !values.items[
+                        index
+                      ].icon.src.startsWith('https://cdn.glow.as/default-data')
+                        ? values.items[index].icon.src
+                        : undefined;
+
+                      const initialTab = values.items[
+                        index
+                      ].icon.src?.startsWith('https://cdn.glow.as/default-data')
+                        ? 'iconGallery'
+                        : 'uploadCustom';
+
                       return (
                         <div
                           key={index}
-                          className="flex flex-col space-y-1 bg-stone-100 border-stone-200 border rounded-lg px-3 py-3"
+                          className="flex flex-col space-y-1 bg-stone-50 border-stone-200 border rounded-lg px-3 py-3"
                         >
                           <span className="font-medium text-sm mb-3">
                             List item {index + 1}
@@ -88,15 +94,49 @@ export function EditForm({
                           />
                           <div>
                             <Label htmlFor={`items.${index}.image`}>Icon</Label>
-                            <FormFileUpload
-                              onUploaded={(val) =>
-                                setFieldValue(`items.${index}.icon.src`, val)
-                              }
-                              initialValue={values.items[index].icon.src}
-                              referenceId={blockId}
-                              isCondensed
-                              assetContext="blockAsset"
-                            />
+
+                            <Tabs defaultValue={initialTab} className="w-full">
+                              <TabsList className="w-full">
+                                <TabsTrigger
+                                  className="w-1/2"
+                                  value="iconGallery"
+                                >
+                                  Icon Gallery
+                                </TabsTrigger>
+                                <TabsTrigger
+                                  className="w-1/2"
+                                  value="uploadCustom"
+                                >
+                                  Upload
+                                </TabsTrigger>
+                              </TabsList>
+                              <TabsContent value="iconGallery">
+                                <IconSelect
+                                  initialValue={values.items[index].icon.src}
+                                  onIconChange={(val) =>
+                                    setFieldValue(
+                                      `items.${index}.icon.src`,
+                                      val
+                                    )
+                                  }
+                                />
+                              </TabsContent>
+                              <TabsContent value="uploadCustom">
+                                <FormFileUpload
+                                  onUploaded={(val) =>
+                                    setFieldValue(
+                                      `items.${index}.icon.src`,
+                                      val
+                                    )
+                                  }
+                                  initialValue={initialUploadedIcon}
+                                  referenceId={blockId}
+                                  isCondensed
+                                  assetContext="blockAsset"
+                                />
+                              </TabsContent>
+                            </Tabs>
+
                             {itemErrors?.icon?.src && (
                               <p
                                 className="mt-2 text-sm text-red-600"
@@ -111,7 +151,7 @@ export function EditForm({
                             type="button"
                             onClick={() => remove(index)}
                           >
-                            Remove
+                            Remove item
                           </Button>
                         </div>
                       );
