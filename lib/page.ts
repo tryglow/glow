@@ -1,3 +1,4 @@
+import { track } from '@vercel/analytics/server';
 import { randomUUID } from 'crypto';
 
 import { defaults as headerDefaults } from './blocks/header/config';
@@ -10,8 +11,13 @@ interface NewPageInput {
   themeId: string;
 }
 
-export function createNewPage(userId: string, input: NewPageInput) {
+export async function createNewPage(userId: string, input: NewPageInput) {
   const headerSectionId = randomUUID();
+
+  await track('pageCreated', {
+    userId,
+    slug: input.slug,
+  });
 
   return prisma.page.create({
     data: {

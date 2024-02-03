@@ -4,6 +4,7 @@ import {
   S3,
 } from '@aws-sdk/client-s3';
 import { Upload } from '@aws-sdk/lib-storage';
+import { track } from '@vercel/analytics/server';
 import { randomUUID } from 'crypto';
 import { getServerSession } from 'next-auth';
 import sharp from 'sharp';
@@ -130,6 +131,11 @@ export async function POST(req: Request) {
       process.env.NEXT_PUBLIC_APP_ENV === 'development'
         ? `https://cdn.dev.glow.as/${assetUpload.Key}`
         : `https://cdn.glow.as/${assetUpload.Key}`;
+
+    await track('assetUploaded', {
+      userId: session.user.id,
+      assetContext: context,
+    });
 
     // const fileLocation = `https://s3.${process.env.AWS_REGION}.amazonaws.com/${assetUpload.Bucket}/${assetUpload.Key}`
 

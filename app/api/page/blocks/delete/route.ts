@@ -1,28 +1,30 @@
-import { getServerSession } from 'next-auth'
-import { authOptions } from '@/lib/auth'
-import prisma from '@/lib/prisma'
-import { Prisma } from '@prisma/client'
+import { Prisma } from '@prisma/client';
+import { track } from '@vercel/analytics/server';
+import { getServerSession } from 'next-auth';
+
+import { authOptions } from '@/lib/auth';
+import prisma from '@/lib/prisma';
 
 export async function POST(req: Request) {
-  const session = await getServerSession(authOptions)
+  const session = await getServerSession(authOptions);
 
   if (!session) {
     return Response.json({
       message: 'error',
       data: null,
-    })
+    });
   }
 
-  const bodyData = await req.json()
+  const bodyData = await req.json();
 
-  const { blockId } = bodyData
+  const { blockId } = bodyData;
 
   if (!blockId) {
     return Response.json({
       error: {
         message: 'Missing required fields',
       },
-    })
+    });
   }
 
   const block = await prisma.block.findUnique({
@@ -35,14 +37,14 @@ export async function POST(req: Request) {
     include: {
       page: true,
     },
-  })
+  });
 
   if (!block) {
     return Response.json({
       error: {
         message: 'Block not found',
       },
-    })
+    });
   }
 
   // Delete the block
@@ -50,7 +52,7 @@ export async function POST(req: Request) {
     where: {
       id: blockId,
     },
-  })
+  });
 
   if (block.page.config && Array.isArray(block.page.config)) {
     await prisma.page.update({
@@ -62,12 +64,18 @@ export async function POST(req: Request) {
           (blck) => (blck as Prisma.JsonObject)?.i !== blockId
         ),
       },
-    })
+    });
   }
+
+  await track('blockDeleted', {
+    userId: session.user.id,
+    blockId: deletedBlock.id,
+    blockType: deletedBlock.type,
+  });
 
   return Response.json({
     data: {
       block: deletedBlock.id,
     },
-  })
+  });
 }

@@ -1,4 +1,5 @@
 import { PrismaAdapter } from '@next-auth/prisma-adapter';
+import { track } from '@vercel/analytics/server';
 import type { NextAuthOptions } from 'next-auth';
 import { getServerSession } from 'next-auth';
 import GoogleProvider from 'next-auth/providers/google';
@@ -38,6 +39,20 @@ export const authOptions: NextAuthOptions = {
     },
     jwt: async (params) => {
       const { user, token, trigger } = params;
+
+      if (trigger === 'signUp') {
+        await track('signUp', {
+          userId: user.id,
+          provider: params.account?.provider ?? 'unknown',
+        });
+      }
+
+      if (trigger === 'signIn') {
+        await track('signIn', {
+          userId: user.id,
+          provider: params.account?.provider ?? 'unknown',
+        });
+      }
 
       if (user) {
         token.uid = user.id;
