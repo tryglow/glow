@@ -75,8 +75,8 @@
       bottom: 3px;
       width: 10px;
       height: 10px;
-      border-right: 2px solid rgba(0, 0, 0, 0.4);
-      border-bottom: 2px solid rgba(0, 0, 0, 0.4);
+      border-right: 2px solid theme('colors.sys.label.primary');
+      border-bottom: 2px solid theme('colors.sys.label.primary');
     }
 
     &.react-resizable-handle-sw {

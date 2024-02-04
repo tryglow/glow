@@ -70,7 +70,9 @@ export function BlockSheet() {
         onMouseOver={() => setOpen(true)}
         onMouseLeave={() => setOpen(false)}
       >
-        <div className="text-black font-4xl font-bold">+ New block</div>
+        <div className="text-sys-label-primary font-4xl font-bold">
+          + New block
+        </div>
         <Sheet open={open} onOpenChange={setOpen}>
           <SheetContent hideOverlay>
             <SheetHeader className="border-b border-stone-200 pb-2 mb-4">
