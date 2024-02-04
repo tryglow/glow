@@ -20,6 +20,7 @@ export const dynamicParams = true;
 
 const fetchData = async (slug: string) => {
   let isEditMode = false;
+  console.log('start fetchData', new Date().toLocaleTimeString());
 
   const session = await getServerSession(authOptions);
 
@@ -69,6 +70,8 @@ const fetchData = async (slug: string) => {
     xss: smallLayout,
   };
 
+  console.log('end fetchData', new Date().toLocaleTimeString());
+
   return {
     data,
     integrations,
@@ -103,6 +106,7 @@ export type InitialDataUsersIntegrations = Pick<
 >[];
 
 export default async function Page({ params }: { params: Params }) {
+  console.log('start [slug]', new Date().toLocaleTimeString());
   const { slug } = params;
   const { data, layout, integrations, isEditMode } = await fetchData(slug);
 
@@ -119,6 +123,7 @@ export default async function Page({ params }: { params: Params }) {
   data.blocks.forEach((block) => {
     initialData[`/api/blocks/${block.id}`] = block.data;
   });
+  console.log('end [slug]', new Date().toLocaleTimeString());
 
   return (
     <SWRProvider
