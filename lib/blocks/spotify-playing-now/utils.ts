@@ -6,16 +6,13 @@ import prisma from '@/lib/prisma';
 
 import { SpotifyIntegrationConfig } from './config';
 
-export const revalidate = 0;
-export const dynamic = 'force-dynamic';
-
 function fetchPlayingNow(accessToken: string) {
   return fetch('https://api.spotify.com/v1/me/player/currently-playing', {
     headers: {
       Authorization: `Bearer ${accessToken}`,
     },
     next: {
-      revalidate: 0,
+      revalidate: 60,
     },
   });
 }
@@ -26,7 +23,7 @@ function fetchRecentlyPlayed(accessToken: string) {
       Authorization: `Bearer ${accessToken}`,
     },
     next: {
-      revalidate: 0,
+      revalidate: 60,
     },
   });
 }
@@ -47,15 +44,7 @@ const fetchSpotifyData = async (
 
     const refreshTokenData = await refreshTokenRequest.json();
 
-    console.log('refreshTokenData', refreshTokenData);
-
     if (refreshTokenData?.access_token) {
-      console.log('utils.ts, Updating Spotify integration', integrationId);
-      console.log(
-        'Updating Spotify integration refreshTokenData',
-        refreshTokenData
-      );
-
       const updatedIntegration = await prisma.integration.update({
         where: {
           id: integrationId,

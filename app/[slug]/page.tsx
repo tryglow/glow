@@ -63,14 +63,10 @@ const fetchData = async (slug: string) => {
     })
   );
 
-  console.log('Page Generated', new Date().toLocaleString());
-
   const layout = {
     sm: data.config,
     xss: smallLayout,
   };
-
-  console.log('end fetchData', new Date().toLocaleTimeString());
 
   return {
     data,
@@ -106,7 +102,6 @@ export type InitialDataUsersIntegrations = Pick<
 >[];
 
 export default async function Page({ params }: { params: Params }) {
-  console.log('start [slug]', new Date().toLocaleTimeString());
   const { slug } = params;
   const { data, layout, integrations, isEditMode } = await fetchData(slug);
 
@@ -123,7 +118,6 @@ export default async function Page({ params }: { params: Params }) {
   data.blocks.forEach((block) => {
     initialData[`/api/blocks/${block.id}`] = block.data;
   });
-  console.log('end [slug]', new Date().toLocaleTimeString());
 
   return (
     <SWRProvider
