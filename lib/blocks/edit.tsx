@@ -8,6 +8,7 @@ import { EditForm as InstagramLatestPostForm } from './instagram-latest-post/for
 import { EditForm as LinkBarForm } from './link-bar/form';
 import { EditForm as LinkBoxForm } from './link-box/form';
 import { EditForm as MapForm } from './map/form';
+import { EditForm as SpotifyEmbedForm } from './spotify-embed/form';
 import { EditForm as SpotifyPlayingNowForm } from './spotify-playing-now/form';
 import { EditForm as StackForm } from './stack/form';
 import { Blocks } from './types';
@@ -23,4 +24,5 @@ export const editForms: Record<Blocks, JSXElementConstructor<any>> = {
   'instagram-latest-post': InstagramLatestPostForm,
   map: MapForm,
   'link-bar': LinkBarForm,
+  'spotify-embed': SpotifyEmbedForm,
 };

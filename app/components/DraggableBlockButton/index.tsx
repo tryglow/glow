@@ -70,6 +70,15 @@ export const config: Record<
       h: 4,
     },
   },
+  'spotify-embed': {
+    title: 'Spotify Embed',
+    label: 'Embed a Spotify playlist or song',
+    icon: '/ui/type-spotify-playing-now.svg',
+    drag: {
+      w: 12,
+      h: 4,
+    },
+  },
   'instagram-latest-post': {
     title: 'Latest Instagram post',
     label: 'The latest post from your connected Instagram account',

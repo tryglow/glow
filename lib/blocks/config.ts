@@ -12,6 +12,10 @@ import { LinkBarSchema, defaults as linkBarDefaults } from './link-bar/config';
 import { defaults as linkBoxDefaults } from './link-box/config';
 import { LinkBoxSchema } from './link-box/config';
 import { MapSchema, defaults as mapDefaults } from './map/config';
+import {
+  SpotifyEmbedSchema,
+  defaults as spotifyEmbedDefaults,
+} from './spotify-embed/config';
 import { defaults as spotifyPlayingNowDefaults } from './spotify-playing-now/config';
 import { StackSchema, defaults as stackDefaults } from './stack/config';
 import { Blocks } from './types';
@@ -62,5 +66,9 @@ export const blocksConfig: Record<
   'link-bar': {
     defaults: linkBarDefaults,
     schema: LinkBarSchema,
+  },
+  'spotify-embed': {
+    defaults: spotifyEmbedDefaults,
+    schema: SpotifyEmbedSchema,
   },
 };

@@ -8,6 +8,7 @@ import InstagramLatestPost from './instagram-latest-post/ui-client';
 import { LinkBar } from './link-bar/ui';
 import { LinkBox } from './link-box/ui';
 import { Map } from './map/ui';
+import SpotifyEmbed from './spotify-embed/ui-client';
 import SpotifyPlayingNow from './spotify-playing-now/ui-client';
 import { Blocks } from './types';
 
@@ -63,5 +64,12 @@ export function renderBlock(block: any, pageId: string, isEditMode: boolean) {
       return <LinkBox {...sharedProps} />;
     case 'link-bar':
       return <LinkBar {...sharedProps} />;
+    case 'spotify-embed':
+      return (
+        <SpotifyEmbed
+          {...sharedProps}
+          spotifyAssetUrl={block.data.spotifyAssetUrl}
+        />
+      );
   }
 }
