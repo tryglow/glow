@@ -69,41 +69,40 @@ export function BlockSheet() {
       <div
         className="fixed h-screen w-60 bg-gradient-to-r from-transparent to-black/10 right-0 top-0 flex items-center justify-center"
         onMouseOver={() => setOpen(true)}
-        onMouseLeave={() => setOpen(false)}
+        // onMouseLeave={() => setOpen(false)}
       >
         <div className="text-sys-label-primary font-4xl font-bold">
           + New block
         </div>
         <Sheet open={open} onOpenChange={setOpen}>
           <SheetContent hideOverlay>
-            <SheetHeader className="border-b border-stone-200 pb-2 mb-4">
-              <SheetTitle className="flex items-center gap-2">
-                <BlockIcon />
-                Add Blocks
-              </SheetTitle>
-            </SheetHeader>
+            <div className="flex flex-col pb-8 max-h-screen">
+              <SheetHeader className="border-b border-stone-200 pb-2 mb-4">
+                <SheetTitle className="flex items-center gap-2">
+                  <BlockIcon />
+                  Add Blocks
+                </SheetTitle>
+              </SheetHeader>
 
-            <div className="flex items-center border-b mb-3">
-              <MagnifyingGlassIcon className="mr-2 h-4 w-4 shrink-0 opacity-50" />
-              <input
-                type="text"
-                className={cn(
-                  'flex h-10 w-full border-0 ring-0 focus:ring-0 rounded-md bg-transparent py-3 text-sm outline-none placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50'
-                )}
-                placeholder="Filter blocks"
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-              />
-            </div>
+              <div className="flex items-center border-b mb-3">
+                <MagnifyingGlassIcon className="mr-2 h-4 w-4 shrink-0 opacity-50" />
+                <input
+                  type="text"
+                  className={cn(
+                    'flex h-10 w-full border-0 ring-0 focus:ring-0 rounded-md bg-transparent py-3 text-sm outline-none placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50'
+                  )}
+                  placeholder="Filter blocks"
+                  value={search}
+                  onChange={(e) => setSearch(e.target.value)}
+                />
+              </div>
 
-            <div
-              className="overflow-y-auto h-auto"
-              style={{ maxHeight: 'calc(100vh - 90px)' }}
-            >
-              <div className="space-y-3 flex flex-col">
-                {filteredBlocks.map((block) => {
-                  return <DraggableBlockButton key={block} type={block} />;
-                })}
+              <div className="overflow-y-auto overscroll-none">
+                <div className="space-y-3 flex flex-col">
+                  {filteredBlocks.map((block) => {
+                    return <DraggableBlockButton key={block} type={block} />;
+                  })}
+                </div>
               </div>
             </div>
           </SheetContent>
