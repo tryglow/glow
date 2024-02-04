@@ -41,6 +41,7 @@ const fetchPageTheme = (slug: string) => {
     },
   });
 };
+
 export default async function PageLayout({
   children,
   params,
@@ -54,13 +55,10 @@ export default async function PageLayout({
 
   let renderTheme: Partial<Theme> = defaultThemeSeeds.Default;
 
-  const { theme, backgroundImage } = (await fetchPageTheme(params.slug)) as {
-    theme: Theme | null;
-    backgroundImage?: string;
-  };
+  const page = await fetchPageTheme(params.slug);
 
-  if (theme?.id) {
-    renderTheme = theme;
+  if (page?.theme?.id) {
+    renderTheme = page.theme;
   }
 
   return (
@@ -97,10 +95,10 @@ export default async function PageLayout({
           </svg>
         </Link>
       </footer>
-      {backgroundImage && (
+      {page?.backgroundImage && (
         <style>
           {`body {
-            background: url(${backgroundImage}) no-repeat center center / cover fixed;
+            background: url(${page.backgroundImage}) no-repeat center center / cover fixed;
           }`}
         </style>
       )}
