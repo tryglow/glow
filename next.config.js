@@ -6,6 +6,11 @@ const nextConfig = {
       destination: '/i/landing-page',
     },
   ],
+  logging: {
+    fetches: {
+      fullUrl: true,
+    },
+  },
   images: {
     remotePatterns: [
       {

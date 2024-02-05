@@ -72,6 +72,9 @@ const fetchSpotifyData = async (
   }
 
   console.log('Spotify Request', req);
+  console.log('Headers Date', req.headers.get('date'));
+  console.log('Headers Server', req.headers.get('server'));
+  console.log('Headers CC', req.headers.get('cache-control'));
 
   if (req.status === 200) {
     const data = await req.json();
