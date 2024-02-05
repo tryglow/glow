@@ -1,14 +1,16 @@
 import { Integration } from '@prisma/client';
 import type { Metadata, ResolvingMetadata } from 'next';
 import { getServerSession } from 'next-auth';
+import { headers } from 'next/headers';
 import { notFound } from 'next/navigation';
-import { Layout } from 'react-grid-layout';
+import { userAgent } from 'next/server';
 
 import { authOptions } from '@/lib/auth';
 import { renderBlock } from '@/lib/blocks/ui';
 import prisma from '@/lib/prisma';
+import { isUserAgentMobile } from '@/lib/user-agent';
 
-import { SWRProvider } from '../components/SWRProvider';
+import { GlowProviders } from '../components/GlowProviders';
 import Grid, { PageConfig } from './grid';
 
 export const dynamic = 'force-dynamic';
@@ -20,7 +22,6 @@ export const dynamicParams = true;
 
 const fetchData = async (slug: string) => {
   let isEditMode = false;
-  console.log('start fetchData', new Date().toLocaleTimeString());
 
   const session = await getServerSession(authOptions);
 
@@ -56,16 +57,9 @@ const fetchData = async (slug: string) => {
     return notFound();
   }
 
-  const smallLayout = (data.config as unknown as Layout[])?.map(
-    (layoutItem: Layout) => ({
-      ...layoutItem,
-      w: 12,
-    })
-  );
-
   const layout = {
     sm: data.config,
-    xss: smallLayout,
+    xxs: data.mobileConfig,
   };
 
   return {
@@ -73,6 +67,22 @@ const fetchData = async (slug: string) => {
     integrations,
     layout,
     isEditMode,
+  };
+};
+
+const fetchCurrentUsersPages = async () => {
+  const session = await getServerSession(authOptions);
+
+  const user = session?.user;
+
+  const userPages = await prisma.page.findMany({
+    where: {
+      userId: user?.id,
+    },
+  });
+
+  return {
+    userPages,
   };
 };
 
@@ -105,6 +115,15 @@ export default async function Page({ params }: { params: Params }) {
   const { slug } = params;
   const { data, layout, integrations, isEditMode } = await fetchData(slug);
 
+  const headersList = headers();
+
+  const isMobile = isUserAgentMobile(headersList.get('user-agent'));
+
+  console.log('|Is Mobile', isMobile);
+
+  const { userPages } = await fetchCurrentUsersPages();
+  const session = await getServerSession(authOptions);
+
   const pageLayout = layout as unknown as PageConfig;
 
   const initialData: Record<string, any> = {
@@ -119,8 +138,11 @@ export default async function Page({ params }: { params: Params }) {
     initialData[`/api/blocks/${block.id}`] = block.data;
   });
 
+  const mergedIds = [...pageLayout.sm, ...pageLayout.xxs].map((item) => item.i);
+
   return (
-    <SWRProvider
+    <GlowProviders
+      session={session}
       value={{
         fallback: initialData,
         revalidateOnFocus: isEditMode,
@@ -128,9 +150,14 @@ export default async function Page({ params }: { params: Params }) {
         revalidateIfStale: isEditMode,
       }}
     >
-      <Grid layout={pageLayout} editMode={isEditMode}>
+      <Grid
+        isPotentiallyMobile={isMobile}
+        layout={pageLayout}
+        editMode={isEditMode}
+        userPages={userPages}
+      >
         {data.blocks
-          .filter((block) => pageLayout.sm?.find((conf) => conf.i === block.id))
+          .filter((block) => mergedIds.includes(block.id))
           .map((block) => {
             return (
               <section key={block.id}>
@@ -139,6 +166,6 @@ export default async function Page({ params }: { params: Params }) {
             );
           })}
       </Grid>
-    </SWRProvider>
+    </GlowProviders>
   );
 }

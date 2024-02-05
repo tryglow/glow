@@ -30,7 +30,18 @@ export async function createNewPage(userId: string, input: NewPageInput) {
         {
           h: 6,
           i: headerSectionId,
-          w: 11,
+          w: 12,
+          x: 0,
+          y: 0,
+          moved: false,
+          static: false,
+        },
+      ],
+      mobileConfig: [
+        {
+          h: 6,
+          i: headerSectionId,
+          w: 12,
           x: 0,
           y: 0,
           moved: false,

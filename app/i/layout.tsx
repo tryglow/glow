@@ -1,12 +1,15 @@
-import { ReactNode } from 'react';
-import MarketingNavigation from '../components/MarketingNavigation';
-import MarketingFooter from '../components/MarketingFooter';
 import { getServerSession } from 'next-auth';
+import { ReactNode } from 'react';
+
 import { authOptions } from '@/lib/auth';
 import prisma from '@/lib/prisma';
-import { LoginWidget } from '../components/LoginWidget';
+
 import { Button } from '@/components/ui/button';
-import { UserWidget } from '../components/UserWidget';
+
+import { UserWidget } from '../components/GlobalNavigation/UserWidget';
+import { LoginWidget } from '../components/LoginWidget';
+import MarketingFooter from '../components/MarketingFooter';
+import MarketingNavigation from '../components/MarketingNavigation';
 
 interface Props {
   children: ReactNode;
@@ -36,7 +39,7 @@ export default async function IPageLayout({ children }: Props) {
     <>
       <MarketingNavigation>
         {user ? (
-          <UserWidget user={user} usersPages={pages} />
+          <UserWidget />
         ) : (
           <>
             <LoginWidget

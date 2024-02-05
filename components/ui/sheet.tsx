@@ -53,6 +53,7 @@ interface SheetContentProps
   extends React.ComponentPropsWithoutRef<typeof SheetPrimitive.Content>,
     VariantProps<typeof sheetVariants> {
   hideOverlay?: boolean;
+  hideCloseButton?: boolean;
 }
 
 const SheetContent = React.forwardRef<
@@ -60,7 +61,14 @@ const SheetContent = React.forwardRef<
   SheetContentProps
 >(
   (
-    { side = 'right', className, hideOverlay = false, children, ...props },
+    {
+      side = 'right',
+      className,
+      hideOverlay = false,
+      hideCloseButton = false,
+      children,
+      ...props
+    },
     ref
   ) => (
     <SheetPortal>
@@ -71,10 +79,12 @@ const SheetContent = React.forwardRef<
         {...props}
       >
         {children}
-        <SheetPrimitive.Close className="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-secondary">
-          <Cross2Icon className="h-4 w-4" />
-          <span className="sr-only">Close</span>
-        </SheetPrimitive.Close>
+        {!hideCloseButton && (
+          <SheetPrimitive.Close className="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-secondary">
+            <Cross2Icon className="h-4 w-4" />
+            <span className="sr-only">Close</span>
+          </SheetPrimitive.Close>
+        )}
       </SheetPrimitive.Content>
     </SheetPortal>
   )

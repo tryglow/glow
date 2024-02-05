@@ -1,5 +1,3 @@
-import { Layout } from 'react-grid-layout';
-
 import prisma from '@/lib/prisma';
 
 export async function GET(
@@ -30,16 +28,5 @@ export async function GET(
     });
   }
 
-  /**
-   * Here we build a layout for mobile where we default each item to be 12
-   * columns wide. Perhaps we could make this configurable in the future.
-   */
-  const smallLayout = (page.config as unknown as Layout[])?.map(
-    (layoutItem: Layout) => ({
-      ...layoutItem,
-      w: 12,
-    })
-  );
-
-  return Response.json({ sm: page.config, xss: smallLayout });
+  return Response.json({ sm: page.config, xxs: page.mobileConfig });
 }

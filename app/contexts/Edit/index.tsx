@@ -2,9 +2,13 @@
 
 import { ReactNode, createContext, useContext, useState } from 'react';
 
+type EditLayoutModes = 'desktop' | 'mobile';
+
 type EditModeContextValue = {
   draggingItem: any;
   setDraggingItem: (newDraggingItem: any) => void;
+  editLayoutMode: EditLayoutModes;
+  setEditLayoutMode: (newLayoutMode: any) => void;
 };
 
 const EditModeContext = createContext<EditModeContextValue | undefined>(
@@ -27,10 +31,14 @@ export const EditModeContextProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
   const [draggingItem, setDraggingItem] = useState();
+  const [editLayoutMode, setEditLayoutMode] =
+    useState<EditLayoutModes>('desktop');
 
   const contextValue: EditModeContextValue = {
     draggingItem,
     setDraggingItem,
+    editLayoutMode,
+    setEditLayoutMode,
   };
 
   return (

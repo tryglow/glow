@@ -57,6 +57,7 @@ model Page {
   user            User      @relation(fields: [userId], references: [id])
   slug            String    @unique
   config          Json
+  mobileConfig    Json?
   blocks          Block[]
   metaTitle       String?
   metaDescription String?

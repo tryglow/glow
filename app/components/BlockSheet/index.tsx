@@ -75,7 +75,7 @@ export function BlockSheet() {
           + New block
         </div>
         <Sheet open={open} onOpenChange={setOpen}>
-          <SheetContent hideOverlay>
+          <SheetContent hideOverlay hideCloseButton className="top-16 border-t">
             <div className="flex flex-col pb-8 max-h-screen">
               <SheetHeader className="border-b border-stone-200 pb-2 mb-4">
                 <SheetTitle className="flex items-center gap-2">

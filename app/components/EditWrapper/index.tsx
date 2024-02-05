@@ -1,21 +1,27 @@
 'use client';
 
+import { NoSymbolIcon } from '@heroicons/react/24/outline';
+import clsx from 'clsx';
 import dynamic from 'next/dynamic';
 import { useParams, useRouter } from 'next/navigation';
 import {
   ReactNode,
-  useCallback,
   useEffect,
+  useMemo,
   useOptimistic,
   useTransition,
 } from 'react';
-import { Layout, Layouts, ResponsiveProps } from 'react-grid-layout';
+import {
+  Layout,
+  Layouts,
+  Responsive,
+  ResponsiveProps,
+  WidthProvider,
+} from 'react-grid-layout';
 import useSWR from 'swr';
 import { v4 as uuidv4 } from 'uuid';
 
-import { PageConfig, ResponsiveReactGridLayout } from '@/app/[slug]/grid';
-
-import { debounce } from '@/lib/utils';
+import { PageConfig } from '@/app/[slug]/grid';
 
 import { Skeleton } from '@/components/ui/skeleton';
 import { useToast } from '@/components/ui/use-toast';
@@ -35,7 +41,7 @@ interface Props {
 }
 
 export function EditWrapper({ children, layoutProps }: Props) {
-  const { draggingItem } = useEditModeContext();
+  const { draggingItem, editLayoutMode } = useEditModeContext();
   const router = useRouter();
   const params = useParams();
   const { toast } = useToast();
@@ -44,6 +50,11 @@ export function EditWrapper({ children, layoutProps }: Props) {
   );
 
   const [isPending, startTransition] = useTransition();
+
+  const ResponsiveReactGridLayout = useMemo(
+    () => WidthProvider(Responsive),
+    []
+  );
 
   const [optimisticItems, setOptimisticItems] =
     useOptimistic<ReactNode[]>(children);
@@ -163,19 +174,43 @@ export function EditWrapper({ children, layoutProps }: Props) {
     };
 
     const sortedNewLayout = JSON.stringify(sortAndNormalizeLayout(newLayout));
-    const sortedLayout = JSON.stringify(sortAndNormalizeLayout(layout.sm));
+    const sortedLayout = JSON.stringify(
+      sortAndNormalizeLayout(
+        editLayoutMode === 'mobile' ? layout.xxs : layout.sm
+      )
+    );
 
     // Both layouts are the same, so we can skip the request
     if (sortedNewLayout === sortedLayout) {
       return;
     }
 
-    const checkIfLayoutContainsTmpBlocks = newLayout.find(
-      (block) => block.i === 'tmp-block'
-    );
-
-    if (checkIfLayoutContainsTmpBlocks) {
+    if (newLayout.some((block) => block.i === 'tmp-block')) {
       return;
+    }
+
+    const nextLayout = {
+      xxs: editLayoutMode === 'mobile' ? newLayout : layout.xxs,
+      sm: editLayoutMode === 'desktop' ? newLayout : layout.sm,
+    };
+
+    if (newLayout.length !== (layout.xxs.length || layout.sm.length)) {
+      // find element that is different
+      const difference = newLayout.filter((item) => {
+        if (editLayoutMode === 'mobile') {
+          return !layout.xxs.some((item2) => item2.i === item.i);
+        }
+        return !layout.sm.some((item2) => item2.i === item.i);
+      });
+
+      if (difference.length === 1) {
+        if (editLayoutMode === 'mobile') {
+          nextLayout.sm.push(difference[0]);
+        }
+        if (editLayoutMode === 'desktop') {
+          nextLayout.xxs.push(difference[0]);
+        }
+      }
     }
 
     try {
@@ -186,7 +221,7 @@ export function EditWrapper({ children, layoutProps }: Props) {
         },
         body: JSON.stringify({
           pageSlug: params.slug,
-          newLayout: newLayout,
+          newLayout: nextLayout,
         }),
       });
 
@@ -205,10 +240,7 @@ export function EditWrapper({ children, layoutProps }: Props) {
         title: 'Layout saved',
       });
 
-      mutateLayout({
-        xss: currentLayouts.xss,
-        sm: newLayout,
-      });
+      mutateLayout(nextLayout);
     } catch (error) {
       console.log(error);
       toast({
@@ -226,23 +258,29 @@ export function EditWrapper({ children, layoutProps }: Props) {
     droppingItem: draggingItem,
     draggableCancel: '.noDrag',
     useCSSTransforms: true,
-    compactType: undefined,
   };
 
   return (
     <>
-      <ResponsiveReactGridLayout
-        {...editableLayoutProps}
-        layouts={{
-          lg: layout?.sm ?? [],
-          md: layout?.sm ?? [],
-          sm: layout?.sm ?? [],
-          xs: layout?.sm ?? [],
-          xxs: layout?.xss ?? [],
-        }}
+      <div
+        className={clsx(
+          'min-h-screen bg-black/0 transition-colors hover:bg-black/5 w-full mx-auto',
+          editLayoutMode === 'mobile' ? 'max-w-[400px]' : 'max-w-[768px]'
+        )}
       >
-        {optimisticItems}
-      </ResponsiveReactGridLayout>
+        <ResponsiveReactGridLayout
+          {...editableLayoutProps}
+          layouts={{
+            lg: layout?.sm ?? [],
+            md: layout?.sm ?? [],
+            sm: layout?.sm ?? [],
+            xs: layout?.sm ?? [],
+            xxs: layout?.xxs ?? [],
+          }}
+        >
+          {optimisticItems}
+        </ResponsiveReactGridLayout>
+      </div>
       <DynamicBlockSheet />
     </>
   );

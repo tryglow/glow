@@ -1,4 +1,5 @@
 import { getServerSession } from 'next-auth';
+
 import { authOptions } from '@/lib/auth';
 import prisma from '@/lib/prisma';
 
@@ -44,7 +45,11 @@ export async function POST(req: Request) {
       slug: pageSlug,
     },
     data: {
-      config: newLayout,
+      config: newLayout.sm,
+      mobileConfig: newLayout.xxs,
+    },
+    select: {
+      id: true,
     },
   });
 

@@ -1,32 +1,35 @@
 'use client';
 
-import dynamic from 'next/dynamic';
-import { ReactNode } from 'react';
-import {
-  Layout,
-  Responsive,
-  ResponsiveProps,
-  WidthProvider,
-} from 'react-grid-layout';
+import { Page } from '@prisma/client';
+import { ReactNode, useMemo } from 'react';
+import { Layout, Responsive, ResponsiveProps } from 'react-grid-layout';
 
 import { EditWrapper } from '../components/EditWrapper';
+import { GlobalNavigation } from '../components/GlobalNavigation';
+import { WidthProvideRGL } from '../components/WidthProvider';
 import { EditModeContextProvider } from '../contexts/Edit';
-
-export const ResponsiveReactGridLayout = WidthProvider(Responsive);
 
 export interface PageConfig {
   sm: Layout[];
-  xss: Layout[];
+  xxs: Layout[];
 }
 
 interface Props {
   layout: PageConfig;
   children: ReactNode[];
   editMode?: boolean;
+  userPages: Page[] | null;
+  isPotentiallyMobile: boolean;
 }
 
-export default function Grid({ layout, children, editMode }: Props) {
-  const layoutProps: ResponsiveProps = {
+export default function Grid({
+  layout,
+  children,
+  editMode,
+  userPages,
+  isPotentiallyMobile = false,
+}: Props) {
+  const defaultLayoutProps: ResponsiveProps = {
     useCSSTransforms: true,
     width: 624,
     rowHeight: 32,
@@ -38,10 +41,16 @@ export default function Grid({ layout, children, editMode }: Props) {
     isDroppable: editMode ? true : false,
   };
 
+  const ResponsiveReactGridLayout = useMemo(
+    () => WidthProvideRGL(Responsive, isPotentiallyMobile),
+    []
+  );
+
   if (editMode) {
     return (
       <EditModeContextProvider>
-        <EditWrapper layoutProps={layoutProps}>{children}</EditWrapper>
+        <GlobalNavigation userPages={userPages} />
+        <EditWrapper layoutProps={defaultLayoutProps}>{children}</EditWrapper>
       </EditModeContextProvider>
     );
   }
@@ -53,9 +62,9 @@ export default function Grid({ layout, children, editMode }: Props) {
         md: layout.sm,
         sm: layout.sm,
         xs: layout.sm,
-        xxs: layout.xss,
+        xxs: layout.xxs,
       }}
-      {...layoutProps}
+      {...defaultLayoutProps}
     >
       {children}
     </ResponsiveReactGridLayout>

@@ -63,13 +63,16 @@ export function EditBlockToolbar({ blockId, blockType }: Props) {
       mutate();
 
       if (layout) {
-        const newLayout = layout.sm.filter((item) => {
+        const newSmLayout = layout.sm.filter((item) => {
+          return item.i !== blockId;
+        });
+        const newXxsLayout = layout.xxs.filter((item) => {
           return item.i !== blockId;
         });
 
         mutateLayout({
-          ...layout,
-          sm: newLayout,
+          xxs: newXxsLayout,
+          sm: newSmLayout,
         });
       }
 
