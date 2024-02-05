@@ -1,6 +1,12 @@
 'use client';
 
+import {
+  Cog6ToothIcon,
+  ComputerDesktopIcon,
+  DevicePhoneMobileIcon,
+} from '@heroicons/react/24/outline';
 import { Page } from '@prisma/client';
+import { DesktopIcon, MobileIcon } from '@radix-ui/react-icons';
 import { useState } from 'react';
 
 import { useEditModeContext } from '@/app/contexts/Edit';
@@ -45,6 +51,7 @@ export function GlobalNavigation({ userPages }: Props) {
                   variant="ghost"
                   onClick={() => setShowEditPageSettingsDialog(true)}
                 >
+                  <Cog6ToothIcon width={20} height={20} className="mr-2" />
                   Settings
                 </Button>
               </nav>
@@ -79,9 +86,9 @@ function ScreenSizeSwitcher() {
         onClick={() => setEditLayoutMode('desktop')}
         aria-selected={editLayoutMode === 'desktop' ? 'true' : 'false'}
         data-state={editLayoutMode === 'desktop' ? 'active' : 'inactive'}
-        className="inline-flex items-center justify-center whitespace-nowrap rounded-md px-3 py-1 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow"
+        className="inline-flex items-center justify-center whitespace-nowrap rounded-md px-6 py-1 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow"
       >
-        Desktop
+        <ComputerDesktopIcon width={20} />
       </button>
       <button
         type="button"
@@ -89,9 +96,9 @@ function ScreenSizeSwitcher() {
         onClick={() => setEditLayoutMode('mobile')}
         aria-selected={editLayoutMode === 'mobile' ? 'true' : 'false'}
         data-state={editLayoutMode === 'mobile' ? 'active' : 'inactive'}
-        className="inline-flex items-center justify-center whitespace-nowrap rounded-md px-3 py-1 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow"
+        className="inline-flex items-center justify-center whitespace-nowrap rounded-md px-6 py-1 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow"
       >
-        Mobile
+        <DevicePhoneMobileIcon width={20} />
       </button>
     </div>
   );
