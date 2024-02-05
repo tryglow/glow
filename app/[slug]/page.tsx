@@ -67,6 +67,7 @@ const fetchData = async (slug: string) => {
     integrations,
     layout,
     isEditMode,
+    isLoggedIn: !!user,
   };
 };
 
@@ -113,7 +114,8 @@ export type InitialDataUsersIntegrations = Pick<
 
 export default async function Page({ params }: { params: Params }) {
   const { slug } = params;
-  const { data, layout, integrations, isEditMode } = await fetchData(slug);
+  const { data, layout, integrations, isEditMode, isLoggedIn } =
+    await fetchData(slug);
 
   const headersList = headers();
 
@@ -153,6 +155,7 @@ export default async function Page({ params }: { params: Params }) {
         layout={pageLayout}
         editMode={isEditMode}
         userPages={userPages}
+        isLoggedIn={isLoggedIn}
       >
         {data.blocks
           .filter((block) => mergedIds.includes(block.id))

@@ -19,9 +19,10 @@ import { UserWidget } from './UserWidget';
 
 interface Props {
   userPages: Page[] | null;
+  isEditMode?: boolean;
 }
 
-export function GlobalNavigation({ userPages }: Props) {
+export function GlobalNavigation({ userPages, isEditMode }: Props) {
   const [showEditPageSettingsDialog, setShowEditPageSettingsDialog] =
     useState(false);
   return (
@@ -45,19 +46,21 @@ export function GlobalNavigation({ userPages }: Props) {
                 />
               </svg>
               <PageSwitcher userPages={userPages} />
-              <nav className="flex items-center mx-2">
-                <Button
-                  type="button"
-                  variant="ghost"
-                  onClick={() => setShowEditPageSettingsDialog(true)}
-                >
-                  <Cog6ToothIcon width={20} height={20} className="mr-2" />
-                  Settings
-                </Button>
-              </nav>
+              {isEditMode && (
+                <nav className="flex items-center mx-2">
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    onClick={() => setShowEditPageSettingsDialog(true)}
+                  >
+                    <Cog6ToothIcon width={20} height={20} className="mr-2" />
+                    Settings
+                  </Button>
+                </nav>
+              )}
             </div>
             <div className="hidden md:flex justify-center">
-              <ScreenSizeSwitcher />
+              {isEditMode && <ScreenSizeSwitcher />}
             </div>
             <div className="flex items-center justify-end">
               <UserWidget />

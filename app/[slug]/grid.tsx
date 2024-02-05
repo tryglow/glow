@@ -20,6 +20,7 @@ interface Props {
   editMode?: boolean;
   userPages: Page[] | null;
   isPotentiallyMobile: boolean;
+  isLoggedIn: boolean;
 }
 
 export default function Grid({
@@ -27,6 +28,7 @@ export default function Grid({
   children,
   editMode,
   userPages,
+  isLoggedIn,
   isPotentiallyMobile = false,
 }: Props) {
   const defaultLayoutProps: ResponsiveProps = {
@@ -49,24 +51,27 @@ export default function Grid({
   if (editMode) {
     return (
       <EditModeContextProvider>
-        <GlobalNavigation userPages={userPages} />
+        <GlobalNavigation userPages={userPages} isEditMode />
         <EditWrapper layoutProps={defaultLayoutProps}>{children}</EditWrapper>
       </EditModeContextProvider>
     );
   }
 
   return (
-    <ResponsiveReactGridLayout
-      layouts={{
-        lg: layout.sm,
-        md: layout.sm,
-        sm: layout.sm,
-        xs: layout.sm,
-        xxs: layout.xxs,
-      }}
-      {...defaultLayoutProps}
-    >
-      {children}
-    </ResponsiveReactGridLayout>
+    <>
+      {isLoggedIn && <GlobalNavigation userPages={userPages} />}
+      <ResponsiveReactGridLayout
+        layouts={{
+          lg: layout.sm,
+          md: layout.sm,
+          sm: layout.sm,
+          xs: layout.sm,
+          xxs: layout.xxs,
+        }}
+        {...defaultLayoutProps}
+      >
+        {children}
+      </ResponsiveReactGridLayout>
+    </>
   );
 }
