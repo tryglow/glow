@@ -1,4 +1,5 @@
 import { getServerSession } from 'next-auth';
+import Link from 'next/link';
 import { ReactNode } from 'react';
 
 import { authOptions } from '@/lib/auth';
@@ -6,7 +7,6 @@ import prisma from '@/lib/prisma';
 
 import { Button } from '@/components/ui/button';
 
-import { UserWidget } from '../components/GlobalNavigation/UserWidget';
 import { LoginWidget } from '../components/LoginWidget';
 import MarketingFooter from '../components/MarketingFooter';
 import MarketingNavigation from '../components/MarketingNavigation';
@@ -24,6 +24,9 @@ const fetchUserAndPages = async () => {
     where: {
       userId: user?.id,
     },
+    orderBy: {
+      createdAt: 'asc',
+    },
   });
 
   return {
@@ -35,11 +38,13 @@ const fetchUserAndPages = async () => {
 export default async function IPageLayout({ children }: Props) {
   const { user, pages } = await fetchUserAndPages();
 
+  const firstPage = pages[0];
+
   return (
     <>
       <MarketingNavigation>
         {user ? (
-          <UserWidget />
+          <Link href={`/${firstPage.slug}`}>Go to app</Link>
         ) : (
           <>
             <LoginWidget
