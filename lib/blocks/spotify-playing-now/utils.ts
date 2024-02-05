@@ -71,6 +71,8 @@ const fetchSpotifyData = async (
     }
   }
 
+  console.log('Spotify Request', req);
+
   if (req.status === 200) {
     const data = await req.json();
 
