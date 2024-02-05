@@ -119,8 +119,6 @@ export default async function Page({ params }: { params: Params }) {
 
   const isMobile = isUserAgentMobile(headersList.get('user-agent'));
 
-  console.log('|Is Mobile', isMobile);
-
   const { userPages } = await fetchCurrentUsersPages();
   const session = await getServerSession(authOptions);
 
