@@ -6,24 +6,32 @@ import prisma from '@/lib/prisma';
 
 import { SpotifyIntegrationConfig } from './config';
 
-function fetchPlayingNow(accessToken: string) {
-  return fetch('https://api.spotify.com/v1/me/player/currently-playing', {
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-    },
-    next: {
-      revalidate: 60,
-    },
-  });
+async function fetchPlayingNow(accessToken: string, integrationId: string) {
+  const req = await fetch(
+    'https://api.spotify.com/v1/me/player/currently-playing',
+    {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+      next: {
+        revalidate: 60,
+        tags: [`spotify-${integrationId}-playing-now`],
+      },
+    }
+  );
+
+  return req;
 }
 
-function fetchRecentlyPlayed(accessToken: string) {
+function fetchRecentlyPlayed(accessToken: string, integrationId: string) {
   return fetch('https://api.spotify.com/v1/me/player/recently-played?limit=1', {
     headers: {
       Authorization: `Bearer ${accessToken}`,
     },
     next: {
       revalidate: 60,
+      tags: [`spotify-${integrationId}-recently-played`],
     },
   });
 }
@@ -33,7 +41,7 @@ const fetchSpotifyData = async (
   isRetry: boolean,
   integrationId: string
 ) => {
-  const req = await fetchPlayingNow(config.accessToken);
+  const req = await fetchPlayingNow(config.accessToken, integrationId);
 
   // The access token might have expired. Try to refresh it.
   if (req.status === 401 && !isRetry) {
@@ -99,7 +107,10 @@ const fetchSpotifyData = async (
     return null;
   }
 
-  const recentlyPlayedReq = await fetchRecentlyPlayed(config.accessToken);
+  const recentlyPlayedReq = await fetchRecentlyPlayed(
+    config.accessToken,
+    integrationId
+  );
   const recentlyPlayedData = await recentlyPlayedReq.json();
 
   if (recentlyPlayedData) {
