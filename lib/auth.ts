@@ -1,3 +1,4 @@
+import { sendWelcomeEmail } from '@/notifications/welcome-email';
 import { PrismaAdapter } from '@next-auth/prisma-adapter';
 import { track } from '@vercel/analytics/server';
 import type { NextAuthOptions } from 'next-auth';
@@ -45,6 +46,10 @@ export const authOptions: NextAuthOptions = {
           userId: user.id,
           provider: params.account?.provider ?? 'unknown',
         });
+
+        if (user.email) {
+          await sendWelcomeEmail(user.email);
+        }
       }
 
       if (trigger === 'signIn') {
