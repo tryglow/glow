@@ -16,9 +16,9 @@ export function FrquentlyAskedQuestions() {
         </AccordionTrigger>
         <AccordionContent className="text-lg text-black/60">
           Glow is a single link that you can use to house all the links to your
-          social media profiles, websites, and other content. It's a great way
-          to share all your content in one place, whether it be your favourite
-          songs on Spotify, or a link to your latest products.
+          social media profiles, websites, and other content. It&apos;s a great
+          way to share all your content in one place, whether it be your
+          favourite songs on Spotify, or a link to your latest products.
         </AccordionContent>
       </AccordionItem>
       <AccordionItem value="why-do-i-need-it">
@@ -48,8 +48,9 @@ export function FrquentlyAskedQuestions() {
           Can I use my own domain?
         </AccordionTrigger>
         <AccordionContent className="text-lg text-black/60">
-          We're currently rolling out custom domains to a select group of users.
-          If you're interested in trying it out, please reach out to us.
+          We&apos;re currently rolling out custom domains to a select group of
+          users. If you&apos;re interested in trying it out, please reach out to
+          us.
         </AccordionContent>
       </AccordionItem>
     </Accordion>
