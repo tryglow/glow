@@ -61,7 +61,7 @@ export default async function IPageLayout({ children }: Props) {
           </>
         )}
       </MarketingNavigation>
-      <main>{children}</main>
+      <main className="bg-white">{children}</main>
       <MarketingFooter />
     </>
   );

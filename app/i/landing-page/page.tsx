@@ -23,7 +23,7 @@ export const Container = (props: {
 
 export default function LandingPage() {
   return (
-    <main className="min-h-screen">
+    <div className="min-h-screen">
       <section className="py-24 md:pt-48 md:pb-16">
         <Container>
           <div className="flex flex-col justify-center md:items-center max-w-2xl mx-auto text-center">
@@ -180,6 +180,6 @@ export default function LandingPage() {
           </div>
         </Container>
       </section>
-    </main>
+    </div>
   );
 }
