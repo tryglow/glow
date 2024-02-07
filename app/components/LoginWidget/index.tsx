@@ -31,25 +31,8 @@ export function LoginWidget({ trigger }: Props) {
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <LoginProviderButton
-            provider={{
-              id: 'twitter',
-              name: 'Twitter',
-              type: 'oauth',
-              signinUrl: '/api/auth/signin/twitter',
-              callbackUrl: '/api/auth/callback/twitter',
-            }}
-            className="mt-2 md:mt-0"
-          />
-          <LoginProviderButton
-            provider={{
-              id: 'google',
-              name: 'Google',
-              type: 'oauth',
-              signinUrl: '/api/auth/signin/google',
-              callbackUrl: '/api/auth/callback/google',
-            }}
-          />
+          <LoginProviderButton provider="twitter" className="mt-2 md:mt-0" />
+          <LoginProviderButton provider="google" />
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

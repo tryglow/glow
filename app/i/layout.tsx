@@ -44,7 +44,9 @@ export default async function IPageLayout({ children }: Props) {
     <>
       <MarketingNavigation>
         {user ? (
-          <Link href={`/${firstPage.slug}`}>Go to app</Link>
+          <Button asChild variant="ghost">
+            <Link href={`/${firstPage.slug}`}>Go to app →</Link>
+          </Button>
         ) : (
           <>
             <LoginWidget

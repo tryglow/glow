@@ -1,0 +1,69 @@
+.title {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0 18px;
+
+  .row {
+    display: flex;
+    gap: theme('spacing.2');
+    justify-content: center;
+
+    @screen md {
+      gap: theme('spacing.5');
+    }
+
+    span {
+      animation: fadeInUp 400ms cubic-bezier(0.22, 0.61, 0.36, 1);
+      animation-fill-mode: forwards;
+      opacity: 0;
+      transform: translateY(40px);
+      display: block;
+    }
+
+    &:nth-of-type(1) {
+      span:nth-of-type(1) {
+        animation-delay: 500ms;
+      }
+      span:nth-of-type(2) {
+        animation-delay: 600ms;
+      }
+    }
+
+    &:nth-of-type(2) {
+      span:nth-of-type(1) {
+        animation-delay: 650ms;
+      }
+      span:nth-of-type(2) {
+        animation-delay: 700ms;
+      }
+    }
+  }
+}
+
+.subtitle,
+.ctas {
+  animation: fadeInUp 400ms cubic-bezier(0.22, 0.61, 0.36, 1);
+  animation-fill-mode: forwards;
+  opacity: 0;
+  transform: translateY(40px);
+  display: block;
+}
+
+.subtitle {
+  animation-delay: 750ms;
+}
+
+.ctas {
+  animation-delay: 800ms;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
