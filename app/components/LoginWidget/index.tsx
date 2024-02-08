@@ -25,9 +25,9 @@ export function LoginWidget({ trigger }: Props) {
       <AlertDialogTrigger asChild>{trigger}</AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Let&apos;s get started!</AlertDialogTitle>
+          <AlertDialogTitle>Welcome back!</AlertDialogTitle>
           <AlertDialogDescription>
-            Sign up or login to begin creating your page.
+            Login to your account below.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>

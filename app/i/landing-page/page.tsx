@@ -2,12 +2,13 @@ import clsx from 'clsx';
 import Link from 'next/link';
 import { ReactNode } from 'react';
 
-import { LoginProviderButton } from '@/app/components/LoginProviderButton';
+import { ClaimInviteDialog } from '@/app/components/ClaimInviteDialog';
 import { LoginWidget } from '@/app/components/LoginWidget';
 
 import { Button } from '@/components/ui/button';
 
 import { FrquentlyAskedQuestions } from './faq';
+import { ShowLoginAlert } from './show-login-alert';
 import styles from './styles.module.scss';
 
 export const Container = (props: {
@@ -24,6 +25,7 @@ export const Container = (props: {
 export default function LandingPage() {
   return (
     <div className="min-h-screen">
+      <ShowLoginAlert />
       <section className="py-24 md:pt-48 md:pb-16">
         <Container>
           <div className="flex flex-col justify-center md:items-center max-w-2xl mx-auto text-center">
@@ -52,14 +54,15 @@ export default function LandingPage() {
             </span>
 
             <div className={clsx('mt-4 md:mt-8', styles.ctas)}>
-              <LoginWidget
+              <ClaimInviteDialog
                 trigger={
-                  <LoginProviderButton
-                    provider="twitter"
-                    variant="glow"
-                    size="lg"
-                    className="mt-2 md:mt-0 mb-2"
-                  />
+                  <Button
+                    variant="default"
+                    size="xl"
+                    className="mt-2 md:mt-0 mb-2 font-bold flex"
+                  >
+                    Claim Invite
+                  </Button>
                 }
               />
               <Button variant="link" asChild>

@@ -1,3 +1,5 @@
+'server only';
+
 import { sendWelcomeEmail } from '@/notifications/welcome-email';
 import { PrismaAdapter } from '@next-auth/prisma-adapter';
 import { track } from '@vercel/analytics/server';
@@ -6,6 +8,7 @@ import { getServerSession } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import GoogleProvider from 'next-auth/providers/google';
 import TwitterProvider from 'next-auth/providers/twitter';
+import { cookies } from 'next/headers';
 
 import { createInviteCodesForUser } from './invite-code';
 import prisma from './prisma';
@@ -54,14 +57,62 @@ export const authOptions: NextAuthOptions = {
     }),
   ],
   secret: process.env.NEXTAUTH_SECRET,
-  adapter: PrismaAdapter(prisma),
+  adapter: {
+    ...PrismaAdapter(prisma),
+    createUser: async (user) => {
+      const cookieStore = cookies();
+      const inviteCode = cookieStore.get('inviteCode');
+
+      if (!inviteCode?.value || inviteCode.value === '') {
+        throw Error('Invalid invite code');
+      }
+
+      const invite = await prisma.inviteCode.findUnique({
+        where: {
+          code: inviteCode.value,
+          claimedById: null,
+        },
+      });
+
+      if (!invite) {
+        throw Error('No invite found');
+      }
+
+      const createdUser = await PrismaAdapter(prisma).createUser!(user);
+
+      await prisma.inviteCode.update({
+        where: { id: invite.id },
+        data: {
+          claimedById: createdUser.id,
+        },
+      });
+
+      await track('inviteCodeClaimed', {
+        userId: createdUser.id,
+        code: invite.code,
+      });
+
+      await prisma.user.update({
+        where: {
+          id: createdUser.id,
+        },
+        data: {
+          acceptedInviteAt: new Date(),
+        },
+      });
+
+      cookieStore.delete('inviteCode');
+
+      return createdUser;
+    },
+  },
   session: { strategy: 'jwt', maxAge: 24 * 60 * 60 },
   pages: {
-    signIn: '/auth/login',
-    newUser: '/new',
+    signIn: '/',
+    error: '/',
   },
   callbacks: {
-    signIn: async ({ user }) => {
+    signIn: async () => {
       return true;
     },
     session: async ({ session, token }) => {

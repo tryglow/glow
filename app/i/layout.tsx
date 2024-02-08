@@ -7,6 +7,7 @@ import prisma from '@/lib/prisma';
 
 import { Button } from '@/components/ui/button';
 
+import { ClaimInviteDialog } from '../components/ClaimInviteDialog';
 import { LoginWidget } from '../components/LoginWidget';
 import MarketingFooter from '../components/MarketingFooter';
 import MarketingNavigation from '../components/MarketingNavigation';
@@ -45,7 +46,9 @@ export default async function IPageLayout({ children }: Props) {
       <MarketingNavigation>
         {user ? (
           <Button asChild variant="ghost">
-            <Link href={`/${firstPage.slug}`}>Go to app →</Link>
+            <Link href={firstPage ? `/${firstPage.slug}` : `/new`}>
+              Go to app →
+            </Link>
           </Button>
         ) : (
           <>
@@ -57,7 +60,9 @@ export default async function IPageLayout({ children }: Props) {
               }
             />
 
-            <LoginWidget trigger={<Button>Create Page</Button>} />
+            <ClaimInviteDialog
+              trigger={<Button className="font-bold">Claim Invite</Button>}
+            />
           </>
         )}
       </MarketingNavigation>

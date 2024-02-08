@@ -67,6 +67,7 @@ interface Props {
   className?: string;
   variant?: 'glow' | 'default';
   size?: 'lg' | 'md';
+  onClick?: () => Promise<void>;
 }
 
 export function LoginProviderButton({
@@ -74,13 +75,19 @@ export function LoginProviderButton({
   className,
   variant = 'default',
   size = 'md',
+  onClick,
 }: Props) {
   const prov = providerConfigs[provider];
 
   return (
     <button
       type="submit"
-      onClick={() => signIn(prov.id)}
+      onClick={async () => {
+        if (onClick) {
+          await onClick();
+        }
+        signIn(prov.id);
+      }}
       className={clsx(
         'flex w-full justify-center items-center border rounded-md font-semibold leading-6',
         size === 'lg' && 'px-6 py-3 text-base',

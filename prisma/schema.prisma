@@ -46,6 +46,7 @@ model User {
   Integration         Integration[]
   Theme               Theme[]
   isAdmin             Boolean       @default(false)
+  acceptedInviteAt    DateTime?
   assignedInviteCodes InviteCode[]  @relation("AssignedInviteCodes")
   claimedInvitedCodes InviteCode[]  @relation("ClaimedInviteCodes")
 }
