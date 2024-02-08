@@ -3,10 +3,18 @@ import { PrismaAdapter } from '@next-auth/prisma-adapter';
 import { track } from '@vercel/analytics/server';
 import type { NextAuthOptions } from 'next-auth';
 import { getServerSession } from 'next-auth';
+import CredentialsProvider from 'next-auth/providers/credentials';
 import GoogleProvider from 'next-auth/providers/google';
 import TwitterProvider from 'next-auth/providers/twitter';
 
 import prisma from './prisma';
+
+const temporaryTestUserForAppReview = {
+  id: '5fdb0664-062c-43fc-9dec-a76f480ad188',
+  email: process.env.TMP_APP_REVIEW_USER_EMAIL,
+  name: 'Test User',
+  password: process.env.TMP_APP_REVIEW_USER_PASSWORD,
+};
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -18,6 +26,30 @@ export const authOptions: NextAuthOptions = {
       clientId: process.env.TWITTER_CLIENT_ID as string,
       clientSecret: process.env.TWITTER_CLIENT_SECRET as string,
       version: '2.0', // opt-in to Twitter OAuth 2.0
+    }),
+    CredentialsProvider({
+      name: 'Credentials',
+      credentials: {
+        email: { label: 'Email', type: 'email', placeholder: 'testuser' },
+        password: { label: 'Password', type: 'password' },
+      },
+      async authorize(credentials, req) {
+        // Add logic here to look up the user from the credentials supplied
+        if (!credentials) return null;
+
+        if (
+          credentials.password === temporaryTestUserForAppReview.password &&
+          credentials.email === temporaryTestUserForAppReview.email
+        ) {
+          return {
+            id: temporaryTestUserForAppReview.id,
+            name: temporaryTestUserForAppReview.name,
+            email: temporaryTestUserForAppReview.email,
+          };
+        }
+
+        return null;
+      },
     }),
   ],
   secret: process.env.NEXTAUTH_SECRET,
