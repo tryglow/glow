@@ -10,7 +10,7 @@ import TwitterProvider from 'next-auth/providers/twitter';
 import prisma from './prisma';
 
 const temporaryTestUserForAppReview = {
-  id: '5fdb0664-062c-43fc-9dec-a76f480ad188',
+  id: process.env.TMP_APP_REVIEW_USER_ID as string,
   email: process.env.TMP_APP_REVIEW_USER_EMAIL,
   name: 'Test User',
   password: process.env.TMP_APP_REVIEW_USER_PASSWORD,

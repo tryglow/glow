@@ -27,7 +27,7 @@ export default function TestUserPrivateLogin() {
     if (result?.error) {
       console.error(result.error);
     } else {
-      router.push('/');
+      router.push('/fb_test_page');
     }
   };
   return (
