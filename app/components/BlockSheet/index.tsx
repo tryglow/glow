@@ -35,12 +35,12 @@ const blocks: Blocks[] = [
   'link-box',
   'link-bar',
   'stack',
+  'instagram-latest-post',
   'image',
   'map',
   'github-commits-this-month',
   'spotify-playing-now',
   'spotify-embed',
-  'instagram-latest-post',
 ];
 
 export function BlockSheet() {
