@@ -1,5 +1,6 @@
 import { getServerSession } from 'next-auth';
 import Link from 'next/link';
+import { redirect } from 'next/navigation';
 import { ReactNode } from 'react';
 
 import { authOptions } from '@/lib/auth';
@@ -39,16 +40,18 @@ const fetchUserAndPages = async () => {
 export default async function IPageLayout({ children }: Props) {
   const { user, pages } = await fetchUserAndPages();
 
-  const firstPage = pages[0];
+  const loggedInUserRedirect = user && pages[0] ? `/${pages[0].slug}` : '/new';
+
+  if (user) {
+    redirect(loggedInUserRedirect);
+  }
 
   return (
     <>
       <MarketingNavigation>
         {user ? (
           <Button asChild variant="ghost">
-            <Link href={firstPage ? `/${firstPage.slug}` : `/new`}>
-              Go to app →
-            </Link>
+            <Link href={loggedInUserRedirect}>Go to app →</Link>
           </Button>
         ) : (
           <>

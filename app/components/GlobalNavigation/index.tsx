@@ -76,11 +76,9 @@ export function GlobalNavigation({
                   variant="ghost"
                   onClick={() => setShowAssignedInviteCodesDialog(true)}
                 >
-                  <FireIcon width={20} className="mr-2" />
-                  {userInviteCodes.length}{' '}
-                  {userInviteCodes.length === 1
-                    ? 'Invite Code'
-                    : 'Invite Codes'}
+                  <FireIcon width={20} className="mr-2 text-[#FF4F17]" />
+                  You have {userInviteCodes.length}{' '}
+                  {userInviteCodes.length === 1 ? 'Invite' : 'Invites'}!
                 </Button>
               )}
               <UserWidget />

@@ -45,13 +45,12 @@ export function AssignedInviteCodesDialog({
       <DialogContent>
         <DialogHeader>
           <DialogTitle>
-            You&apos;ve been assigned {inviteCodes.length}{' '}
+            Enjoying Glow? Here&apos;s {inviteCodes.length}{' '}
             {inviteCodes.length === 1 ? 'invite code!' : 'invite codes!'}
           </DialogTitle>
           <DialogDescription>
-            You can use these codes to invite friends to join Glow.
-            <br />
-            Use them wisely!
+            You can use these codes to invite your friends (or enemies) to join
+            Glow. Use them wisely!
           </DialogDescription>
         </DialogHeader>
 
