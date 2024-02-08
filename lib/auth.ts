@@ -7,6 +7,7 @@ import CredentialsProvider from 'next-auth/providers/credentials';
 import GoogleProvider from 'next-auth/providers/google';
 import TwitterProvider from 'next-auth/providers/twitter';
 
+import { createInviteCodesForUser } from './invite-code';
 import prisma from './prisma';
 
 const temporaryTestUserForAppReview = {
@@ -79,9 +80,13 @@ export const authOptions: NextAuthOptions = {
           provider: params.account?.provider ?? 'unknown',
         });
 
+        // Send welcome email
         if (user.email) {
           await sendWelcomeEmail(user.email);
         }
+
+        // Create invite codes for the user
+        await createInviteCodesForUser(user.id, 4);
       }
 
       if (trigger === 'signIn') {

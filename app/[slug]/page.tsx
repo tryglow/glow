@@ -70,19 +70,32 @@ const fetchData = async (slug: string) => {
   };
 };
 
-const fetchCurrentUsersPages = async () => {
+const fetchUserInfo = async () => {
   const session = await getServerSession(authOptions);
 
   const user = session?.user;
 
+  if (!user)
+    return {
+      userInviteCodes: null,
+      userPages: null,
+    };
+
   const userPages = await prisma.page.findMany({
     where: {
-      userId: user?.id,
+      userId: user.id,
+    },
+  });
+
+  const userInviteCodes = await prisma.inviteCode.findMany({
+    where: {
+      assignedToId: user.id,
     },
   });
 
   return {
     userPages,
+    userInviteCodes,
   };
 };
 
@@ -120,7 +133,7 @@ export default async function Page({ params }: { params: Params }) {
 
   const isMobile = isUserAgentMobile(headersList.get('user-agent'));
 
-  const { userPages } = await fetchCurrentUsersPages();
+  const { userPages, userInviteCodes } = await fetchUserInfo();
   const session = await getServerSession(authOptions);
 
   const pageLayout = layout as unknown as PageConfig;
@@ -154,6 +167,7 @@ export default async function Page({ params }: { params: Params }) {
         layout={pageLayout}
         editMode={isEditMode}
         userPages={userPages}
+        userInviteCodes={userInviteCodes}
         isLoggedIn={isLoggedIn}
       >
         {data.blocks

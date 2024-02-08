@@ -34,18 +34,20 @@ model Account {
 }
 
 model User {
-  id            String        @id @default(uuid())
-  name          String?
-  email         String?       @unique
-  emailVerified DateTime?
-  image         String?
-  accounts      Account[]
-  createdAt     DateTime      @default(now())
-  updatedAt     DateTime      @updatedAt
-  pages         Page[]
-  Integration   Integration[]
-  Theme         Theme[]
-  isAdmin       Boolean       @default(false)
+  id                  String        @id @default(uuid())
+  name                String?
+  email               String?       @unique
+  emailVerified       DateTime?
+  image               String?
+  accounts            Account[]
+  createdAt           DateTime      @default(now())
+  updatedAt           DateTime      @updatedAt
+  pages               Page[]
+  Integration         Integration[]
+  Theme               Theme[]
+  isAdmin             Boolean       @default(false)
+  assignedInviteCodes InviteCode[]  @relation("AssignedInviteCodes")
+  claimedInvitedCodes InviteCode[]  @relation("ClaimedInviteCodes")
 }
 
 model Page {
@@ -101,4 +103,15 @@ model Theme {
   colorLabelSecondary String
   colorLabelTertiary  String
   pages               Page[]
+}
+
+model InviteCode {
+  id           String   @id @default(uuid())
+  code         String   @unique
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  assignedToId String
+  assignedTo   User?    @relation("AssignedInviteCodes", fields: [assignedToId], references: [id])
+  claimedById  String?
+  claimedBy    User?    @relation("ClaimedInviteCodes", fields: [claimedById], references: [id])
 }
