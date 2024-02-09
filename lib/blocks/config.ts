@@ -19,6 +19,10 @@ import {
 import { defaults as spotifyPlayingNowDefaults } from './spotify-playing-now/config';
 import { StackSchema, defaults as stackDefaults } from './stack/config';
 import { Blocks } from './types';
+import {
+  WaitlistEmailBlockSchema,
+  defaults as waitlistEmailDefaults,
+} from './waitlist-email/config';
 
 export const blocksConfig: Record<
   Blocks,
@@ -70,5 +74,9 @@ export const blocksConfig: Record<
   'spotify-embed': {
     defaults: spotifyEmbedDefaults,
     schema: SpotifyEmbedSchema,
+  },
+  'waitlist-email': {
+    defaults: waitlistEmailDefaults,
+    schema: WaitlistEmailBlockSchema,
   },
 };

@@ -12,6 +12,7 @@ import { EditForm as SpotifyEmbedForm } from './spotify-embed/form';
 import { EditForm as SpotifyPlayingNowForm } from './spotify-playing-now/form';
 import { EditForm as StackForm } from './stack/form';
 import { Blocks } from './types';
+import { EditForm as WaitlistEmailForm } from './waitlist-email/form';
 
 export const editForms: Record<Blocks, JSXElementConstructor<any>> = {
   'link-box': LinkBoxForm,
@@ -25,4 +26,5 @@ export const editForms: Record<Blocks, JSXElementConstructor<any>> = {
   map: MapForm,
   'link-bar': LinkBarForm,
   'spotify-embed': SpotifyEmbedForm,
+  'waitlist-email': WaitlistEmailForm,
 };

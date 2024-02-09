@@ -11,6 +11,7 @@ import { Map } from './map/ui';
 import SpotifyEmbed from './spotify-embed/ui-client';
 import SpotifyPlayingNow from './spotify-playing-now/ui-client';
 import { Blocks } from './types';
+import { WaitlistEmail } from './waitlist-email/ui';
 
 export interface BlockConfig {
   x: number;
@@ -71,5 +72,7 @@ export function renderBlock(block: any, pageId: string, isEditMode: boolean) {
           spotifyAssetUrl={block.data.spotifyAssetUrl}
         />
       );
+    case 'waitlist-email':
+      return <WaitlistEmail {...sharedProps} />;
   }
 }

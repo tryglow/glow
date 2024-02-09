@@ -9,7 +9,8 @@ export type Blocks =
   | 'instagram-latest-post'
   | 'map'
   | 'link-box'
-  | 'link-bar';
+  | 'link-bar'
+  | 'waitlist-email';
 
 export interface EditFormProps<T> {
   initialValues: T;

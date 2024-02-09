@@ -41,6 +41,7 @@ const blocks: Blocks[] = [
   'github-commits-this-month',
   'spotify-playing-now',
   'spotify-embed',
+  'waitlist-email',
 ];
 
 export function BlockSheet() {

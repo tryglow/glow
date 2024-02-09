@@ -115,6 +115,15 @@ export const config: Record<
       h: 2,
     },
   },
+  'waitlist-email': {
+    title: 'Waitlist.com Email',
+    label: 'A form to collect emails for your waitlist',
+    icon: '/ui/type-waitlist-email.svg',
+    drag: {
+      w: 12,
+      h: 3,
+    },
+  },
 };
 
 interface Props {

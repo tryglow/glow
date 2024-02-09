@@ -1,0 +1,79 @@
+import { Form, Formik, FormikHelpers } from 'formik';
+import { Loader2 } from 'lucide-react';
+
+import { FormField } from '@/app/components/FormField';
+
+import { Button } from '@/components/ui/button';
+
+import { EditFormProps } from '../types';
+import { WaitlistEmailBlockConfig, WaitlistEmailBlockSchema } from './config';
+
+export function EditForm({
+  initialValues,
+  onSave,
+  onClose,
+  blockId,
+}: EditFormProps<WaitlistEmailBlockConfig>) {
+  const onSubmit = async (
+    values: WaitlistEmailBlockConfig,
+    { setSubmitting }: FormikHelpers<WaitlistEmailBlockConfig>
+  ) => {
+    setSubmitting(true);
+    onSave(values);
+  };
+
+  return (
+    <Formik
+      initialValues={{
+        title: initialValues?.title ?? '',
+        label: initialValues?.label ?? '',
+        buttonLabel: initialValues?.buttonLabel ?? '',
+        waitlistId: initialValues?.waitlistId ?? '',
+      }}
+      validationSchema={WaitlistEmailBlockSchema}
+      onSubmit={onSubmit}
+      enableReinitialize={true}
+    >
+      {({ isSubmitting, setFieldValue, errors }) => (
+        <Form className="w-full flex flex-col gap-2">
+          <FormField
+            label="Title"
+            name="title"
+            id="title"
+            error={errors.title}
+          />
+          <FormField
+            label="Label"
+            name="label"
+            id="label"
+            error={errors.label}
+          />
+          <FormField
+            label="Button label"
+            name="buttonLabel"
+            id="buttonLabel"
+            error={errors.buttonLabel}
+          />
+          <FormField
+            label="Waitlist ID"
+            name="waitlistId"
+            id="waitlistId"
+            error={errors.waitlistId}
+          />
+
+          <div className="flex flex-shrink-0 justify-between py-4 border-t border-stone-200">
+            <Button type="button" variant="secondary" onClick={onClose}>
+              ← Cancel
+            </Button>
+            <Button type="submit">
+              {isSubmitting && (
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              )}
+              Save
+            </Button>
+          </div>
+        </Form>
+      )}
+    </Formik>
+  );
+}
