@@ -60,6 +60,9 @@ export function EditForm({
             id="waitlistId"
             error={errors.waitlistId}
           />
+          <span className="text-xs text-black/70 -mt-2 mb-3">
+            You can find this in your settings on getwaitlist.com
+          </span>
 
           <div className="flex flex-shrink-0 justify-between py-4 border-t border-stone-200">
             <Button type="button" variant="secondary" onClick={onClose}>

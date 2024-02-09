@@ -116,12 +116,12 @@ export const config: Record<
     },
   },
   'waitlist-email': {
-    title: 'Waitlist.com Email',
-    label: 'A form to collect emails for your waitlist',
+    title: 'GetWaitlist Email',
+    label: 'A form to collect emails for your getwaitlist.com project',
     icon: '/ui/type-waitlist-email.svg',
     drag: {
       w: 12,
-      h: 3,
+      h: 5,
     },
   },
 };
