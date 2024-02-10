@@ -22,54 +22,97 @@ export const Container = (props: {
   );
 };
 
+const title = ['The', 'link-in-bio', 'that', 'is', 'always', 'current.'];
+
 export default function LandingPage() {
   return (
     <div className="min-h-screen">
       <ShowLoginAlert />
-      <section className="py-24 md:pt-48 md:pb-16">
+      <section className="bg-gradient-to-b from-white to-stone-100 py-24 md:py-0">
         <Container>
-          <div className="flex flex-col justify-center md:items-center max-w-2xl mx-auto text-center">
-            <h1
-              className={clsx(
-                'text-5xl md:text-7xl lg:text-8xl font-black text-black tracking-tight',
-                styles.title
-              )}
-            >
-              <span className={styles.row}>
-                <span>Always</span> <span>Current.</span>
+          <div className="grid grid-cols-1 md:grid-cols-6 items-center">
+            <div className="md:col-span-4 pr-16">
+              <h1
+                className={clsx(
+                  'text-5xl lg:text-6xl font-black text-black tracking-tight',
+                  styles.title
+                )}
+              >
+                {title.map((word) => {
+                  return (
+                    <span
+                      key={word}
+                      className={
+                        ['link-in-bio'].includes(word) ? 'text-[#FF4F17]' : ''
+                      }
+                    >
+                      {word}
+                    </span>
+                  );
+                })}
+              </h1>
+              <span
+                className={clsx(
+                  'text-xl md:text-2xl font-normal mt-3 md:mt-6 text-black/80',
+                  styles.subtitle
+                )}
+              >
+                Your current link-in-bio is already out of date. Glow integrates
+                with your favorite platforms to keep your page fresh, so that
+                you can focus on creating.
               </span>
-              <span className={styles.row}>
-                <span>Uniquely</span>{' '}
-                <span className="text-[#FF4F17]">You.</span>
-              </span>
-            </h1>
-            <span
-              className={clsx(
-                'text-xl md:text-2xl font-normal mt-3 text-black/80',
-                styles.subtitle
-              )}
-            >
-              Glow is the link in bio that stays
-              <br /> up-to-date with your content.
-            </span>
 
-            <div className={clsx('mt-4 md:mt-8', styles.ctas)}>
-              <ClaimInviteDialog
-                trigger={
-                  <Button
-                    variant="default"
-                    size="xl"
-                    className="mt-2 md:mt-0 mb-2 font-bold flex"
+              <div className={clsx('mt-4 md:mt-8', styles.ctas)}>
+                <ClaimInviteDialog
+                  trigger={
+                    <Button
+                      variant="default"
+                      size="xl"
+                      className="mt-2 md:mt-0 mb-2 font-bold flex"
+                    >
+                      Claim Invite
+                    </Button>
+                  }
+                />
+                <Button variant="link" asChild>
+                  <Link
+                    href="/jack"
+                    target="_blank"
+                    className="text-black/40 text-left pl-0"
                   >
-                    Claim Invite
-                  </Button>
-                }
-              />
-              <Button variant="link" asChild>
-                <Link href="/jack" target="_blank" className="text-black/40">
-                  See an example page →
-                </Link>
-              </Button>
+                    See an example page →
+                  </Link>
+                </Button>
+              </div>
+
+              <div className="flex -space-x-1 overflow-hidden mt-4 md:mt-8">
+                <img
+                  className="inline-block h-7 w-7 rounded-full ring-2 ring-white"
+                  src="https://cdn.glow.as/block-9077b37e-2c6c-4457-aa30-13f44f38ec15/16608f2e-8492-425e-ba0c-777c61755a08"
+                  alt=""
+                />
+                <img
+                  className="inline-block h-7 w-7 rounded-full ring-2 ring-white"
+                  src="https://cdn.glow.as/666b7445-c171-4ad7-a21d-eb1954b7bd40/0885d7ec-9af4-4430-94f4-ad1a033c2704"
+                  alt=""
+                />
+                <img
+                  className="inline-block h-7 w-7 rounded-full ring-2 ring-white"
+                  src="https://cdn.glow.as/block-9077b37e-2c6c-4457-aa30-13f44f38ec15/94c2926b-a54e-488e-8464-6e44dc5afce4"
+                  alt=""
+                />
+                <img
+                  className="inline-block h-7 w-7 rounded-full ring-2 ring-white"
+                  src="https://cdn.glow.as/block-9077b37e-2c6c-4457-aa30-13f44f38ec15/76af84b5-0e47-41fc-852b-458020c75d71"
+                  alt=""
+                />
+              </div>
+              <span className="text-xs font-medium text-black/60 block mt-1">
+                Used by 100+ creators
+              </span>
+            </div>
+            <div className="hidden md:block md:col-span-2">
+              <img src="/hero.png" />
             </div>
           </div>
         </Container>
@@ -78,7 +121,7 @@ export default function LandingPage() {
       <section className="my-20">
         <Container>
           <h2 className="text-3xl md:text-4xl font-semibold tracking-tight mb-8">
-            The dynamic link-in-bio
+            What makes Glow special?
           </h2>
 
           <div className="grid grid-cols-1 md:grid-cols-3 md:grid-rows-2 gap-6 w-full">
@@ -132,7 +175,7 @@ export default function LandingPage() {
               <div className="py-3 px-4 bg-white flex-1 flex flex-col justify-center">
                 <h3 className="text-lg font-semibold mb-2">Works everywhere</h3>
                 <p className="text-base text-black/80">
-                  Optimized for mobile devices, and looks great on desktop.
+                  Your page will look great on mobile and desktop.
                 </p>
               </div>
             </div>
@@ -165,10 +208,14 @@ export default function LandingPage() {
                 </p>
 
                 <div className="mt-6">
-                  <LoginWidget
+                  <ClaimInviteDialog
                     trigger={
-                      <Button variant="default" size="xl">
-                        Get started
+                      <Button
+                        variant="default"
+                        size="xl"
+                        className="mt-2 md:mt-0 mb-2 font-bold flex"
+                      >
+                        Claim Invite Code
                       </Button>
                     }
                   />

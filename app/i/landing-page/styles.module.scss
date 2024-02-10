@@ -1,42 +1,40 @@
 .title {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 0 18px;
+  display: flex;
+  gap: 4px 8px;
+  flex-wrap: wrap;
 
-  .row {
-    display: flex;
-    gap: theme('spacing.2');
-    justify-content: center;
+  @screen md {
+    gap: 8px;
+  }
 
-    @screen md {
-      gap: theme('spacing.5');
-    }
+  span {
+    animation: fadeInUp 400ms cubic-bezier(0.22, 0.61, 0.36, 1);
+    animation-fill-mode: forwards;
+    opacity: 0;
+    transform: translateY(40px);
+  }
 
-    span {
-      animation: fadeInUp 400ms cubic-bezier(0.22, 0.61, 0.36, 1);
-      animation-fill-mode: forwards;
-      opacity: 0;
-      transform: translateY(40px);
-      display: block;
-    }
+  span:nth-of-type(1) {
+    animation-delay: 500ms;
+  }
+  span:nth-of-type(2) {
+    animation-delay: 600ms;
+  }
 
-    &:nth-of-type(1) {
-      span:nth-of-type(1) {
-        animation-delay: 500ms;
-      }
-      span:nth-of-type(2) {
-        animation-delay: 600ms;
-      }
-    }
+  span:nth-of-type(3) {
+    animation-delay: 650ms;
+  }
 
-    &:nth-of-type(2) {
-      span:nth-of-type(1) {
-        animation-delay: 650ms;
-      }
-      span:nth-of-type(2) {
-        animation-delay: 700ms;
-      }
-    }
+  span:nth-of-type(4) {
+    animation-delay: 700ms;
+  }
+
+  span:nth-of-type(5) {
+    animation-delay: 750ms;
+  }
+
+  span:nth-of-type(6) {
+    animation-delay: 800ms;
   }
 }
 
@@ -50,11 +48,11 @@
 }
 
 .subtitle {
-  animation-delay: 750ms;
+  animation-delay: 850ms;
 }
 
 .ctas {
-  animation-delay: 800ms;
+  animation-delay: 850ms;
 }
 
 @keyframes fadeInUp {

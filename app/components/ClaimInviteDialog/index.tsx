@@ -4,14 +4,14 @@ import Link from 'next/link';
 import { useState } from 'react';
 
 import {
-  AlertDialog,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from '@/components/ui/alert-dialog';
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 
 import { LoginProviderButton } from '../LoginProviderButton';
@@ -33,18 +33,18 @@ export function ClaimInviteDialog({ trigger }: Props) {
   };
 
   return (
-    <AlertDialog open={open} onOpenChange={setOpen}>
-      <AlertDialogTrigger asChild>{trigger}</AlertDialogTrigger>
-      <AlertDialogContent>
-        <AlertDialogHeader>
-          <AlertDialogTitle className="font-bold tracking-tight text-2xl">
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogTrigger asChild>{trigger}</DialogTrigger>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle className="font-bold tracking-tight text-2xl">
             Enter invite code
-          </AlertDialogTitle>
-          <AlertDialogDescription>
+          </DialogTitle>
+          <DialogDescription>
             Welcome to Glow. To get started, please enter your invite code and
             then sign in with either Twitter or Google.
-          </AlertDialogDescription>
-        </AlertDialogHeader>
+          </DialogDescription>
+        </DialogHeader>
         <div className="my-3">
           <Input
             value={userInput}
@@ -54,19 +54,19 @@ export function ClaimInviteDialog({ trigger }: Props) {
             className="h-10"
           />
           <span className="text-xs block mt-3 text-black/80">
-            Don&apos;t have an invite code? Reach out to us at{' '}
+            Don&apos;t have an invite code? We regularly tweet out new codes at{' '}
             <Link href="https://twitter.com/tryglow">@tryglow</Link> 👀
           </span>
         </div>
-        <AlertDialogFooter>
+        <DialogFooter>
           <LoginProviderButton
             onClick={setCookie}
             provider="twitter"
             className="mt-2 md:mt-0"
           />
           <LoginProviderButton onClick={setCookie} provider="google" />
-        </AlertDialogFooter>
-      </AlertDialogContent>
-    </AlertDialog>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
   );
 }
