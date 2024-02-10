@@ -5,7 +5,7 @@ export interface ImageBlockConfig {
 }
 
 export const defaults: ImageBlockConfig = {
-  src: '/demo/image.jpg',
+  src: 'https://cdn.glow.as/default-data/image.png',
 };
 
 export const ImageSchema = Yup.object().shape({
