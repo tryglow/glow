@@ -68,6 +68,7 @@ interface Props {
   variant?: 'glow' | 'default';
   size?: 'lg' | 'md';
   onClick?: () => Promise<void>;
+  disabled?: boolean;
 }
 
 export function LoginProviderButton({
@@ -76,6 +77,7 @@ export function LoginProviderButton({
   variant = 'default',
   size = 'md',
   onClick,
+  disabled,
 }: Props) {
   const prov = providerConfigs[provider];
 
@@ -83,11 +85,16 @@ export function LoginProviderButton({
     <button
       type="submit"
       onClick={async () => {
+        if (disabled) {
+          return;
+        }
+
         if (onClick) {
           await onClick();
         }
         signIn(prov.id);
       }}
+      disabled={disabled}
       className={clsx(
         'flex w-full justify-center items-center border rounded-md font-semibold leading-6',
         size === 'lg' && 'px-6 py-3 text-base',
@@ -95,6 +102,7 @@ export function LoginProviderButton({
         variant === 'default' &&
           'border-stone-200 bg-white text-stone-800 hover:bg-stone-100',
         variant === 'glow' && 'bg-black text-white',
+        disabled && 'opacity-20 hover:bg-white cursor-not-allowed',
         className
       )}
     >

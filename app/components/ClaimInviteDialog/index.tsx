@@ -32,6 +32,8 @@ export function ClaimInviteDialog({ trigger }: Props) {
     }
   };
 
+  const loginButtonsDisabled = userInput.length === 0 || userInput === '';
+
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>{trigger}</DialogTrigger>
@@ -63,8 +65,13 @@ export function ClaimInviteDialog({ trigger }: Props) {
             onClick={setCookie}
             provider="twitter"
             className="mt-2 md:mt-0"
+            disabled={loginButtonsDisabled}
           />
-          <LoginProviderButton onClick={setCookie} provider="google" />
+          <LoginProviderButton
+            onClick={setCookie}
+            provider="google"
+            disabled={loginButtonsDisabled}
+          />
         </DialogFooter>
       </DialogContent>
     </Dialog>
