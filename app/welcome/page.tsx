@@ -1,7 +1,9 @@
 'use client';
 
 import clsx from 'clsx';
+import Head from 'next/head';
 import Link from 'next/link';
+import Script from 'next/script';
 import { ReactNode, useEffect } from 'react';
 
 import { Button } from '@/components/ui/button';
@@ -32,6 +34,20 @@ export default function LandingPage() {
 
   return (
     <div className="min-h-screen">
+      <Script
+        async
+        src="https://www.googletagmanager.com/gtag/js?id=AW-16458898231"
+      />
+
+      <Script id="google-gtag">
+        {`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+        
+          gtag('config', 'AW-16458898231');
+          `}
+      </Script>
       <ShowLoginAlert />
       <section className="bg-gradient-to-b from-white to-stone-100 py-24 md:py-0">
         <Container>
