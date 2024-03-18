@@ -8,7 +8,6 @@ import prisma from '@/lib/prisma';
 
 import { Button } from '@/components/ui/button';
 
-import { ClaimInviteDialog } from '../components/ClaimInviteDialog';
 import { LoginWidget } from '../components/LoginWidget';
 import MarketingFooter from '../components/MarketingFooter';
 import MarketingNavigation from '../components/MarketingNavigation';
@@ -62,9 +61,9 @@ export default async function IPageLayout({ children }: Props) {
                 </Button>
               }
             />
-
-            <ClaimInviteDialog
-              trigger={<Button className="font-bold">Claim Invite</Button>}
+            <LoginWidget
+              isSignup
+              trigger={<Button className="hidden lg:block">Get started</Button>}
             />
           </>
         )}

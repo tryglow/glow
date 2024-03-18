@@ -16,17 +16,24 @@ import { LoginProviderButton } from '../LoginProviderButton';
 
 interface Props {
   trigger: React.ReactNode;
+  isSignup?: boolean;
 }
 
-export function LoginWidget({ trigger }: Props) {
+export function LoginWidget({ trigger, isSignup }: Props) {
   const [open, setOpen] = useState(false);
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>{trigger}</DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Welcome back!</DialogTitle>
-          <DialogDescription>Login to your account below.</DialogDescription>
+          <DialogTitle>
+            {isSignup ? 'Get started ' : 'Welcome back!'}
+          </DialogTitle>
+          <DialogDescription>
+            {isSignup
+              ? 'Create your account using one of the options below'
+              : 'Login to your account below.'}
+          </DialogDescription>
         </DialogHeader>
         <DialogFooter>
           <LoginProviderButton provider="twitter" className="mt-2 md:mt-0" />

@@ -7,7 +7,6 @@ import { defaultThemeSeeds } from '@/lib/theme';
 
 import { Button } from '@/components/ui/button';
 
-import { ClaimInviteDialog } from '../components/ClaimInviteDialog';
 import { LoginWidget } from '../components/LoginWidget';
 
 export const dynamic = 'force-dynamic';
@@ -56,13 +55,14 @@ export default async function PageLayout({
   return (
     <>
       {!user && (
-        <ClaimInviteDialog
+        <LoginWidget
+          isSignup
           trigger={
             <Button
               variant="default"
               className="fixed z-50 top-3 right-3 font-bold flex"
             >
-              Claim Invite
+              Get started
             </Button>
           }
         />

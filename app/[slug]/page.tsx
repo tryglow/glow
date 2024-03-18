@@ -77,7 +77,6 @@ const fetchUserInfo = async () => {
 
   if (!user)
     return {
-      userInviteCodes: null,
       userPages: null,
     };
 
@@ -87,15 +86,8 @@ const fetchUserInfo = async () => {
     },
   });
 
-  const userInviteCodes = await prisma.inviteCode.findMany({
-    where: {
-      assignedToId: user.id,
-    },
-  });
-
   return {
     userPages,
-    userInviteCodes,
   };
 };
 
@@ -133,7 +125,7 @@ export default async function Page({ params }: { params: Params }) {
 
   const isMobile = isUserAgentMobile(headersList.get('user-agent'));
 
-  const { userPages, userInviteCodes } = await fetchUserInfo();
+  const { userPages } = await fetchUserInfo();
   const session = await getServerSession(authOptions);
 
   const pageLayout = layout as unknown as PageConfig;
@@ -167,7 +159,6 @@ export default async function Page({ params }: { params: Params }) {
         layout={pageLayout}
         editMode={isEditMode}
         userPages={userPages}
-        userInviteCodes={userInviteCodes}
         isLoggedIn={isLoggedIn}
       >
         {data.blocks

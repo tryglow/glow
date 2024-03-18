@@ -2,7 +2,6 @@ import clsx from 'clsx';
 import Link from 'next/link';
 import { ReactNode } from 'react';
 
-import { ClaimInviteDialog } from '@/app/components/ClaimInviteDialog';
 import { LoginWidget } from '@/app/components/LoginWidget';
 
 import { Button } from '@/components/ui/button';
@@ -63,14 +62,15 @@ export default function LandingPage() {
               </span>
 
               <div className={clsx('mt-4 md:mt-8', styles.ctas)}>
-                <ClaimInviteDialog
+                <LoginWidget
+                  isSignup
                   trigger={
                     <Button
                       variant="default"
                       size="xl"
                       className="mt-2 md:mt-0 mb-2 font-bold flex"
                     >
-                      Claim Invite
+                      Get Started
                     </Button>
                   }
                 />
@@ -208,14 +208,15 @@ export default function LandingPage() {
                 </p>
 
                 <div className="mt-6">
-                  <ClaimInviteDialog
+                  <LoginWidget
+                    isSignup
                     trigger={
                       <Button
                         variant="default"
                         size="xl"
                         className="mt-2 md:mt-0 mb-2 font-bold flex"
                       >
-                        Claim Invite Code
+                        Get Started
                       </Button>
                     }
                   />

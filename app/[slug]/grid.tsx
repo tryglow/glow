@@ -1,6 +1,6 @@
 'use client';
 
-import { InviteCode, Page } from '@prisma/client';
+import { Page } from '@prisma/client';
 import { ReactNode, useMemo } from 'react';
 import { Layout, Responsive, ResponsiveProps } from 'react-grid-layout';
 
@@ -19,7 +19,6 @@ interface Props {
   children: ReactNode[];
   editMode?: boolean;
   userPages: Page[] | null;
-  userInviteCodes?: InviteCode[] | null;
   isPotentiallyMobile: boolean;
   isLoggedIn: boolean;
 }
@@ -29,7 +28,6 @@ export default function Grid({
   children,
   editMode,
   userPages,
-  userInviteCodes,
   isLoggedIn,
   isPotentiallyMobile = false,
 }: Props) {
@@ -53,11 +51,7 @@ export default function Grid({
   if (editMode) {
     return (
       <EditModeContextProvider>
-        <GlobalNavigation
-          userPages={userPages}
-          userInviteCodes={userInviteCodes}
-          isEditMode
-        />
+        <GlobalNavigation userPages={userPages} isEditMode />
         <EditWrapper layoutProps={defaultLayoutProps}>{children}</EditWrapper>
       </EditModeContextProvider>
     );

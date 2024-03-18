@@ -4,35 +4,25 @@ import {
   Cog6ToothIcon,
   ComputerDesktopIcon,
   DevicePhoneMobileIcon,
-  FireIcon,
 } from '@heroicons/react/24/outline';
-import { InviteCode, Page } from '@prisma/client';
-import { DesktopIcon, MobileIcon } from '@radix-ui/react-icons';
+import { Page } from '@prisma/client';
 import { useState } from 'react';
 
 import { useEditModeContext } from '@/app/contexts/Edit';
 
 import { Button } from '@/components/ui/button';
 
-import { AssignedInviteCodesDialog } from '../AssignedInviteCodesDialog';
 import { EditPageSettingsDialog } from '../EditPageSettingsDialog';
 import { PageSwitcher } from '../PageSwitcher';
 import { UserWidget } from './UserWidget';
 
 interface Props {
   userPages: Page[] | null;
-  userInviteCodes?: InviteCode[] | null;
   isEditMode?: boolean;
 }
 
-export function GlobalNavigation({
-  userPages,
-  userInviteCodes,
-  isEditMode,
-}: Props) {
+export function GlobalNavigation({ userPages, isEditMode }: Props) {
   const [showEditPageSettingsDialog, setShowEditPageSettingsDialog] =
-    useState(false);
-  const [showAssignedInviteCodesDialog, setShowAssignedInviteCodesDialog] =
     useState(false);
 
   return (
@@ -72,17 +62,6 @@ export function GlobalNavigation({
               {isEditMode && <ScreenSizeSwitcher />}
             </div>
             <div className="flex items-center justify-end">
-              {userInviteCodes && userInviteCodes?.length > 0 && (
-                <Button
-                  type="button"
-                  variant="ghost"
-                  onClick={() => setShowAssignedInviteCodesDialog(true)}
-                >
-                  <FireIcon width={20} className="mr-2 text-[#FF4F17]" />
-                  You have {userInviteCodes.length}{' '}
-                  {userInviteCodes.length === 1 ? 'Invite' : 'Invites'}!
-                </Button>
-              )}
               <UserWidget />
             </div>
           </div>
@@ -93,15 +72,6 @@ export function GlobalNavigation({
           open={true}
           onOpenChange={setShowEditPageSettingsDialog}
           onClose={() => setShowEditPageSettingsDialog(false)}
-        />
-      )}
-
-      {userInviteCodes && showAssignedInviteCodesDialog && (
-        <AssignedInviteCodesDialog
-          open={true}
-          onOpenChange={setShowAssignedInviteCodesDialog}
-          onClose={() => setShowAssignedInviteCodesDialog(false)}
-          inviteCodes={userInviteCodes}
         />
       )}
     </>
