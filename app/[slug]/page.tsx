@@ -3,6 +3,7 @@ import type { Metadata, ResolvingMetadata } from 'next';
 import { getServerSession } from 'next-auth';
 import { headers } from 'next/headers';
 import { notFound } from 'next/navigation';
+import { PerformanceObserver, performance } from 'node:perf_hooks';
 
 import { authOptions } from '@/lib/auth';
 import { renderBlock } from '@/lib/blocks/ui';

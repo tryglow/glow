@@ -1,5 +1,6 @@
 import { Theme } from '@prisma/client';
 import { getServerSession } from 'next-auth';
+import { PerformanceObserver, performance } from 'node:perf_hooks';
 
 import { authOptions } from '@/lib/auth';
 import prisma from '@/lib/prisma';
