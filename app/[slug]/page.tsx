@@ -3,7 +3,6 @@ import type { Metadata, ResolvingMetadata } from 'next';
 import { getServerSession } from 'next-auth';
 import { headers } from 'next/headers';
 import { notFound } from 'next/navigation';
-import { PerformanceObserver, performance } from 'node:perf_hooks';
 
 import { authOptions } from '@/lib/auth';
 import { renderBlock } from '@/lib/blocks/ui';
@@ -20,17 +19,8 @@ export const dynamicParams = true;
 // export const revalidate = 60;
 // export const dynamicParams = true;
 
-const perfObserver = new PerformanceObserver((items) => {
-  items.getEntries().forEach((entry) => {
-    console.log(entry);
-  });
-});
-
-perfObserver.observe({ entryTypes: ['measure'] });
-
 const fetchData = async (slug: string) => {
   let isEditMode = false;
-  performance.mark('fetchData-start');
 
   const session = await getServerSession(authOptions);
 
@@ -70,9 +60,6 @@ const fetchData = async (slug: string) => {
     sm: data.config,
     xxs: data.mobileConfig,
   };
-
-  performance.mark('fetchData-end');
-  performance.measure('fetchData', 'fetchData-start', 'fetchData-end');
 
   return {
     data,

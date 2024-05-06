@@ -1,6 +1,5 @@
 import { Theme } from '@prisma/client';
 import { getServerSession } from 'next-auth';
-import { PerformanceObserver, performance } from 'node:perf_hooks';
 
 import { authOptions } from '@/lib/auth';
 import prisma from '@/lib/prisma';
@@ -12,26 +11,10 @@ import { LoginWidget } from '../components/LoginWidget';
 
 export const dynamic = 'force-dynamic';
 
-const perfObserver = new PerformanceObserver((items) => {
-  items.getEntries().forEach((entry) => {
-    console.log(entry);
-  });
-});
-
-perfObserver.observe({ entryTypes: ['measure'] });
-
 const fetchUserLoggedinStatus = async () => {
-  performance.mark('fetchUserLoggedinStatus-start');
   const session = await getServerSession(authOptions);
 
   const user = session?.user;
-
-  performance.mark('fetchUserLoggedinStatus-end');
-  performance.measure(
-    'fetchUserLoggedinStatus',
-    'fetchUserLoggedinStatus-start',
-    'fetchUserLoggedinStatus-end'
-  );
 
   return {
     user,
@@ -59,7 +42,6 @@ export default async function PageLayout({
     slug: string;
   };
 }) {
-  performance.mark('layout-start');
   const { user } = await fetchUserLoggedinStatus();
 
   let renderTheme: Partial<Theme> = defaultThemeSeeds.Default;
@@ -69,8 +51,6 @@ export default async function PageLayout({
   if (page?.theme?.id) {
     renderTheme = page.theme;
   }
-  performance.mark('layout-end');
-  performance.measure('layout', 'layout-start', 'layout-end');
 
   return (
     <>
