@@ -23,6 +23,7 @@ async function main() {
     },
     update: {},
     create: {
+      id: '00441c91-6762-44d8-8110-2b5616825bd9',
       createdById: initialUser.id,
       colorBgPrimary: '0 0% 100%',
       colorBgSecondary: '0 0% 90.20%',
@@ -41,6 +42,7 @@ async function main() {
     },
     update: {},
     create: {
+      id: '14fc9bdf-f363-4404-b05e-856670722fda',
       createdById: initialUser.id,
       colorBgPrimary: '255deg 29% 13.5%',
       colorBgSecondary: '0 0% 0%',
@@ -59,6 +61,7 @@ async function main() {
     },
     update: {},
     create: {
+      id: '1e24ab02-9b97-4a61-9b83-fe278a41b30b',
       createdById: initialUser.id,
       colorBgPrimary: '0 0% 0%',
       colorBgSecondary: '0 0% 90.20%',
@@ -77,6 +80,7 @@ async function main() {
     },
     update: {},
     create: {
+      id: '4c47b21f-9183-4e7a-be6c-6ee4fabae92a',
       createdById: initialUser.id,
       colorBgPrimary: '140deg 9.88% 31%',
       colorBgSecondary: '0 0% 90.20%',
