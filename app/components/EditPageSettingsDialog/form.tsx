@@ -157,6 +157,7 @@ export function EditPageSettings({ onCancel, initialValues, pageId }: Props) {
 
             <div className="mt-4">
               <FormFileUpload
+                htmlFor="page-background-image"
                 onUploaded={(url) => setFieldValue('backgroundImage', url)}
                 initialValue={initialValues?.backgroundImage}
                 referenceId={pageId}

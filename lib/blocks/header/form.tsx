@@ -52,6 +52,7 @@ export function EditForm({
           />
 
           <FormFileUpload
+            htmlFor="header-avatar"
             onUploaded={(url) => setFieldValue('avatar.src', url)}
             initialValue={initialValues?.avatar?.src}
             referenceId={blockId}

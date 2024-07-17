@@ -88,6 +88,7 @@ export function EditForm({
               </TabsContent>
               <TabsContent value="uploadCustom">
                 <FormFileUpload
+                  htmlFor="link-box-icon"
                   onUploaded={(url) => setFieldValue('icon.src', url)}
                   initialValue={initialUploadedIcon}
                   referenceId={blockId}

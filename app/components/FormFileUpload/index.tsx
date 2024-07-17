@@ -15,6 +15,7 @@ interface Props {
   label?: string;
   isCondensed?: boolean;
   assetContext: AssetContexts;
+  htmlFor: string;
 }
 
 export function FormFileUpload({
@@ -24,6 +25,7 @@ export function FormFileUpload({
   label = 'Asset',
   assetContext,
   isCondensed = false,
+  htmlFor,
 }: Props) {
   const [uploadedFileUrl, setUploadedFileUrl] = useState<string | null>(null);
 
@@ -82,7 +84,7 @@ export function FormFileUpload({
   return (
     <>
       <label
-        htmlFor="cover-photo"
+        htmlFor={htmlFor}
         className="block text-sm font-medium leading-6 text-gray-900"
       >
         {label}
@@ -115,8 +117,8 @@ export function FormFileUpload({
             >
               <span>Select a file</span>
               <input
-                id="file-upload"
-                name="file-upload"
+                id={htmlFor}
+                name={htmlFor}
                 type="file"
                 className="sr-only"
                 onChange={handleUpload}

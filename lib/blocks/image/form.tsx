@@ -34,6 +34,7 @@ export function EditForm({
       {({ isSubmitting, setValues, errors }) => (
         <Form className="w-full flex flex-col">
           <FormFileUpload
+            htmlFor="image-src"
             onUploaded={(url) => setValues({ src: url })}
             initialValue={initialValues?.src}
             referenceId={blockId}
