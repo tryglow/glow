@@ -1,10 +1,10 @@
 'use client';
 
 import { PhotoIcon } from '@heroicons/react/24/solid';
-import clsx from 'clsx';
 import { ChangeEvent, useEffect, useState } from 'react';
 
 import { AssetContexts } from '@/lib/asset';
+import { cn } from '@/lib/utils';
 
 import { Button } from '@/components/ui/button';
 
@@ -97,7 +97,7 @@ export function FormFileUpload({
       )}
 
       <div
-        className={clsx(
+        className={cn(
           'mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/250',
           isCondensed ? ' px-4 py-5' : ' px-6 py-10'
         )}

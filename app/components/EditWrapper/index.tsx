@@ -1,7 +1,5 @@
 'use client';
 
-import { NoSymbolIcon } from '@heroicons/react/24/outline';
-import clsx from 'clsx';
 import dynamic from 'next/dynamic';
 import { useParams, useRouter } from 'next/navigation';
 import {
@@ -22,6 +20,8 @@ import useSWR from 'swr';
 import { v4 as uuidv4 } from 'uuid';
 
 import { PageConfig } from '@/app/[slug]/grid';
+
+import { cn } from '@/lib/utils';
 
 import { Skeleton } from '@/components/ui/skeleton';
 import { useToast } from '@/components/ui/use-toast';
@@ -263,7 +263,7 @@ export function EditWrapper({ children, layoutProps }: Props) {
   return (
     <>
       <div
-        className={clsx(
+        className={cn(
           'min-h-screen bg-black/0 transition-colors hover:bg-black/5 w-full mx-auto',
           editLayoutMode === 'mobile' ? 'max-w-[400px]' : 'max-w-[768px]'
         )}

@@ -1,8 +1,9 @@
 'use client';
 
-import clsx from 'clsx';
 import { ClientSafeProvider, signIn } from 'next-auth/react';
 import { ReactNode } from 'react';
+
+import { cn } from '@/lib/utils';
 
 type EnabledProviders = 'google' | 'twitter';
 
@@ -95,7 +96,7 @@ export function LoginProviderButton({
         signIn(prov.id);
       }}
       disabled={disabled}
-      className={clsx(
+      className={cn(
         'flex w-full justify-center items-center border rounded-md font-semibold leading-6',
         size === 'lg' && 'px-6 py-3 text-base',
         size === 'md' && 'px-3 py-1.5 text-sm',

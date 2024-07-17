@@ -1,9 +1,9 @@
 'use client';
 
-import clsx from 'clsx';
 import { AnchorHTMLAttributes, JSXElementConstructor, ReactNode } from 'react';
 
 import { BlockProps } from '@/lib/blocks/ui';
+import { cn } from '@/lib/utils';
 
 import { EditBlockToolbar } from '../EditBlockToolbar';
 
@@ -27,7 +27,7 @@ export function CoreBlock({
 }: Props) {
   return (
     <Component
-      className={clsx(
+      className={cn(
         'h-full overflow-hidden relative',
         !isFrameless &&
           'bg-sys-bg-primary border-sys-bg-border border p-6 rounded-3xl shadow-md ',

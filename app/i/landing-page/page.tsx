@@ -1,8 +1,9 @@
-import clsx from 'clsx';
 import Link from 'next/link';
 import { ReactNode } from 'react';
 
 import { LoginWidget } from '@/app/components/LoginWidget';
+
+import { cn } from '@/lib/utils';
 
 import { Button } from '@/components/ui/button';
 
@@ -15,7 +16,7 @@ export const Container = (props: {
   children: ReactNode;
 }) => {
   return (
-    <div className={clsx('max-w-5xl mx-auto px-4', props.className)}>
+    <div className={cn('max-w-5xl mx-auto px-4', props.className)}>
       {props.children}
     </div>
   );
@@ -32,7 +33,7 @@ export default function LandingPage() {
           <div className="grid grid-cols-1 md:grid-cols-6 items-center">
             <div className="md:col-span-4 pr-16">
               <h1
-                className={clsx(
+                className={cn(
                   'text-5xl lg:text-6xl font-black text-black tracking-tight',
                   styles.title
                 )}
@@ -51,7 +52,7 @@ export default function LandingPage() {
                 })}
               </h1>
               <span
-                className={clsx(
+                className={cn(
                   'text-xl md:text-2xl font-normal mt-3 md:mt-6 text-black/80',
                   styles.subtitle
                 )}
@@ -61,7 +62,7 @@ export default function LandingPage() {
                 you can focus on creating.
               </span>
 
-              <div className={clsx('mt-4 md:mt-8', styles.ctas)}>
+              <div className={cn('mt-4 md:mt-8', styles.ctas)}>
                 <LoginWidget
                   isSignup
                   trigger={

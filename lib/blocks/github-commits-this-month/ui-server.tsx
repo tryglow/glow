@@ -1,6 +1,7 @@
-import clsx from 'clsx';
 import Link from 'next/link';
 import { SVGProps } from 'react';
+
+import { cn } from '@/lib/utils';
 
 import { GithubCommitsThisMonthBlockConfig } from './config';
 import { fetchGithubData } from './utils';
@@ -51,7 +52,7 @@ export async function GithubServerUI({
           </span>
           {!Number.isNaN(percentageDifference) && (
             <span
-              className={clsx(
+              className={cn(
                 percentageDifference > 0
                   ? 'text-sys-label-positive'
                   : 'text-sys-label-negative',

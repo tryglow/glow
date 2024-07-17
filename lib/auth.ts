@@ -29,6 +29,11 @@ export const authOptions: NextAuthOptions = {
       clientSecret: process.env.TWITTER_CLIENT_SECRET as string,
       version: '2.0', // opt-in to Twitter OAuth 2.0
     }),
+    /**
+     * This provider is used for the app review process only. Some of the
+     * integrations that we use (such as Spotify and Facebook) require us to
+     * provide test users for the review process.
+     */
     CredentialsProvider({
       name: 'Credentials',
       credentials: {

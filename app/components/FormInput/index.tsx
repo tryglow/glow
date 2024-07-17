@@ -1,6 +1,7 @@
-import clsx from 'clsx';
 import { Field } from 'formik';
 import { ReactNode } from 'react';
+
+import { cn } from '@/lib/utils';
 
 interface Props {
   name: string;
@@ -33,7 +34,7 @@ export function FormInput({
       name={name}
       placeholder={placeholder}
       type={type}
-      className={clsx(
+      className={cn(
         'block w-full rounded-md border-0 px-3 py-1.5 ring-1 ring-inset focus:ring-2 focus:ring-inset sm:text-sm sm:leading-6',
         hasError
           ? 'text-red-900 ring-red-300 placeholder:text-red-300 focus:ring-red-500'

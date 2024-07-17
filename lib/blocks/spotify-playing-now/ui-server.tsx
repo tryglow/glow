@@ -1,6 +1,7 @@
-import clsx from 'clsx';
 import Link from 'next/link';
 import { FunctionComponent } from 'react';
+
+import { cn } from '@/lib/utils';
 
 import styles from './styles.module.css';
 import { fetchData } from './utils';
@@ -40,7 +41,7 @@ export const SpotifyPlayingNowServerUI: FunctionComponent<Props> = async ({
       <div className="flex flex-col justify-center">
         <p className="text-xs text-white/60 uppercase font-bold">
           <span
-            className={clsx(styles.bars, data?.isPlayingNow && styles.animate)}
+            className={cn(styles.bars, data?.isPlayingNow && styles.animate)}
           >
             <span />
             <span />
