@@ -83,12 +83,9 @@ export function FormFileUpload({
 
   return (
     <>
-      <label
-        htmlFor={htmlFor}
-        className="block text-sm font-medium leading-6 text-gray-900"
-      >
+      <span className="block text-sm font-medium leading-6 text-gray-900">
         {label}
-      </label>
+      </span>
       {uploadedFileUrl && (
         <div className="flex items-center gap-2">
           <img src={uploadedFileUrl} className="w-16 h-16 rounded-md" />
@@ -112,7 +109,7 @@ export function FormFileUpload({
           />
           <div className="mt-4 flex text-sm text-center leading-6 text-gray-600">
             <label
-              htmlFor="file-upload"
+              htmlFor={htmlFor}
               className="relative text-center cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500"
             >
               <span>Select a file</span>
