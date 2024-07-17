@@ -4,9 +4,9 @@ services:
     image: postgres:15.1
     restart: always
     environment:
-      POSTGRES_USER: pulse_user
+      POSTGRES_USER: glow_user
       POSTGRES_PASSWORD: password
-      POSTGRES_DB: pulse_development
+      POSTGRES_DB: glow_development
     volumes:
       - postgres:/var/lib/postgresql/data
     ports:
