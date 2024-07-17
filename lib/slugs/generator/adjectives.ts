@@ -1262,4 +1262,4 @@ export const adjectives = [
   'zesty',
   'zippy',
   'zonked',
-]
+];

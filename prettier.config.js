@@ -8,6 +8,6 @@ const config = {
   importOrderSeparation: true,
   importOrderSortSpecifiers: true,
   plugins: ['@trivago/prettier-plugin-sort-imports'],
-}
+};
 
-module.exports = config
+module.exports = config;

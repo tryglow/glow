@@ -120,7 +120,7 @@ export function EditForm({
                                 </TabsContent>
                                 <TabsContent value="uploadCustom">
                                   <FormFileUpload
-                                    htmlFor={`links.${index}.icon.src`}
+                                    htmlFor={z}
                                     onUploaded={(val) =>
                                       setFieldValue(
                                         `links.${index}.icon.src`,

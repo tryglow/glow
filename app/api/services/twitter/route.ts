@@ -1,20 +1,20 @@
-import { redirect } from 'next/navigation'
+import { redirect } from 'next/navigation';
 
 export async function GET() {
   if (!process.env.TWITTER_CLIENT_ID) {
-    throw new Error('Missing TWITTER_CLIENT_ID')
+    throw new Error('Missing TWITTER_CLIENT_ID');
   }
 
   if (!process.env.TWITTER_CLIENT_SECRET) {
-    throw new Error('Missing TWITTER_CLIENT_SECRET')
+    throw new Error('Missing TWITTER_CLIENT_SECRET');
   }
 
   if (!process.env.TWITTER_CALLBACK_URL) {
-    throw new Error('Missing TWITTER_CALLBACK_URL')
+    throw new Error('Missing TWITTER_CALLBACK_URL');
   }
 
   if (!process.env.TWITTER_CHALLENGE) {
-    throw new Error('Missing TWITTER_CHALLENGE')
+    throw new Error('Missing TWITTER_CHALLENGE');
   }
 
   const options = {
@@ -25,8 +25,8 @@ export async function GET() {
     code_challenge: process.env.TWITTER_CHALLENGE,
     code_challenge_method: 'plain',
     scope: ['users.read', 'tweet.read'].join(' '),
-  }
+  };
 
-  const qs = new URLSearchParams(options).toString()
-  redirect(`https://twitter.com/i/oauth2/authorize?${qs}`)
+  const qs = new URLSearchParams(options).toString();
+  redirect(`https://twitter.com/i/oauth2/authorize?${qs}`);
 }
