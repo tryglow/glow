@@ -5,7 +5,7 @@ services:
     restart: always
     environment:
       POSTGRES_USER: glow_user
-      POSTGRES_PASSWORD: password
+      POSTGRES_PASSWORD: KGfUZosCOm
       POSTGRES_DB: glow_development
     volumes:
       - postgres:/var/lib/postgresql/data
