@@ -1,36 +1,38 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+<a href="https://dub.co">
+  <img alt="Glow - The open-source dynamic link-in-bio" src=".github/cover.png">
+</a>
 
-## Getting Started
+<h3 align="center">Glow</h3>
 
-First, run the development server:
+<p align="center">
+    An open-source dynamic link-in-bio
+    <br />
+    <br />
+    <a href="#hello"><strong>Introduction</strong></a> ·
+    <a href="#tech-stack"><strong>Tech Stack</strong></a> ·
+    <a href="#self-hosting"><strong>Self-hosting</strong></a> ·
+    <a href="#license"><strong>License</strong></a>
+</p>
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+<br/>
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Hello
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Glow is an open-source dynamic link-in-bio tool.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## Tech Stack
 
-## Learn More
+- [Next.js](https://nextjs.org/) – framework
+- [TypeScript](https://www.typescriptlang.org/) – language
+- [Tailwind](https://tailwindcss.com/) – CSS
+- [NextAuth.js](https://next-auth.js.org/) – auth
+- [Resend](https://resend.com/) – emails
+- [Vercel](https://vercel.com/) – deployments
 
-To learn more about Next.js, take a look at the following resources:
+## Self-Hosting
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+You can self-host Glow if you would like to run it yourself. I haven't written up a guide yet, but watch this space! (or just get stuck in and try it out yourself!)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## License
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Please see the [LICENSE](https://github.com/alexpate/glow/blob/main/LICENSE.md) file for more information.
