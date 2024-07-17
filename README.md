@@ -1,4 +1,4 @@
-<a href="https://dub.co">
+<a href="https://glow.as">
   <img alt="Glow - The open-source dynamic link-in-bio" src=".github/cover.png">
 </a>
 
