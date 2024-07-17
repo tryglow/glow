@@ -159,7 +159,9 @@ export function EditForm({
                     })}
                     <Button
                       variant="outline"
-                      onClick={() => push({ title: '', url: '' })}
+                      onClick={() =>
+                        push({ title: '', label: '', icon: { src: '' } })
+                      }
                     >
                       Add Item
                     </Button>
