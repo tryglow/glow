@@ -57,9 +57,9 @@ export default function LandingPage() {
                   styles.subtitle
                 )}
               >
-                Your current link-in-bio is already out of date. Glow integrates
-                with your favorite platforms to keep your page fresh, so that
-                you can focus on creating.
+                Glow is the open source link-in-bio tool that integrates with
+                your favorite platforms to keep your page fresh, so that you can
+                focus on creating.
               </span>
 
               <div className={cn('mt-4 md:mt-8', styles.ctas)}>
