@@ -5,6 +5,7 @@ import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import { ReactNode, useState } from 'react';
 
+import { LoginProviderButton } from '@/app/components/LoginProviderButton';
 import { Container } from '@/app/i/landing-page/page';
 
 import { Button } from '@/components/ui/button';
@@ -89,18 +90,10 @@ export default function MarketingNavigation({ children }: Props) {
             <div className="mt-6 flow-root">
               <div className="-my-6 divide-y divide-gray-500/10">
                 <div className="py-6">
-                  <Link
-                    href="/api/auth/signin/google"
-                    className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
-                  >
-                    Log in with Google
-                  </Link>
-                  <Link
-                    href="/api/auth/signin/twitter"
-                    className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
-                  >
-                    Log in with Twitter
-                  </Link>
+                  <div className="space-y-3">
+                    <LoginProviderButton provider="twitter" className="h-12" />
+                    <LoginProviderButton provider="google" className="h-12" />
+                  </div>
                 </div>
                 <div className="py-6">
                   <Link
