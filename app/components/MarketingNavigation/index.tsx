@@ -37,6 +37,9 @@ export default function MarketingNavigation({ children }: Props) {
               <Button asChild variant="ghost" className="hidden md:flex">
                 <Link href="https://twitter.com/tryglow">Twitter / X</Link>
               </Button>
+              <Button asChild variant="ghost" className="hidden md:flex">
+                <Link href="https://github.com/alexpate/glow">GitHub</Link>
+              </Button>
               {children}
             </div>
             <div className="flex lg:hidden">
