@@ -39,7 +39,7 @@ export default function MarketingNavigation({ children }: Props) {
                 <Link href="https://twitter.com/tryglow">Twitter / X</Link>
               </Button>
               <Button asChild variant="ghost" className="hidden md:flex">
-                <Link href="https://github.com/alexpate/glow">GitHub</Link>
+                <Link href="https://github.com/tryglow/glow">GitHub</Link>
               </Button>
               {children}
             </div>
@@ -103,7 +103,7 @@ export default function MarketingNavigation({ children }: Props) {
                     Twitter / X
                   </Link>
                   <Link
-                    href="https://github.com/alexpate/glow"
+                    href="https://github.com/tryglow/glow"
                     className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
                   >
                     View Source on GitHub
