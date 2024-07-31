@@ -6,7 +6,7 @@ import prisma from '@/lib/prisma';
 
 import { SpotifyIntegrationConfig } from './config';
 
-async function fetchPlayingNow(accessToken: string, integrationId: string) {
+async function fetchPlayingNow(accessToken: string) {
   const req = await fetch(
     'https://api.spotify.com/v1/me/player/currently-playing',
     {
@@ -15,8 +15,7 @@ async function fetchPlayingNow(accessToken: string, integrationId: string) {
         Authorization: `Bearer ${accessToken}`,
       },
       next: {
-        revalidate: 60,
-        tags: [`spotify-${integrationId}-playing-now`],
+        revalidate: 45,
       },
     }
   );
@@ -24,14 +23,13 @@ async function fetchPlayingNow(accessToken: string, integrationId: string) {
   return req;
 }
 
-function fetchRecentlyPlayed(accessToken: string, integrationId: string) {
+function fetchRecentlyPlayed(accessToken: string) {
   return fetch('https://api.spotify.com/v1/me/player/recently-played?limit=1', {
     headers: {
       Authorization: `Bearer ${accessToken}`,
     },
     next: {
       revalidate: 60,
-      tags: [`spotify-${integrationId}-recently-played`],
     },
   });
 }
@@ -41,7 +39,7 @@ const fetchSpotifyData = async (
   isRetry: boolean,
   integrationId: string
 ) => {
-  const req = await fetchPlayingNow(config.accessToken, integrationId);
+  const req = await fetchPlayingNow(config.accessToken);
 
   // The access token might have expired. Try to refresh it.
   if (req.status === 401 && !isRetry) {
@@ -79,10 +77,7 @@ const fetchSpotifyData = async (
     }
   }
 
-  console.log('Spotify Request', req);
   console.log('Headers Date', req.headers.get('date'));
-  console.log('Headers Server', req.headers.get('server'));
-  console.log('Headers CC', req.headers.get('cache-control'));
 
   if (req.status === 200) {
     const data = await req.json();
@@ -107,10 +102,7 @@ const fetchSpotifyData = async (
     return null;
   }
 
-  const recentlyPlayedReq = await fetchRecentlyPlayed(
-    config.accessToken,
-    integrationId
-  );
+  const recentlyPlayedReq = await fetchRecentlyPlayed(config.accessToken);
   const recentlyPlayedData = await recentlyPlayedReq.json();
 
   if (recentlyPlayedData) {
