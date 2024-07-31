@@ -1,10 +1,18 @@
 .react-grid-layout {
   position: relative;
+
+  overflow: hidden;
 }
 
 .react-grid-item {
   border-radius: 24px;
   z-index: 20;
+  transform: translate(1px, 0);
+  will-change: position, width, height, transform;
+
+  @screen md {
+    transform: unset;
+  }
 
   &:hover {
     .block-toolbar {

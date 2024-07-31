@@ -37,6 +37,13 @@ export default function Grid({
     rowHeight: 32,
     cols: { lg: 12, md: 12, sm: 12, xs: 12, xxs: 12 },
     margin: [10, 10],
+    containerPadding: {
+      lg: [0, 0],
+      md: [0, 0],
+      sm: [0, 0],
+      xs: [0, 0],
+      xxs: [10, 10],
+    },
     compactType: 'vertical',
     isResizable: editMode ? true : false,
     isDraggable: editMode ? true : false,
