@@ -270,6 +270,7 @@ export function EditWrapper({ children, layoutProps }: Props) {
       >
         <ResponsiveReactGridLayout
           {...editableLayoutProps}
+          className="!overflow-auto"
           layouts={{
             lg: layout?.sm ?? [],
             md: layout?.sm ?? [],
