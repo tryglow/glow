@@ -62,7 +62,7 @@ const featuredProfiles: {
   {
     name: 'Nicola Adams',
     label: 'Student at University of Georgia',
-    slug: 'garett',
+    slug: 'nicola_adams',
     avatarUrl:
       'https://cdn.glow.as/block-4e8321e4-6997-4b74-92f8-5da2458ef6fb/1066a5b8-cf2f-43f6-8525-a39c82f27795',
     bg: '#f5f5f4',
