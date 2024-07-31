@@ -36,7 +36,11 @@ export const SpotifyPlayingNowServerUI: FunctionComponent<Props> = async ({
   return (
     <div className="flex gap-3">
       {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src={data?.imageUrl} className="w-16 h-16 object-cover" alt="" />
+      <img
+        src={data?.imageUrl}
+        className="w-16 h-16 object-cover rounded-lg"
+        alt=""
+      />
 
       <div className="flex flex-col justify-center">
         <p className="text-xs text-white/60 uppercase font-bold">
