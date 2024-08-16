@@ -35,4 +35,4 @@ You can self-host Glow if you would like to run it yourself. I haven't written u
 
 ## License
 
-Please see the [LICENSE](https://github.com/tryglow/glow/blob/main/LICENSE.md) file for more information.
+Please see the [LICENSE](https://github.com/tryglow/glow/blob/main/LICENSE) file for more information.
