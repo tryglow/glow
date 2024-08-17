@@ -20,6 +20,9 @@
 
 Glow is an open-source dynamic personal page builder.
 
+https://github.com/user-attachments/assets/d2c04b21-eb96-459b-8751-0c2bcb904da8
+
+
 ## Tech Stack
 
 - [Next.js](https://nextjs.org/) – framework
