@@ -89,7 +89,7 @@ const featuredProfiles: {
   },
 ];
 
-const title = ['The', 'link-in-bio', 'that', 'is', 'always', 'current.'];
+const title = ['Your', 'personal', 'page', 'that', 'is', 'always', 'current.'];
 
 export default function LandingPage() {
   return (
@@ -110,7 +110,9 @@ export default function LandingPage() {
                     <span
                       key={word}
                       className={
-                        ['link-in-bio'].includes(word) ? 'text-[#FF4F17]' : ''
+                        ['personal', 'page'].includes(word)
+                          ? 'text-[#FF4F17]'
+                          : ''
                       }
                     >
                       {word}
@@ -124,9 +126,9 @@ export default function LandingPage() {
                   styles.subtitle
                 )}
               >
-                Glow is the open source link-in-bio tool that integrates with
-                your favorite platforms to keep your page fresh, so that you can
-                focus on creating.
+                Glow is the open source personal page builder that integrates
+                with your favorite platforms to keep your page fresh, so that
+                you can focus on creating.
               </span>
 
               <div className={cn('mt-4 md:mt-8', styles.ctas)}>

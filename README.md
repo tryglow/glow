@@ -1,11 +1,11 @@
 <a href="https://glow.as">
-  <img alt="Glow - The open-source dynamic link-in-bio" src=".github/cover.png">
+  <img alt="Glow - The open-source dynamic personal page builder" src=".github/cover.png">
 </a>
 
 <h3 align="center">Glow</h3>
 
 <p align="center">
-    An open-source dynamic link-in-bio
+    An open-source dynamic personal page builder.
     <br />
     <br />
     <a href="#hello"><strong>Introduction</strong></a> ·
@@ -18,7 +18,7 @@
 
 ## Hello
 
-Glow is an open-source dynamic link-in-bio tool.
+Glow is an open-source dynamic personal page builder.
 
 ## Tech Stack
 
