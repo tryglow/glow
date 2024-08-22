@@ -1,11 +1,15 @@
 import { ArrowRightIcon, ArrowUpRightIcon } from '@heroicons/react/20/solid';
 import clsx from 'clsx';
+import { getServerSession } from 'next-auth';
 import Image from 'next/image';
 import Link from 'next/link';
+import { redirect } from 'next/navigation';
 import { ReactNode } from 'react';
 
 import { LoginWidget } from '@/app/components/LoginWidget';
 
+import { authOptions } from '@/lib/auth';
+import prisma from '@/lib/prisma';
 import { cn } from '@/lib/utils';
 
 import { Button } from '@/components/ui/button';
@@ -91,7 +95,35 @@ const featuredProfiles: {
 
 const title = ['Your', 'personal', 'page', 'that', 'is', 'always', 'current.'];
 
-export default function LandingPage() {
+const fetchUserAndPages = async () => {
+  const session = await getServerSession(authOptions);
+
+  const user = session?.user;
+
+  const pages = await prisma.page.findMany({
+    where: {
+      userId: user?.id,
+    },
+    orderBy: {
+      createdAt: 'asc',
+    },
+  });
+
+  return {
+    user,
+    pages,
+  };
+};
+
+export default async function LandingPage() {
+  const { user, pages } = await fetchUserAndPages();
+
+  const loggedInUserRedirect = user && pages[0] ? `/${pages[0].slug}` : '/new';
+
+  if (user) {
+    redirect(loggedInUserRedirect);
+  }
+
   return (
     <div className="min-h-screen">
       <ShowLoginAlert />

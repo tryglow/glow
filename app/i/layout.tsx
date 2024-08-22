@@ -1,6 +1,5 @@
 import { getServerSession } from 'next-auth';
 import Link from 'next/link';
-import { redirect } from 'next/navigation';
 import { ReactNode } from 'react';
 
 import { authOptions } from '@/lib/auth';
@@ -40,10 +39,6 @@ export default async function IPageLayout({ children }: Props) {
   const { user, pages } = await fetchUserAndPages();
 
   const loggedInUserRedirect = user && pages[0] ? `/${pages[0].slug}` : '/new';
-
-  if (user) {
-    redirect(loggedInUserRedirect);
-  }
 
   return (
     <>
