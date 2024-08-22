@@ -49,7 +49,17 @@ export default function MarketingFooter() {
             ))}
           </div>
           <p className="mt-8 text-xs leading-5 text-gray-500 md:order-1 md:mt-0">
-            &copy; 2024 Glow
+            &copy; 2024 Glow -{' '}
+            <Link
+              href="/i/privacy"
+              className="text-gray-400 hover:text-gray-500"
+            >
+              Privacy
+            </Link>
+            {' - '}
+            <Link href="/i/terms" className="text-gray-400 hover:text-gray-500">
+              Terms
+            </Link>
           </p>
         </div>
       </Container>
