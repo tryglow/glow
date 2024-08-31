@@ -115,13 +115,22 @@ const fetchUserAndPages = async () => {
   };
 };
 
-export default async function LandingPage() {
-  const { user, pages } = await fetchUserAndPages();
+export default async function LandingPage({
+  searchParams,
+}: {
+  searchParams: { force: string };
+}) {
+  const { force } = searchParams;
 
-  const loggedInUserRedirect = user && pages[0] ? `/${pages[0].slug}` : '/new';
+  if (!force) {
+    const { user, pages } = await fetchUserAndPages();
 
-  if (user) {
-    redirect(loggedInUserRedirect);
+    const loggedInUserRedirect =
+      user && pages[0] ? `/${pages[0].slug}` : '/new';
+
+    if (user) {
+      redirect(loggedInUserRedirect);
+    }
   }
 
   return (
