@@ -1,6 +1,7 @@
 'use client';
 
 import { signIn } from 'next-auth/react';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { FormEvent, useState } from 'react';
 
@@ -61,6 +62,10 @@ export default function TestUserPrivateLogin() {
         </label>
         <Button type="submit">Login</Button>
       </form>
+      <div className="flex flex-row gap-2 mt-2 text-sm text-gray-500">
+        <Link href="/i/privacy">Privacy Policy</Link>
+        <Link href="/i/terms">Terms of Service</Link>
+      </div>
     </div>
   );
 }
