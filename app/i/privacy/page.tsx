@@ -9,7 +9,7 @@ export default function LegalPrivacyPage() {
           Privacy Policy
         </h1>
         <p className="mt-6 text-xl leading-8">
-          Last updated: January 17th 2024
+          Last updated: September 1st 2024
         </p>
         <div className="mt-10 max-w-2xl prose">
           <h2>1. Introduction</h2>
@@ -91,12 +91,18 @@ export default function LegalPrivacyPage() {
             children under the age of 13. If you become aware that a child has
             provided us with personal information, please contact us.
           </p>
-          <h2>9. Changes to This Privacy Policy</h2>
+          <h2>9. Deleting your data</h2>
+          <p>
+            You can request your account and all data to be deleted by
+            contacting as at support@glow.as. Please include your email address
+            that you used to register for the Web App.
+          </p>
+          <h2>10. Changes to This Privacy Policy</h2>
           <p>
             We may update our Privacy Policy from time to time. We will notify
             you of any changes by posting the new Privacy Policy on this page.
           </p>
-          <h2>10. Contact Us</h2>
+          <h2>11. Contact Us</h2>
           <p>
             If you have any questions or suggestions about our Privacy Policy,
             do not hesitate to contact us at support@glow.as
