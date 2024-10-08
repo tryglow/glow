@@ -1,11 +1,10 @@
-import { CheckIcon } from '@heroicons/react/24/outline';
 import { getServerSession } from 'next-auth';
 
 import { authOptions } from '@/lib/auth';
 
 import { Button } from '@/components/ui/button';
 
-import { LoginWidget } from '../components/LoginWidget';
+import { LoginWidget } from '../../components/LoginWidget';
 
 export default async function NotFoundPage() {
   const session = await getServerSession(authOptions);

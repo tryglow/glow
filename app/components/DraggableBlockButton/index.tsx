@@ -19,7 +19,7 @@ export const config: Record<
   header: {
     title: 'Header',
     label: 'A primary title and optional subtitle',
-    icon: '/ui/type-header.svg',
+    icon: '/assets/ui/type-header.svg',
     drag: {
       w: 12,
       h: 6,
@@ -28,7 +28,7 @@ export const config: Record<
   content: {
     title: 'Content',
     label: 'A block of text',
-    icon: '/ui/type-content.svg',
+    icon: '/assets/ui/type-content.svg',
     drag: {
       w: 12,
       h: 6,
@@ -37,7 +37,7 @@ export const config: Record<
   image: {
     title: 'Image',
     label: 'Nothing more, nothing less',
-    icon: '/ui/type-image.svg',
+    icon: '/assets/ui/type-image.svg',
     drag: {
       w: 8,
       h: 8,
@@ -46,7 +46,7 @@ export const config: Record<
   stack: {
     title: 'Stack',
     label: 'A list of items',
-    icon: '/ui/type-stack.svg',
+    icon: '/assets/ui/type-stack.svg',
     drag: {
       w: 6,
       h: 8,
@@ -55,7 +55,7 @@ export const config: Record<
   'github-commits-this-month': {
     title: 'Github Commits (month)',
     label: 'The number of commits this month for a user',
-    icon: '/ui/type-github-commits-this-month.svg',
+    icon: '/assets/ui/type-github-commits-this-month.svg',
     drag: {
       w: 6,
       h: 6,
@@ -64,7 +64,7 @@ export const config: Record<
   'spotify-playing-now': {
     title: 'Spotify Playing Now',
     label: 'The song you are currently playing on Spotify',
-    icon: '/ui/type-spotify-playing-now.svg',
+    icon: '/assets/ui/type-spotify-playing-now.svg',
     drag: {
       w: 12,
       h: 4,
@@ -73,7 +73,7 @@ export const config: Record<
   'spotify-embed': {
     title: 'Spotify Embed',
     label: 'Embed a Spotify playlist or song',
-    icon: '/ui/type-spotify-playing-now.svg',
+    icon: '/assets/ui/type-spotify-playing-now.svg',
     drag: {
       w: 12,
       h: 4,
@@ -82,7 +82,7 @@ export const config: Record<
   'instagram-latest-post': {
     title: 'Latest Instagram post',
     label: 'The latest post from your connected Instagram account',
-    icon: '/ui/type-instagram-latest-post.svg',
+    icon: '/assets/ui/type-instagram-latest-post.svg',
     drag: {
       w: 12,
       h: 4,
@@ -91,7 +91,7 @@ export const config: Record<
   map: {
     title: 'Map',
     label: 'A map with a pin',
-    icon: '/ui/type-map.svg',
+    icon: '/assets/ui/type-map.svg',
     drag: {
       w: 12,
       h: 6,
@@ -100,7 +100,7 @@ export const config: Record<
   'link-box': {
     title: 'Link Box',
     label: 'Display a nicely formatted link',
-    icon: '/ui/type-link-box.svg',
+    icon: '/assets/ui/type-link-box.svg',
     drag: {
       w: 12,
       h: 2,
@@ -109,7 +109,7 @@ export const config: Record<
   'link-bar': {
     title: 'Link Bar',
     label: 'A row of links to social media',
-    icon: '/ui/type-link-bar.svg',
+    icon: '/assets/ui/type-link-bar.svg',
     drag: {
       w: 12,
       h: 2,
@@ -118,7 +118,7 @@ export const config: Record<
   'waitlist-email': {
     title: 'GetWaitlist Email',
     label: 'A form to collect emails for your getwaitlist.com project',
-    icon: '/ui/type-waitlist-email.svg',
+    icon: '/assets/ui/type-waitlist-email.svg',
     drag: {
       w: 12,
       h: 5,
@@ -154,7 +154,12 @@ export function DraggableBlockButton({ type }: Props) {
         });
       }}
     >
-      <img src="/ui/drag.svg" className="mr-3" width={9} height={15}></img>
+      <img
+        src="/assets/ui/drag.svg"
+        className="mr-3"
+        width={9}
+        height={15}
+      ></img>
       <div className="w-9 h-9 bg-stone-100 rounded-md flex items-center mr-3 flex-shrink-0">
         <img src={blockConfig.icon} className="w-9 h-9" />
       </div>

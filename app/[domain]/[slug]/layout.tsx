@@ -1,13 +1,13 @@
 import { Theme } from '@prisma/client';
 import { getServerSession } from 'next-auth';
 
+import { LoginWidget } from '@/app/components/LoginWidget';
+
 import { authOptions } from '@/lib/auth';
 import prisma from '@/lib/prisma';
 import { defaultThemeSeeds } from '@/lib/theme';
 
 import { Button } from '@/components/ui/button';
-
-import { LoginWidget } from '../components/LoginWidget';
 
 export const dynamic = 'force-dynamic';
 
@@ -21,11 +21,11 @@ const fetchUserLoggedinStatus = async () => {
   };
 };
 
-const fetchPageTheme = (slug: string) => {
+const fetchPageTheme = (slug: string, domain: string) => {
+  const useSlug =
+    decodeURIComponent(domain) === process.env.NEXT_PUBLIC_ROOT_DOMAIN;
   return prisma.page.findUnique({
-    where: {
-      slug,
-    },
+    where: useSlug ? { slug } : { customDomain: decodeURIComponent(domain) },
     select: {
       theme: true,
       backgroundImage: true,
@@ -40,13 +40,14 @@ export default async function PageLayout({
   children: React.ReactNode;
   params: {
     slug: string;
+    domain: string;
   };
 }) {
   const { user } = await fetchUserLoggedinStatus();
 
   let renderTheme: Partial<Theme> = defaultThemeSeeds.Default;
 
-  const page = await fetchPageTheme(params.slug);
+  const page = await fetchPageTheme(params.slug, params.domain);
 
   if (page?.theme?.id) {
     renderTheme = page.theme;

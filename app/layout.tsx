@@ -20,7 +20,7 @@ export const metadata: Metadata = {
   openGraph: {
     images: [
       {
-        url: 'https://glow.as/og.png',
+        url: 'https://glow.as/assets/og.png',
       },
     ],
     type: 'website',
@@ -33,7 +33,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     site: '@tryglow',
     creator: '@tryglow',
-    images: 'https://glow.as/og.png',
+    images: 'https://glow.as/assets/og.png',
   },
 };
 

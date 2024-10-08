@@ -67,6 +67,7 @@ model Page {
   themeId         String?
   theme           Theme?    @relation(fields: [themeId], references: [id])
   backgroundImage String?
+  customDomain    String?   @unique
 }
 
 model Block {

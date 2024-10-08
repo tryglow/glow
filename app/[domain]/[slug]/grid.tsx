@@ -4,10 +4,10 @@ import { Page } from '@prisma/client';
 import { ReactNode, useMemo } from 'react';
 import { Layout, Responsive, ResponsiveProps } from 'react-grid-layout';
 
-import { EditWrapper } from '../components/EditWrapper';
-import { GlobalNavigation } from '../components/GlobalNavigation';
-import { WidthProvideRGL } from '../components/WidthProvider';
-import { EditModeContextProvider } from '../contexts/Edit';
+import { EditWrapper } from '../../components/EditWrapper';
+import { GlobalNavigation } from '../../components/GlobalNavigation';
+import { WidthProvideRGL } from '../../components/WidthProvider';
+import { EditModeContextProvider } from '../../contexts/Edit';
 
 export interface PageConfig {
   sm: Layout[];

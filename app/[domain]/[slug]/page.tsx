@@ -9,7 +9,7 @@ import { renderBlock } from '@/lib/blocks/ui';
 import prisma from '@/lib/prisma';
 import { isUserAgentMobile } from '@/lib/user-agent';
 
-import { GlowProviders } from '../components/GlowProviders';
+import { GlowProviders } from '../../components/GlowProviders';
 import Grid, { PageConfig } from './grid';
 
 export const dynamic = 'force-dynamic';
@@ -19,7 +19,10 @@ export const dynamicParams = true;
 // export const revalidate = 60;
 // export const dynamicParams = true;
 
-const fetchData = async (slug: string) => {
+const fetchData = async (slug: string, domain: string) => {
+  const useSlug =
+    decodeURIComponent(domain) === process.env.NEXT_PUBLIC_ROOT_DOMAIN;
+
   let isEditMode = false;
 
   const session = await getServerSession(authOptions);
@@ -27,9 +30,7 @@ const fetchData = async (slug: string) => {
   const user = session?.user;
 
   const data = await prisma.page.findUnique({
-    where: {
-      slug,
-    },
+    where: useSlug ? { slug } : { customDomain: decodeURIComponent(domain) },
     include: {
       blocks: true,
       user: !!user,
@@ -92,12 +93,10 @@ const fetchUserInfo = async () => {
 };
 
 export async function generateMetadata(
-  { params }: { params: { slug: string } },
+  { params }: { params: { slug: string; domain: string } },
   parent: ResolvingMetadata
 ): Promise<Metadata> {
-  const pageSlug = params.slug;
-
-  const { data } = await fetchData(pageSlug);
+  const { data } = await fetchData(params.slug, params.domain);
 
   const parentMeta = await parent;
 
@@ -109,6 +108,7 @@ export async function generateMetadata(
 
 interface Params {
   slug: string;
+  domain: string;
 }
 
 export type InitialDataUsersIntegrations = Pick<
@@ -117,9 +117,8 @@ export type InitialDataUsersIntegrations = Pick<
 >[];
 
 export default async function Page({ params }: { params: Params }) {
-  const { slug } = params;
   const { data, layout, integrations, isEditMode, isLoggedIn } =
-    await fetchData(slug);
+    await fetchData(params.slug, params.domain);
 
   const headersList = headers();
 
@@ -131,7 +130,7 @@ export default async function Page({ params }: { params: Params }) {
   const pageLayout = layout as unknown as PageConfig;
 
   const initialData: Record<string, any> = {
-    [`/api/pages/${slug}/layout`]: layout,
+    [`/api/pages/${params.slug}/layout`]: layout,
   };
 
   if (isEditMode) {
