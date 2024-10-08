@@ -63,7 +63,7 @@ export default async function PageLayout({
               variant="default"
               className="fixed z-50 top-3 right-3 font-bold flex"
             >
-              Get started
+              Built with Glow
             </Button>
           }
         />
