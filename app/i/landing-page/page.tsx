@@ -427,7 +427,7 @@ export default async function LandingPage({
               <Image
                 width={831}
                 height={831}
-                src="/blocks.webp"
+                src="/assets/blocks.webp"
                 className="hidden md:block flex-1 h-full w-full object-cover"
                 alt=""
               />
