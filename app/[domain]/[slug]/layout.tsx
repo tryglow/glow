@@ -1,5 +1,6 @@
 import { Theme } from '@prisma/client';
 import { getServerSession } from 'next-auth';
+import Link from 'next/link';
 
 import { LoginWidget } from '@/app/components/LoginWidget';
 
@@ -56,17 +57,13 @@ export default async function PageLayout({
   return (
     <>
       {!user && (
-        <LoginWidget
-          isSignup
-          trigger={
-            <Button
-              variant="default"
-              className="fixed z-50 top-3 right-3 font-bold flex"
-            >
-              Built with Glow
-            </Button>
-          }
-        />
+        <Button
+          variant="default"
+          asChild
+          className="fixed z-50 top-3 right-3 font-bold flex"
+        >
+          <Link href="https://glow.as?referrer=domain">Built with Glow</Link>
+        </Button>
       )}
 
       <div className="w-full max-w-2xl mx-auto px-3 md:px-6 gap-3 pt-16 pb-8">
