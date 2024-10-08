@@ -62,9 +62,7 @@ export default async function PageLayout({
           asChild
           className="fixed z-50 top-3 right-3 font-bold flex"
         >
-          <Link href={`https://glow.as?referrer=${params.domain}`}>
-            Built with Glow
-          </Link>
+          <Link href="https://glow.as">Built with Glow</Link>
         </Button>
       )}
 
