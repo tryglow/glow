@@ -2,7 +2,7 @@ import { Integration } from '@prisma/client';
 import type { Metadata, ResolvingMetadata } from 'next';
 import { getServerSession } from 'next-auth';
 import { headers } from 'next/headers';
-import { notFound } from 'next/navigation';
+import { notFound, redirect } from 'next/navigation';
 
 import { authOptions } from '@/lib/auth';
 import { renderBlock } from '@/lib/blocks/ui';
@@ -119,6 +119,14 @@ export type InitialDataUsersIntegrations = Pick<
 export default async function Page({ params }: { params: Params }) {
   const { data, layout, integrations, isEditMode, isLoggedIn } =
     await fetchData(params.slug, params.domain);
+
+  if (
+    data.customDomain &&
+    data.customDomain !== decodeURIComponent(params.domain) &&
+    !isEditMode
+  ) {
+    redirect(`//${data.customDomain}`);
+  }
 
   const headersList = headers();
 
