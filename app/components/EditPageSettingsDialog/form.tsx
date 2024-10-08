@@ -125,6 +125,17 @@ export function EditPageSettings({ onCancel, initialValues, pageId }: Props) {
                 id="pageSlug"
                 error={errors.pageSlug}
               />
+              <div className="px-3 py-4 rounded-lg ring-1 ring-black/10 relative bg-[#fffbec] flex flex-col gap-1">
+                <span className="text-sm text-black font-semibold">
+                  Custom Domain 👀
+                </span>
+                <span className="text-sm text-black">
+                  Add a custom domain to your page for a one-time fee of{' '}
+                  <del>$10</del> <ins className="font-semibold">$5</ins>. This
+                  feature is still in beta, and you can enable it by reaching
+                  out to us at <a href="mailto:team@glow.as">team@glow.as</a>.
+                </span>
+              </div>
             </div>
             <div className="mt-4">
               <FormField
