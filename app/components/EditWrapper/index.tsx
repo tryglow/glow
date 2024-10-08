@@ -19,7 +19,7 @@ import {
 import useSWR from 'swr';
 import { v4 as uuidv4 } from 'uuid';
 
-import { PageConfig } from '@/app/[slug]/grid';
+import { PageConfig } from '@/app/[domain]/[slug]/grid';
 
 import { cn } from '@/lib/utils';
 

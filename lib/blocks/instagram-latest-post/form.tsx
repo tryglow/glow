@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import useSWR from 'swr';
 
-import { InitialDataUsersIntegrations } from '@/app/[slug]/page';
+import { InitialDataUsersIntegrations } from '@/app/[domain]/[slug]/page';
 
 import { Button } from '@/components/ui/button';
 

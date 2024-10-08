@@ -5,7 +5,7 @@ import { useParams, useRouter } from 'next/navigation';
 import { useState } from 'react';
 import useSWR from 'swr';
 
-import { PageConfig } from '@/app/[slug]/grid';
+import { PageConfig } from '@/app/[domain]/[slug]/grid';
 
 import { Blocks } from '@/lib/blocks/types';
 
