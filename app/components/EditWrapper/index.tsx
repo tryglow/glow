@@ -85,7 +85,7 @@ export function EditWrapper({ children, layoutProps }: Props) {
   const handleAddNewBlock = async (
     newLayout: Layout[],
     layoutItem: any,
-    _event: Event,
+    _event: Event | null,
     isMobile?: boolean
   ) => {
     // Get the last item from the newLayout
