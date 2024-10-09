@@ -108,6 +108,7 @@ export function EditBlockToolbar({ blockId, blockType }: Props) {
           type="button"
           className="relative -ml-px inline-flex items-center rounded-r-full bg-white px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-stone-100 focus:z-10"
           onClick={() => handleDeleteBlock(blockId)}
+          onTouchStart={() => handleDeleteBlock(blockId)}
         >
           <TrashIcon width={16} height={16} className="text-slate-700" />
         </button>

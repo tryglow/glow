@@ -153,17 +153,6 @@ export function EditWrapper({ children, layoutProps }: Props) {
     }
 
     /**
-     * We don't support editing on smaller breakpoints yet, so we can skip saving
-     * the layout if the user is on a smaller breakpoint. This also fixes an issue
-     * where the large layout is overwritten if the user resizes their window
-     * whilst in edit mode.
-     */
-
-    // if (window.innerWidth <= 505) {
-    //   return;
-    // }
-
-    /**
      * handleLayoutChange is called quite often, so we need to make sure that
      * the layout has actually changed before we send a request to the server.
      *

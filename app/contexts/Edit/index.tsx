@@ -1,6 +1,12 @@
 'use client';
 
-import { ReactNode, createContext, useContext, useState } from 'react';
+import {
+  ReactNode,
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+} from 'react';
 
 type EditLayoutModes = 'desktop' | 'mobile';
 
@@ -45,6 +51,27 @@ export const EditModeContextProvider: React.FC<{ children: ReactNode }> = ({
     nextToAddBlock,
     setNextToAddBlock,
   };
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth > 505) {
+        setEditLayoutMode('desktop');
+      } else {
+        setEditLayoutMode('mobile');
+      }
+    };
+
+    // Set initial layout mode
+    handleResize();
+
+    // Add event listener
+    window.addEventListener('resize', handleResize);
+
+    // Clean up
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
 
   return (
     <EditModeContext.Provider value={contextValue}>
