@@ -49,6 +49,8 @@ export function EditForm({
             name="description"
             id="description"
             error={errors.description}
+            isTextArea
+            fieldType="textarea"
           />
 
           <FormFileUpload

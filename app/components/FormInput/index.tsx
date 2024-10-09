@@ -12,7 +12,7 @@ interface Props {
   hasError?: boolean;
   ariaDescribedby?: string;
   ariaInvalid?: 'true' | 'false';
-  isSelect?: boolean;
+  fieldType?: 'input' | 'textarea' | 'select';
   children?: ReactNode;
   prefix?: string;
 }
@@ -25,12 +25,12 @@ export function FormInput({
   type = 'text',
   ariaInvalid,
   ariaDescribedby,
-  isSelect,
+  fieldType = 'input',
   children,
 }: Props) {
   return (
     <Field
-      as={isSelect ? 'select' : 'input'}
+      as={fieldType}
       name={name}
       placeholder={placeholder}
       type={type}
@@ -43,7 +43,7 @@ export function FormInput({
       aria-invalid={ariaInvalid}
       aria-describedby={ariaDescribedby}
     >
-      {isSelect ? children : undefined}
+      {fieldType === 'select' ? children : undefined}
     </Field>
   );
 }
@@ -54,9 +54,9 @@ export function FormInputWithPrefix({
   initialValue,
   hasError,
   type = 'text',
+  fieldType = 'input',
   ariaInvalid,
   ariaDescribedby,
-  isSelect,
   children,
   prefix,
 }: Props) {
@@ -66,7 +66,7 @@ export function FormInputWithPrefix({
         {prefix}
       </span>
       <Field
-        as={isSelect ? 'select' : 'input'}
+        as={fieldType}
         name={name}
         placeholder={placeholder}
         type={type}
@@ -74,7 +74,7 @@ export function FormInputWithPrefix({
         aria-invalid={ariaInvalid}
         aria-describedby={ariaDescribedby}
       >
-        {isSelect ? children : undefined}
+        {fieldType === 'select' ? children : undefined}
       </Field>
     </div>
   );

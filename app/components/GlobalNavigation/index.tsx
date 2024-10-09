@@ -56,7 +56,7 @@ export function GlobalNavigation({ userPages, isEditMode }: Props) {
                     onClick={() => setShowEditPageSettingsDialog(true)}
                   >
                     <Cog6ToothIcon width={20} height={20} className="mr-2" />
-                    Page Settings
+                    <span className="hidden md:block">Page Settings</span>
                   </Button>
                 </nav>
               )}

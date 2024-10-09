@@ -149,7 +149,7 @@ export function EditPageSettings({ onCancel, initialValues, pageId }: Props) {
 
             <div className="mt-4">
               <FormField
-                isSelect
+                fieldType="select"
                 label="Page theme (experimental)"
                 name="themeId"
                 placeholder=""

@@ -93,12 +93,14 @@ export function EditWrapper({ children, layoutProps }: Props) {
 
     const newItemId = uuidv4();
 
-    const newItemConfig = {
+    const newItemConfig: Layout = {
       h: isMobile ? layoutItem.h : draggingItem.h,
       i: newItemId,
       w: isMobile ? layoutItem.w : draggingItem.w,
       x: isMobile ? 0 : lastItem.x,
       y: isMobile ? Infinity : lastItem.y,
+      minW: 4,
+      minH: 2,
     };
 
     startTransition(async () => {
@@ -267,13 +269,14 @@ export function EditWrapper({ children, layoutProps }: Props) {
     droppingItem: draggingItem,
     draggableCancel: '.noDrag',
     useCSSTransforms: true,
+    resizeHandles: ['se'],
   };
 
   return (
     <>
       <div
         className={cn(
-          'min-h-screen bg-black/0 transition-colors hover:bg-black/5 w-full mx-auto',
+          'min-h-screen bg-black/0 transition-colors hover:bg-black/5 w-full mx-auto pb-24 md:pb-0',
           editLayoutMode === 'mobile' ? 'max-w-[400px]' : 'max-w-[768px]'
         )}
       >

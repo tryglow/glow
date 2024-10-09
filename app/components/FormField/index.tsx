@@ -10,15 +10,16 @@ interface Props {
   id: string;
   label: string;
   placeholder?: string;
+  fieldType?: 'input' | 'textarea' | 'select';
   type?: 'text' | 'email';
   error?: string | undefined;
-  isSelect?: boolean;
+  isTextArea?: boolean;
   children?: ReactNode;
   withPrefix?: string;
 }
 
 export function FormField({
-  isSelect = false,
+  fieldType = 'input',
   children,
   name,
   label,
@@ -34,7 +35,7 @@ export function FormField({
       <Label htmlFor={name}>{label}</Label>
       <div className="relative mt-1 rounded-md shadow-sm">
         <InputComponent
-          isSelect={isSelect}
+          fieldType={fieldType}
           type={type}
           name={name}
           id={id}
