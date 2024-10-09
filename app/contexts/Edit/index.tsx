@@ -7,6 +7,8 @@ type EditLayoutModes = 'desktop' | 'mobile';
 type EditModeContextValue = {
   draggingItem: any;
   setDraggingItem: (newDraggingItem: any) => void;
+  setNextToAddBlock: (newNextToAddBlock: any) => void;
+  nextToAddBlock: any;
   editLayoutMode: EditLayoutModes;
   setEditLayoutMode: (newLayoutMode: any) => void;
 };
@@ -31,6 +33,7 @@ export const EditModeContextProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
   const [draggingItem, setDraggingItem] = useState();
+  const [nextToAddBlock, setNextToAddBlock] = useState();
   const [editLayoutMode, setEditLayoutMode] =
     useState<EditLayoutModes>('desktop');
 
@@ -39,6 +42,8 @@ export const EditModeContextProvider: React.FC<{ children: ReactNode }> = ({
     setDraggingItem,
     editLayoutMode,
     setEditLayoutMode,
+    nextToAddBlock,
+    setNextToAddBlock,
   };
 
   return (

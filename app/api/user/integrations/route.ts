@@ -24,6 +24,7 @@ export async function GET(req: Request) {
     },
     where: {
       userId: user.id,
+      deletedAt: null,
     },
   });
 

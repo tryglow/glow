@@ -1,9 +1,11 @@
 import Link from 'next/link';
-import useSWR from 'swr';
+import { useState } from 'react';
+import useSWR, { useSWRConfig } from 'swr';
 
 import { InitialDataUsersIntegrations } from '@/app/[domain]/[slug]/page';
 
 import { Button } from '@/components/ui/button';
+import { toast } from '@/components/ui/use-toast';
 
 import { EditFormProps } from '../types';
 
@@ -21,13 +23,41 @@ const SpotifyLogo = () => {
 };
 
 export function EditForm({}: EditFormProps<{}>) {
+  const [showConfirmDisconnect, setShowConfirmDisconnect] = useState(false);
   const { data: usersIntegrations } = useSWR<InitialDataUsersIntegrations>(
     `/api/user/integrations`
   );
 
+  const { mutate } = useSWRConfig();
+
   const spotifyIntegrations = usersIntegrations?.filter(
     (integration) => integration.type === 'spotify'
   );
+
+  const handleDisconnect = async () => {
+    if (!spotifyIntegrations || spotifyIntegrations?.length === 0) {
+      return;
+    }
+
+    try {
+      const response = await fetch('/api/services/disconnect', {
+        method: 'POST',
+        body: JSON.stringify({
+          integrationId: spotifyIntegrations[0].id,
+        }),
+      });
+
+      if (response.ok) {
+        toast({
+          title: 'Integration disconnected',
+        });
+
+        mutate('/api/user/integrations');
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   if (!spotifyIntegrations || spotifyIntegrations?.length === 0) {
     return (
@@ -64,6 +94,23 @@ export function EditForm({}: EditFormProps<{}>) {
         Your Spotify account was connected on{' '}
         {new Date(connectedSince).toLocaleDateString()}
       </span>
+
+      {!showConfirmDisconnect && (
+        <Button onClick={() => setShowConfirmDisconnect(true)} className="mt-4">
+          Disconnect Account
+        </Button>
+      )}
+      {showConfirmDisconnect && (
+        <div className="flex gap-2 mt-4">
+          <Button onClick={handleDisconnect}>Are you sure?</Button>
+          <Button
+            variant="outline"
+            onClick={() => setShowConfirmDisconnect(false)}
+          >
+            Cancel
+          </Button>
+        </div>
+      )}
     </div>
   );
 }

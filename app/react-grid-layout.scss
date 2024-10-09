@@ -9,13 +9,17 @@
   transform: translate(1px, 0);
   will-change: position, width, height, transform;
 
-  @screen md {
+  @screen sm {
     transform: unset;
-  }
 
-  &:hover {
     .block-toolbar {
-      opacity: 1;
+      opacity: 0;
+    }
+
+    &:hover {
+      .block-toolbar {
+        opacity: 1;
+      }
     }
   }
 

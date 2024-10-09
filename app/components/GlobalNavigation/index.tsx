@@ -31,7 +31,7 @@ export function GlobalNavigation({ userPages, isEditMode }: Props) {
       <div className="flex-col flex fixed w-full left-0 top-0 z-50">
         <div className="border-b bg-white">
           <div className="grid grid-cols-2 md:grid-cols-3 h-16 items-center px-4">
-            <div className="flex items-center">
+            <div className="flex items-center relative z-10">
               <Link href="/?force=true">
                 <svg
                   viewBox="0 0 321 321"
@@ -56,7 +56,7 @@ export function GlobalNavigation({ userPages, isEditMode }: Props) {
                     onClick={() => setShowEditPageSettingsDialog(true)}
                   >
                     <Cog6ToothIcon width={20} height={20} className="mr-2" />
-                    Settings
+                    Page Settings
                   </Button>
                 </nav>
               )}

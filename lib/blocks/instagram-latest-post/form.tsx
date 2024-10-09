@@ -1,9 +1,11 @@
 import Link from 'next/link';
-import useSWR from 'swr';
+import { useState } from 'react';
+import useSWR, { useSWRConfig } from 'swr';
 
 import { InitialDataUsersIntegrations } from '@/app/[domain]/[slug]/page';
 
 import { Button } from '@/components/ui/button';
+import { toast } from '@/components/ui/use-toast';
 
 const InstagramLogo = () => {
   return (
@@ -67,13 +69,46 @@ const InstagramLogo = () => {
 };
 
 export function EditForm() {
+  const [showConfirmDisconnect, setShowConfirmDisconnect] = useState(false);
   const { data: usersIntegrations } = useSWR<InitialDataUsersIntegrations>(
-    `/api/user/integrations`
+    '/api/user/integrations'
   );
+
+  const { mutate } = useSWRConfig();
 
   const instagramIntegrations = usersIntegrations?.filter(
     (integration) => integration.type === 'instagram'
   );
+
+  const handleDisconnect = async () => {
+    console.log(instagramIntegrations);
+    if (!instagramIntegrations || instagramIntegrations?.length === 0) {
+      return;
+    }
+
+    try {
+      const response = await fetch('/api/services/disconnect', {
+        method: 'POST',
+        body: JSON.stringify({
+          integrationId: instagramIntegrations[0].id,
+        }),
+      });
+
+      if (response.ok) {
+        toast({
+          title: 'Integration disconnected',
+        });
+
+        mutate('/api/user/integrations');
+      }
+    } catch (error) {
+      console.log(error);
+      toast({
+        title: 'Error disconnecting integration',
+        description: 'Please try again later.',
+      });
+    }
+  };
 
   if (!instagramIntegrations || instagramIntegrations?.length === 0) {
     return (
@@ -110,6 +145,23 @@ export function EditForm() {
         Your Instagram account was connected on{' '}
         {new Date(connectedSince).toLocaleDateString()}
       </span>
+
+      {!showConfirmDisconnect && (
+        <Button onClick={() => setShowConfirmDisconnect(true)} className="mt-4">
+          Disconnect Account
+        </Button>
+      )}
+      {showConfirmDisconnect && (
+        <div className="flex gap-2 mt-4">
+          <Button onClick={handleDisconnect}>Are you sure?</Button>
+          <Button
+            variant="outline"
+            onClick={() => setShowConfirmDisconnect(false)}
+          >
+            Cancel
+          </Button>
+        </div>
+      )}
     </div>
   );
 }

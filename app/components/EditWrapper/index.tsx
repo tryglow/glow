@@ -41,7 +41,8 @@ interface Props {
 }
 
 export function EditWrapper({ children, layoutProps }: Props) {
-  const { draggingItem, editLayoutMode } = useEditModeContext();
+  const { draggingItem, editLayoutMode, nextToAddBlock, setNextToAddBlock } =
+    useEditModeContext();
   const router = useRouter();
   const params = useParams();
   const { toast } = useToast();
@@ -74,10 +75,18 @@ export function EditWrapper({ children, layoutProps }: Props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [layout]);
 
-  const onDrop = async (
+  useEffect(() => {
+    console.log('nextToAddBlock', nextToAddBlock);
+    if (nextToAddBlock) {
+      handleAddNewBlock([], nextToAddBlock, null, true);
+    }
+  }, [nextToAddBlock]);
+
+  const handleAddNewBlock = async (
     newLayout: Layout[],
     layoutItem: any,
-    _event: Event
+    _event: Event,
+    isMobile?: boolean
   ) => {
     // Get the last item from the newLayout
     const lastItem = layoutItem;
@@ -85,11 +94,11 @@ export function EditWrapper({ children, layoutProps }: Props) {
     const newItemId = uuidv4();
 
     const newItemConfig = {
-      h: draggingItem.h,
+      h: isMobile ? layoutItem.h : draggingItem.h,
       i: newItemId,
-      w: draggingItem.w,
-      x: lastItem.x,
-      y: lastItem.y,
+      w: isMobile ? layoutItem.w : draggingItem.w,
+      x: isMobile ? 0 : lastItem.x,
+      y: isMobile ? Infinity : lastItem.y,
     };
 
     startTransition(async () => {
@@ -121,7 +130,7 @@ export function EditWrapper({ children, layoutProps }: Props) {
         body: JSON.stringify({
           block: {
             id: newItemId,
-            type: draggingItem.type,
+            type: isMobile ? layoutItem.type : draggingItem.type,
           },
           pageSlug: params.slug,
         }),
@@ -148,9 +157,9 @@ export function EditWrapper({ children, layoutProps }: Props) {
      * whilst in edit mode.
      */
 
-    if (window.innerWidth <= 505) {
-      return;
-    }
+    // if (window.innerWidth <= 505) {
+    //   return;
+    // }
 
     /**
      * handleLayoutChange is called quite often, so we need to make sure that
@@ -253,7 +262,7 @@ export function EditWrapper({ children, layoutProps }: Props) {
 
   const editableLayoutProps: ResponsiveProps = {
     ...layoutProps,
-    onDrop,
+    onDrop: handleAddNewBlock,
     onLayoutChange: handleLayoutChange,
     droppingItem: draggingItem,
     draggableCancel: '.noDrag',

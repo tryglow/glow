@@ -25,6 +25,8 @@ export function EditPageSettingsDialog({ open, onOpenChange, onClose }: Props) {
   const [pageSettings, setPageSettings] = useState<Partial<Page> | null>(null);
   const params = useParams();
 
+  console.log('edit Page Is Open', open);
+
   useEffect(() => {
     if (!params.slug) return;
 

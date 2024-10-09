@@ -1,4 +1,4 @@
-import { MagnifyingGlassIcon } from '@radix-ui/react-icons';
+import { ChevronLeftIcon, MagnifyingGlassIcon } from '@radix-ui/react-icons';
 import { useEffect, useState } from 'react';
 
 import { Blocks } from '@/lib/blocks/types';
@@ -6,6 +6,7 @@ import { cn } from '@/lib/utils';
 
 import {
   Sheet,
+  SheetClose,
   SheetContent,
   SheetHeader,
   SheetTitle,
@@ -13,13 +14,14 @@ import {
 
 import { DraggableBlockButton } from '../DraggableBlockButton';
 
-const BlockIcon = () => {
+const BlockIcon = ({ className }: { className: string }) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 62 62"
       width={20}
       fill="none"
+      className={className}
     >
       <path
         fill="#000"
@@ -68,47 +70,88 @@ export function BlockSheet() {
   return (
     <>
       <div
-        className="fixed h-screen w-60 bg-gradient-to-r from-transparent to-black/10 right-0 top-0 flex items-center justify-center"
+        className="fixed shadow z-50 bottom-2 left-2 w-[calc(100%_-_1rem)] h-14 bg-white rounded-full flex items-center justify-center md:hidden"
+        onClick={() => setOpen(true)}
+      >
+        <span className="text-stone-900 font-4xl font-bold">+ New Block</span>
+      </div>
+      <div
+        className="hidden md:flex fixed h-screen w-60 bg-gradient-to-r from-transparent to-black/10 right-0 top-0 items-center justify-center"
         onMouseOver={() => setOpen(true)}
         // onMouseLeave={() => setOpen(false)}
       >
         <div className="text-sys-label-primary font-4xl font-bold">
           + New block
         </div>
-        <Sheet open={open} onOpenChange={setOpen}>
-          <SheetContent hideOverlay hideCloseButton className="top-16 border-t">
-            <div className="flex flex-col pb-28 max-h-screen">
-              <SheetHeader className="border-b border-stone-200 pb-2 mb-4">
-                <SheetTitle className="flex items-center gap-2">
-                  <BlockIcon />
-                  Add Blocks
-                </SheetTitle>
-              </SheetHeader>
-
-              <div className="flex items-center border-b mb-3">
-                <MagnifyingGlassIcon className="mr-2 h-4 w-4 shrink-0 opacity-50" />
-                <input
-                  type="text"
-                  className={cn(
-                    'flex h-10 w-full border-0 ring-0 focus:ring-0 rounded-md bg-transparent py-3 text-sm outline-none placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50'
-                  )}
-                  placeholder="Filter blocks"
-                  value={search}
-                  onChange={(e) => setSearch(e.target.value)}
-                />
-              </div>
-
-              <div className="overflow-y-auto overscroll-none">
-                <div className="space-y-3 flex flex-col">
-                  {filteredBlocks.map((block) => {
-                    return <DraggableBlockButton key={block} type={block} />;
-                  })}
-                </div>
-              </div>
-            </div>
-          </SheetContent>
-        </Sheet>
+        <BlockSheetContent
+          open={open}
+          setOpen={setOpen}
+          search={search}
+          setSearch={setSearch}
+          filteredBlocks={filteredBlocks}
+        />
       </div>
     </>
+  );
+}
+
+function BlockSheetContent({
+  open,
+  setOpen,
+  search,
+  setSearch,
+  filteredBlocks,
+}: {
+  open: boolean;
+  setOpen: (open: boolean) => void;
+  search: string;
+  setSearch: (search: string) => void;
+  filteredBlocks: Blocks[];
+}) {
+  return (
+    <Sheet open={open} onOpenChange={setOpen}>
+      <SheetContent hideOverlay hideCloseButton className="top-16 border-t">
+        <div className="flex flex-col pb-28 max-h-screen">
+          <SheetHeader className="border-b border-stone-200 pb-2 mb-4">
+            <SheetTitle className="flex items-center gap-2">
+              <SheetClose className="block md:hidden">
+                <div className="bg-stone-100 rounded-lg w-8 h-8 flex items-center justify-center">
+                  <ChevronLeftIcon className="w-5 h-5" />
+                </div>
+              </SheetClose>
+              <BlockIcon className="hidden md:block" />
+              Add Blocks
+            </SheetTitle>
+          </SheetHeader>
+
+          <div className="flex items-center border-b mb-3">
+            <MagnifyingGlassIcon className="mr-2 h-4 w-4 shrink-0 opacity-50" />
+            <input
+              type="text"
+              className={cn(
+                'flex h-10 w-full border-0 ring-0 focus:ring-0 rounded-md bg-transparent py-3 text-sm outline-none placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50'
+              )}
+              placeholder="Filter blocks"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+            />
+          </div>
+
+          <div className="overflow-y-auto overscroll-none">
+            <div className="space-y-3 flex flex-col">
+              {filteredBlocks.map((block) => {
+                return (
+                  <DraggableBlockButton
+                    key={block}
+                    type={block}
+                    onClose={() => setOpen(false)}
+                  />
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      </SheetContent>
+    </Sheet>
   );
 }

@@ -91,11 +91,16 @@ export function EditBlockToolbar({ blockId, blockType }: Props) {
   };
   return (
     <>
-      <span className="isolate inline-flex rounded-full shadow-md z-40 absolute top-2 right-2 opacity-0 block-toolbar">
+      <span className="isolate inline-flex rounded-full shadow-md z-40 absolute top-2 right-2 block-toolbar">
         <button
           type="button"
           className="relative inline-flex items-center rounded-l-full bg-white px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-stone-100 focus:z-10"
-          onClick={() => setOpen(true)}
+          onTouchStart={() => {
+            setOpen(true);
+          }}
+          onClick={() => {
+            setOpen(true);
+          }}
         >
           <PencilSquareIcon width={16} height={16} className="text-slate-700" />
         </button>

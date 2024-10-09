@@ -34,6 +34,7 @@ export async function GET(request: Request) {
     const existingIntegration = await prisma.integration.findFirst({
       where: {
         userId: session.user.id,
+        deletedAt: null,
         type: 'spotify',
       },
     });
@@ -55,6 +56,7 @@ export async function GET(request: Request) {
       await prisma.integration.update({
         where: {
           id: existingIntegration.id,
+          deletedAt: null,
         },
         data: newData,
       });

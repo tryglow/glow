@@ -1,5 +1,3 @@
-import { HeadObjectCommand } from '@aws-sdk/client-s3';
-
 import { useEditModeContext } from '@/app/contexts/Edit';
 
 import { Blocks } from '@/lib/blocks/types';
@@ -128,40 +126,25 @@ export const config: Record<
 
 interface Props {
   type: Blocks;
+  onClose: () => void;
 }
 
-export function DraggableBlockButton({ type }: Props) {
-  const { setDraggingItem } = useEditModeContext();
+export function DraggableBlockButton({ type, onClose }: Props) {
+  const { setDraggingItem, setNextToAddBlock } = useEditModeContext();
 
   const blockConfig = config[type];
 
-  return (
-    <button
-      id="hello"
-      type="button"
-      className="w-full bg-white border border-stone-200 rounded-md flex items-center justify-start text-left px-3 py-3 shadow-none hover:shadow-md transition-shadow cursor-move"
-      draggable={true}
-      unselectable="on"
-      onDragStart={(e) => {
-        // This is needed to make the drag work in Firefox
-        e.dataTransfer.setData('text/plain', '');
-
-        setDraggingItem({
-          i: 'tmp-block',
-          w: blockConfig.drag.w,
-          h: blockConfig.drag.h,
-          type,
-        });
-      }}
-    >
+  const content = (
+    <>
       <img
         src="/assets/ui/drag.svg"
-        className="mr-3"
+        className="mr-3 opacity-0 md:opacity-100"
         width={9}
         height={15}
-      ></img>
+        alt=""
+      />
       <div className="w-9 h-9 bg-stone-100 rounded-md flex items-center mr-3 flex-shrink-0">
-        <img src={blockConfig.icon} className="w-9 h-9" />
+        <img src={blockConfig.icon} className="w-9 h-9" alt="" />
       </div>
       <div className="flex flex-col">
         <span className="font-semibold text-stone-900 text-sm">
@@ -169,6 +152,46 @@ export function DraggableBlockButton({ type }: Props) {
         </span>
         <span className="text-xs text-slate-600">{blockConfig.label}</span>
       </div>
-    </button>
+    </>
+  );
+
+  return (
+    <>
+      <button
+        id="hello"
+        type="button"
+        className="hidden md:flex w-full bg-white border border-stone-200 rounded-md  items-center justify-start text-left px-3 py-3 shadow-none hover:shadow-md transition-shadow cursor-move"
+        draggable={true}
+        unselectable="on"
+        onDragStart={(e) => {
+          // This is needed to make the drag work in Firefox
+          e.dataTransfer.setData('text/plain', '');
+
+          setDraggingItem({
+            i: 'tmp-block',
+            w: blockConfig.drag.w,
+            h: blockConfig.drag.h,
+            type,
+          });
+        }}
+      >
+        {content}
+      </button>
+      <button
+        type="button"
+        className="flex md:hidden w-full bg-white border border-stone-200 rounded-md items-center justify-start text-left px-3 py-3 shadow-none hover:shadow-md transition-shadow"
+        onClick={() => {
+          setNextToAddBlock({
+            i: 'tmp-block',
+            w: blockConfig.drag.w,
+            h: blockConfig.drag.h,
+            type,
+          });
+          onClose();
+        }}
+      >
+        {content}
+      </button>
+    </>
   );
 }
