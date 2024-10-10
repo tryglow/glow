@@ -1,6 +1,6 @@
 'use client';
 
-import { ClientSafeProvider, signIn } from 'next-auth/react';
+import { signIn } from 'next-auth/react';
 import { ReactNode } from 'react';
 
 import { cn } from '@/lib/utils';
@@ -46,7 +46,16 @@ const providerIcons: Record<EnabledProviders, ReactNode> = {
   ),
 };
 
-const providerConfigs: Record<EnabledProviders, ClientSafeProvider> = {
+const providerConfigs: Record<
+  EnabledProviders,
+  {
+    id: string;
+    name: string;
+    type: 'oauth';
+    signinUrl: string;
+    callbackUrl: string;
+  }
+> = {
   google: {
     id: 'google',
     name: 'Google',
