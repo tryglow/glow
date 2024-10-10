@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "vercel:build": "prisma generate && prisma migrate deploy && next build",
+    "vercel:build": "prisma generate && db:data-migration:move-users-to-teams && db:data-migration:move-integrations-to-teams && prisma migrate deploy && next build",
     "db:migrate": "dotenv -e .env.local prisma migrate dev",
     "db:seed": "dotenv -e .env.local prisma db seed --preview-feature",
     "db:data-migration:move-users-to-teams": "dotenv -e .env.local ts-node ./prisma/migrations/20241010092756_migrate_users_to_teams/data-migration.ts",
