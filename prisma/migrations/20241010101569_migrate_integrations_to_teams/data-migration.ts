@@ -1,4 +1,6 @@
-import prisma from '../../../lib/prisma';
+import Prisma from '@prisma/client';
+
+const prisma = new Prisma.PrismaClient();
 
 // Get all of the users
 // Get all of the integrations for each user
