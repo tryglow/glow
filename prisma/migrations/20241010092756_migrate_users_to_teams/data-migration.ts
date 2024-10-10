@@ -5,8 +5,11 @@ import prisma from '../../../lib/prisma';
 async function main() {
   await prisma.$transaction(
     async (tx) => {
+      console.log('Starting migration');
       // Get all of the users
       const users = await tx.user.findMany();
+
+      console.log('Users', users.length);
 
       for (const user of users) {
         // Create a new team for each user
