@@ -49,7 +49,7 @@ async function main() {
     },
     {
       maxWait: 20000, // 10 seconds max wait to connect to prisma
-      timeout: 20000, // 20 seconds
+      timeout: 120000, // 2 minutes
       isolationLevel: Prisma.TransactionIsolationLevel.Serializable,
     }
   );
