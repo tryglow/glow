@@ -49,6 +49,28 @@ model User {
   acceptedInviteAt    DateTime?
   assignedInviteCodes InviteCode[]  @relation("AssignedInviteCodes")
   claimedInvitedCodes InviteCode[]  @relation("ClaimedInviteCodes")
+  teamId              String?
+  teams               TeamUser[]
+}
+
+model Team {
+  id           String        @id @default(uuid())
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  name         String
+  pages        Page[]
+  members      TeamUser[]
+  integrations Integration[]
+}
+
+model TeamUser {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  teamId    String
+  team      Team     @relation(fields: [teamId], references: [id])
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
 }
 
 model Page {
@@ -68,6 +90,8 @@ model Page {
   theme           Theme?    @relation(fields: [themeId], references: [id])
   backgroundImage String?
   customDomain    String?   @unique
+  team            Team?     @relation(fields: [teamId], references: [id])
+  teamId          String?
 }
 
 model Block {
@@ -86,6 +110,8 @@ model Integration {
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
   userId    String
+  teamId    String?
+  team      Team?     @relation(fields: [teamId], references: [id])
   user      User      @relation(fields: [userId], references: [id])
   type      String
   config    Json
