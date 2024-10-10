@@ -113,7 +113,7 @@ export async function POST(req: Request) {
     }
   }
 
-  const newPage = await createNewPage(session.currentTeamId, { slug, themeId });
+  const newPage = await createNewPage({ slug, themeId });
 
   if (newPage) {
     return Response.json({
