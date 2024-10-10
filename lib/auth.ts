@@ -32,7 +32,6 @@ export const { auth, signIn, signOut, handlers, unstable_update } = NextAuth({
     TwitterProvider({
       clientId: process.env.TWITTER_CLIENT_ID as string,
       clientSecret: process.env.TWITTER_CLIENT_SECRET as string,
-      version: '2.0', // opt-in to Twitter OAuth 2.0
     }),
     /**
      * This provider is used for the app review process only. Some of the
