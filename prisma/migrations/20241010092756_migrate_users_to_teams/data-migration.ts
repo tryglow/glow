@@ -9,8 +9,6 @@ async function main() {
       // Get all of the users
       const users = await tx.user.findMany();
 
-      console.log('Users', users.length);
-
       for (const user of users) {
         console.log('Migrating for user', user.id);
         // Create a new team for each user
