@@ -1,11 +1,9 @@
 'use client';
 
 import { Form, Formik, FormikHelpers } from 'formik';
+import { withZodSchema } from 'formik-validator-zod';
 import { Loader2 } from 'lucide-react';
 import { useParams, useRouter } from 'next/navigation';
-import * as Yup from 'yup';
-
-import { defaultThemes } from '@/lib/theme';
 
 import { Button } from '@/components/ui/button';
 import { DialogFooter } from '@/components/ui/dialog';
@@ -14,19 +12,13 @@ import { Switch } from '@/components/ui/switch';
 import { useToast } from '@/components/ui/use-toast';
 
 import { FormField } from '../FormField';
-import { FormFileUpload } from '../FormFileUpload';
+import { updateGeneralPageSettings } from './actions';
+import { generalPageSettingsSchema } from './shared';
 
-const FormSchema = Yup.object().shape({
-  pageSlug: Yup.string().required('Please provide a page slug'),
-  metaTitle: Yup.string().required('Please provide a page title'),
-});
-
-type FormValues = {
+export type FormValues = {
   pageSlug: string;
   metaTitle: string;
   published: boolean;
-  themeId: string;
-  backgroundImage: string;
 };
 
 interface Props {
@@ -35,7 +27,11 @@ interface Props {
   pageId: string;
 }
 
-export function EditPageSettings({ onCancel, initialValues, pageId }: Props) {
+export function EditPageSettingsGeneral({
+  onCancel,
+  initialValues,
+  pageId,
+}: Props) {
   const params = useParams();
   const router = useRouter();
   const { toast } = useToast();
@@ -47,38 +43,26 @@ export function EditPageSettings({ onCancel, initialValues, pageId }: Props) {
     setSubmitting(true);
 
     try {
-      const req = await fetch('/api/page/settings', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          pageSlug: values.pageSlug,
-          metaTitle: values.metaTitle,
-          published: values.published,
-          currentPageSlug: params.slug,
-          themeId: values.themeId,
-          backgroundImage: values.backgroundImage,
-        }),
-      });
+      const response = await updateGeneralPageSettings(
+        values,
+        params.slug as string
+      );
 
-      const res = await req.json();
-
-      if (res?.error) {
-        console.log(res.error);
+      if (response?.error) {
+        console.log(response.error);
         toast({
           variant: 'error',
           title: 'Something went wrong',
-          description: res.error.message,
+          description: response.error.message,
         });
 
-        if (res.error.field) {
-          setFieldError(res.error.field, res.error.message);
+        if (response.error.field) {
+          setFieldError(response.error.field, response.error.message);
         }
         return;
       }
 
-      if (req.ok) {
+      if (response.data) {
         if (values.pageSlug !== params.slug) {
           router.push(`/${values.pageSlug}`);
         }
@@ -106,10 +90,8 @@ export function EditPageSettings({ onCancel, initialValues, pageId }: Props) {
         pageSlug: initialValues.pageSlug,
         metaTitle: initialValues.metaTitle,
         published: initialValues.published,
-        themeId: initialValues.themeId,
-        backgroundImage: initialValues.backgroundImage,
       }}
-      validationSchema={FormSchema}
+      validate={withZodSchema(generalPageSettingsSchema)}
       onSubmit={onSubmit}
       enableReinitialize
     >
@@ -144,37 +126,6 @@ export function EditPageSettings({ onCancel, initialValues, pageId }: Props) {
                 placeholder="Hello world"
                 id="metaTitle"
                 error={errors.metaTitle}
-              />
-            </div>
-
-            <div className="mt-4">
-              <FormField
-                fieldType="select"
-                label="Page theme (experimental)"
-                name="themeId"
-                placeholder=""
-                id="themeId"
-                error={errors.themeId}
-              >
-                {defaultThemes.map((theme) => {
-                  return (
-                    <option value={theme.id} key={theme.id}>
-                      {theme.name}
-                    </option>
-                  );
-                })}
-              </FormField>
-            </div>
-
-            <div className="mt-4">
-              <FormFileUpload
-                htmlFor="page-background-image"
-                onUploaded={(url) => setFieldValue('backgroundImage', url)}
-                initialValue={initialValues?.backgroundImage}
-                referenceId={pageId}
-                label="Background image (experimental)"
-                assetContext="pageBackgroundImage"
-                isCondensed
               />
             </div>
 

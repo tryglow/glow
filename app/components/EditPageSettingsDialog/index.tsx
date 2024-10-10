@@ -11,9 +11,11 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
-import { fetchPageSettings } from './action';
-import { EditPageSettings } from './form';
+import { fetchPageSettings } from './actions';
+import { EditPageSettingsDesign } from './design-settings-form';
+import { EditPageSettingsGeneral } from './general-settings-form';
 
 interface Props {
   open: boolean;
@@ -24,8 +26,6 @@ interface Props {
 export function EditPageSettingsDialog({ open, onOpenChange, onClose }: Props) {
   const [pageSettings, setPageSettings] = useState<Partial<Page> | null>(null);
   const params = useParams();
-
-  console.log('edit Page Is Open', open);
 
   useEffect(() => {
     if (!params.slug) return;
@@ -48,17 +48,37 @@ export function EditPageSettingsDialog({ open, onOpenChange, onClose }: Props) {
           </DialogDescription>
         </DialogHeader>
 
-        <EditPageSettings
-          onCancel={onClose}
-          initialValues={{
-            metaTitle: pageSettings?.metaTitle ?? '',
-            pageSlug: pageSettings?.slug ?? '',
-            published: pageSettings?.publishedAt ? true : false,
-            themeId: pageSettings?.themeId ?? '',
-            backgroundImage: pageSettings?.backgroundImage ?? '',
-          }}
-          pageId={pageSettings?.id ?? ''}
-        />
+        <Tabs defaultValue="general" className="w-full">
+          <TabsList className="w-full">
+            <TabsTrigger value="general" className="w-1/2">
+              General
+            </TabsTrigger>
+            <TabsTrigger value="design" className="w-1/2">
+              Design
+            </TabsTrigger>
+          </TabsList>
+          <TabsContent value="general">
+            <EditPageSettingsGeneral
+              onCancel={onClose}
+              initialValues={{
+                metaTitle: pageSettings?.metaTitle ?? '',
+                pageSlug: pageSettings?.slug ?? '',
+                published: pageSettings?.publishedAt ? true : false,
+              }}
+              pageId={pageSettings?.id ?? ''}
+            />
+          </TabsContent>
+          <TabsContent value="design">
+            <EditPageSettingsDesign
+              onCancel={onClose}
+              initialValues={{
+                themeId: pageSettings?.themeId ?? '',
+                backgroundImage: pageSettings?.backgroundImage ?? '',
+              }}
+              pageId={pageSettings?.id ?? ''}
+            />
+          </TabsContent>
+        </Tabs>
       </DialogContent>
     </Dialog>
   );

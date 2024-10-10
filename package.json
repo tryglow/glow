@@ -50,6 +50,7 @@
     "cmdk": "^0.2.0",
     "date-fns": "^3.6.0",
     "formik": "^2.4.6",
+    "formik-validator-zod": "^2.0.1",
     "lucide-react": "^0.408.0",
     "mapbox-gl": "^3.5.1",
     "next": "^14.2.11",
@@ -65,7 +66,8 @@
     "tailwind-merge": "^2.4.0",
     "tailwindcss-animate": "^1.0.7",
     "uuid": "^10.0.0",
-    "yup": "^1.4.0"
+    "yup": "^1.4.0",
+    "zod": "^3.23.8"
   },
   "devDependencies": {
     "@trivago/prettier-plugin-sort-imports": "^4.3.0",
