@@ -27,7 +27,14 @@ export async function POST(request: Request) {
   const integration = await prisma.integration.findUnique({
     where: {
       id: integrationId,
-      userId: session.user.id,
+      team: {
+        id: session.currentTeamId,
+        members: {
+          some: {
+            userId: session.user.id,
+          },
+        },
+      },
     },
   });
 

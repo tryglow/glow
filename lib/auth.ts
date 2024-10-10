@@ -73,6 +73,7 @@ export const authOptions: NextAuthOptions = {
       if (!session.user) return session;
 
       session.user.id = token.uid;
+      session.currentTeamId = token.teamId;
 
       return session;
     },
@@ -83,6 +84,18 @@ export const authOptions: NextAuthOptions = {
         await track('signUp', {
           userId: user.id,
           provider: params.account?.provider ?? 'unknown',
+        });
+
+        // Create a new team for the user
+        await prisma.team.create({
+          data: {
+            name: 'Default Team',
+            members: {
+              create: {
+                userId: user.id,
+              },
+            },
+          },
         });
 
         // Send welcome email
@@ -100,6 +113,22 @@ export const authOptions: NextAuthOptions = {
 
       if (user) {
         token.uid = user.id;
+      }
+
+      if (!token.teamId) {
+        const team = await prisma.team.findFirst({
+          where: {
+            members: {
+              some: {
+                userId: user.id,
+              },
+            },
+          },
+        });
+
+        if (team?.id) {
+          token.teamId = team?.id;
+        }
       }
 
       return token;

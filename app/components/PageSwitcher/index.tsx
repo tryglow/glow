@@ -28,21 +28,20 @@ import {
   PopoverTrigger,
 } from '@/components/ui/popover';
 
-import { EditPageSettingsDialog } from '../EditPageSettingsDialog';
 import { NewPageDialog } from '../NewPageDialog';
 
 interface Props {
-  userPages?: Page[] | null;
+  teamPages?: Page[] | null;
 }
 
-export function PageSwitcher({ userPages }: Props) {
+export function PageSwitcher({ teamPages }: Props) {
   const [open, setOpen] = useState(false);
   const router = useRouter();
 
   const [showNewTeamDialog, setShowNewTeamDialog] = useState(false);
   const params = useParams();
 
-  const currentPage = userPages?.find((page) => page.slug === params.slug);
+  const currentPage = teamPages?.find((page) => page.slug === params.slug);
 
   return (
     <>
@@ -74,7 +73,7 @@ export function PageSwitcher({ userPages }: Props) {
             <CommandList>
               <CommandInput placeholder="Search pages..." />
               <CommandEmpty>No page found.</CommandEmpty>
-              {userPages?.map((page) => {
+              {teamPages?.map((page) => {
                 return (
                   <CommandItem
                     key={page.id}

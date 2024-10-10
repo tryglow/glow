@@ -27,7 +27,14 @@ export async function POST(req: Request) {
 
   const page = await prisma.page.findUnique({
     where: {
-      userId: session.user.id,
+      team: {
+        id: session.currentTeamId,
+        members: {
+          some: {
+            userId: session.user.id,
+          },
+        },
+      },
       slug: pageSlug,
     },
   });

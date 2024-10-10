@@ -18,11 +18,11 @@ import { PageSwitcher } from '../PageSwitcher';
 import { UserWidget } from './UserWidget';
 
 interface Props {
-  userPages: Page[] | null;
+  teamPages: Page[] | null;
   isEditMode?: boolean;
 }
 
-export function GlobalNavigation({ userPages, isEditMode }: Props) {
+export function GlobalNavigation({ teamPages, isEditMode }: Props) {
   const [showEditPageSettingsDialog, setShowEditPageSettingsDialog] =
     useState(false);
 
@@ -47,7 +47,7 @@ export function GlobalNavigation({ userPages, isEditMode }: Props) {
                 </svg>
               </Link>
 
-              <PageSwitcher userPages={userPages} />
+              <PageSwitcher teamPages={teamPages} />
               {isEditMode && (
                 <nav className="flex items-center mx-2">
                   <Button

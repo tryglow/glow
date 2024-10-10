@@ -1,27 +1,35 @@
 import { track } from '@vercel/analytics/server';
 import { randomUUID } from 'crypto';
+import { getSession } from 'next-auth/react';
 
 import { defaults as headerDefaults } from './blocks/header/config';
 import prisma from './prisma';
 
-export const MAX_PAGES_PER_USER = 10;
+export const MAX_PAGES_PER_TEAM = 10;
 
 interface NewPageInput {
   slug: string;
   themeId: string;
 }
 
-export async function createNewPage(userId: string, input: NewPageInput) {
+export async function createNewPage(teamId: string, input: NewPageInput) {
   const headerSectionId = randomUUID();
+  const session = await getSession();
+
+  if (!session) {
+    return null;
+  }
 
   await track('pageCreated', {
-    userId,
+    teamId,
     slug: input.slug,
   });
 
   return prisma.page.create({
     data: {
-      userId,
+      // Temporary until we drop userId from the page model
+      userId: session.user.id,
+      teamId,
       slug: input.slug,
       publishedAt: new Date(),
       themeId: input.themeId,

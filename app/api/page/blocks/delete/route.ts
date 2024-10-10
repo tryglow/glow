@@ -31,7 +31,14 @@ export async function POST(req: Request) {
     where: {
       id: blockId,
       page: {
-        userId: session.user.id,
+        team: {
+          id: session.currentTeamId,
+          members: {
+            some: {
+              userId: session.user.id,
+            },
+          },
+        },
       },
     },
     include: {

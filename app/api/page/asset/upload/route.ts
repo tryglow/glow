@@ -134,6 +134,7 @@ export async function POST(req: Request) {
 
     await track('assetUploaded', {
       userId: session.user.id,
+      teamId: session.currentTeamId,
       assetContext: context,
     });
 

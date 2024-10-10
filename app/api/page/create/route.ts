@@ -1,7 +1,7 @@
 import { getServerSession } from 'next-auth';
 
 import { authOptions } from '@/lib/auth';
-import { MAX_PAGES_PER_USER, createNewPage } from '@/lib/page';
+import { MAX_PAGES_PER_TEAM, createNewPage } from '@/lib/page';
 import prisma from '@/lib/prisma';
 import { isForbiddenSlug, isReservedSlug, regexSlug } from '@/lib/slugs';
 
@@ -76,9 +76,16 @@ export async function POST(req: Request) {
     });
   }
 
-  const usersPages = await prisma.page.findMany({
+  const teamPages = await prisma.page.findMany({
     where: {
-      userId: session.user.id,
+      team: {
+        id: session.currentTeamId,
+        members: {
+          some: {
+            userId: session.user.id,
+          },
+        },
+      },
     },
     include: {
       user: {
@@ -95,7 +102,7 @@ export async function POST(req: Request) {
     },
   });
 
-  if (usersPages.length >= MAX_PAGES_PER_USER) {
+  if (teamPages.length >= MAX_PAGES_PER_TEAM) {
     if (!user?.isAdmin) {
       return Response.json({
         error: {
@@ -106,7 +113,7 @@ export async function POST(req: Request) {
     }
   }
 
-  const newPage = await createNewPage(session.user.id, { slug, themeId });
+  const newPage = await createNewPage(session.currentTeamId, { slug, themeId });
 
   if (newPage) {
     return Response.json({

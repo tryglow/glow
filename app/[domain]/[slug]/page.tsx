@@ -16,9 +16,6 @@ export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 export const dynamicParams = true;
 
-// export const revalidate = 60;
-// export const dynamicParams = true;
-
 const fetchData = async (slug: string, domain: string) => {
   const useSlug =
     decodeURIComponent(domain) === process.env.NEXT_PUBLIC_ROOT_DOMAIN;
@@ -49,7 +46,7 @@ const fetchData = async (slug: string, domain: string) => {
 
   if (!data) notFound();
 
-  if (user && data?.userId === user.id) {
+  if (user && data?.teamId === session?.currentTeamId) {
     isEditMode = true;
   }
 
@@ -71,24 +68,31 @@ const fetchData = async (slug: string, domain: string) => {
   };
 };
 
-const fetchUserInfo = async () => {
+const fetchTeamInfo = async () => {
   const session = await getServerSession(authOptions);
 
   const user = session?.user;
 
-  if (!user)
+  if (!user || !session?.currentTeamId)
     return {
-      userPages: null,
+      teamPages: null,
     };
 
-  const userPages = await prisma.page.findMany({
+  const teamPages = await prisma.page.findMany({
     where: {
-      userId: user.id,
+      team: {
+        id: session.currentTeamId,
+        members: {
+          some: {
+            userId: user.id,
+          },
+        },
+      },
     },
   });
 
   return {
-    userPages,
+    teamPages,
   };
 };
 
@@ -132,7 +136,7 @@ export default async function Page({ params }: { params: Params }) {
 
   const isMobile = isUserAgentMobile(headersList.get('user-agent'));
 
-  const { userPages } = await fetchUserInfo();
+  const { teamPages } = await fetchTeamInfo();
   const session = await getServerSession(authOptions);
 
   const pageLayout = layout as unknown as PageConfig;
@@ -165,7 +169,7 @@ export default async function Page({ params }: { params: Params }) {
         isPotentiallyMobile={isMobile}
         layout={pageLayout}
         editMode={isEditMode}
-        userPages={userPages}
+        teamPages={teamPages}
         isLoggedIn={isLoggedIn}
       >
         {data.blocks
