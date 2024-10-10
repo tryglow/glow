@@ -6,33 +6,39 @@ import prisma from '../../../lib/prisma';
 // Update the integration with the teamId
 
 async function main() {
-  await prisma.$transaction(async (tx) => {
-    // Get all of the users
-    const users = await tx.user.findMany({
-      include: {
-        teams: true,
-      },
-    });
-
-    for (const user of users) {
-      const integrations = await tx.integration.findMany({
-        where: {
-          userId: user.id,
+  await prisma.$transaction(
+    async (tx) => {
+      // Get all of the users
+      const users = await tx.user.findMany({
+        include: {
+          teams: true,
         },
       });
 
-      for (const integration of integrations) {
-        await tx.integration.update({
+      for (const user of users) {
+        const integrations = await tx.integration.findMany({
           where: {
-            id: integration.id,
-          },
-          data: {
-            teamId: user.teams[0].teamId,
+            userId: user.id,
           },
         });
+
+        for (const integration of integrations) {
+          await tx.integration.update({
+            where: {
+              id: integration.id,
+            },
+            data: {
+              teamId: user.teams[0].teamId,
+            },
+          });
+        }
       }
+    },
+    {
+      maxWait: 5000, // 5 seconds max wait to connect to prisma
+      timeout: 20000, // 20 seconds
     }
-  });
+  );
 }
 
 main()
