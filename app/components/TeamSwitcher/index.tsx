@@ -2,7 +2,7 @@
 
 import { Team } from '@prisma/client';
 import { CaretSortIcon, CheckIcon } from '@radix-ui/react-icons';
-import { useParams, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
 import { switchTeam } from '@/app/components/TeamSwitcher/actions';
@@ -14,7 +14,6 @@ import { Button } from '@/components/ui/button';
 import {
   Command,
   CommandEmpty,
-  CommandInput,
   CommandItem,
   CommandList,
   CommandSeparator,
