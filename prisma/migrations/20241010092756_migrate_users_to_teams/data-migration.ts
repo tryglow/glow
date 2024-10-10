@@ -12,6 +12,7 @@ async function main() {
       console.log('Users', users.length);
 
       for (const user of users) {
+        console.log('Migrating for user', user.id);
         // Create a new team for each user
         const newTeam = await tx.team.create({
           data: {
@@ -30,6 +31,8 @@ async function main() {
             userId: user.id,
           },
         });
+
+        console.log('Pages for user', pages.length);
 
         // Update the page with the teamId
         for (const page of pages) {
