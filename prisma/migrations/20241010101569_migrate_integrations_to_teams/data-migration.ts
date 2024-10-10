@@ -1,6 +1,6 @@
-import { Prisma, PrismaClient } from '@prisma/client';
+import { Prisma } from '@prisma/client';
 
-const prisma = new PrismaClient();
+import prisma from '@/lib/prisma';
 
 // Get all of the users
 // Get all of the integrations for each user
@@ -37,16 +37,14 @@ async function main() {
       }
     },
     {
-      maxWait: 10000, // 10 seconds max wait to connect to prisma
+      maxWait: 20000, // 10 seconds max wait to connect to prisma
       timeout: 20000, // 20 seconds
       isolationLevel: Prisma.TransactionIsolationLevel.Serializable,
     }
   );
 }
 
-main()
-  .catch(async (e) => {
-    console.error(e);
-    process.exit(1);
-  })
-  .finally(async () => await prisma.$disconnect());
+main().catch(async (e) => {
+  console.error(e);
+  process.exit(1);
+});
