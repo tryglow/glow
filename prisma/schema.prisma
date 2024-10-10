@@ -51,6 +51,7 @@ model User {
   claimedInvitedCodes InviteCode[]  @relation("ClaimedInviteCodes")
   teamId              String?
   teams               TeamUser[]
+  plan                String        @default("free")
 }
 
 model Team {
