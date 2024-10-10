@@ -12,8 +12,8 @@ const tiers = [
     priceMonthly: '$0',
     href: '#',
     highlights: [
-      { description: 'Use up to 5 blocks' },
       { description: 'Create 2 pages' },
+      { description: 'Up to 5 blocks per page' },
       { description: 'Real-time blocks' },
       { description: 'Custom themes' },
     ],
@@ -29,6 +29,19 @@ const tiers = [
       { description: 'Unlimited pages' },
       { description: 'Premium only blocks' },
       { description: 'Verification badge' },
+      { description: 'Private pages' },
+    ],
+  },
+  {
+    name: 'Team',
+    description: 'Built for teams.',
+    priceMonthly: '$10',
+    href: '#',
+    highlights: [
+      { description: 'A team with unlimited pages/blocks' },
+      { description: 'Invite up to 5 team members' },
+      { description: 'Google Analytics integration' },
+      { description: 'Facebook Pixel integration' },
     ],
   },
 ];
@@ -38,16 +51,16 @@ export default function PricingPage() {
     <div className="bg-white pt-24 sm:pt-32 pb-8">
       <Container>
         <h1 className="text-pretty text-5xl lg:text-6xl font-black text-black tracking-tight">
-          Premium
+          Our Plans
         </h1>
         <p className="mt-6 max-w-3xl text-xl font-medium text-gray-600 sm:text-2xl">
-          Get Glow Premium to unlock to exclusive features and blocks.
+          Take Glow to the next level with one of our paid plans.
         </p>
       </Container>
       <div className="relative pt-16 sm:pt-16 pb-16">
         <div className="absolute inset-x-0 bottom-0 top-48 bg-gradient-to-b from-white to-stone-100" />
         <Container className="relative z-10">
-          <div className="grid grid-cols-1 gap-16 lg:grid-cols-2">
+          <div className="grid grid-cols-1 gap-10 lg:grid-cols-3">
             {tiers.map((tier) => (
               <div
                 key={tier.name}
@@ -55,7 +68,7 @@ export default function PricingPage() {
               >
                 <div className="grid grid-cols-1 rounded-[2rem] p-2 shadow-md shadow-black/5">
                   <div className="rounded-3xl bg-white p-10 pb-9 shadow-2xl ring-1 ring-black/5">
-                    <h2 className="text-3xl font-black text-[#FF4F17]">
+                    <h2 className="text-2xl font-black text-[#FF4F17]">
                       {tier.name} <span className="sr-only">plan</span>
                     </h2>
                     <p className="mt-2 text-pretty text-sm/6 text-gray-600">
@@ -79,7 +92,9 @@ export default function PricingPage() {
                           <Button size="lg" className="w-full">
                             {tier.name === 'Premium'
                               ? 'Get Premium'
-                              : 'Get Started'}
+                              : tier.name === 'Team'
+                                ? 'Get Team'
+                                : 'Get Started'}
                           </Button>
                         }
                       />
@@ -88,7 +103,9 @@ export default function PricingPage() {
                       <h3 className="text-sm/6 font-medium text-gray-950">
                         {tier.name === 'Free'
                           ? 'Includes:'
-                          : 'Everything in free plus:'}
+                          : tier.name === 'Team'
+                            ? 'Everything in Premium plus:'
+                            : 'Everything in Free plus:'}
                       </h3>
                       <ul className="mt-3 space-y-3">
                         {tier.highlights.map((highlight) => (
