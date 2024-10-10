@@ -10,8 +10,8 @@
     "vercel:build": "prisma generate && npm run db:data-migration:move-users-to-teams && npm run db:data-migration:move-integrations-to-teams && prisma migrate deploy && next build",
     "db:migrate": "dotenv -e .env.local prisma migrate dev",
     "db:seed": "dotenv -e .env.local prisma db seed --preview-feature",
-    "db:data-migration:move-users-to-teams": "dotenv -e .env.local ts-node ./prisma/migrations/20241010092756_migrate_users_to_teams/data-migration.ts",
-    "db:data-migration:move-integrations-to-teams": "dotenv -e .env.local ts-node ./prisma/migrations/20241010101569_migrate_integrations_to_teams/data-migration.ts"
+    "db:data-migration:move-users-to-teams": "ts-node ./prisma/migrations/20241010092756_migrate_users_to_teams/data-migration.ts",
+    "db:data-migration:move-integrations-to-teams": "ts-node ./prisma/migrations/20241010101569_migrate_integrations_to_teams/data-migration.ts"
   },
   "prisma": {
     "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
