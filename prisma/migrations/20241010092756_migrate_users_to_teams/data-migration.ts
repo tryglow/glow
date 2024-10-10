@@ -1,6 +1,6 @@
 import { Prisma } from '@prisma/client';
 
-import prisma from '@/lib/prisma';
+import prisma from '../../../lib/prisma';
 
 async function main() {
   await prisma.$transaction(
