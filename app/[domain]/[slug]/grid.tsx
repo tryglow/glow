@@ -1,6 +1,6 @@
 'use client';
 
-import { Page } from '@prisma/client';
+import { Page, Team } from '@prisma/client';
 import { ReactNode, useMemo } from 'react';
 import { Layout, Responsive, ResponsiveProps } from 'react-grid-layout';
 
@@ -21,6 +21,8 @@ interface Props {
   teamPages: Page[] | null;
   isPotentiallyMobile: boolean;
   isLoggedIn: boolean;
+  usersTeams?: Team[];
+  currentTeamId?: string;
 }
 
 export default function Grid({
@@ -30,6 +32,8 @@ export default function Grid({
   teamPages,
   isLoggedIn,
   isPotentiallyMobile = false,
+  usersTeams,
+  currentTeamId,
 }: Props) {
   const defaultLayoutProps: ResponsiveProps = {
     useCSSTransforms: true,
@@ -58,7 +62,12 @@ export default function Grid({
   if (editMode) {
     return (
       <EditModeContextProvider>
-        <GlobalNavigation teamPages={teamPages} isEditMode />
+        <GlobalNavigation
+          teamPages={teamPages}
+          isEditMode
+          usersTeams={usersTeams}
+          currentTeamId={currentTeamId}
+        />
         <EditWrapper layoutProps={defaultLayoutProps}>{children}</EditWrapper>
       </EditModeContextProvider>
     );
@@ -66,7 +75,13 @@ export default function Grid({
 
   return (
     <>
-      {isLoggedIn && <GlobalNavigation teamPages={teamPages} />}
+      {isLoggedIn && (
+        <GlobalNavigation
+          teamPages={teamPages}
+          usersTeams={usersTeams}
+          currentTeamId={currentTeamId}
+        />
+      )}
       <ResponsiveReactGridLayout
         layouts={{
           lg: layout.sm,

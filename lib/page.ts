@@ -1,8 +1,7 @@
 import { track } from '@vercel/analytics/server';
 import { randomUUID } from 'crypto';
-import { getServerSession } from 'next-auth';
 
-import { authOptions } from '@/lib/auth';
+import { auth } from '@/lib/auth';
 
 import { defaults as headerDefaults } from './blocks/header/config';
 import prisma from './prisma';
@@ -16,7 +15,7 @@ interface NewPageInput {
 
 export async function createNewPage(input: NewPageInput) {
   const headerSectionId = randomUUID();
-  const session = await getServerSession(authOptions);
+  const session = await auth();
 
   if (!session) {
     return null;

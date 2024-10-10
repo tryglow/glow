@@ -1,8 +1,7 @@
-import { getServerSession } from 'next-auth';
 import Link from 'next/link';
 import { ReactNode } from 'react';
 
-import { authOptions } from '@/lib/auth';
+import { auth } from '@/lib/auth';
 import prisma from '@/lib/prisma';
 
 import { Button } from '@/components/ui/button';
@@ -16,7 +15,7 @@ interface Props {
 }
 
 const fetchUserAndPages = async () => {
-  const session = await getServerSession(authOptions);
+  const session = await auth();
 
   const user = session?.user;
 

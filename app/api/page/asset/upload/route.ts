@@ -6,11 +6,10 @@ import {
 import { Upload } from '@aws-sdk/lib-storage';
 import { track } from '@vercel/analytics/server';
 import { randomUUID } from 'crypto';
-import { getServerSession } from 'next-auth';
 import sharp from 'sharp';
 
 import { AssetContexts } from '@/lib/asset';
-import { authOptions } from '@/lib/auth';
+import { auth } from '@/lib/auth';
 import { isObjKey } from '@/lib/utils';
 
 function isComplete(
@@ -75,7 +74,7 @@ const assetContexts: Record<
 };
 
 export async function POST(req: Request) {
-  const session = await getServerSession(authOptions);
+  const session = await auth();
 
   if (!session) {
     return Response.json({

@@ -1,8 +1,6 @@
 'use server';
 
-import { getServerSession } from 'next-auth';
-
-import { authOptions } from '@/lib/auth';
+import { auth } from '@/lib/auth';
 import prisma from '@/lib/prisma';
 import { isForbiddenSlug, isReservedSlug } from '@/lib/slugs';
 
@@ -11,7 +9,7 @@ import { FormValues as GeneralPageSettingsFormValues } from './general-settings-
 import { designPageSettingsSchema, generalPageSettingsSchema } from './shared';
 
 export const fetchPageSettings = async (slug: string) => {
-  const session = await getServerSession(authOptions);
+  const session = await auth();
 
   if (!session) {
     return null;
@@ -42,7 +40,7 @@ export const updateGeneralPageSettings = async (
   formData: GeneralPageSettingsFormValues,
   currentPageSlug: string
 ) => {
-  const session = await getServerSession(authOptions);
+  const session = await auth();
 
   if (!session) {
     return {
@@ -161,7 +159,7 @@ export const updateDesignPageSettings = async (
   formData: DesignPageSettingsFormValues,
   currentPageSlug: string
 ) => {
-  const session = await getServerSession(authOptions);
+  const session = await auth();
 
   if (!session) {
     return {

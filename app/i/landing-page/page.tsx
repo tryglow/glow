@@ -1,6 +1,5 @@
 import { ArrowRightIcon, ArrowUpRightIcon } from '@heroicons/react/20/solid';
 import clsx from 'clsx';
-import { getServerSession } from 'next-auth';
 import Image from 'next/image';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
@@ -8,7 +7,7 @@ import { ReactNode } from 'react';
 
 import { LoginWidget } from '@/app/components/LoginWidget';
 
-import { authOptions } from '@/lib/auth';
+import { auth } from '@/lib/auth';
 import prisma from '@/lib/prisma';
 import { cn } from '@/lib/utils';
 
@@ -96,7 +95,7 @@ const featuredProfiles: {
 const title = ['Your', 'personal', 'page', 'that', 'is', 'always', 'current.'];
 
 const fetchUserAndPages = async () => {
-  const session = await getServerSession(authOptions);
+  const session = await auth();
 
   const user = session?.user;
 

@@ -1,12 +1,11 @@
 import { track } from '@vercel/analytics/server';
-import { getServerSession } from 'next-auth';
 
-import { authOptions } from '@/lib/auth';
+import { auth } from '@/lib/auth';
 import prisma from '@/lib/prisma';
 
 export async function POST(request: Request) {
   const { integrationId } = await request.json();
-  const session = await getServerSession(authOptions);
+  const session = await auth();
 
   if (!integrationId) {
     return Response.json({

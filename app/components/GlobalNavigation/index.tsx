@@ -5,10 +5,11 @@ import {
   ComputerDesktopIcon,
   DevicePhoneMobileIcon,
 } from '@heroicons/react/24/outline';
-import { Page } from '@prisma/client';
+import { Page, Team } from '@prisma/client';
 import Link from 'next/link';
 import { useState } from 'react';
 
+import { TeamSwitcher } from '@/app/components/TeamSwitcher';
 import { useEditModeContext } from '@/app/contexts/Edit';
 
 import { Button } from '@/components/ui/button';
@@ -19,10 +20,17 @@ import { UserWidget } from './UserWidget';
 
 interface Props {
   teamPages: Page[] | null;
+  usersTeams?: Team[];
   isEditMode?: boolean;
+  currentTeamId?: string;
 }
 
-export function GlobalNavigation({ teamPages, isEditMode }: Props) {
+export function GlobalNavigation({
+  teamPages,
+  usersTeams,
+  isEditMode,
+  currentTeamId,
+}: Props) {
   const [showEditPageSettingsDialog, setShowEditPageSettingsDialog] =
     useState(false);
 
@@ -47,7 +55,13 @@ export function GlobalNavigation({ teamPages, isEditMode }: Props) {
                 </svg>
               </Link>
 
-              <PageSwitcher teamPages={teamPages} />
+              <div className="flex gap-2">
+                <TeamSwitcher
+                  usersTeams={usersTeams}
+                  currentTeamId={currentTeamId}
+                />
+                <PageSwitcher teamPages={teamPages} />
+              </div>
               {isEditMode && (
                 <nav className="flex items-center mx-2">
                   <Button

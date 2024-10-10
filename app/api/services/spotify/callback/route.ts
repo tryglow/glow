@@ -1,7 +1,6 @@
-import { getServerSession } from 'next-auth';
 import { NextResponse } from 'next/server';
 
-import { authOptions } from '@/lib/auth';
+import { auth } from '@/lib/auth';
 import { SpotifyIntegrationConfig } from '@/lib/blocks/spotify-playing-now/config';
 import prisma from '@/lib/prisma';
 
@@ -9,7 +8,7 @@ import { requestToken } from './utils';
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
-  const session = await getServerSession(authOptions);
+  const session = await auth();
 
   if (!session) {
     NextResponse.json({ error: 'Unauthorized' });

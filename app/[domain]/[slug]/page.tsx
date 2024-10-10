@@ -1,10 +1,9 @@
 import { Integration } from '@prisma/client';
 import type { Metadata, ResolvingMetadata } from 'next';
-import { getServerSession } from 'next-auth';
 import { headers } from 'next/headers';
 import { notFound, redirect } from 'next/navigation';
 
-import { authOptions } from '@/lib/auth';
+import { auth } from '@/lib/auth';
 import { renderBlock } from '@/lib/blocks/ui';
 import prisma from '@/lib/prisma';
 import { isUserAgentMobile } from '@/lib/user-agent';
@@ -22,7 +21,7 @@ const fetchData = async (slug: string, domain: string) => {
 
   let isEditMode = false;
 
-  const session = await getServerSession(authOptions);
+  const session = await auth();
 
   const user = session?.user;
 
@@ -69,7 +68,7 @@ const fetchData = async (slug: string, domain: string) => {
 };
 
 const fetchTeamInfo = async () => {
-  const session = await getServerSession(authOptions);
+  const session = await auth();
 
   const user = session?.user;
 
@@ -78,7 +77,17 @@ const fetchTeamInfo = async () => {
       teamPages: null,
     };
 
-  const teamPages = await prisma.page.findMany({
+  const usersTeams = await prisma.team.findMany({
+    where: {
+      members: {
+        some: {
+          userId: user.id,
+        },
+      },
+    },
+  });
+
+  const currentTeamPages = await prisma.page.findMany({
     where: {
       team: {
         id: session.currentTeamId,
@@ -92,7 +101,8 @@ const fetchTeamInfo = async () => {
   });
 
   return {
-    teamPages,
+    teamPages: currentTeamPages,
+    usersTeams: usersTeams,
   };
 };
 
@@ -136,8 +146,8 @@ export default async function Page({ params }: { params: Params }) {
 
   const isMobile = isUserAgentMobile(headersList.get('user-agent'));
 
-  const { teamPages } = await fetchTeamInfo();
-  const session = await getServerSession(authOptions);
+  const { teamPages, usersTeams } = await fetchTeamInfo();
+  const session = await auth();
 
   const pageLayout = layout as unknown as PageConfig;
 
@@ -170,7 +180,9 @@ export default async function Page({ params }: { params: Params }) {
         layout={pageLayout}
         editMode={isEditMode}
         teamPages={teamPages}
+        usersTeams={usersTeams}
         isLoggedIn={isLoggedIn}
+        currentTeamId={session?.currentTeamId}
       >
         {data.blocks
           .filter((block) => mergedIds.includes(block.id))

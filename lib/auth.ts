@@ -1,10 +1,9 @@
 'server only';
 
 import { sendWelcomeEmail } from '@/notifications/welcome-email';
-import { PrismaAdapter } from '@next-auth/prisma-adapter';
+import { PrismaAdapter } from '@auth/prisma-adapter';
 import { track } from '@vercel/analytics/server';
-import type { NextAuthOptions } from 'next-auth';
-import { getServerSession } from 'next-auth';
+import NextAuth from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import GoogleProvider from 'next-auth/providers/google';
 import TwitterProvider from 'next-auth/providers/twitter';
@@ -18,7 +17,13 @@ const temporaryTestUserForAppReview = {
   password: process.env.TMP_APP_REVIEW_USER_PASSWORD,
 };
 
-export const authOptions: NextAuthOptions = {
+export const { auth, signIn, signOut, handlers } = NextAuth({
+  secret: process.env.NEXTAUTH_SECRET,
+  adapter: PrismaAdapter(prisma),
+  session: { strategy: 'jwt', maxAge: 24 * 60 * 60 },
+  pages: {
+    signIn: '/',
+  },
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID as string,
@@ -59,12 +64,7 @@ export const authOptions: NextAuthOptions = {
       },
     }),
   ],
-  secret: process.env.NEXTAUTH_SECRET,
-  adapter: PrismaAdapter(prisma),
-  session: { strategy: 'jwt', maxAge: 24 * 60 * 60 },
-  pages: {
-    signIn: '/',
-  },
+
   callbacks: {
     signIn: async () => {
       return true;
@@ -80,7 +80,7 @@ export const authOptions: NextAuthOptions = {
     jwt: async (params) => {
       const { user, token, trigger } = params;
 
-      if (trigger === 'signUp') {
+      if (trigger === 'signUp' && user.id) {
         await track('signUp', {
           userId: user.id,
           provider: params.account?.provider ?? 'unknown',
@@ -106,13 +106,13 @@ export const authOptions: NextAuthOptions = {
 
       if (trigger === 'signIn') {
         await track('signIn', {
-          userId: user.id,
+          userId: user.id as string,
           provider: params.account?.provider ?? 'unknown',
         });
       }
 
       if (user) {
-        token.uid = user.id;
+        token.uid = user.id as string;
       }
 
       if (!token.teamId) {
@@ -134,14 +134,4 @@ export const authOptions: NextAuthOptions = {
       return token;
     },
   },
-};
-
-export const getUser = async () => {
-  const session = await getServerSession(authOptions);
-
-  if (!session) {
-    return null;
-  }
-
-  return session.user;
-};
+});

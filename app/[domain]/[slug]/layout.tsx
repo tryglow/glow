@@ -1,10 +1,7 @@
 import { Theme } from '@prisma/client';
-import { getServerSession } from 'next-auth';
 import Link from 'next/link';
 
-import { LoginWidget } from '@/app/components/LoginWidget';
-
-import { authOptions } from '@/lib/auth';
+import { auth } from '@/lib/auth';
 import prisma from '@/lib/prisma';
 import { defaultThemeSeeds } from '@/lib/theme';
 
@@ -13,7 +10,7 @@ import { Button } from '@/components/ui/button';
 export const dynamic = 'force-dynamic';
 
 const fetchUserLoggedinStatus = async () => {
-  const session = await getServerSession(authOptions);
+  const session = await auth();
 
   const user = session?.user;
 

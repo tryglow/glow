@@ -1,13 +1,11 @@
-import { getServerSession } from 'next-auth';
-
-import { authOptions } from '@/lib/auth';
+import { auth } from '@/lib/auth';
 
 import { Button } from '@/components/ui/button';
 
 import { LoginWidget } from '../../components/LoginWidget';
 
 export default async function NotFoundPage() {
-  const session = await getServerSession(authOptions);
+  const session = await auth();
 
   const user = session?.user;
   return (
