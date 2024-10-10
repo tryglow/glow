@@ -1,6 +1,6 @@
-import Prisma from '@prisma/client';
+import { Prisma, PrismaClient } from '@prisma/client';
 
-const prisma = new Prisma.PrismaClient();
+const prisma = new PrismaClient();
 
 // Get all of the users
 // Get all of the integrations for each user
@@ -39,6 +39,7 @@ async function main() {
     {
       maxWait: 10000, // 10 seconds max wait to connect to prisma
       timeout: 20000, // 20 seconds
+      isolationLevel: Prisma.TransactionIsolationLevel.Serializable,
     }
   );
 }
