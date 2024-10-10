@@ -1,8 +1,9 @@
 'use server';
 
+import { revalidatePath } from 'next/cache';
 import { cookies } from 'next/headers';
 
-import { auth } from '@/lib/auth';
+import { auth, unstable_update } from '@/lib/auth';
 import prisma from '@/lib/prisma';
 
 export async function switchTeam(teamId: string) {
@@ -21,14 +22,24 @@ export async function switchTeam(teamId: string) {
   });
 
   if (!checkIfUserIsInTeam) {
-    return;
+    return {
+      error: 'You are not in this team',
+    };
   }
 
-  const updatedToken = {
-    ...session?.user,
-    currentTeamId: '123',
-  };
-  cookies().set('next-auth.session-token', JSON.stringify(updatedToken));
+  try {
+    await unstable_update({
+      ...session?.user,
+      currentTeamId: teamId,
+    });
+  } catch (error) {
+    console.log('Error', error);
+    return {
+      error: 'Unable to switch team',
+    };
+  }
 
-  return;
+  return {
+    success: true,
+  };
 }

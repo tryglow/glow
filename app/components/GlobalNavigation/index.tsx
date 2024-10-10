@@ -56,10 +56,12 @@ export function GlobalNavigation({
               </Link>
 
               <div className="flex gap-2">
-                <TeamSwitcher
-                  usersTeams={usersTeams}
-                  currentTeamId={currentTeamId}
-                />
+                {usersTeams?.length && usersTeams?.length > 1 && (
+                  <TeamSwitcher
+                    usersTeams={usersTeams}
+                    currentTeamId={currentTeamId}
+                  />
+                )}
                 <PageSwitcher teamPages={teamPages} />
               </div>
               {isEditMode && (

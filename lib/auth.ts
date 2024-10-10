@@ -17,7 +17,7 @@ const temporaryTestUserForAppReview = {
   password: process.env.TMP_APP_REVIEW_USER_PASSWORD,
 };
 
-export const { auth, signIn, signOut, handlers } = NextAuth({
+export const { auth, signIn, signOut, handlers, unstable_update } = NextAuth({
   secret: process.env.NEXTAUTH_SECRET,
   adapter: PrismaAdapter(prisma),
   session: { strategy: 'jwt', maxAge: 24 * 60 * 60 },
@@ -70,6 +70,7 @@ export const { auth, signIn, signOut, handlers } = NextAuth({
       return true;
     },
     session: async ({ session, token }) => {
+      console.log('Session Call');
       if (!session.user) return session;
 
       session.user.id = token.uid;
@@ -78,7 +79,7 @@ export const { auth, signIn, signOut, handlers } = NextAuth({
       return session;
     },
     jwt: async (params) => {
-      const { user, token, trigger } = params;
+      const { user, token, trigger, session } = params;
 
       if (trigger === 'signUp' && user.id) {
         await track('signUp', {
@@ -129,6 +130,10 @@ export const { auth, signIn, signOut, handlers } = NextAuth({
         if (team?.id) {
           token.teamId = team?.id;
         }
+      }
+
+      if (trigger === 'update' && session) {
+        token.teamId = session.currentTeamId;
       }
 
       return token;

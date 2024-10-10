@@ -24,6 +24,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover';
+import { toast } from '@/components/ui/use-toast';
 
 interface Props {
   usersTeams?: Team[] | null;
@@ -33,7 +34,32 @@ interface Props {
 export function TeamSwitcher({ usersTeams, currentTeamId }: Props) {
   const [open, setOpen] = useState(false);
 
+  const router = useRouter();
   const currentTeam = usersTeams?.find((team) => team.id === currentTeamId);
+
+  const handleSwitchTeam = async (teamId: string) => {
+    if (!teamId) {
+      return;
+    }
+
+    const res = await switchTeam(teamId);
+
+    if (res?.error) {
+      toast({
+        title: 'Unable to switch team',
+        variant: 'error',
+      });
+    }
+
+    if (res?.success) {
+      toast({
+        title: 'Switching team…',
+        variant: 'default',
+      });
+
+      router.refresh();
+    }
+  };
 
   return (
     <>
@@ -50,7 +76,6 @@ export function TeamSwitcher({ usersTeams, currentTeamId }: Props) {
               <AvatarImage
                 src={`https://avatar.vercel.sh/${currentTeam?.id}.png`}
                 alt={currentTeam?.id}
-                className="grayscale"
               />
               <AvatarFallback>
                 {currentTeam?.name?.slice(0, 1).toUpperCase()}
@@ -67,22 +92,19 @@ export function TeamSwitcher({ usersTeams, currentTeamId }: Props) {
                 return (
                   <CommandItem
                     key={team.id}
-                    onSelect={async () => {
-                      await switchTeam(team.id);
-                    }}
+                    onSelect={() => handleSwitchTeam(team.id)}
                     className="text-sm"
                   >
                     <Avatar className="mr-2 h-5 w-5">
                       <AvatarImage
                         src={`https://avatar.vercel.sh/${team.id}.png`}
                         alt={team.id}
-                        className="grayscale"
                       />
                       <AvatarFallback>
                         {team?.name?.slice(0, 1).toUpperCase()}
                       </AvatarFallback>
                     </Avatar>
-                    /{team.name}
+                    {team.name}
                     <CheckIcon
                       className={cn(
                         'ml-auto h-4 w-4',
