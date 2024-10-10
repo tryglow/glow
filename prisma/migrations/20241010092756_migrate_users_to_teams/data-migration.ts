@@ -32,8 +32,6 @@ async function main() {
           },
         });
 
-        console.log('Pages for user', pages.length);
-
         // Update the page with the teamId
         for (const page of pages) {
           await tx.page.update({
@@ -49,7 +47,7 @@ async function main() {
     },
     {
       maxWait: 20000, // 10 seconds max wait to connect to prisma
-      timeout: 120000, // 2 minutes
+      timeout: 300000, // 5 minutes
       isolationLevel: Prisma.TransactionIsolationLevel.Serializable,
     }
   );

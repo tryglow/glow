@@ -17,7 +17,10 @@ async function main() {
         },
       });
 
+      console.log('Users', users.length);
+
       for (const user of users) {
+        console.log('Migrating for user', user.id);
         const integrations = await tx.integration.findMany({
           where: {
             userId: user.id,
@@ -38,7 +41,7 @@ async function main() {
     },
     {
       maxWait: 20000, // 10 seconds max wait to connect to prisma
-      timeout: 20000, // 20 seconds
+      timeout: 300000, // 5 minutes
       isolationLevel: Prisma.TransactionIsolationLevel.Serializable,
     }
   );
