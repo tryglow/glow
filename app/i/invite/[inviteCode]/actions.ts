@@ -1,5 +1,6 @@
 'use server';
 
+import { sendMemberAcceptedInvitationEmail } from '@/notifications/member-accepted-invitation';
 import { createHmac } from 'crypto';
 
 import { auth, unstable_update } from '@/lib/auth';
@@ -41,6 +42,11 @@ export async function acceptInvite(inviteCode: string) {
         select: {
           id: true,
           userId: true,
+          user: {
+            select: {
+              email: true,
+            },
+          },
         },
       },
     },
@@ -88,6 +94,15 @@ export async function acceptInvite(inviteCode: string) {
   await unstable_update({
     ...session?.user,
     currentTeamId: team.id,
+  });
+
+  const teamEmails = team.members
+    .map((member) => member.user.email)
+    .filter(Boolean) as string[];
+
+  await sendMemberAcceptedInvitationEmail({
+    teamEmails,
+    newMemberName: session.user.name || session.user.email,
   });
 
   return {
