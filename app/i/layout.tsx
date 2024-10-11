@@ -14,14 +14,19 @@ interface Props {
   children: ReactNode;
 }
 
-const fetchUserAndPages = async () => {
+const fetchCurrentTeamAndPages = async () => {
   const session = await auth();
 
-  const user = session?.user;
+  if (!session?.user) {
+    return {
+      user: null,
+      pages: [],
+    };
+  }
 
   const pages = await prisma.page.findMany({
     where: {
-      userId: user?.id,
+      teamId: session?.currentTeamId,
     },
     orderBy: {
       createdAt: 'asc',
@@ -29,20 +34,22 @@ const fetchUserAndPages = async () => {
   });
 
   return {
-    user,
     pages,
   };
 };
 
 export default async function IPageLayout({ children }: Props) {
-  const { user, pages } = await fetchUserAndPages();
+  const { pages } = await fetchCurrentTeamAndPages();
 
-  const loggedInUserRedirect = user && pages[0] ? `/${pages[0].slug}` : '/new';
+  const session = await auth();
+
+  const loggedInUserRedirect =
+    session?.user && pages[0] ? `/${pages[0].slug}` : '/new';
 
   return (
     <>
       <MarketingNavigation>
-        {user ? (
+        {session?.user ? (
           <Button asChild variant="ghost">
             <Link href={loggedInUserRedirect}>Go to app →</Link>
           </Button>
@@ -62,7 +69,7 @@ export default async function IPageLayout({ children }: Props) {
           </>
         )}
       </MarketingNavigation>
-      <main className="bg-white">{children}</main>
+      <main className="bg-white min-h-full">{children}</main>
       <MarketingFooter />
     </>
   );

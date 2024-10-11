@@ -79,6 +79,8 @@ interface Props {
   size?: 'lg' | 'md';
   onClick?: () => Promise<void>;
   disabled?: boolean;
+  shouldRedirect?: boolean;
+  redirectTo?: string;
 }
 
 export function LoginProviderButton({
@@ -88,6 +90,8 @@ export function LoginProviderButton({
   size = 'md',
   onClick,
   disabled,
+  redirectTo,
+  shouldRedirect = true,
 }: Props) {
   const prov = providerConfigs[provider];
 
@@ -102,7 +106,10 @@ export function LoginProviderButton({
         if (onClick) {
           await onClick();
         }
-        signIn(prov.id);
+        signIn(prov.id, {
+          redirect: shouldRedirect,
+          redirectTo,
+        });
       }}
       disabled={disabled}
       className={cn(

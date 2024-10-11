@@ -81,7 +81,7 @@ export function GlobalNavigation({
               {isEditMode && <ScreenSizeSwitcher />}
             </div>
             <div className="flex items-center justify-end">
-              <UserWidget />
+              <UserWidget usersTeams={usersTeams} />
             </div>
           </div>
         </div>

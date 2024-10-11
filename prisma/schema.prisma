@@ -62,16 +62,19 @@ model Team {
   pages        Page[]
   members      TeamUser[]
   integrations Integration[]
+  isPersonal   Boolean       @default(true)
+  invites      TeamInvite[]
 }
 
 model TeamUser {
-  id        String   @id @default(uuid())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  teamId    String
-  team      Team     @relation(fields: [teamId], references: [id])
-  userId    String
-  user      User     @relation(fields: [userId], references: [id])
+  id             String       @id @default(uuid())
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+  teamId         String
+  team           Team         @relation(fields: [teamId], references: [id])
+  userId         String
+  user           User         @relation(fields: [userId], references: [id])
+  claimedInvites TeamInvite[] @relation("ClaimedInvites")
 }
 
 model Page {
@@ -144,4 +147,18 @@ model InviteCode {
   assignedTo   User?    @relation("AssignedInviteCodes", fields: [assignedToId], references: [id])
   claimedById  String?
   claimedBy    User?    @relation("ClaimedInviteCodes", fields: [claimedById], references: [id])
+}
+
+model TeamInvite {
+  id          String    @id @default(uuid())
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  teamId      String
+  team        Team      @relation(fields: [teamId], references: [id])
+  email       String
+  code        String    @unique @default(uuid())
+  expiresAt   DateTime
+  claimedAt   DateTime?
+  claimedBy   TeamUser? @relation("ClaimedInvites", fields: [claimedById], references: [id])
+  claimedById String?
 }

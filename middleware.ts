@@ -60,7 +60,6 @@ export default async function middleware(req: NextRequest) {
       `/${encodeURIComponent(process.env.NEXT_PUBLIC_ROOT_DOMAIN as string)}/${slug}`,
       'http://localhost:3000'
     );
-    console.log('REWRITE URL', rewriteUrl);
 
     return NextResponse.rewrite(rewriteUrl);
   }

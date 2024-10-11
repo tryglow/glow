@@ -94,14 +94,18 @@ const featuredProfiles: {
 
 const title = ['Your', 'personal', 'page', 'that', 'is', 'always', 'current.'];
 
-const fetchUserAndPages = async () => {
+const fetchCurrentTeamPages = async () => {
   const session = await auth();
 
-  const user = session?.user;
+  if (!session?.currentTeamId) {
+    return {
+      pages: [],
+    };
+  }
 
   const pages = await prisma.page.findMany({
     where: {
-      userId: user?.id,
+      teamId: session?.currentTeamId,
     },
     orderBy: {
       createdAt: 'asc',
@@ -109,7 +113,6 @@ const fetchUserAndPages = async () => {
   });
 
   return {
-    user,
     pages,
   };
 };
@@ -122,12 +125,13 @@ export default async function LandingPage({
   const { force } = searchParams;
 
   if (!force) {
-    const { user, pages } = await fetchUserAndPages();
+    const session = await auth();
+    const { pages } = await fetchCurrentTeamPages();
 
     const loggedInUserRedirect =
-      user && pages[0] ? `/${pages[0].slug}` : '/new';
+      session?.user && pages[0] ? `/${pages[0].slug}` : '/new';
 
-    if (user) {
+    if (session?.user) {
       redirect(loggedInUserRedirect);
     }
   }

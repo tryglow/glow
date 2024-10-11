@@ -19,7 +19,7 @@ export default function MarketingNavigation({ children }: Props) {
 
   return (
     <>
-      <header className="bg-white">
+      <header className="bg-white relative z-10">
         <Container className="py-4">
           <nav className="flex items-center justify-between gap-x-6">
             <div className="flex lg:flex-1">

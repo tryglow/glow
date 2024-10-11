@@ -65,11 +65,10 @@ export const { auth, signIn, signOut, handlers, unstable_update } = NextAuth({
   ],
 
   callbacks: {
-    signIn: async () => {
+    signIn: async ({ user, account, profile, email, credentials }) => {
       return true;
     },
     session: async ({ session, token }) => {
-      console.log('Session Call');
       if (!session.user) return session;
 
       session.user.id = token.uid;
@@ -90,6 +89,7 @@ export const { auth, signIn, signOut, handlers, unstable_update } = NextAuth({
         await prisma.team.create({
           data: {
             name: 'Default Team',
+            isPersonal: true,
             members: {
               create: {
                 userId: user.id,

@@ -1,7 +1,12 @@
 'use client';
 
-import { signOut, useSession } from 'next-auth/react';
+import { Team } from '@prisma/client';
+import { useSession } from 'next-auth/react';
 import { useState } from 'react';
+
+import { EditTeamSettingsDialog } from '@/app/components/TeamSettingsDialog';
+
+import { signOut } from '@/lib/auth-actions';
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
@@ -14,15 +19,15 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 
-import { EditPageSettingsDialog } from '../../EditPageSettingsDialog';
 import { NewPageDialog } from '../../NewPageDialog';
 
-interface Props {}
+interface Props {
+  usersTeams?: Team[];
+}
 
-export function UserWidget({}: Props) {
+export function UserWidget({ usersTeams }: Props) {
   const [showNewTeamDialog, setShowNewTeamDialog] = useState(false);
-  const [showEditPageSettingsDialog, setShowEditPageSettingsDialog] =
-    useState(false);
+  const [showTeamSettingsDialog, setShowTeamSettingsDialog] = useState(false);
 
   const { data: session } = useSession();
 
@@ -58,6 +63,14 @@ export function UserWidget({}: Props) {
           </DropdownMenuLabel>
           <DropdownMenuSeparator />
 
+          {usersTeams && usersTeams?.length > 1 && (
+            <>
+              <DropdownMenuItem onClick={() => setShowTeamSettingsDialog(true)}>
+                Team settings
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
+            </>
+          )}
           <DropdownMenuItem onClick={() => signOut()}>Log out</DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
@@ -66,11 +79,11 @@ export function UserWidget({}: Props) {
         onOpenChange={setShowNewTeamDialog}
         onClose={() => setShowNewTeamDialog(false)}
       />
-      {showEditPageSettingsDialog && (
-        <EditPageSettingsDialog
-          open={true}
-          onOpenChange={setShowEditPageSettingsDialog}
-          onClose={() => setShowEditPageSettingsDialog(false)}
+      {showTeamSettingsDialog && (
+        <EditTeamSettingsDialog
+          open={showTeamSettingsDialog}
+          onOpenChange={setShowTeamSettingsDialog}
+          onClose={() => setShowTeamSettingsDialog(false)}
         />
       )}
     </>
