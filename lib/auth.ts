@@ -65,7 +65,7 @@ export const { auth, signIn, signOut, handlers, unstable_update } = NextAuth({
   ],
 
   callbacks: {
-    signIn: async ({ user, account, profile, email, credentials }) => {
+    signIn: async () => {
       return true;
     },
     session: async ({ session, token }) => {
