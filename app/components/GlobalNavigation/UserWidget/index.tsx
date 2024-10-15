@@ -7,6 +7,7 @@ import { useState } from 'react';
 import { EditTeamSettingsDialog } from '@/app/components/TeamSettingsDialog';
 
 import { signOut } from '@/lib/auth-actions';
+import { getBillingPortalLink } from '@/lib/stripe';
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
@@ -71,6 +72,18 @@ export function UserWidget({ usersTeams }: Props) {
               <DropdownMenuSeparator />
             </>
           )}
+
+          <DropdownMenuItem
+            onClick={async () => {
+              const billingPortalLink = await getBillingPortalLink();
+              if (billingPortalLink) {
+                window.open(billingPortalLink, '_blank');
+              }
+            }}
+          >
+            Manage Billing
+          </DropdownMenuItem>
+
           <DropdownMenuItem onClick={() => signOut()}>Log out</DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>

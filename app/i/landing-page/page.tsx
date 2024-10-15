@@ -129,7 +129,9 @@ export default async function LandingPage({
     const { pages } = await fetchCurrentTeamPages();
 
     const loggedInUserRedirect =
-      session?.user && pages[0] ? `/${pages[0].slug}` : '/new';
+      session?.user && pages[0]
+        ? `/${pages[0].slug}${searchParams ? `?${new URLSearchParams(searchParams).toString()}` : ''}`
+        : `/new${searchParams ? `?${new URLSearchParams(searchParams).toString()}` : ''}`;
 
     if (session?.user) {
       redirect(loggedInUserRedirect);

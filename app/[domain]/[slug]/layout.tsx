@@ -1,6 +1,11 @@
 import { Theme } from '@prisma/client';
 import Link from 'next/link';
 
+import {
+  PremiumOnboardingDialog,
+  TeamOnboardingDialog,
+} from '@/app/components/PremiumOnboardingDialog';
+
 import { auth } from '@/lib/auth';
 import prisma from '@/lib/prisma';
 import { defaultThemeSeeds } from '@/lib/theme';
@@ -86,6 +91,13 @@ export default async function PageLayout({
           --color-sys-label-tertiary: ${renderTheme.colorLabelTertiary};
         }`}
       </style>
+
+      {user && (
+        <>
+          <PremiumOnboardingDialog />
+          <TeamOnboardingDialog />
+        </>
+      )}
     </>
   );
 }

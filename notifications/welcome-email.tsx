@@ -6,7 +6,7 @@ export async function sendWelcomeEmail(email: string) {
   const oneHourFromNow = new Date(Date.now() + 1000 * 60 * 60).toISOString();
 
   await resend.emails.send({
-    from: 'Alex - Glow <alex@glow.as>',
+    from: 'Alex from Glow <alex@glow.as>',
     to: [email],
     subject: 'Re: Welcome to Glow!',
     scheduledAt: oneHourFromNow,

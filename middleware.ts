@@ -65,8 +65,10 @@ export default async function middleware(req: NextRequest) {
   }
 
   if (hostname === process.env.NEXT_PUBLIC_ROOT_DOMAIN) {
-    if (path === '/') {
-      return NextResponse.rewrite(new URL('/i/landing-page', req.url));
+    if (url.pathname === '/') {
+      const newUrl = new URL('/i/landing-page', req.url);
+      newUrl.search = url.searchParams.toString();
+      return NextResponse.rewrite(newUrl);
     }
 
     if (
