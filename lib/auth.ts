@@ -1,5 +1,6 @@
 'server only';
 
+import { createContact } from '@/notifications/create-contact';
 import { sendWelcomeEmail } from '@/notifications/welcome-email';
 import { PrismaAdapter } from '@auth/prisma-adapter';
 import { track } from '@vercel/analytics/server';
@@ -100,6 +101,7 @@ export const { auth, signIn, signOut, handlers, unstable_update } = NextAuth({
 
         // Send welcome email
         if (user.email) {
+          await createContact(user.email);
           await sendWelcomeEmail(user.email);
         }
       }
