@@ -6,6 +6,13 @@ const nextConfig = {
       destination: '/i/landing-page',
     },
   ],
+  redirects: async () => [
+    {
+      source: '/pricing',
+      destination: '/i/pricing',
+      permanent: true,
+    },
+  ],
   logging: {
     fetches: {
       fullUrl: true,
