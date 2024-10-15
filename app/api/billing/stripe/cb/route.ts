@@ -90,6 +90,20 @@ async function setupSubscription(sessionId: string) {
     );
   }
 
+  if (hasTeamAccess) {
+    await prisma.team.create({
+      data: {
+        name: 'Shared Team',
+        isPersonal: false,
+        members: {
+          create: {
+            userId: dbUser.id,
+          },
+        },
+      },
+    });
+  }
+
   return;
 }
 
