@@ -124,7 +124,7 @@ export function EditWrapper({ children, layoutProps }: Props) {
         </div>,
       ]);
 
-      await fetch('/api/page/blocks/add', {
+      const req = await fetch('/api/page/blocks/add', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -137,6 +137,17 @@ export function EditWrapper({ children, layoutProps }: Props) {
           pageSlug: params.slug,
         }),
       });
+
+      const res = await req.json();
+
+      if (res.error) {
+        toast({
+          variant: 'error',
+          title: 'Something went wrong',
+          description: res.error.message,
+        });
+        return;
+      }
 
       // Refresh the current route and fetch new data from the server without
       // losing client-side browser or React state.
@@ -236,9 +247,9 @@ export function EditWrapper({ children, layoutProps }: Props) {
         return;
       }
 
-      toast({
-        title: 'Layout saved',
-      });
+      // toast({
+      //   title: 'Layout saved',
+      // });
 
       mutateLayout(nextLayout);
     } catch (error) {

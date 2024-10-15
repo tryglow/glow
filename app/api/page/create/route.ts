@@ -100,12 +100,15 @@ export async function POST(req: Request) {
     },
   });
 
-  if (teamPages.length >= MAX_PAGES_PER_TEAM) {
+  const maxNumberOfPages =
+    user?.hasPremiumAccess || user?.hasTeamAccess ? 1000 : 2;
+
+  if (teamPages.length >= maxNumberOfPages) {
     if (!user?.isAdmin) {
       return Response.json({
         error: {
           message: 'You have reached the maximum number of pages',
-          label: 'Sorry, you can only create 10 pages per account.',
+          label: 'Please upgrade your plan to create more pages',
         },
       });
     }
