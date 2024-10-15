@@ -1,5 +1,5 @@
 import { auth } from '@/lib/auth';
-import { MAX_PAGES_PER_TEAM, createNewPage } from '@/lib/page';
+import { createNewPage } from '@/lib/page';
 import prisma from '@/lib/prisma';
 import { isForbiddenSlug, isReservedSlug, regexSlug } from '@/lib/slugs';
 
