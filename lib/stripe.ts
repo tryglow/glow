@@ -117,6 +117,7 @@ export const getCheckoutLink = async ({
         quantity: 1,
       },
     ],
+    allow_promotion_codes: true,
     mode: 'subscription',
   });
 
