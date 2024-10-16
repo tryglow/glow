@@ -246,7 +246,7 @@ export default async function LandingPage({
                 />
               </div>
               <span className="text-xs font-medium text-black/60 block mt-1">
-                Used by 400+ creators
+                Used by 1000+ creators
               </span>
             </div>
             <div className="hidden md:block md:col-span-2">
