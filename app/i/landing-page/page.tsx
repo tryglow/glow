@@ -46,12 +46,13 @@ const featuredProfiles: {
       'https://cdn.glow.as/block-606a523c-7c90-4a24-abd7-fe323718b5fd/68d83e15-6fde-4c94-810d-a1485e1af193',
     bg: '#2c2443',
   },
+
   {
-    name: 'Jonas K',
-    label: 'Wallpapers / Icons / Etsy',
-    slug: 'jonask',
+    name: 'Dmitri Tsvetkov',
+    label: 'Programmer | Entrepreneur | Founder at graspil.com',
+    slug: 'beekboff',
     avatarUrl:
-      'https://cdn.glow.as/block-db66b09e-6253-477e-b48e-7adc9f5234fa/7c98057e-f2c2-415b-bb8c-638e2a961994',
+      'https://cdn.glow.as/block-bda8e51a-9566-4fc0-88b8-0110937688b7/3155a632-e053-4c41-9d9e-a4092e98bcaf',
     bg: '#f5f5f4',
     isLight: true,
   },
@@ -72,11 +73,11 @@ const featuredProfiles: {
     bg: '#000',
   },
   {
-    name: 'Nicola Adams',
-    label: 'Student at University of Georgia',
-    slug: 'nicola_adams',
+    name: 'Jonas K',
+    label: 'Wallpapers / Icons / Etsy',
+    slug: 'jonask',
     avatarUrl:
-      'https://cdn.glow.as/block-4e8321e4-6997-4b74-92f8-5da2458ef6fb/1066a5b8-cf2f-43f6-8525-a39c82f27795',
+      'https://cdn.glow.as/block-db66b09e-6253-477e-b48e-7adc9f5234fa/7c98057e-f2c2-415b-bb8c-638e2a961994',
     bg: '#f5f5f4',
     isLight: true,
   },
