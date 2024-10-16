@@ -5,6 +5,8 @@ import { Loader2 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import * as Yup from 'yup';
 
+import { createPage } from '@/app/api/page/actions';
+
 import { regexSlug } from '@/lib/slugs';
 import { DefaultThemeNames, defaultThemeSeeds } from '@/lib/theme';
 
@@ -48,35 +50,27 @@ export function CreatePageForm({ onCancel }: Props) {
     setSubmitting(true);
 
     try {
-      const req = await fetch('/api/page/create', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          slug: values.pageSlug,
-          themeId: values.themeId,
-        }),
+      const { error, data } = await createPage({
+        slug: values.pageSlug,
+        themeId: values.themeId,
       });
 
-      const res = await req.json();
-
-      if (res?.error) {
-        console.log(res.error);
+      if (error) {
+        console.log(error);
         toast({
           variant: 'error',
-          title: res.error.message,
-          description: res.error.label,
+          title: error.message,
+          description: error.label,
         });
 
-        if (res.error.field) {
-          setFieldError(res.error.field, res.error.message);
+        if (error.field) {
+          setFieldError(error.field, error.message);
         }
         return;
       }
 
-      if (req.ok && res.data) {
-        router.push(`/${res.data.page.slug}`);
+      if (data) {
+        router.push(`/${data.page.slug}`);
         if (onCancel) {
           onCancel();
         }
