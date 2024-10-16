@@ -34,6 +34,8 @@ const fetchPageTheme = (slug: string, domain: string) => {
     select: {
       theme: true,
       backgroundImage: true,
+      publishedAt: true,
+      teamId: true,
     },
   });
 };
@@ -48,19 +50,24 @@ export default async function PageLayout({
     domain: string;
   };
 }) {
-  const { user } = await fetchUserLoggedinStatus();
+  const session = await auth();
 
   let renderTheme: Partial<Theme> = defaultThemeSeeds.Default;
 
   const page = await fetchPageTheme(params.slug, params.domain);
 
-  if (page?.theme?.id) {
-    renderTheme = page.theme;
+  const currentUserIsOwner = page?.teamId === session?.currentTeamId;
+
+  // We should only show the custom theme if the page is published or the user is logged in
+  if (page?.publishedAt || currentUserIsOwner) {
+    if (page?.theme?.id) {
+      renderTheme = page.theme;
+    }
   }
 
   return (
     <>
-      {!user && (
+      {!session?.user && (
         <Button
           variant="default"
           asChild
@@ -74,13 +81,18 @@ export default async function PageLayout({
         {children}
       </div>
 
-      {page?.backgroundImage && (
-        <style>
-          {`body {
-            background: url(${page.backgroundImage}) no-repeat center center / cover fixed;
-          }`}
-        </style>
+      {(page?.publishedAt || currentUserIsOwner) && (
+        <>
+          {page?.backgroundImage && (
+            <style>
+              {`body {
+                background: url(${page.backgroundImage}) no-repeat center center / cover fixed;
+                }`}
+            </style>
+          )}
+        </>
       )}
+
       <style>
         {`:root {
           --color-sys-bg-base: ${renderTheme.colorBgBase};
@@ -94,7 +106,7 @@ export default async function PageLayout({
         }`}
       </style>
 
-      {user && (
+      {session?.user && (
         <>
           <PremiumOnboardingDialog />
           <TeamOnboardingDialog />
