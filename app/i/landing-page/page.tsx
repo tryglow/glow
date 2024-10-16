@@ -73,6 +73,15 @@ const featuredProfiles: {
     bg: '#000',
   },
   {
+    name: 'Preeti Y.',
+    label: "I'm Preeti. Nice to meet you!",
+    slug: 'earthpyy',
+    avatarUrl:
+      'https://cdn.glow.as/block-33c6e82d-8ef3-4c37-92ec-c8fb123e1bc8/59169aa9-6524-400a-bd5e-d7b6d62e965b',
+      bg: '#f5f5f4',
+      isLight: true,
+  },
+  {
     name: 'Jonas K',
     label: 'Wallpapers / Icons / Etsy',
     slug: 'jonask',
@@ -86,10 +95,10 @@ const featuredProfiles: {
     label: 'Probably nothing...',
     slug: 'skl',
     avatarUrl:
-      'https://cdn.glow.as/block-65ddb0b7-467c-4015-bd15-2b2ff91a4b73/c7f46beb-7f9b-4034-b734-037cd38bbb34',
+    'https://cdn.glow.as/block-65ddb0b7-467c-4015-bd15-2b2ff91a4b73/c7f46beb-7f9b-4034-b734-037cd38bbb34',
     bg: '#000',
     bgImage:
-      'https://cdn.glow.as/pg-bg-42175fcd-41b6-4411-a46e-38e8f09352ad/953fee3e-0c78-400b-b195-ff461d0feeb5',
+    'https://cdn.glow.as/pg-bg-42175fcd-41b6-4411-a46e-38e8f09352ad/953fee3e-0c78-400b-b195-ff461d0feeb5',
   },
   {
     name: 'Jack',
