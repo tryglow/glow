@@ -56,9 +56,8 @@ export function PageSwitcher({ teamPages }: Props) {
           >
             <Avatar className="mr-2 h-5 w-5">
               <AvatarImage
-                src={`https://avatar.vercel.sh/${currentPage?.slug}.png`}
+                src={`https://avatar.vercel.sh/${currentPage?.id}.png`}
                 alt={currentPage?.slug}
-                className="grayscale"
               />
               <AvatarFallback>
                 {currentPage?.slug?.slice(0, 1).toUpperCase()}
@@ -84,9 +83,8 @@ export function PageSwitcher({ teamPages }: Props) {
                   >
                     <Avatar className="mr-2 h-5 w-5">
                       <AvatarImage
-                        src={`https://avatar.vercel.sh/${page.slug}.png`}
+                        src={`https://avatar.vercel.sh/${page.id}.png`}
                         alt={page.slug}
-                        className="grayscale"
                       />
                       <AvatarFallback>
                         {page?.slug?.slice(0, 1).toUpperCase()}

@@ -46,7 +46,7 @@ export default async function AcceptInvitePage({
       <div className="bg-white shadow-sm px-4 py-12 rounded-2xl border border-slate-200 text-center w-full flex flex-col items-center">
         <Avatar className="h-16 w-16 mb-4">
           <AvatarImage
-            src={`https://avatar.vercel.sh/${invite?.team.name}.png`}
+            src={`https://avatar.vercel.sh/${invite?.team.id}.png`}
             alt={invite?.team.name}
           />
           <AvatarFallback>
