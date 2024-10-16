@@ -10,13 +10,11 @@ import { deletePage } from '@/app/api/page/actions';
 
 import { Button } from '@/components/ui/button';
 import {
-  Dial,
   Dialog,
   DialogContent,
   DialogDescription,
   DialogFooter,
   DialogHeader,
-  DialogHeaderogContent,
   DialogTitle,
 } from '@/components/ui/dialog';
 import { Label } from '@/components/ui/label';
