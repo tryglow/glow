@@ -25,14 +25,9 @@ export const InstagramLogo = ({ stroke = '#fff' }) => {
 
 export const InstagramLatestPostServerUI: FunctionComponent<{
   pageId: string;
-}> = async ({ pageId }) => {
-  const data = await fetchData(pageId);
-
-  const formattedDate = data?.timestamp
-    ? formatDistance(data?.timestamp, new Date(), {
-        addSuffix: true,
-      })
-    : null;
+  numberOfPosts: number;
+}> = async ({ pageId, numberOfPosts }) => {
+  const data = await fetchData({ pageId, numberOfPosts });
 
   if (!data) {
     return (
@@ -45,22 +40,54 @@ export const InstagramLatestPostServerUI: FunctionComponent<{
   }
 
   return (
-    <>
-      <img
-        src={data?.imageUrl}
-        className="absolute w-full h-full object-cover"
-      />
-      <div className="absolute h-32 w-full bg-gradient-to-b from-transparent to-black bottom-0 z-10 px-6 py-6 flex flex-row justify-between items-end">
-        <span className="flex flex-col">
-          <span className="text-white font-bold text-base">
-            @{data?.username}
-          </span>
-          <span className="text-white/70 text-sm">Posted {formattedDate}</span>
-        </span>
-        <Link target="_blank" rel="noopener noreferrer" href={data?.link ?? ''}>
-          <InstagramLogo />
-        </Link>
+    <div className="w-full h-full overflow-x-auto snap-x snap-mandatory">
+      <div className="w-auto h-full flex flex-row gap-3">
+        {data.map((post: any) => {
+          const formattedDate = post?.timestamp
+            ? formatDistance(post?.timestamp, new Date(), {
+                addSuffix: true,
+              })
+            : null;
+          return (
+            <div
+              key={post?.imageUrl}
+              className="w-full flex-shrink-0 relative snap-center"
+            >
+              {post?.mediaType === 'video' ? (
+                <video
+                  src={post?.imageUrl}
+                  className="absolute w-full h-full object-cover"
+                  autoPlay
+                  muted
+                  loop
+                />
+              ) : (
+                <img
+                  src={post?.imageUrl}
+                  className="absolute w-full h-full object-cover"
+                />
+              )}
+              <div className="absolute h-32 w-full bg-gradient-to-b from-transparent to-black bottom-0 z-10 px-6 py-6 flex flex-row justify-between items-end">
+                <span className="flex flex-col">
+                  <span className="text-white font-bold text-base">
+                    @{post?.username}
+                  </span>
+                  <span className="text-white/70 text-sm">
+                    Posted {formattedDate}
+                  </span>
+                </span>
+                <Link
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  href={post?.link ?? ''}
+                >
+                  <InstagramLogo />
+                </Link>
+              </div>
+            </div>
+          );
+        })}
       </div>
-    </>
+    </div>
   );
 };

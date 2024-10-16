@@ -8,11 +8,12 @@ import { InstagramIntegrationConfig } from './config';
 
 function fetchLatestInstagramPost(
   accessToken: string,
-  instagramUserId: string
+  instagramUserId: string,
+  numberOfPosts: number
 ) {
   const options = {
-    limit: '1',
-    fields: 'id,media_url,permalink,username,timestamp,caption',
+    limit: numberOfPosts.toString(),
+    fields: 'id,media_url,permalink,username,timestamp,caption,media_type',
     access_token: accessToken,
   };
 
@@ -31,11 +32,13 @@ function fetchLatestInstagramPost(
 const fetchInstagramData = async (
   config: InstagramIntegrationConfig,
   isRetry: boolean,
-  integrationId: string
+  integrationId: string,
+  numberOfPosts: number
 ) => {
   const req = await fetchLatestInstagramPost(
     config.accessToken,
-    config.instagramUserId
+    config.instagramUserId,
+    numberOfPosts
   );
 
   // The access token might have expired. Try to refresh it.
@@ -64,7 +67,8 @@ const fetchInstagramData = async (
           instagramUserId: config.instagramUserId,
         },
         true,
-        integrationId
+        integrationId,
+        numberOfPosts
       );
     }
   }
@@ -72,13 +76,16 @@ const fetchInstagramData = async (
   if (req.status === 200) {
     const data = await req.json();
 
-    return {
-      imageUrl: data.data[0].media_url,
-      link: data.data[0].permalink,
-      username: data.data[0].username,
-      timestamp: data.data[0].timestamp,
-      caption: data.data[0].caption,
-    };
+    const mappedData = data.data.map((post: any) => ({
+      imageUrl: post.media_url,
+      link: post.permalink,
+      username: post.username,
+      timestamp: post.timestamp,
+      caption: post.caption,
+      mediaType: post.media_type === 'VIDEO' ? 'video' : 'image',
+    }));
+
+    return mappedData;
   }
 
   // Is this is a retry, bail out to prevent an infinite loop.
@@ -87,7 +94,13 @@ const fetchInstagramData = async (
   }
 };
 
-export const fetchData = async (pageId: string) => {
+export const fetchData = async ({
+  pageId,
+  numberOfPosts = 1,
+}: {
+  pageId: string;
+  numberOfPosts: number;
+}) => {
   try {
     const instagramIntegration = await prisma.integration.findFirst({
       where: {
@@ -126,8 +139,10 @@ export const fetchData = async (pageId: string) => {
     const instagramData = await fetchInstagramData(
       config,
       false,
-      instagramIntegration.id
+      instagramIntegration.id,
+      numberOfPosts
     );
+
     return instagramData;
   } catch (error) {
     console.log(error);

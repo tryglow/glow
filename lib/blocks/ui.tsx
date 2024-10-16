@@ -49,7 +49,12 @@ export function renderBlock(block: any, pageId: string, isEditMode: boolean) {
         <Image {...sharedProps} />
       );
     case 'instagram-latest-post':
-      return <InstagramLatestPost {...sharedProps} />;
+      return (
+        <InstagramLatestPost
+          numberOfPosts={block.data.numberOfPosts}
+          {...sharedProps}
+        />
+      );
     case 'github-commits-this-month':
       return (
         <GitHubCommitsThisMonth

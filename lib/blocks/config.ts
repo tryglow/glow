@@ -7,7 +7,10 @@ import {
 } from './github-commits-this-month/config';
 import { HeaderSchema, defaults as headerDefaults } from './header/config';
 import { ImageSchema, defaults as imageDefaults } from './image/config';
-import { defaults as instagramLatestPostDefaults } from './instagram-latest-post/config';
+import {
+  InstagramLatestPostSchema,
+  defaults as instagramLatestPostDefaults,
+} from './instagram-latest-post/config';
 import { LinkBarSchema, defaults as linkBarDefaults } from './link-bar/config';
 import { defaults as linkBoxDefaults } from './link-box/config';
 import { LinkBoxSchema } from './link-box/config';
@@ -61,7 +64,7 @@ export const blocksConfig: Record<
   },
   'instagram-latest-post': {
     defaults: instagramLatestPostDefaults,
-    schema: null,
+    schema: InstagramLatestPostSchema,
   },
   map: {
     defaults: mapDefaults,
