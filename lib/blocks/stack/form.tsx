@@ -92,6 +92,12 @@ export function EditForm({
                             id={`items.${index}.label`}
                             error={itemErrors?.label}
                           />
+                          <FormField
+                            label="Link"
+                            name={`items.${index}.link`}
+                            id={`items.${index}.link`}
+                            error={itemErrors?.link}
+                          />
                           <div>
                             <Label htmlFor={`items.${index}.image`}>Icon</Label>
 

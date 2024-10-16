@@ -22,8 +22,15 @@ export const Stack: FunctionComponent<BlockProps> = (props) => {
 
       <div className="flex flex-col gap-6 mt-6">
         {data?.items?.map((item) => {
+          const Component = item.link && !props.isEditable ? 'a' : 'div';
           return (
-            <div key={item.title} className="flex items-center gap-4">
+            <Component
+              key={item.title}
+              href={item.link ?? undefined}
+              target={item.link ? '_blank' : undefined}
+              rel={item.link ? 'noopener noreferrer' : undefined}
+              className="flex items-center gap-4"
+            >
               <img
                 src={item.icon.src}
                 alt=""
@@ -35,7 +42,7 @@ export const Stack: FunctionComponent<BlockProps> = (props) => {
                 </h3>
                 <p className="text-sys-label-secondary -mt-1">{item.label}</p>
               </div>
-            </div>
+            </Component>
           );
         })}
       </div>

@@ -6,6 +6,7 @@ export interface StackBlockConfig {
   items: {
     title: string;
     label: string;
+    link?: string;
     icon: {
       src: string;
     };
@@ -19,6 +20,7 @@ export const defaults: StackBlockConfig = {
     {
       title: 'Figma',
       label: 'Design',
+      link: 'https://figma.com',
       icon: {
         src: 'https://cdn.glow.as/default-data/figma.jpeg',
       },
@@ -26,6 +28,7 @@ export const defaults: StackBlockConfig = {
     {
       title: 'Amie',
       label: 'Productivity',
+      link: 'https://amie.so',
       icon: {
         src: 'https://cdn.glow.as/default-data/amie.jpg',
       },
@@ -33,6 +36,7 @@ export const defaults: StackBlockConfig = {
     {
       title: 'Warp',
       label: 'Engineering',
+      link: 'https://warp.dev',
       icon: {
         src: 'https://cdn.glow.as/default-data/warp.png',
       },
@@ -49,6 +53,7 @@ export const StackSchema = Yup.object().shape({
       Yup.object().shape({
         title: Yup.string().required('Please provide a title'),
         label: Yup.string().required('Please provide a label'),
+        link: Yup.string().url('Please provide a valid URL'),
         icon: Yup.object().shape({
           src: Yup.string().required('Please provide an icon URL'),
         }),
