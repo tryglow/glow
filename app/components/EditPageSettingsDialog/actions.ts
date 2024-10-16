@@ -17,6 +17,7 @@ export const fetchPageSettings = async (slug: string) => {
 
   const page = await prisma.page.findUnique({
     where: {
+      deletedAt: null,
       slug,
       userId: session.user.id,
     },
@@ -72,6 +73,7 @@ export const updateGeneralPageSettings = async (
   if (currentPageSlug !== pageSlug) {
     const existingPage = await prisma.page.findUnique({
       where: {
+        deletedAt: null,
         slug: pageSlug,
       },
     });
@@ -106,6 +108,7 @@ export const updateGeneralPageSettings = async (
 
   const page = await prisma.page.findUnique({
     where: {
+      deletedAt: null,
       team: {
         id: session.currentTeamId,
         members: {

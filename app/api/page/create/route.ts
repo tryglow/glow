@@ -34,6 +34,7 @@ export async function POST(req: Request) {
 
   const existingPage = await prisma.page.findUnique({
     where: {
+      deletedAt: null,
       slug,
     },
   });
@@ -76,6 +77,7 @@ export async function POST(req: Request) {
 
   const teamPages = await prisma.page.findMany({
     where: {
+      deletedAt: null,
       team: {
         id: session.currentTeamId,
         members: {

@@ -28,7 +28,9 @@ const fetchPageTheme = (slug: string, domain: string) => {
   const useSlug =
     decodeURIComponent(domain) === process.env.NEXT_PUBLIC_ROOT_DOMAIN;
   return prisma.page.findUnique({
-    where: useSlug ? { slug } : { customDomain: decodeURIComponent(domain) },
+    where: useSlug
+      ? { slug, deletedAt: null }
+      : { customDomain: decodeURIComponent(domain), deletedAt: null },
     select: {
       theme: true,
       backgroundImage: true,

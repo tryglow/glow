@@ -26,6 +26,7 @@ const fetchCurrentTeamAndPages = async () => {
 
   const pages = await prisma.page.findMany({
     where: {
+      deletedAt: null,
       teamId: session?.currentTeamId,
     },
     orderBy: {

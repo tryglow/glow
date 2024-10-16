@@ -26,7 +26,9 @@ const fetchData = async (slug: string, domain: string) => {
   const user = session?.user;
 
   const data = await prisma.page.findUnique({
-    where: useSlug ? { slug } : { customDomain: decodeURIComponent(domain) },
+    where: useSlug
+      ? { slug, deletedAt: null }
+      : { customDomain: decodeURIComponent(domain), deletedAt: null },
     include: {
       blocks: true,
       user: !!user,

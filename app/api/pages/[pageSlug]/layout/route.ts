@@ -16,6 +16,7 @@ export async function GET(
 
   const page = await prisma.page.findUnique({
     where: {
+      deletedAt: null,
       slug: pageSlug,
     },
   });
