@@ -201,10 +201,10 @@ export function EditForm({
       >
         {({ isSubmitting, errors }) => {
           return (
-            <Form className="w-full flex flex-col gap-2">
+            <Form className="w-full flex flex-col gap-2 mt-4">
               <FormField
                 type="number"
-                label="Number of posts"
+                label="Number of posts to show"
                 name="numberOfPosts"
                 id="numberOfPosts"
                 error={errors.numberOfPosts}
