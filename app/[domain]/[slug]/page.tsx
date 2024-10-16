@@ -89,6 +89,7 @@ const fetchTeamInfo = async () => {
 
   const currentTeamPages = await prisma.page.findMany({
     where: {
+      deletedAt: null,
       team: {
         id: session.currentTeamId,
         members: {

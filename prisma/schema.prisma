@@ -86,6 +86,7 @@ model Page {
   createdAt       DateTime  @default(now())
   updatedAt       DateTime  @updatedAt
   publishedAt     DateTime?
+  deletedAt       DateTime?
   userId          String
   user            User      @relation(fields: [userId], references: [id])
   slug            String    @unique
