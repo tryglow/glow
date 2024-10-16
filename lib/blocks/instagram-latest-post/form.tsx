@@ -1,8 +1,17 @@
+import { Form, Formik, FormikHelpers } from 'formik';
+import { Loader2 } from 'lucide-react';
 import Link from 'next/link';
 import { useState } from 'react';
 import useSWR, { useSWRConfig } from 'swr';
 
 import { InitialDataUsersIntegrations } from '@/app/[domain]/[slug]/page';
+import { FormField } from '@/app/components/FormField';
+
+import {
+  InstagramLatestPostBlockConfig,
+  InstagramLatestPostSchema,
+} from '@/lib/blocks/instagram-latest-post/config';
+import { EditFormProps } from '@/lib/blocks/types';
 
 import { Button } from '@/components/ui/button';
 import { toast } from '@/components/ui/use-toast';
@@ -68,7 +77,12 @@ const InstagramLogo = () => {
   );
 };
 
-export function EditForm() {
+export function EditForm({
+  initialValues,
+  onSave,
+  onClose,
+  blockId,
+}: EditFormProps<InstagramLatestPostBlockConfig>) {
   const [showConfirmDisconnect, setShowConfirmDisconnect] = useState(false);
   const { data: usersIntegrations } = useSWR<InitialDataUsersIntegrations>(
     '/api/user/integrations'
@@ -110,6 +124,14 @@ export function EditForm() {
     }
   };
 
+  const onSubmit = async (
+    values: InstagramLatestPostBlockConfig,
+    { setSubmitting }: FormikHelpers<InstagramLatestPostBlockConfig>
+  ) => {
+    setSubmitting(true);
+    onSave(values);
+  };
+
   if (!instagramIntegrations || instagramIntegrations?.length === 0) {
     return (
       <div className="bg-stone-100 rounded-md flex flex-col items-center text-center px-4 py-8">
@@ -136,32 +158,73 @@ export function EditForm() {
   const connectedSince = instagramIntegrations[0].createdAt;
 
   return (
-    <div className="bg-stone-100 rounded-md flex flex-col items-center text-center px-4 py-8">
-      <div className="bg-stone-200 rounded-md w-14 h-14 flex items-center justify-center">
-        <InstagramLogo />
-      </div>
-      <span className="font-medium text-lg text-stone-800 mt-3">Connected</span>
-      <span className="font-normal text-stone-600 mt-1">
-        Your Instagram account was connected on{' '}
-        {new Date(connectedSince).toLocaleDateString()}
-      </span>
-
-      {!showConfirmDisconnect && (
-        <Button onClick={() => setShowConfirmDisconnect(true)} className="mt-4">
-          Disconnect Account
-        </Button>
-      )}
-      {showConfirmDisconnect && (
-        <div className="flex gap-2 mt-4">
-          <Button onClick={handleDisconnect}>Are you sure?</Button>
-          <Button
-            variant="outline"
-            onClick={() => setShowConfirmDisconnect(false)}
-          >
-            Cancel
-          </Button>
+    <>
+      <div className="bg-stone-100 rounded-md flex flex-col items-center text-center px-4 py-8">
+        <div className="bg-stone-200 rounded-md w-14 h-14 flex items-center justify-center">
+          <InstagramLogo />
         </div>
-      )}
-    </div>
+        <span className="font-medium text-lg text-stone-800 mt-3">
+          Connected
+        </span>
+        <span className="font-normal text-stone-600 mt-1">
+          Your Instagram account was connected on{' '}
+          {new Date(connectedSince).toLocaleDateString()}
+        </span>
+
+        {!showConfirmDisconnect && (
+          <Button
+            onClick={() => setShowConfirmDisconnect(true)}
+            className="mt-4"
+          >
+            Disconnect Account
+          </Button>
+        )}
+        {showConfirmDisconnect && (
+          <div className="flex gap-2 mt-4">
+            <Button onClick={handleDisconnect}>Are you sure?</Button>
+            <Button
+              variant="outline"
+              onClick={() => setShowConfirmDisconnect(false)}
+            >
+              Cancel
+            </Button>
+          </div>
+        )}
+      </div>
+      <Formik
+        initialValues={{
+          numberOfPosts: initialValues?.numberOfPosts ?? 1,
+        }}
+        validationSchema={InstagramLatestPostSchema}
+        onSubmit={onSubmit}
+        enableReinitialize={true}
+      >
+        {({ isSubmitting, errors }) => {
+          return (
+            <Form className="w-full flex flex-col gap-2">
+              <FormField
+                type="number"
+                label="Number of posts"
+                name="numberOfPosts"
+                id="numberOfPosts"
+                error={errors.numberOfPosts}
+              />
+
+              <div className="flex flex-shrink-0 justify-between py-4 border-t border-stone-200">
+                <Button variant="secondary" onClick={onClose}>
+                  ← Cancel
+                </Button>
+                <Button type="submit">
+                  {isSubmitting && (
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  )}
+                  Save
+                </Button>
+              </div>
+            </Form>
+          );
+        }}
+      </Formik>
+    </>
   );
 }

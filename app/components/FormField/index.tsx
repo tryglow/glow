@@ -11,7 +11,7 @@ interface Props {
   label: string;
   placeholder?: string;
   fieldType?: 'input' | 'textarea' | 'select';
-  type?: 'text' | 'email';
+  type?: 'text' | 'email' | 'number';
   error?: string | undefined;
   isTextArea?: boolean;
   children?: ReactNode;

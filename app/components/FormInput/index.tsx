@@ -7,7 +7,7 @@ interface Props {
   name: string;
   id: string;
   placeholder?: string;
-  type?: 'text' | 'email';
+  type?: 'text' | 'email' | 'number';
   initialValue?: string;
   hasError?: boolean;
   ariaDescribedby?: string;
