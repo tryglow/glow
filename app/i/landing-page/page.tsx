@@ -6,6 +6,7 @@ import { redirect } from 'next/navigation';
 import { ReactNode } from 'react';
 
 import { LoginWidget } from '@/app/components/LoginWidget';
+import { SpotifyPlayingNowMockup } from '@/app/i/landing-page/ui-mockups';
 
 import { auth } from '@/lib/auth';
 import prisma from '@/lib/prisma';
@@ -407,6 +408,29 @@ export default async function LandingPage({
                   Your page will look great on mobile and desktop.
                 </p>
               </div>
+            </div>
+          </div>
+        </Container>
+      </section>
+
+      <section className="my-24 ">
+        <Container>
+          <div className="grid grid-cols-1 md:grid-cols-2 items-center gap-10">
+            <div className="w-full px-8 py-8 md:py-16 bg-gradient-to-tr from-[#4e54c8] to-[#8f94fb] rounded-xl">
+              <SpotifyPlayingNowMockup />
+            </div>
+            <div className="flex flex-col items-start gap-2">
+              <span className="text-xs font-bold uppercase bg-yellow-300 text-yellow-900 px-2 py-1 rounded-full">
+                New
+              </span>
+              <h2 className="text-3xl md:text-4xl font-semibold tracking-tight">
+                Share what you&apos;re listening to
+              </h2>
+              <p className="text-base md:text-lg text-pretty">
+                With live blocks, you can share things like what you&apos;re
+                currently listening to on Spotify, or your latest Instagram
+                post.
+              </p>
             </div>
           </div>
         </Container>
