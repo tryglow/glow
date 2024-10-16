@@ -40,7 +40,7 @@ const fetchData = async (slug: string, domain: string) => {
   if (user) {
     integrations = await prisma.integration.findMany({
       where: {
-        userId: user.id,
+        teamId: session?.currentTeamId,
       },
     });
   }

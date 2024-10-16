@@ -32,14 +32,16 @@ export async function GET(request: Request) {
 
     const existingIntegration = await prisma.integration.findFirst({
       where: {
-        userId: session.user.id,
+        teamId: session.currentTeamId,
         deletedAt: null,
         type: 'spotify',
       },
     });
 
     const newData = {
+      // To be cleaned up once userId is dropped from the integration table
       userId: session.user.id,
+      teamId: session.currentTeamId,
       type: 'spotify',
       config: {
         accessToken: json.access_token,

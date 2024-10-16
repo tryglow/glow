@@ -92,7 +92,7 @@ export const fetchData = async (pageId: string) => {
     const instagramIntegration = await prisma.integration.findFirst({
       where: {
         type: 'instagram',
-        user: {
+        team: {
           pages: {
             some: {
               id: pageId,

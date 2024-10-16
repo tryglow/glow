@@ -121,7 +121,7 @@ export const fetchData = async (pageId: string) => {
     const data = await prisma.integration.findFirst({
       where: {
         type: 'spotify',
-        user: {
+        team: {
           pages: {
             some: {
               id: pageId,
