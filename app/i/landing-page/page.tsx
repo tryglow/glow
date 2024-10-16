@@ -38,6 +38,14 @@ const featuredProfiles: {
   isLight?: boolean;
 }[] = [
   {
+    name: 'Michele Riva',
+    label: 'Co-founder and CTO @Orama. TC39 Delegate.',
+    slug: 'michele',
+    avatarUrl:
+      'https://cdn.glow.as/block-606a523c-7c90-4a24-abd7-fe323718b5fd/68d83e15-6fde-4c94-810d-a1485e1af193',
+    bg: '#2c2443',
+  },
+  {
     name: 'Jonas K',
     label: 'Wallpapers / Icons / Etsy',
     slug: 'jonask',
