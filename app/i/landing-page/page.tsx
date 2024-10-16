@@ -177,20 +177,33 @@ export default async function LandingPage({
                 you can focus on creating.
               </span>
 
-              <div className={cn('mt-4 md:mt-8', styles.ctas)}>
-                <LoginWidget
-                  isSignup
-                  trigger={
-                    <Button
-                      variant="default"
-                      size="xl"
-                      className="mt-2 md:mt-0 mb-2 font-bold flex group"
-                    >
-                      Create Your Page
-                      <ArrowRightIcon className="w-5 h-5 ml-2 -mr-6 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 group-hover:-mr-4 transition-all ease-in-out duration-200" />
-                    </Button>
-                  }
-                />
+              <div
+                className={cn(
+                  'mt-4 md:mt-8 flex flex-col items-start',
+                  styles.ctas
+                )}
+              >
+                <div className="inline-flex flex-row items-center rounded-full bg-white pl-4 border border-slate-200 shadow-sm w-auto">
+                  <span className="text-slate-600 font-medium">glow.as/</span>
+                  <input
+                    type="text"
+                    placeholder="name"
+                    className="bg-transparent border-0 px-0 focus:outline-none focus:ring-0 rounded-full"
+                  />
+                  <LoginWidget
+                    isSignup
+                    trigger={
+                      <Button
+                        variant="default"
+                        size="xl"
+                        className="font-bold flex group rounded-full"
+                      >
+                        Claim Page
+                        <ArrowRightIcon className="w-5 h-5 ml-2 -mr-6 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 group-hover:-mr-4 transition-all ease-in-out duration-200" />
+                      </Button>
+                    }
+                  />
+                </div>
                 <Button variant="link" asChild>
                   <Link
                     href="/jack"
@@ -415,18 +428,27 @@ export default async function LandingPage({
                 </p>
 
                 <div className="mt-6">
-                  <LoginWidget
-                    isSignup
-                    trigger={
-                      <Button
-                        variant="default"
-                        size="xl"
-                        className="mt-2 md:mt-0 mb-2 font-bold flex"
-                      >
-                        Get Started
-                      </Button>
-                    }
-                  />
+                  <div className="inline-flex flex-row items-center rounded-full bg-white pl-4 border border-slate-200 shadow-sm w-auto">
+                    <span className="text-slate-600 font-medium">glow.as/</span>
+                    <input
+                      type="text"
+                      placeholder="name"
+                      className="bg-transparent border-0 px-0 focus:outline-none focus:ring-0 rounded-full"
+                    />
+                    <LoginWidget
+                      isSignup
+                      trigger={
+                        <Button
+                          variant="default"
+                          size="xl"
+                          className="font-bold flex group rounded-full"
+                        >
+                          Claim Page
+                          <ArrowRightIcon className="w-5 h-5 ml-2 -mr-6 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 group-hover:-mr-4 transition-all ease-in-out duration-200" />
+                        </Button>
+                      }
+                    />
+                  </div>
                 </div>
               </div>
               <Image
