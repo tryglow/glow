@@ -1,6 +1,6 @@
 'use client';
 
-import { Prisma, Team, TeamInvite, User } from '@prisma/client';
+import { Team, TeamInvite, User } from '@prisma/client';
 import { useParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 

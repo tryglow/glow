@@ -1,4 +1,3 @@
-import { createContact } from '@/notifications/create-contact';
 import { track } from '@vercel/analytics/server';
 
 import { auth } from '@/lib/auth';

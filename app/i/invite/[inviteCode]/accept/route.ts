@@ -2,7 +2,6 @@ import { redirect } from 'next/navigation';
 import { NextRequest } from 'next/server';
 
 import { auth } from '@/lib/auth';
-import prisma from '@/lib/prisma';
 
 import { acceptInvite, verifyInviteCodeHash } from '../actions';
 

@@ -4,10 +4,8 @@ const config = {
   tabWidth: 2,
   semi: true,
   singleQuote: true,
-  importOrder: ['^@/app/(.*)$', '^@/lib/(.*)$', '^@/components/(.*)$', '^[./]'],
-  importOrderSeparation: true,
-  importOrderSortSpecifiers: true,
-  plugins: ['@trivago/prettier-plugin-sort-imports'],
+  plugins: ['prettier-plugin-organize-imports'],
+  skipDestructiveCodeActions: false,
 };
 
 module.exports = config;

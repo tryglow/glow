@@ -12,8 +12,7 @@ import {
   defaults as instagramLatestPostDefaults,
 } from './instagram-latest-post/config';
 import { LinkBarSchema, defaults as linkBarDefaults } from './link-bar/config';
-import { defaults as linkBoxDefaults } from './link-box/config';
-import { LinkBoxSchema } from './link-box/config';
+import { LinkBoxSchema, defaults as linkBoxDefaults } from './link-box/config';
 import { MapSchema, defaults as mapDefaults } from './map/config';
 import {
   SpotifyEmbedSchema,

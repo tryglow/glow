@@ -1,4 +1,4 @@
-import { Form, Formik, FormikHelpers, FormikProps } from 'formik';
+import { Form, Formik, FormikHelpers } from 'formik';
 import { Loader2 } from 'lucide-react';
 
 import { FormField } from '@/components/FormField';
