@@ -4,11 +4,11 @@ import { Team } from '@prisma/client';
 import { useSession } from 'next-auth/react';
 import { useState } from 'react';
 
-import { EditTeamSettingsDialog } from '@/components/TeamSettingsDialog';
-
 import { signOut } from '@/lib/auth-actions';
 import { getBillingPortalLink } from '@/lib/stripe';
 
+import { EditTeamSettingsDialog } from '@/components/EditTeamSettingsDialog/EditTeamSettingsDialog';
+import { NewPageDialog } from '@/components/NewPageDialog';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import {
@@ -19,8 +19,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-
-import { NewPageDialog } from '../../NewPageDialog';
 
 interface Props {
   usersTeams?: Team[];

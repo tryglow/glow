@@ -14,10 +14,9 @@ import { Button } from '@/components/ui/button';
 import { DialogFooter } from '@/components/ui/dialog';
 import { Label } from '@/components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
-import { SelectLabel } from '@/components/ui/select';
 import { useToast } from '@/components/ui/use-toast';
 
-import { FormField } from '../FormField';
+import { FormField } from './FormField';
 
 const FormSchema = Yup.object().shape({
   pageSlug: Yup.string()

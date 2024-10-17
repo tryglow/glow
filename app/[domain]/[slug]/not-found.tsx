@@ -1,8 +1,7 @@
 import { auth } from '@/lib/auth';
 
+import { LoginWidget } from '@/components/LoginWidget';
 import { Button } from '@/components/ui/button';
-
-import { LoginWidget } from '../../components/LoginWidget';
 
 export default async function NotFoundPage() {
   const session = await auth();

@@ -4,11 +4,10 @@ import { ReactNode } from 'react';
 import { auth } from '@/lib/auth';
 import prisma from '@/lib/prisma';
 
+import { LoginWidget } from '@/components/LoginWidget';
+import MarketingFooter from '@/components/MarketingFooter';
+import MarketingNavigation from '@/components/MarketingNavigation';
 import { Button } from '@/components/ui/button';
-
-import { LoginWidget } from '../components/LoginWidget';
-import MarketingFooter from '../components/MarketingFooter';
-import MarketingNavigation from '../components/MarketingNavigation';
 
 interface Props {
   children: ReactNode;

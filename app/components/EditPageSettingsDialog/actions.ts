@@ -4,8 +4,8 @@ import { auth } from '@/lib/auth';
 import prisma from '@/lib/prisma';
 import { isForbiddenSlug, isReservedSlug } from '@/lib/slugs';
 
-import { FormValues as DesignPageSettingsFormValues } from './design-settings-form';
-import { FormValues as GeneralPageSettingsFormValues } from './general-settings-form';
+import { FormValues as DesignPageSettingsFormValues } from './EditPageSettingsDesignForm';
+import { FormValues as GeneralPageSettingsFormValues } from './EditPageSettingsGeneralForm';
 import { designPageSettingsSchema, generalPageSettingsSchema } from './shared';
 
 export const fetchPageSettings = async (slug: string) => {

@@ -11,6 +11,7 @@ import { useState } from 'react';
 
 import { cn } from '@/lib/utils';
 
+import { NewPageDialog } from '@/components/NewPageDialog';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import {
@@ -27,8 +28,6 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover';
-
-import { NewPageDialog } from '../NewPageDialog';
 
 interface Props {
   teamPages?: Page[] | null;

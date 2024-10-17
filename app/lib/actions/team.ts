@@ -1,8 +1,5 @@
 'use server';
 
-import { revalidatePath } from 'next/cache';
-import { cookies } from 'next/headers';
-
 import { auth, unstable_update } from '@/lib/auth';
 import prisma from '@/lib/prisma';
 

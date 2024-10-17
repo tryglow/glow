@@ -5,7 +5,7 @@ import { AnchorHTMLAttributes, JSXElementConstructor, ReactNode } from 'react';
 import { BlockProps } from '@/lib/blocks/ui';
 import { cn } from '@/lib/utils';
 
-import { EditBlockToolbar } from '../EditBlockToolbar';
+import { EditBlockToolbar } from './EditBlockToolbar';
 
 interface Props extends BlockProps {
   className?: string;

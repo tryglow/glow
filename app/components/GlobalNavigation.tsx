@@ -9,14 +9,13 @@ import { Page, Team } from '@prisma/client';
 import Link from 'next/link';
 import { useState } from 'react';
 
-import { TeamSwitcher } from '@/components/TeamSwitcher';
 import { useEditModeContext } from '@/app/contexts/Edit';
 
+import { EditPageSettingsDialog } from '@/components/EditPageSettingsDialog/EditPageSettingsDialog';
+import { PageSwitcher } from '@/components/PageSwitcher';
+import { TeamSwitcher } from '@/components/TeamSwitcher';
+import { UserWidget } from '@/components/UserWidget';
 import { Button } from '@/components/ui/button';
-
-import { EditPageSettingsDialog } from '../EditPageSettingsDialog';
-import { PageSwitcher } from '../PageSwitcher';
-import { UserWidget } from './UserWidget';
 
 interface Props {
   teamPages: Page[] | null;

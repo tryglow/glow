@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { Blocks } from '@/lib/blocks/types';
 import { cn } from '@/lib/utils';
 
+import { DraggableBlockButton } from '@/components/DraggableBlockButton';
 import {
   Sheet,
   SheetClose,
@@ -11,8 +12,6 @@ import {
   SheetHeader,
   SheetTitle,
 } from '@/components/ui/sheet';
-
-import { DraggableBlockButton } from '../DraggableBlockButton';
 
 const BlockIcon = ({ className }: { className: string }) => {
   return (

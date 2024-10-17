@@ -13,9 +13,9 @@ import {
 } from '@/components/ui/dialog';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
+import { EditPageSettingsDesign } from './EditPageSettingsDesignForm';
+import { EditPageSettingsGeneral } from './EditPageSettingsGeneralForm';
 import { fetchPageSettings } from './actions';
-import { EditPageSettingsDesign } from './design-settings-form';
-import { EditPageSettingsGeneral } from './general-settings-form';
 
 interface Props {
   open: boolean;

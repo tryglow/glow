@@ -8,7 +8,8 @@ import { renderBlock } from '@/lib/blocks/ui';
 import prisma from '@/lib/prisma';
 import { isUserAgentMobile } from '@/lib/user-agent';
 
-import { GlowProviders } from '../../components/GlowProviders';
+import { GlowProviders } from '@/components/GlowProviders';
+
 import Grid, { PageConfig } from './grid';
 
 export const dynamic = 'force-dynamic';

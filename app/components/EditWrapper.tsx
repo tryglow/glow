@@ -20,18 +20,17 @@ import useSWR from 'swr';
 import { v4 as uuidv4 } from 'uuid';
 
 import { PageConfig } from '@/app/[domain]/[slug]/grid';
+import { useEditModeContext } from '@/app/contexts/Edit';
 
 import { cn } from '@/lib/utils';
 
+import { CoreBlock } from '@/components/CoreBlock';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useToast } from '@/components/ui/use-toast';
 
-import { useEditModeContext } from '../../contexts/Edit';
-import { CoreBlock } from '../CoreBlock';
-
 // Dynamically import BlockSheet
 const DynamicBlockSheet = dynamic(
-  () => import('../BlockSheet').then((mod) => mod.BlockSheet),
+  () => import('@/components/BlockSheet').then((mod) => mod.BlockSheet),
   { ssr: false }
 );
 

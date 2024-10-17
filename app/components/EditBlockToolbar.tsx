@@ -9,6 +9,8 @@ import { PageConfig } from '@/app/[domain]/[slug]/grid';
 
 import { Blocks } from '@/lib/blocks/types';
 
+import { config } from '@/components/DraggableBlockButton';
+import { EditForm } from '@/components/EditForm';
 import {
   Sheet,
   SheetContent,
@@ -16,9 +18,6 @@ import {
   SheetTitle,
 } from '@/components/ui/sheet';
 import { useToast } from '@/components/ui/use-toast';
-
-import { config } from '../DraggableBlockButton';
-import { EditForm } from '../EditForm';
 
 interface Props {
   blockId: string;

@@ -2,7 +2,7 @@ import { redirect } from 'next/navigation';
 
 import { auth } from '@/lib/auth';
 
-import { NewPageDialog } from '../components/NewPageDialog';
+import { NewPageDialog } from '@/components/NewPageDialog';
 
 export default async function NewPage() {
   const session = await auth();

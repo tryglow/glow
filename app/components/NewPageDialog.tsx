@@ -8,7 +8,7 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog';
 
-import { CreatePageForm } from './form';
+import { CreatePageForm } from './NewPageForm';
 
 interface Props {
   open: boolean;

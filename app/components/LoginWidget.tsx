@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 
+import { LoginProviderButton } from '@/components/LoginProviderButton';
 import {
   Dialog,
   DialogContent,
@@ -11,8 +12,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
-
-import { LoginProviderButton } from '../LoginProviderButton';
 
 interface Props {
   trigger: React.ReactNode;

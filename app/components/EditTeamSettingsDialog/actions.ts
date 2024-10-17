@@ -5,8 +5,8 @@ import { sendTeamInvitationEmail } from '@/notifications/team-invitation';
 import { auth } from '@/lib/auth';
 import prisma from '@/lib/prisma';
 
-import { FormValues } from './general-team-settings-form';
-import { TeamInviteFormValues } from './members-team-settings-form';
+import { FormValues } from './EditTeamSettingsGeneralForm';
+import { TeamInviteFormValues } from './EditTeamSettingsMembersForm';
 import { teamInviteSchema } from './shared';
 
 export const fetchTeamSettings = async () => {
