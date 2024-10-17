@@ -6,7 +6,6 @@ import Link from 'next/link';
 import { ReactNode, useState } from 'react';
 
 import { Container } from '@/app/i/landing-page/page';
-import { LoginProviderButton } from '@/components/LoginProviderButton';
 
 import { Button } from '@/components/ui/button';
 
@@ -89,12 +88,31 @@ export default function MarketingNavigation({ children }: Props) {
             </div>
             <div className="mt-6 flow-root">
               <div className="-my-6 divide-y divide-gray-500/10">
-                <div className="py-6">
-                  <div className="space-y-3">
-                    <LoginProviderButton provider="twitter" className="h-12" />
-                    <LoginProviderButton provider="google" className="h-12" />
-                  </div>
+                <div className="flex flex-col gap-2 py-6">
+                  <Button
+                    asChild
+                    variant="default"
+                    className="w-full"
+                    size="lg"
+                    onClick={() => {
+                      setMobileMenuOpen(false);
+                    }}
+                  >
+                    <Link href="/i/auth/signup">Get started</Link>
+                  </Button>
+                  <Button
+                    asChild
+                    variant="secondary"
+                    className="w-full"
+                    size="lg"
+                    onClick={() => {
+                      setMobileMenuOpen(false);
+                    }}
+                  >
+                    <Link href="/i/auth/signup">Login</Link>
+                  </Button>
                 </div>
+
                 <div className="py-6">
                   <Link
                     href="https://x.com/tryglow"

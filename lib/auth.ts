@@ -7,8 +7,11 @@ import { track } from '@vercel/analytics/server';
 import NextAuth from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import GoogleProvider from 'next-auth/providers/google';
+import ResendProvider from 'next-auth/providers/resend';
+
 import TwitterProvider from 'next-auth/providers/twitter';
 
+import { sendVerificationRequest } from '@/notifications/send-verification-request';
 import prisma from './prisma';
 
 const temporaryTestUserForAppReview = {
@@ -23,7 +26,8 @@ export const { auth, signIn, signOut, handlers, unstable_update } = NextAuth({
   adapter: PrismaAdapter(prisma),
   session: { strategy: 'jwt', maxAge: 24 * 60 * 60 },
   pages: {
-    signIn: '/',
+    signIn: '/i/auth/signup',
+    verifyRequest: '/i/auth/verify',
   },
   providers: [
     GoogleProvider({
@@ -33,6 +37,11 @@ export const { auth, signIn, signOut, handlers, unstable_update } = NextAuth({
     TwitterProvider({
       clientId: process.env.TWITTER_CLIENT_ID as string,
       clientSecret: process.env.TWITTER_CLIENT_SECRET as string,
+    }),
+    ResendProvider({
+      apiKey: process.env.RESEND_API_KEY,
+      from: 'no-reply@glow.as',
+      sendVerificationRequest,
     }),
     /**
      * This provider is used for the app review process only. Some of the

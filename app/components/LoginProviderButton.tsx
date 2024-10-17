@@ -1,9 +1,9 @@
 'use client';
 
-import { signIn } from 'next-auth/react';
 import { ReactNode } from 'react';
 
-import { cn } from '@/lib/utils';
+import { Button } from '@/app/components/ui/button';
+import { signInWithGoogle, signInWithTwitter } from '@/lib/auth-actions';
 
 type EnabledProviders = 'google' | 'twitter';
 
@@ -96,8 +96,10 @@ export function LoginProviderButton({
   const prov = providerConfigs[provider];
 
   return (
-    <button
+    <Button
       type="submit"
+      className="w-full"
+      variant="secondary"
       onClick={async () => {
         if (disabled) {
           return;
@@ -106,25 +108,19 @@ export function LoginProviderButton({
         if (onClick) {
           await onClick();
         }
-        signIn(prov.id, {
-          redirect: shouldRedirect,
-          redirectTo,
-        });
+
+        if (provider === 'google') {
+          await signInWithGoogle(redirectTo);
+        }
+
+        if (provider === 'twitter') {
+          await signInWithTwitter(redirectTo);
+        }
       }}
       disabled={disabled}
-      className={cn(
-        'flex w-full justify-center items-center border rounded-md font-semibold leading-6',
-        size === 'lg' && 'px-6 py-3 text-base',
-        size === 'md' && 'px-3 py-1.5 text-sm',
-        variant === 'default' &&
-          'border-stone-200 bg-white text-stone-800 hover:bg-stone-100',
-        variant === 'glow' && 'bg-black text-white',
-        disabled && 'opacity-20 hover:bg-white cursor-not-allowed',
-        className
-      )}
     >
       {providerIcons[provider]}
       <span className="ml-3">Continue with {prov.name}</span>
-    </button>
+    </Button>
   );
 }

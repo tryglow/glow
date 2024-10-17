@@ -2,12 +2,11 @@
 
 import { useState } from 'react';
 
-import { LoginProviderButton } from '@/components/LoginProviderButton';
+import { LoginForm } from '@/app/components/LoginForm';
 import {
   Dialog,
   DialogContent,
   DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -20,6 +19,7 @@ interface Props {
 
 export function LoginWidget({ trigger, isSignup }: Props) {
   const [open, setOpen] = useState(false);
+
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>{trigger}</DialogTrigger>
@@ -34,10 +34,8 @@ export function LoginWidget({ trigger, isSignup }: Props) {
               : 'Login to your account below.'}
           </DialogDescription>
         </DialogHeader>
-        <DialogFooter>
-          <LoginProviderButton provider="twitter" className="mt-2 md:mt-0" />
-          <LoginProviderButton provider="google" />
-        </DialogFooter>
+
+        <LoginForm onComplete={() => setOpen(false)} />
       </DialogContent>
     </Dialog>
   );
