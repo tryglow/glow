@@ -1,8 +1,8 @@
 import { Form, Formik, FormikHelpers } from 'formik';
 import { Loader2 } from 'lucide-react';
 
-import { FormField } from '@/app/components/FormField';
-import { FormFileUpload } from '@/app/components/FormFileUpload';
+import { FormField } from '@/components/FormField';
+import { FormFileUpload } from '@/components/FormFileUpload';
 
 import { Button } from '@/components/ui/button';
 

@@ -4,7 +4,7 @@ import Link from 'next/link';
 import {
   PremiumOnboardingDialog,
   TeamOnboardingDialog,
-} from '@/app/components/PremiumOnboardingDialog';
+} from '@/components/PremiumOnboardingDialog';
 
 import { auth } from '@/lib/auth';
 import prisma from '@/lib/prisma';

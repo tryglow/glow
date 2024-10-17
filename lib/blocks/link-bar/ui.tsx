@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import useSWR from 'swr';
 
-import { CoreBlock } from '@/app/components/CoreBlock';
+import { CoreBlock } from '@/components/CoreBlock';
 
 import { BlockProps } from '../ui';
 import { LinkBarBlockConfig } from './config';

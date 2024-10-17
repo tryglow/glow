@@ -5,7 +5,7 @@ import { useState } from 'react';
 import useSWR, { useSWRConfig } from 'swr';
 
 import { InitialDataUsersIntegrations } from '@/app/[domain]/[slug]/page';
-import { FormField } from '@/app/components/FormField';
+import { FormField } from '@/components/FormField';
 
 import {
   InstagramLatestPostBlockConfig,

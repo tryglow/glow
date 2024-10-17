@@ -4,8 +4,8 @@ import { Prisma, Team, TeamInvite, User } from '@prisma/client';
 import { useParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
-import { EditTeamSettingsGeneral } from '@/app/components/TeamSettingsDialog/general-team-settings-form';
-import { EditTeamSettingsMembers } from '@/app/components/TeamSettingsDialog/members-team-settings-form';
+import { EditTeamSettingsGeneral } from '@/components/TeamSettingsDialog/general-team-settings-form';
+import { EditTeamSettingsMembers } from '@/components/TeamSettingsDialog/members-team-settings-form';
 
 import {
   Dialog,

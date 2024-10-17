@@ -1,7 +1,7 @@
 import { Form, Formik, FormikHelpers, FormikProps } from 'formik';
 import { Loader2 } from 'lucide-react';
 
-import { FormField } from '@/app/components/FormField';
+import { FormField } from '@/components/FormField';
 
 import { Button } from '@/components/ui/button';
 

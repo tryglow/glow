@@ -4,7 +4,7 @@ import { FunctionComponent, useState } from 'react';
 import { useFormStatus } from 'react-dom';
 import useSWR from 'swr';
 
-import { CoreBlock } from '@/app/components/CoreBlock';
+import { CoreBlock } from '@/components/CoreBlock';
 
 import { toast } from '@/components/ui/use-toast';
 

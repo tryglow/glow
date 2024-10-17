@@ -1,6 +1,6 @@
 import { FunctionComponent, Suspense } from 'react';
 
-import { CoreBlock } from '@/app/components/CoreBlock';
+import { CoreBlock } from '@/components/CoreBlock';
 
 import { Skeleton } from '@/components/ui/skeleton';
 

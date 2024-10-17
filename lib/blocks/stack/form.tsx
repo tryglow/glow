@@ -1,9 +1,9 @@
 import { FieldArray, Form, Formik, FormikHelpers, getIn } from 'formik';
 import { Loader2 } from 'lucide-react';
 
-import { FormField } from '@/app/components/FormField';
-import { FormFileUpload } from '@/app/components/FormFileUpload';
-import { IconSelect } from '@/app/components/IconSelect';
+import { FormField } from '@/components/FormField';
+import { FormFileUpload } from '@/components/FormFileUpload';
+import { IconSelect } from '@/components/IconSelect';
 
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';

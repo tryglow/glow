@@ -5,7 +5,7 @@ import { CaretSortIcon, CheckIcon } from '@radix-ui/react-icons';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
-import { switchTeam } from '@/app/components/TeamSwitcher/actions';
+import { switchTeam } from '@/components/TeamSwitcher/actions';
 
 import { cn } from '@/lib/utils';
 

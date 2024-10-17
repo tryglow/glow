@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { ReactNode } from 'react';
 
-import { LoginWidget } from '@/app/components/LoginWidget';
+import { LoginWidget } from '@/components/LoginWidget';
 import { SpotifyPlayingNowMockup } from '@/app/i/landing-page/ui-mockups';
 
 import { auth } from '@/lib/auth';

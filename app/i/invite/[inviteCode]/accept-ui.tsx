@@ -2,7 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 
-import { LoginProviderButton } from '@/app/components/LoginProviderButton';
+import { LoginProviderButton } from '@/components/LoginProviderButton';
 
 import { Button } from '@/components/ui/button';
 import { toast } from '@/components/ui/use-toast';

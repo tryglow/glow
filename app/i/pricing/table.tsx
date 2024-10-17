@@ -2,7 +2,7 @@
 
 import { PlusIcon } from '@heroicons/react/16/solid';
 
-import { LoginWidget } from '@/app/components/LoginWidget';
+import { LoginWidget } from '@/components/LoginWidget';
 import { Container } from '@/app/i/landing-page/page';
 
 import { getCheckoutLink } from '@/lib/stripe';

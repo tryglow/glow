@@ -5,7 +5,7 @@ import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import { ReactNode, useState } from 'react';
 
-import { LoginProviderButton } from '@/app/components/LoginProviderButton';
+import { LoginProviderButton } from '@/components/LoginProviderButton';
 import { Container } from '@/app/i/landing-page/page';
 
 import { Button } from '@/components/ui/button';

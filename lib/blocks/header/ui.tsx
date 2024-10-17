@@ -4,7 +4,7 @@ import Image from 'next/image';
 import { FunctionComponent } from 'react';
 import useSWR from 'swr';
 
-import { CoreBlock } from '@/app/components/CoreBlock';
+import { CoreBlock } from '@/components/CoreBlock';
 
 import { BlockProps } from '../ui';
 import { HeaderBlockConfig } from './config';

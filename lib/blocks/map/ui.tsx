@@ -3,7 +3,7 @@
 import dynamic from 'next/dynamic';
 import useSWR from 'swr';
 
-import { CoreBlock } from '@/app/components/CoreBlock';
+import { CoreBlock } from '@/components/CoreBlock';
 
 import { BlockProps } from '../ui';
 import { MapBlockConfig } from './config';

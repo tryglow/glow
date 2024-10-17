@@ -9,7 +9,7 @@ import { Page, Team } from '@prisma/client';
 import Link from 'next/link';
 import { useState } from 'react';
 
-import { TeamSwitcher } from '@/app/components/TeamSwitcher';
+import { TeamSwitcher } from '@/components/TeamSwitcher';
 import { useEditModeContext } from '@/app/contexts/Edit';
 
 import { Button } from '@/components/ui/button';
