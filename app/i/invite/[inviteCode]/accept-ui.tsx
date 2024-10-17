@@ -2,11 +2,10 @@
 
 import { useRouter } from 'next/navigation';
 
-import { LoginProviderButton } from '@/components/LoginProviderButton';
-
 import { Button } from '@/components/ui/button';
 import { toast } from '@/components/ui/use-toast';
 
+import { LoginForm } from '@/app/components/LoginForm';
 import { acceptInvite } from './actions';
 
 export function LoggedInAcceptInviteUI({ inviteCode }: { inviteCode: string }) {
@@ -38,19 +37,8 @@ export function LoggedOutAcceptInviteUI({
   inviteCodeHash: string;
 }) {
   return (
-    <div className="gap-2 flex flex-col items-center justify-center md:flex-row w-full">
-      <LoginProviderButton
-        provider="twitter"
-        className="h-9"
-        shouldRedirect={true}
-        redirectTo={`/i/invite/${inviteCode}/accept?hash=${inviteCodeHash}`}
-      />
-      <LoginProviderButton
-        provider="google"
-        className="h-9"
-        shouldRedirect={true}
-        redirectTo={`/i/invite/${inviteCode}/accept?hash=${inviteCodeHash}`}
-      />
-    </div>
+    <LoginForm
+      redirectTo={`/i/invite/${inviteCode}/accept?hash=${inviteCodeHash}`}
+    />
   );
 }
