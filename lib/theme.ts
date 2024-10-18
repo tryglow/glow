@@ -24,13 +24,13 @@ export const defaultThemes: { id: string; name: DefaultThemeNames }[] = [
 export const defaultThemeSeeds: Record<DefaultThemeNames, any> = {
   Default: {
     id: '00441c91-6762-44d8-8110-2b5616825bd9',
-    colorBgBase: { h: 60, l: 96, s: 4.76 },
-    colorBgPrimary: { h: 0, l: 100, s: 0 },
-    colorBgSecondary: { h: 0, l: 90.2, s: 0 },
-    colorBorderPrimary: { h: 0, l: 91.76, s: 0 },
-    colorLabelPrimary: { h: 240, l: 11.37, s: 3.45 },
-    colorLabelSecondary: { h: 0, l: 16, s: 0 },
-    colorLabelTertiary: { h: 0, l: 98.04, s: 0 },
+    colorBgBase: { h: 0.06, l: 0.96, s: 0.0476 },
+    colorBgPrimary: { h: 0, l: 0.01, s: 0 },
+    colorBgSecondary: { h: 0, l: 0.902, s: 0 },
+    colorBorderPrimary: { h: 0, l: 0.9176, s: 0 },
+    colorLabelPrimary: { h: 0.024, l: 0.1137, s: 0.0345 },
+    colorLabelSecondary: { h: 0, l: 0.16, s: 0 },
+    colorLabelTertiary: { h: 0, l: 0.9804, s: 0 },
   },
   Purple: {
     id: '14fc9bdf-f363-4404-b05e-856670722fda',
@@ -111,7 +111,7 @@ export type HSLColor = {
 export const themeColorToCssValue = (color?: JsonValue): string => {
   if (!color) return '';
   const colorAsHsl = color as HSLColor;
-  return `${colorAsHsl.h} ${colorAsHsl.s}% ${colorAsHsl.l}%`;
+  return `${colorAsHsl.h} ${colorAsHsl.s * 100}% ${colorAsHsl.l * 100}%`;
 };
 
 export const hslToHex = ({ h, s, l }: HSLColor) => {
