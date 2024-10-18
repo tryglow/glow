@@ -76,6 +76,7 @@ model Team {
   integrations Integration[]
   isPersonal   Boolean       @default(true)
   invites      TeamInvite[]
+  themes       Theme[]
 }
 
 model TeamUser {
@@ -139,16 +140,20 @@ model Theme {
   id                  String   @id @default(uuid())
   createdAt           DateTime @default(now())
   updatedAt           DateTime @updatedAt
+  name                String   @default("")
+  isDefault           Boolean  @default(false)
   createdById         String
   createdBy           User     @relation(fields: [createdById], references: [id])
-  colorBgBase         String   @default("rgba(255 255 255 / 1)")
-  colorBgPrimary      String
-  colorBgSecondary    String
-  colorBorderPrimary  String
-  colorLabelPrimary   String
-  colorLabelSecondary String
-  colorLabelTertiary  String
+  colorBgBase         Json?
+  colorBgPrimary      Json?
+  colorBgSecondary    Json?
+  colorBorderPrimary  Json?
+  colorLabelPrimary   Json?
+  colorLabelSecondary Json?
+  colorLabelTertiary  Json?
   pages               Page[]
+  teamId              String?
+  team                Team?    @relation(fields: [teamId], references: [id])
 }
 
 model InviteCode {
