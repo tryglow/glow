@@ -46,7 +46,7 @@ export function EditPageSettingsDesign({
 
   const onSubmit = async (
     values: FormValues,
-    { setSubmitting, setFieldError }: FormikHelpers<FormValues>
+    { setSubmitting }: FormikHelpers<FormValues>
   ) => {
     setSubmitting(true);
 
@@ -92,9 +92,11 @@ export function EditPageSettingsDesign({
       enableReinitialize
     >
       {({ isSubmitting, values, setFieldValue, errors }) => {
-        const isSelectedThemeCustom = !currentTeamThemes?.find(
+        const currentSelectedTheme = currentTeamThemes?.find(
           (theme) => theme.id === values.themeId
-        )?.isDefault;
+        );
+
+        const isSelectedThemeCustom = currentSelectedTheme?.isDefault === false;
 
         return (
           <Form className="w-full flex flex-col">
@@ -145,13 +147,18 @@ export function EditPageSettingsDesign({
                 )}
               </div>
 
-              {showCreateNewTheme &&
-                !showEditTheme &&
-                isSelectedThemeCustom && (
-                  <section className="px-4 py-4 bg-stone-100 rounded-lg mt-4">
-                    <CreateEditThemeForm action="create" />
-                  </section>
-                )}
+              {showCreateNewTheme && !showEditTheme && (
+                <section className="px-4 py-4 bg-stone-100 rounded-lg mt-4">
+                  <CreateEditThemeForm
+                    action="create"
+                    onCreateSuccess={(newThemeId) => {
+                      setShowCreateNewTheme(false);
+                      setShowEditTheme(true);
+                      setFieldValue('themeId', newThemeId);
+                    }}
+                  />
+                </section>
+              )}
 
               {showEditTheme &&
                 !showCreateNewTheme &&

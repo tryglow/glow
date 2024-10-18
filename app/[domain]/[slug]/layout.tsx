@@ -8,11 +8,9 @@ import {
 
 import { auth } from '@/lib/auth';
 import prisma from '@/lib/prisma';
-import { defaultThemeSeeds } from '@/lib/theme';
+import { defaultThemeSeeds, themeColorToCssValue } from '@/lib/theme';
 
-import { HSLColor } from '@/app/components/EditPageSettingsDialog/shared';
 import { Button } from '@/components/ui/button';
-import { JsonValue } from '@prisma/client/runtime/library';
 
 export const dynamic = 'force-dynamic';
 
@@ -30,12 +28,6 @@ const fetchPageTheme = (slug: string, domain: string) => {
       teamId: true,
     },
   });
-};
-
-const themeColorToCssValue = (color?: JsonValue): string => {
-  if (!color) return '';
-  const colorAsHsl = color as HSLColor;
-  return `${colorAsHsl.h} ${colorAsHsl.s * 100}% ${colorAsHsl.l * 100}%`;
 };
 
 export default async function PageLayout({

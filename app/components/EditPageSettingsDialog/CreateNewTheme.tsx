@@ -6,50 +6,12 @@ import { Input } from '@/app/components/ui/input';
 import { Label } from '@/app/components/ui/label';
 import { toast } from '@/app/components/ui/use-toast';
 import { fetcher } from '@/lib/fetch';
+import { HSLColor, hslToHex, themeFields } from '@/lib/theme';
 import { Theme } from '@prisma/client';
 import { useRouter } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
 import { SketchPicker } from 'react-color';
 import useSWR, { mutate } from 'swr';
-import { HSLColor, hslToHex } from './shared';
-
-const themeFields = [
-  {
-    id: 'colorBgBase',
-    variable: 'color-sys-bg-base',
-    label: 'Page background',
-  },
-  {
-    id: 'colorBgPrimary',
-    variable: 'color-sys-bg-primary',
-    label: 'Primary background',
-  },
-  {
-    id: 'colorBgSecondary',
-    variable: 'color-sys-bg-secondary',
-    label: 'Secondary background',
-  },
-  {
-    id: 'colorLabelPrimary',
-    variable: 'color-sys-label-primary',
-    label: 'Primary text',
-  },
-  {
-    id: 'colorLabelSecondary',
-    variable: 'color-sys-label-secondary',
-    label: 'Secondary text',
-  },
-  {
-    id: 'colorLabelTertiary',
-    variable: 'color-sys-label-tertiary',
-    label: 'Tertiary text',
-  },
-  {
-    id: 'colorBorderPrimary',
-    variable: 'color-sys-border-primary',
-    label: 'Primary border',
-  },
-];
 
 type ReactColorValue = {
   hex?: string;
@@ -68,9 +30,11 @@ const defaultColor = {
 export function CreateEditThemeForm({
   action,
   editThemeId,
+  onCreateSuccess,
 }: {
   action: 'create' | 'edit';
   editThemeId?: string;
+  onCreateSuccess?: (newThemeId: string) => void;
 }) {
   const [themeName, setThemeName] = useState('');
   const router = useRouter();
@@ -149,7 +113,12 @@ export function CreateEditThemeForm({
           description: req.error,
           variant: 'destructive',
         });
+
         return;
+      }
+
+      if (req.data && onCreateSuccess) {
+        onCreateSuccess(req.data?.id);
       }
     } else if (editThemeId && action === 'edit') {
       const req = await updateTheme(editThemeId, values);

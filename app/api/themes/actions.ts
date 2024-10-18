@@ -29,7 +29,7 @@ export async function createTheme({
   }
 
   try {
-    await prisma.theme.create({
+    const newTheme = await prisma.theme.create({
       data: {
         name: themeName,
         isDefault: false,
@@ -47,6 +47,9 @@ export async function createTheme({
 
     return {
       success: true,
+      data: {
+        id: newTheme.id,
+      },
     };
   } catch (error) {
     console.error(error);
