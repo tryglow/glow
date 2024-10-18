@@ -181,38 +181,50 @@ export const PageThemePreview = ({
 }) => {
   const selectedTheme = defaultThemeSeeds[themeName];
 
+  console.log(selectedTheme);
+
   return (
     <div
       className="space-y-2 rounded-sm p-2"
-      style={{ backgroundColor: `hsl(${selectedTheme.colorBgBase})` }}
+      style={{
+        backgroundColor: `hsl(${selectedTheme.colorBgBase.h} ${selectedTheme.colorBgBase.s * 100} ${selectedTheme.colorBgBase.l * 100})`,
+      }}
     >
       <div
         className="flex items-center space-x-2 rounded-md p-2 shadow-sm"
-        style={{ backgroundColor: `hsl(${selectedTheme.colorBgPrimary})` }}
+        style={{
+          backgroundColor: `hsl(${selectedTheme.colorBgPrimary.h} ${selectedTheme.colorBgPrimary.s * 100} ${selectedTheme.colorBgPrimary.l * 100})`,
+        }}
       >
         <div
           className="h-4 w-4 rounded-full"
-          style={{ backgroundColor: `hsl(${selectedTheme.colorLabelPrimary})` }}
+          style={{
+            backgroundColor: `hsl(${selectedTheme.colorLabelPrimary.h} ${selectedTheme.colorLabelPrimary.s * 100} ${selectedTheme.colorLabelPrimary.l * 100})`,
+          }}
         />
         <div
           className="h-2 w-[100px] rounded-lg"
           style={{
-            backgroundColor: `hsl(${selectedTheme.colorLabelSecondary})`,
+            backgroundColor: `hsl(${selectedTheme.colorLabelSecondary.h} ${selectedTheme.colorLabelSecondary.s * 100} ${selectedTheme.colorLabelSecondary.l * 100})`,
           }}
         />
       </div>
       <div
         className="space-y-2 rounded-md p-2 shadow-sm"
-        style={{ backgroundColor: `hsl(${selectedTheme.colorBgPrimary})` }}
+        style={{
+          backgroundColor: `hsl(${selectedTheme.colorBgPrimary.h} ${selectedTheme.colorBgPrimary.s * 100} ${selectedTheme.colorBgPrimary.l * 100})`,
+        }}
       >
         <div
           className="h-2 w-[80px] rounded-lg"
-          style={{ backgroundColor: `hsl(${selectedTheme.colorLabelPrimary})` }}
+          style={{
+            backgroundColor: `hsl(${selectedTheme.colorLabelPrimary.h} ${selectedTheme.colorLabelPrimary.s * 100} ${selectedTheme.colorLabelPrimary.l * 100})`,
+          }}
         />
         <div
           className="h-2 w-[100px] rounded-lg"
           style={{
-            backgroundColor: `hsl(${selectedTheme.colorLabelSecondary})`,
+            backgroundColor: `hsl(${selectedTheme.colorLabelSecondary.h} ${selectedTheme.colorLabelSecondary.s * 100} ${selectedTheme.colorLabelSecondary.l * 100})`,
           }}
         />
       </div>
