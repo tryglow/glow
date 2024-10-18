@@ -90,7 +90,12 @@ export function FormFileUpload({
         <div className="flex items-center gap-2">
           <img src={uploadedFileUrl} className="w-16 h-16 rounded-md" />
 
-          <Button size="sm" variant="ghost" onClick={onRemoveFile}>
+          <Button
+            type="button"
+            size="sm"
+            variant="ghost"
+            onClick={onRemoveFile}
+          >
             Remove
           </Button>
         </div>
