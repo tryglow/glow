@@ -164,7 +164,7 @@ export default async function LandingPage({
       <section className="bg-gradient-to-b from-white to-stone-100 py-24 md:py-0">
         <Container>
           <div className="grid grid-cols-1 md:grid-cols-6 items-center">
-            <div className="md:col-span-4 pr-16">
+            <div className="md:col-span-4 md:pr-16">
               <h1
                 className={cn(
                   'text-5xl lg:text-6xl font-black text-black tracking-tight',
@@ -199,16 +199,16 @@ export default async function LandingPage({
 
               <div
                 className={cn(
-                  'mt-4 md:mt-8 flex flex-col items-start',
+                  'mt-4 md:mt-8 flex flex-col items-start w-full',
                   styles.ctas
                 )}
               >
-                <div className="inline-flex flex-row items-center rounded-full bg-white pl-4 border border-slate-200 shadow-sm w-auto">
+                <div className="w-full md:w-auto inline-flex flex-row items-center rounded-full bg-white pl-4 border border-slate-200 shadow-sm">
                   <span className="text-slate-600 font-medium">glow.as/</span>
                   <input
                     type="text"
                     placeholder="name"
-                    className="bg-transparent border-0 px-0 focus:outline-none focus:ring-0 rounded-full"
+                    className="bg-transparent border-0 px-0 focus:outline-none focus:ring-0 rounded-full w-full"
                   />
                   <LoginWidget
                     isSignup
@@ -216,7 +216,7 @@ export default async function LandingPage({
                       <Button
                         variant="default"
                         size="xl"
-                        className="font-bold flex group rounded-full"
+                        className="font-bold flex group rounded-full px-6 md:px-10"
                       >
                         Claim Page
                         <ArrowRightIcon className="w-5 h-5 ml-2 -mr-6 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 group-hover:-mr-4 transition-all ease-in-out duration-200" />
