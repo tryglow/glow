@@ -21,26 +21,28 @@ export const defaultThemes: { id: string; name: DefaultThemeNames }[] = [
   },
 ];
 
+// TODO - Fix the L/S color values to be in the correct format (divide by 100)
+
 export const defaultThemeSeeds: Record<DefaultThemeNames, any> = {
   Default: {
     id: '00441c91-6762-44d8-8110-2b5616825bd9',
-    colorBgBase: { h: 0.06, l: 0.96, s: 0.0476 },
-    colorBgPrimary: { h: 0, l: 0.01, s: 0 },
-    colorBgSecondary: { h: 0, l: 0.902, s: 0 },
-    colorBorderPrimary: { h: 0, l: 0.9176, s: 0 },
-    colorLabelPrimary: { h: 0.024, l: 0.1137, s: 0.0345 },
-    colorLabelSecondary: { h: 0, l: 0.16, s: 0 },
-    colorLabelTertiary: { h: 0, l: 0.9804, s: 0 },
+    colorBgBase: { h: 60, l: 96, s: 4.76 },
+    colorBgPrimary: { h: 0, l: 100, s: 0 },
+    colorBgSecondary: { h: 0, l: 90.2, s: 0 },
+    colorBorderPrimary: { h: 0, l: 91.76, s: 0 },
+    colorLabelPrimary: { h: 240, l: 11.37, s: 3.45 },
+    colorLabelSecondary: { h: 0, l: 16, s: 0 },
+    colorLabelTertiary: { h: 0, l: 98.04, s: 0 },
   },
   Purple: {
     id: '14fc9bdf-f363-4404-b05e-856670722fda',
-    colorBgBase: { h: 0.25548, l: 0.0202, s: 0.0301 },
-    colorBgPrimary: { h: 0.255, l: 0.0135, s: 0.029 },
+    colorBgBase: { h: 255.48, l: 20.2, s: 30.1 },
+    colorBgPrimary: { h: 255, l: 13.5, s: 29 },
     colorBgSecondary: { h: 0, l: 0, s: 0 },
-    colorBorderPrimary: { h: 0.025355, l: 0.02837, s: 0.01969 },
+    colorBorderPrimary: { h: 253.55, l: 28.37, s: 19.69 },
     colorLabelPrimary: { h: 0, l: 100, s: 0 },
-    colorLabelSecondary: { h: 0.029333, l: 0.07627, s: 0.0744 },
-    colorLabelTertiary: { h: 0, l: 0.09804, s: 0 },
+    colorLabelSecondary: { h: 293.33, l: 76.27, s: 7.44 },
+    colorLabelTertiary: { h: 0, l: 98.04, s: 0 },
   },
   Black: {
     id: '1e24ab02-9b97-4a61-9b83-fe278a41b30b',
