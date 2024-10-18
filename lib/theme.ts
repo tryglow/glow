@@ -111,7 +111,7 @@ export type HSLColor = {
 export const themeColorToCssValue = (color?: JsonValue): string => {
   if (!color) return '';
   const colorAsHsl = color as HSLColor;
-  return `${colorAsHsl.h} ${colorAsHsl.s * 100}% ${colorAsHsl.l * 100}%`;
+  return `${colorAsHsl.h}deg ${colorAsHsl.l * 100}% ${colorAsHsl.s * 100}%`;
 };
 
 export const hslToHex = ({ h, s, l }: HSLColor) => {
