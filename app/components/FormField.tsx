@@ -8,6 +8,7 @@ interface Props {
   name: string;
   id: string;
   label: string;
+  labelDetail?: ReactNode;
   placeholder?: string;
   fieldType?: 'input' | 'textarea' | 'select';
   type?: 'text' | 'email' | 'number';
@@ -15,6 +16,7 @@ interface Props {
   isTextArea?: boolean;
   children?: ReactNode;
   withPrefix?: string;
+  className?: string;
 }
 
 export function FormField({
@@ -22,16 +24,23 @@ export function FormField({
   children,
   name,
   label,
+  labelDetail,
   id,
   placeholder,
   error,
   type = 'text',
   withPrefix,
+  className,
 }: Props) {
   const InputComponent = withPrefix ? FormInputWithPrefix : FormInput;
   return (
-    <div>
-      <Label htmlFor={name}>{label}</Label>
+    <div className={className}>
+      <Label htmlFor={name}>
+        <div className="flex items-center justify-between">
+          {label}
+          {labelDetail}
+        </div>
+      </Label>
       <div className="relative mt-1 rounded-md shadow-sm">
         <InputComponent
           fieldType={fieldType}

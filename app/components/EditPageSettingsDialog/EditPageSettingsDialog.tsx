@@ -2,7 +2,7 @@
 
 import { Page } from '@prisma/client';
 import { useParams } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useTransition } from 'react';
 
 import {
   Dialog,
@@ -26,21 +26,27 @@ interface Props {
 export function EditPageSettingsDialog({ open, onOpenChange, onClose }: Props) {
   const [pageSettings, setPageSettings] = useState<Partial<Page> | null>(null);
   const params = useParams();
+  const [isPending, startTransition] = useTransition();
 
   useEffect(() => {
-    if (!params.slug) return;
+    if (open && params.slug) {
+      startTransition(async () => {
+        const [data] = await Promise.all([
+          fetchPageSettings(params.slug as string),
+        ]);
 
-    const getPageSettings = async () => {
-      const data = await fetchPageSettings(params.slug as string);
+        setPageSettings(data?.page ?? null);
+      });
+    }
+  }, [open, params.slug]);
 
-      setPageSettings(data?.page ?? null);
-    };
-
-    getPageSettings();
-  }, [params.slug]);
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent>
+      <DialogContent
+        onInteractOutside={(e) => {
+          e.preventDefault();
+        }}
+      >
         <DialogHeader>
           <DialogTitle>Page settings</DialogTitle>
           <DialogDescription>
@@ -48,37 +54,43 @@ export function EditPageSettingsDialog({ open, onOpenChange, onClose }: Props) {
           </DialogDescription>
         </DialogHeader>
 
-        <Tabs defaultValue="general" className="w-full">
-          <TabsList className="w-full">
-            <TabsTrigger value="general" className="w-1/2">
-              General
-            </TabsTrigger>
-            <TabsTrigger value="design" className="w-1/2">
-              Design
-            </TabsTrigger>
-          </TabsList>
-          <TabsContent value="general">
-            <EditPageSettingsGeneral
-              onCancel={onClose}
-              initialValues={{
-                metaTitle: pageSettings?.metaTitle ?? '',
-                pageSlug: pageSettings?.slug ?? '',
-                published: pageSettings?.publishedAt ? true : false,
-              }}
-              pageId={pageSettings?.id ?? ''}
-            />
-          </TabsContent>
-          <TabsContent value="design">
-            <EditPageSettingsDesign
-              onCancel={onClose}
-              initialValues={{
-                themeId: pageSettings?.themeId ?? '',
-                backgroundImage: pageSettings?.backgroundImage ?? '',
-              }}
-              pageId={pageSettings?.id ?? ''}
-            />
-          </TabsContent>
-        </Tabs>
+        {isPending ? (
+          <div className="flex items-center justify-center aspect-square rounded-mg bg-stone-100">
+            Loading...
+          </div>
+        ) : (
+          <Tabs defaultValue="general" className="w-full">
+            <TabsList className="w-full">
+              <TabsTrigger value="general" className="w-1/2">
+                General
+              </TabsTrigger>
+              <TabsTrigger value="design" className="w-1/2">
+                Design
+              </TabsTrigger>
+            </TabsList>
+            <TabsContent value="general">
+              <EditPageSettingsGeneral
+                onCancel={onClose}
+                initialValues={{
+                  metaTitle: pageSettings?.metaTitle ?? '',
+                  pageSlug: pageSettings?.slug ?? '',
+                  published: pageSettings?.publishedAt ? true : false,
+                }}
+                pageId={pageSettings?.id ?? ''}
+              />
+            </TabsContent>
+            <TabsContent value="design">
+              <EditPageSettingsDesign
+                onCancel={onClose}
+                initialValues={{
+                  themeId: pageSettings?.themeId ?? '',
+                  backgroundImage: pageSettings?.backgroundImage ?? '',
+                }}
+                pageId={pageSettings?.id ?? ''}
+              />
+            </TabsContent>
+          </Tabs>
+        )}
       </DialogContent>
     </Dialog>
   );

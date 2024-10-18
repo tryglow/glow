@@ -37,6 +37,41 @@ export const fetchPageSettings = async (slug: string) => {
   };
 };
 
+export const fetchTeamThemes = async () => {
+  const session = await auth();
+
+  if (!session) {
+    return {
+      error: 'Unauthorized',
+    };
+  }
+
+  const themes = await prisma.theme.findMany({
+    where: {
+      teamId: session.currentTeamId,
+    },
+    select: {
+      id: true,
+      name: true,
+    },
+  });
+
+  const defaultThemes = await prisma.theme.findMany({
+    where: {
+      isDefault: true,
+    },
+    select: {
+      id: true,
+      name: true,
+      isDefault: true,
+    },
+  });
+
+  return {
+    themes: [...defaultThemes, ...themes],
+  };
+};
+
 export const updateGeneralPageSettings = async (
   formData: GeneralPageSettingsFormValues,
   currentPageSlug: string

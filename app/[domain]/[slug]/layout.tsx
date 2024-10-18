@@ -10,19 +10,11 @@ import { auth } from '@/lib/auth';
 import prisma from '@/lib/prisma';
 import { defaultThemeSeeds } from '@/lib/theme';
 
+import { HSLColor } from '@/app/components/EditPageSettingsDialog/shared';
 import { Button } from '@/components/ui/button';
+import { JsonValue } from '@prisma/client/runtime/library';
 
 export const dynamic = 'force-dynamic';
-
-const fetchUserLoggedinStatus = async () => {
-  const session = await auth();
-
-  const user = session?.user;
-
-  return {
-    user,
-  };
-};
 
 const fetchPageTheme = (slug: string, domain: string) => {
   const useSlug =
@@ -38,6 +30,12 @@ const fetchPageTheme = (slug: string, domain: string) => {
       teamId: true,
     },
   });
+};
+
+const themeColorToCssValue = (color?: JsonValue): string => {
+  if (!color) return '';
+  const colorAsHsl = color as HSLColor;
+  return `${colorAsHsl.h} ${colorAsHsl.s * 100}% ${colorAsHsl.l * 100}%`;
 };
 
 export default async function PageLayout({
@@ -95,14 +93,14 @@ export default async function PageLayout({
 
       <style>
         {`:root {
-          --color-sys-bg-base: ${renderTheme.colorBgBase};
-          --color-sys-bg-primary: ${renderTheme.colorBgPrimary};
-          --color-sys-bg-secondary: ${renderTheme.colorBgSecondary};
-          --color-sys-bg-border: ${renderTheme.colorBorderPrimary};
+          --color-sys-bg-base: ${themeColorToCssValue(renderTheme.colorBgBase)};
+          --color-sys-bg-primary: ${themeColorToCssValue(renderTheme.colorBgPrimary)};
+          --color-sys-bg-secondary: ${themeColorToCssValue(renderTheme.colorBgSecondary)};
+          --color-sys-bg-border: ${themeColorToCssValue(renderTheme.colorBorderPrimary)};
           
-          --color-sys-label-primary: ${renderTheme.colorLabelPrimary};
-          --color-sys-label-secondary: ${renderTheme.colorLabelSecondary};
-          --color-sys-label-tertiary: ${renderTheme.colorLabelTertiary};
+          --color-sys-label-primary: ${themeColorToCssValue(renderTheme.colorLabelPrimary)};
+          --color-sys-label-secondary: ${themeColorToCssValue(renderTheme.colorLabelSecondary)};
+          --color-sys-label-tertiary: ${themeColorToCssValue(renderTheme.colorLabelTertiary)};
         }`}
       </style>
 

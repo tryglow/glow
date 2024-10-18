@@ -5,12 +5,16 @@ import { withZodSchema } from 'formik-validator-zod';
 import { Loader2 } from 'lucide-react';
 import { useParams, useRouter } from 'next/navigation';
 
-import { defaultThemes } from '@/lib/theme';
-
 import { Button } from '@/components/ui/button';
 import { DialogFooter } from '@/components/ui/dialog';
 import { useToast } from '@/components/ui/use-toast';
 
+import { CreateEditThemeForm } from '@/app/components/EditPageSettingsDialog/CreateNewTheme';
+import { fetcher } from '@/lib/fetch';
+import { PlusIcon } from '@heroicons/react/20/solid';
+import { Theme } from '@prisma/client';
+import { useState } from 'react';
+import useSWR from 'swr';
 import { FormField } from '../FormField';
 import { FormFileUpload } from '../FormFileUpload';
 import { updateDesignPageSettings } from './actions';
@@ -35,6 +39,10 @@ export function EditPageSettingsDesign({
   const params = useParams();
   const router = useRouter();
   const { toast } = useToast();
+  const [showCreateNewTheme, setShowCreateNewTheme] = useState(false);
+  const [showEditTheme, setShowEditTheme] = useState(false);
+
+  const { data: currentTeamThemes } = useSWR<Theme[]>('/api/themes', fetcher);
 
   const onSubmit = async (
     values: FormValues,
@@ -83,56 +91,108 @@ export function EditPageSettingsDesign({
       onSubmit={onSubmit}
       enableReinitialize
     >
-      {({ isSubmitting, values, setFieldValue, errors }) => (
-        <Form className="w-full flex flex-col">
-          <div className="border-b border-white/10 pb-12">
-            <div className="mt-4">
-              <FormField
-                fieldType="select"
-                label="Page theme"
-                name="themeId"
-                placeholder=""
-                id="themeId"
-                error={errors.themeId}
-              >
-                {defaultThemes.map((theme) => {
-                  return (
-                    <option value={theme.id} key={theme.id}>
-                      {theme.name}
-                    </option>
-                  );
-                })}
-              </FormField>
+      {({ isSubmitting, values, setFieldValue, errors }) => {
+        const isSelectedThemeCustom = !currentTeamThemes?.find(
+          (theme) => theme.id === values.themeId
+        )?.isDefault;
+
+        return (
+          <Form className="w-full flex flex-col">
+            <div className="border-b border-white/10 pb-12">
+              <div className="mt-4">
+                <FormField
+                  fieldType="select"
+                  label="Page theme"
+                  labelDetail={
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      className="text-sm text-indigo-600 hover:bg-transparent px-0 items-center flex"
+                      onClick={() => {
+                        setShowCreateNewTheme(true);
+                        setShowEditTheme(false);
+                      }}
+                    >
+                      <PlusIcon className="h-4 w-4 mr-1" />
+                      New theme
+                    </Button>
+                  }
+                  name="themeId"
+                  placeholder=""
+                  id="themeId"
+                  error={errors.themeId}
+                >
+                  {currentTeamThemes?.map((theme) => {
+                    return (
+                      <option value={theme.id} key={theme.id}>
+                        {theme.name}
+                      </option>
+                    );
+                  })}
+                </FormField>
+                {isSelectedThemeCustom && (
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    className="text-sm text-indigo-600 px-0"
+                    onClick={() => {
+                      setShowCreateNewTheme(false);
+                      setShowEditTheme(true);
+                    }}
+                  >
+                    Edit theme
+                  </Button>
+                )}
+              </div>
+
+              {showCreateNewTheme &&
+                !showEditTheme &&
+                isSelectedThemeCustom && (
+                  <section className="px-4 py-4 bg-stone-100 rounded-lg mt-4">
+                    <CreateEditThemeForm action="create" />
+                  </section>
+                )}
+
+              {showEditTheme &&
+                !showCreateNewTheme &&
+                isSelectedThemeCustom && (
+                  <section className="px-4 py-4 bg-stone-100 rounded-lg mt-4">
+                    <CreateEditThemeForm
+                      action="edit"
+                      editThemeId={values.themeId}
+                    />
+                  </section>
+                )}
+
+              <div className="mt-4">
+                <FormFileUpload
+                  htmlFor="page-background-image"
+                  onUploaded={(url) => setFieldValue('backgroundImage', url)}
+                  initialValue={initialValues?.backgroundImage}
+                  referenceId={pageId}
+                  label="Background image"
+                  assetContext="pageBackgroundImage"
+                  isCondensed
+                />
+              </div>
             </div>
 
-            <div className="mt-4">
-              <FormFileUpload
-                htmlFor="page-background-image"
-                onUploaded={(url) => setFieldValue('backgroundImage', url)}
-                initialValue={initialValues?.backgroundImage}
-                referenceId={pageId}
-                label="Background image"
-                assetContext="pageBackgroundImage"
-                isCondensed
-              />
-            </div>
-          </div>
-
-          <DialogFooter>
-            {onCancel && (
-              <Button variant="secondary" onClick={onCancel}>
-                ← Cancel
-              </Button>
-            )}
-            <Button type="submit">
-              {isSubmitting && (
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+            <DialogFooter>
+              {onCancel && (
+                <Button variant="secondary" onClick={onCancel}>
+                  ← Cancel
+                </Button>
               )}
-              Save Settings
-            </Button>
-          </DialogFooter>
-        </Form>
-      )}
+              <Button type="submit">
+                {isSubmitting && (
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                )}
+                Save Settings
+              </Button>
+            </DialogFooter>
+          </Form>
+        );
+      }}
     </Formik>
   );
 }
