@@ -15,7 +15,7 @@ export async function GET(
     });
   }
 
-  const page = await getPageSettings(params.pageSlug);
+  const page = await getPageSettings({ slug: params.pageSlug });
 
   if (!page) {
     return Response.json({

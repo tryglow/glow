@@ -12,7 +12,7 @@ export async function GET(
     hostname = 'localhost:3000';
   }
 
-  const page = await getPageTheme(params.pageSlug, hostname);
+  const page = await getPageTheme({ slug: params.pageSlug, domain: hostname });
 
   if (!page) {
     return Response.json({

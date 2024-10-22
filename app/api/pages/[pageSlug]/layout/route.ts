@@ -14,7 +14,7 @@ export async function GET(
     });
   }
 
-  const page = await getPageLayout(pageSlug);
+  const page = await getPageLayout({ slug: pageSlug });
 
   if (!page) {
     return Response.json({
