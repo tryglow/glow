@@ -84,12 +84,19 @@ export const { auth, signIn, signOut, handlers, unstable_update } = NextAuth({
       session.user.id = token.uid;
       session.currentTeamId = token.teamId;
 
+      session.features = {
+        showGlowTour: token?.features?.showGlowTour,
+      };
+
       return session;
     },
     jwt: async (params) => {
       const { user, token, trigger, session } = params;
 
       if (trigger === 'signUp' && user.id) {
+        // Show the tour
+        token.features = { showGlowTour: true };
+
         await track('signUp', {
           userId: user.id,
           provider: params.account?.provider ?? 'unknown',
@@ -144,6 +151,7 @@ export const { auth, signIn, signOut, handlers, unstable_update } = NextAuth({
 
       if (trigger === 'update' && session) {
         token.teamId = session.currentTeamId;
+        token.features.showGlowTour = session.features.showGlowTour;
       }
 
       return token;

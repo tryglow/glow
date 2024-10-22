@@ -14,6 +14,7 @@ import { getPageSettings } from '@/app/api/pages/[pageSlug]/settings/actions';
 import { getPageTheme } from '@/app/api/pages/[pageSlug]/theme/actions';
 import { getTeamIntegrations } from '@/app/api/user/integrations/actions';
 import { GlowProviders } from '@/app/components/GlowProviders';
+import { UserOnboardingDialog } from '@/app/components/UserOnboardingDialog';
 import { Button } from '@/components/ui/button';
 import { notFound } from 'next/navigation';
 
@@ -159,6 +160,7 @@ export default async function PageLayout({
         <>
           <PremiumOnboardingDialog />
           <TeamOnboardingDialog />
+          <UserOnboardingDialog />
         </>
       )}
     </GlowProviders>

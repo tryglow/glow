@@ -1,11 +1,14 @@
-import NextAuth from 'next-auth';
-import { JWT } from 'next-auth/jwt';
+import 'next-auth';
+import 'next-auth/jwt';
 
 declare module 'next-auth/jwt' {
   /** Returned by the `jwt` callback and `getToken`, when using JWT sessions */
   interface JWT {
     uid: string;
     teamId: string;
+    features: {
+      showGlowTour?: boolean;
+    };
   }
 }
 
@@ -21,5 +24,8 @@ declare module 'next-auth' {
       image: string;
     };
     currentTeamId: string;
+    features: {
+      showGlowTour?: boolean;
+    };
   }
 }
