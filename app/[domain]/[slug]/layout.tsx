@@ -132,7 +132,7 @@ export default async function PageLayout({
 
       {pageTheme?.publishedAt && !currentUserIsOwner ? (
         <main className="bg-sys-bg-base">
-          <div className="w-full max-w-[768px] mx-auto px-3 md:px-6 gap-3 pt-16 pb-8">
+          <div className="w-full max-w-[672px] mx-auto px-3 md:px-6 gap-3 pt-16 pb-8">
             {children}
           </div>
         </main>
