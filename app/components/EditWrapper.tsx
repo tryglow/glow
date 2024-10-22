@@ -1,5 +1,5 @@
 'use client';
-
+import { enableDragDropTouch } from '@/lib/polyfills/drag-drop-touch.esm.min.js';
 import { useParams, useRouter } from 'next/navigation';
 import {
   ReactNode,
@@ -32,9 +32,10 @@ interface Props {
   layoutProps: ResponsiveProps;
 }
 
+// Enable touch support for drag and drop
+enableDragDropTouch();
 export function EditWrapper({ children, layoutProps }: Props) {
-  const { draggingItem, editLayoutMode, nextToAddBlock, setNextToAddBlock } =
-    useEditModeContext();
+  const { draggingItem, editLayoutMode, nextToAddBlock } = useEditModeContext();
   const router = useRouter();
   const params = useParams();
   const { toast } = useToast();
