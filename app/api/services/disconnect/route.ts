@@ -1,6 +1,6 @@
 import { track } from '@vercel/analytics/server';
 
-import { auth } from '@/lib/auth';
+import { auth } from '@/app/lib/auth';
 import prisma from '@/lib/prisma';
 
 export async function POST(request: Request) {

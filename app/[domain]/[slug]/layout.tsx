@@ -5,7 +5,7 @@ import {
   TeamOnboardingDialog,
 } from '@/components/PremiumOnboardingDialog';
 
-import { auth } from '@/lib/auth';
+import { auth } from '@/app/lib/auth';
 import prisma from '@/lib/prisma';
 
 import { RenderPageTheme } from '@/app/[domain]/[slug]/render-page-theme';

@@ -1,7 +1,7 @@
 import { track } from '@vercel/analytics/server';
 import { randomUUID } from 'crypto';
 
-import { auth } from '@/lib/auth';
+import { auth } from '@/app/lib/auth';
 
 import { defaults as headerDefaults } from './blocks/header/config';
 import prisma from './prisma';

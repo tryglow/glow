@@ -1,4 +1,4 @@
-import { auth } from '@/lib/auth';
+import { auth } from '@/app/lib/auth';
 
 import { LoginWidget } from '@/components/LoginWidget';
 import { Button } from '@/components/ui/button';

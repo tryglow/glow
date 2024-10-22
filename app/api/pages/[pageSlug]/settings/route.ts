@@ -1,4 +1,4 @@
-import { auth } from '@/lib/auth';
+import { auth } from '@/app/lib/auth';
 import { getPageSettings } from './actions';
 
 export async function GET(

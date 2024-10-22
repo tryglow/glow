@@ -1,6 +1,6 @@
 'use server';
 
-import { auth, unstable_update } from '@/lib/auth';
+import { auth, unstable_update } from '@/app/lib/auth';
 import prisma from '@/lib/prisma';
 
 export async function switchTeam(teamId: string) {

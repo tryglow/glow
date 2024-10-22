@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { ReactNode } from 'react';
 
-import { auth } from '@/lib/auth';
+import { auth } from '@/app/lib/auth';
 import prisma from '@/lib/prisma';
 
 import { LoginWidget } from '@/components/LoginWidget';

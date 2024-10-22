@@ -2,7 +2,7 @@
 
 import stripe from 'stripe';
 
-import { auth } from '@/lib/auth';
+import { auth } from '@/app/lib/auth';
 import prisma from '@/lib/prisma';
 import { prices } from '@/lib/stripe-prices';
 

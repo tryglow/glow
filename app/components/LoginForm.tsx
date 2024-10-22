@@ -7,7 +7,7 @@ import { Input } from '@/app/components/ui/input';
 import { toast } from '@/app/components/ui/use-toast';
 import { LoginProviderButton } from '@/components/LoginProviderButton';
 
-import { signInWithEmail } from '@/lib/auth-actions';
+import { signInWithEmail } from '@/app/lib/auth-actions';
 
 interface Props {
   onComplete?: () => void;

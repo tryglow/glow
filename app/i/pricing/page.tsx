@@ -1,7 +1,7 @@
 import { Container } from '@/app/i/landing-page/page';
 import { PricingTable } from '@/app/i/pricing/table';
 
-import { auth } from '@/lib/auth';
+import { auth } from '@/app/lib/auth';
 
 export default async function PricingPage() {
   const session = await auth();

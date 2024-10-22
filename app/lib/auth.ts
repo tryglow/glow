@@ -11,8 +11,8 @@ import ResendProvider from 'next-auth/providers/resend';
 
 import TwitterProvider from 'next-auth/providers/twitter';
 
+import prisma from '@/lib/prisma';
 import { sendVerificationRequest } from '@/notifications/send-verification-request';
-import prisma from './prisma';
 
 const temporaryTestUserForAppReview = {
   id: process.env.TMP_APP_REVIEW_USER_ID as string,

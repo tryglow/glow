@@ -8,7 +8,7 @@ import { ReactNode } from 'react';
 import { SpotifyPlayingNowMockup } from '@/app/i/landing-page/ui-mockups';
 import { LoginWidget } from '@/components/LoginWidget';
 
-import { auth } from '@/lib/auth';
+import { auth } from '@/app/lib/auth';
 import prisma from '@/lib/prisma';
 import { cn } from '@/lib/utils';
 

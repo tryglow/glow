@@ -1,7 +1,7 @@
 'use server';
 
 import { ThemeData } from '@/app/components/EditPageSettingsDialog/shared';
-import { auth } from '@/lib/auth';
+import { auth } from '@/app/lib/auth';
 import prisma from '@/lib/prisma';
 
 export async function createTheme({

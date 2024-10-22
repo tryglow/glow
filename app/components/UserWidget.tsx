@@ -4,7 +4,7 @@ import { Team } from '@prisma/client';
 import { useSession } from 'next-auth/react';
 import { useState } from 'react';
 
-import { signOut } from '@/lib/auth-actions';
+import { signOut } from '@/app/lib/auth-actions';
 import { getBillingPortalLink } from '@/lib/stripe';
 
 import { EditTeamSettingsDialog } from '@/components/EditTeamSettingsDialog/EditTeamSettingsDialog';

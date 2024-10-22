@@ -1,7 +1,7 @@
 import { redirect } from 'next/navigation';
 import { NextRequest } from 'next/server';
 
-import { auth } from '@/lib/auth';
+import { auth } from '@/app/lib/auth';
 
 import { acceptInvite, verifyInviteCodeHash } from '../actions';
 

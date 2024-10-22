@@ -33,6 +33,7 @@ const pageMenuItems: {
   label: string;
   viewId: SidebarView;
   icon: React.ElementType;
+  id?: string;
 }[] = [
   {
     label: 'Blocks',
@@ -48,6 +49,7 @@ const pageMenuItems: {
     label: 'Settings',
     viewId: 'settings',
     icon: Cog,
+    id: 'tour-settings',
   },
   {
     label: 'Integrations',
@@ -138,6 +140,7 @@ export function EditSidebar({
                               setOpen(true);
                               setSidebarView(menuItem.viewId);
                             }}
+                            id={menuItem.id}
                             isActive={sidebarView === menuItem.viewId}
                           >
                             <menuItem.icon />

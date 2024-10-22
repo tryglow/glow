@@ -52,6 +52,7 @@ export function PageSwitcher({ teamPages }: Props) {
             aria-expanded={open}
             aria-label="Select a team"
             className="md:w-[200px] justify-between"
+            id="tour-page-switcher"
           >
             <Avatar className="mr-2 h-5 w-5">
               <AvatarImage

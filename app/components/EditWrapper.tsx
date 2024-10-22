@@ -27,6 +27,7 @@ import { cn } from '@/lib/utils';
 import { CoreBlock } from '@/components/CoreBlock';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useToast } from '@/components/ui/use-toast';
+import { useTour } from '@reactour/tour';
 
 // Dynamically import BlockSheet
 const DynamicBlockSheet = dynamic(
@@ -45,6 +46,7 @@ export function EditWrapper({ children, layoutProps }: Props) {
   const router = useRouter();
   const params = useParams();
   const { toast } = useToast();
+  const { setIsOpen } = useTour();
   const { data: layout, mutate: mutateLayout } = useSWR<PageConfig>(
     `/api/pages/${params.slug}/layout`
   );
@@ -277,6 +279,7 @@ export function EditWrapper({ children, layoutProps }: Props) {
           editLayoutMode === 'mobile' ? 'max-w-[400px]' : 'max-w-[624px]'
         )}
       >
+        <button onClick={() => setIsOpen(true)}>Open tour</button>
         <ResponsiveReactGridLayout
           {...editableLayoutProps}
           className="!overflow-auto w-full min-h-[100vh]"

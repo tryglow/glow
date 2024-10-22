@@ -749,12 +749,14 @@ SidebarMenuSubButton.displayName = 'SidebarMenuSubButton';
 const SidebarContentHeader = ({
   title,
   children,
+  id,
 }: {
   title: string;
   children?: React.ReactNode;
+  id?: string;
 }) => {
   return (
-    <div className="md:sticky top-0 z-10 bg-white border-b py-3 px-4">
+    <div className="md:sticky top-0 z-10 bg-white border-b py-3 px-4" id={id}>
       <h4 className="text-lg font-bold tracking-tight text-foreground">
         {title}
       </h4>

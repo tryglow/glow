@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 
-import { auth } from '@/lib/auth';
+import { auth } from '@/app/lib/auth';
 import { SpotifyIntegrationConfig } from '@/lib/blocks/spotify-playing-now/config';
 import prisma from '@/lib/prisma';
 

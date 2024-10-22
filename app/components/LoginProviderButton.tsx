@@ -3,7 +3,7 @@
 import { ReactNode } from 'react';
 
 import { Button } from '@/app/components/ui/button';
-import { signInWithGoogle, signInWithTwitter } from '@/lib/auth-actions';
+import { signInWithGoogle, signInWithTwitter } from '@/app/lib/auth-actions';
 
 type EnabledProviders = 'google' | 'twitter';
 

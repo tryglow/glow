@@ -1,6 +1,6 @@
 import { redirect } from 'next/navigation';
 
-import { auth } from '@/lib/auth';
+import { auth } from '@/app/lib/auth';
 
 import { NewPageDialog } from '@/components/NewPageDialog';
 

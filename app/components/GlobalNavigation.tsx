@@ -96,7 +96,10 @@ function ScreenSizeSwitcher() {
   const { editLayoutMode, setEditLayoutMode } = useEditModeContext();
 
   return (
-    <div className="inline-flex w-auto h-9 items-center justify-center rounded-lg bg-muted p-1 text-muted-foreground">
+    <div
+      className="inline-flex w-auto h-9 items-center justify-center rounded-lg bg-muted p-1 text-muted-foreground"
+      id="tour-screen-size-switcher"
+    >
       <button
         type="button"
         role="tab"

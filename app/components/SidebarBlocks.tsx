@@ -54,7 +54,7 @@ export function SidebarBlocks() {
         <SidebarGroupContent>
           <SidebarMenu>
             <div className="overflow-y-auto overscroll-none">
-              <div className="space-y-2 flex flex-col">
+              <div className="space-y-2 flex flex-col" id="tour-blocks">
                 {filteredBlocks.map((block) => {
                   return <DraggableBlockButton key={block} type={block} />;
                 })}

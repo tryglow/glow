@@ -3,6 +3,7 @@
 import { ChevronsUpDown } from 'lucide-react';
 
 import { EditTeamSettingsDialog } from '@/app/components/EditTeamSettingsDialog/EditTeamSettingsDialog';
+import { signOut } from '@/app/lib/auth-actions';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import {
   DropdownMenu,
@@ -18,7 +19,6 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from '@/components/ui/sidebar';
-import { signOut } from '@/lib/auth-actions';
 import { getBillingPortalLink } from '@/lib/stripe';
 import { Team } from '@prisma/client';
 import { useSession } from 'next-auth/react';

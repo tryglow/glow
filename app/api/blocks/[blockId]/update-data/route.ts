@@ -1,6 +1,6 @@
 import { ValidationError } from 'yup';
 
-import { auth } from '@/lib/auth';
+import { auth } from '@/app/lib/auth';
 import { blocksConfig } from '@/lib/blocks/config';
 import { Blocks } from '@/lib/blocks/types';
 import prisma from '@/lib/prisma';
