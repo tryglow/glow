@@ -4,8 +4,6 @@ export const submitSignupToWaitlistCom = async (formData: FormData) => {
   const email = formData.get('email') as string;
   const waitlistId = formData.get('waitlist_id') as string;
 
-  console.log('FORMDATA', formData);
-
   if (!email) {
     return {
       errors: 'Email is required',
