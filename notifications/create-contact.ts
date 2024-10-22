@@ -1,4 +1,5 @@
-'server only';
+import 'server-only';
+
 import { Resend } from 'resend';
 
 export async function createContact(email: string) {

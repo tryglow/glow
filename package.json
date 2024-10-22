@@ -65,6 +65,7 @@
     "react-grid-layout": "^1.4.4",
     "resend": "^4.0.0",
     "sass": "^1.77.8",
+    "server-only": "^0.0.1",
     "sharp": "0.33.4",
     "stripe": "^17.2.0",
     "swr": "^2.2.5",

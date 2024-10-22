@@ -1,4 +1,4 @@
-'server only';
+import 'server-only';
 
 import { createContact } from '@/notifications/create-contact';
 import { sendWelcomeEmail } from '@/notifications/welcome-email';
