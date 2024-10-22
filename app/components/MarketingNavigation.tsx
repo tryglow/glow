@@ -8,6 +8,8 @@ import { ReactNode, useState } from 'react';
 import { Container } from '@/app/i/landing-page/page';
 
 import { Button } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
+import { usePathname } from 'next/navigation';
 
 interface Props {
   children: ReactNode;
@@ -15,10 +17,16 @@ interface Props {
 
 export default function MarketingNavigation({ children }: Props) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const pathname = usePathname();
 
   return (
     <>
-      <header className="bg-white relative z-10">
+      <header
+        className={cn(
+          'bg-white relative z-10',
+          pathname === '/' && 'bg-[#bbb5ff]'
+        )}
+      >
         <Container className="py-4">
           <nav className="flex items-center justify-between gap-x-6">
             <div className="flex lg:flex-1">

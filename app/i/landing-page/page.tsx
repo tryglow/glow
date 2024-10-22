@@ -169,7 +169,7 @@ export default async function LandingPage({
   return (
     <div className="min-h-screen">
       <ShowLoginAlert />
-      <section className="bg-gradient-to-b from-white to-stone-100 py-24 md:py-0">
+      <section className="bg-gradient-to-b from-[#bbb5ff] to-[#f4cbdc] py-24 md:py-0">
         <Container>
           <div className="grid grid-cols-1 md:grid-cols-6 items-center">
             <div className="md:col-span-4 md:pr-16">
@@ -185,8 +185,8 @@ export default async function LandingPage({
                       key={word}
                       className={
                         ['personal', 'page'].includes(word)
-                          ? 'text-[#FF4F17]'
-                          : ''
+                          ? 'text-white'
+                          : 'text-[#241f3d]'
                       }
                     >
                       {word}
@@ -196,7 +196,7 @@ export default async function LandingPage({
               </h1>
               <span
                 className={cn(
-                  'text-xl md:text-2xl font-normal mt-3 md:mt-6 text-black/80',
+                  'text-xl md:text-2xl font-normal mt-3 md:mt-4 block text-[#241f3d]/80',
                   styles.subtitle
                 )}
               >
