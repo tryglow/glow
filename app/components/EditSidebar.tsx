@@ -9,7 +9,6 @@ import {
   Palette,
 } from 'lucide-react';
 
-import { EditPageSettingsDialog } from '@/app/components/EditPageSettingsDialog/EditPageSettingsDialog';
 import { SidebarForms } from '@/app/components/SidebarForms';
 import {
   Sidebar,
@@ -79,7 +78,6 @@ type SidebarView =
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { setOpen, isMobile } = useSidebar();
   const [sidebarView, setSidebarView] = useState<SidebarView>('blocks');
-  const [showPageSettingsDialog, setShowPageSettingsDialog] = useState(false);
 
   const { currentEditingBlock } = useEditModeContext();
 
@@ -171,14 +169,6 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           </SidebarContent>
         </Sidebar>
       </Sidebar>
-
-      {showPageSettingsDialog && (
-        <EditPageSettingsDialog
-          open={true}
-          onOpenChange={setShowPageSettingsDialog}
-          onClose={() => setShowPageSettingsDialog(false)}
-        />
-      )}
     </>
   );
 }

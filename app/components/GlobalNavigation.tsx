@@ -6,13 +6,11 @@ import {
 } from '@heroicons/react/24/outline';
 import { Page, Team } from '@prisma/client';
 import Link from 'next/link';
-import { useState } from 'react';
 
 import { useEditModeContext } from '@/app/contexts/Edit';
 
 import { Button } from '@/app/components/ui/button';
 import { useSidebar } from '@/app/components/ui/sidebar';
-import { EditPageSettingsDialog } from '@/components/EditPageSettingsDialog/EditPageSettingsDialog';
 import { PageSwitcher } from '@/components/PageSwitcher';
 import { TeamSwitcher } from '@/components/TeamSwitcher';
 import { UserWidget } from '@/components/UserWidget';
@@ -22,9 +20,6 @@ import { useSession } from 'next-auth/react';
 import useSWR from 'swr';
 
 export function GlobalNavigation({ isEditMode }: { isEditMode: boolean }) {
-  const [showEditPageSettingsDialog, setShowEditPageSettingsDialog] =
-    useState(false);
-
   const { setOpen, toggleSidebar } = useSidebar();
 
   const { data: usersTeams } = useSWR<Partial<Team>[]>(
@@ -94,13 +89,6 @@ export function GlobalNavigation({ isEditMode }: { isEditMode: boolean }) {
           </div>
         </div>
       </div>
-      {showEditPageSettingsDialog && (
-        <EditPageSettingsDialog
-          open={true}
-          onOpenChange={setShowEditPageSettingsDialog}
-          onClose={() => setShowEditPageSettingsDialog(false)}
-        />
-      )}
     </>
   );
 }
