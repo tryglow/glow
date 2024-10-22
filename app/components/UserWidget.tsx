@@ -38,7 +38,7 @@ export function UserWidget({ usersTeams }: Props) {
 
   return (
     <>
-      <DropdownMenu>
+      <DropdownMenu modal={false}>
         <DropdownMenuTrigger asChild>
           <Button variant="ghost" className="h-10 w-10 rounded-full">
             <Avatar className="h-8 w-8">
