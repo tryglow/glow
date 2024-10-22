@@ -465,7 +465,7 @@ export default async function LandingPage({
         </Container>
       </section>
 
-      <section className="my-8 md:my-24">
+      <section className="py-8 md:py-24">
         <Container>
           <div className="bg-[#e2e5ea] rounded-xl overflow-hidden">
             <div className="grid grid-cols-1 md:grid-cols-2 items-center gap-8">
