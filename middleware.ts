@@ -21,16 +21,6 @@ export default async function middleware(req: NextRequest) {
     .get('host')!
     .replace('.localhost:3000', `.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}`);
 
-  // special case for Vercel preview deployment URLs
-  if (
-    hostname.includes('---') &&
-    hostname.endsWith(`.${process.env.NEXT_PUBLIC_VERCEL_DEPLOYMENT_SUFFIX}`)
-  ) {
-    hostname = `${hostname.split('---')[0]}.${
-      process.env.NEXT_PUBLIC_ROOT_DOMAIN
-    }`;
-  }
-
   const searchParams = req.nextUrl.searchParams.toString();
 
   const path = `${url.pathname}${
@@ -48,20 +38,6 @@ export default async function middleware(req: NextRequest) {
     return NextResponse.rewrite(
       new URL(`/app${path === '/' ? '' : path}`, req.url)
     );
-  }
-
-  if (hostname.endsWith(`.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}`)) {
-    const slug = hostname.replace(
-      `.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}`,
-      ''
-    );
-
-    const rewriteUrl = new URL(
-      `/${encodeURIComponent(process.env.NEXT_PUBLIC_ROOT_DOMAIN as string)}/${slug}`,
-      'http://localhost:3000'
-    );
-
-    return NextResponse.rewrite(rewriteUrl);
   }
 
   if (hostname === process.env.NEXT_PUBLIC_ROOT_DOMAIN) {

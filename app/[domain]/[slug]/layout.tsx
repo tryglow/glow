@@ -19,10 +19,13 @@ import { notFound } from 'next/navigation';
 
 export const dynamic = 'force-dynamic';
 
-const fetchData = async (slug: string, domain: string) => {
-  const useSlug =
-    decodeURIComponent(domain) === process.env.NEXT_PUBLIC_ROOT_DOMAIN;
-
+const getPageData = async ({
+  slug,
+  domain,
+}: {
+  slug?: string;
+  domain?: string;
+}) => {
   let isEditMode = false;
 
   const session = await auth();
@@ -30,9 +33,11 @@ const fetchData = async (slug: string, domain: string) => {
   const user = session?.user;
 
   const data = await prisma.page.findUnique({
-    where: useSlug
-      ? { slug, deletedAt: null }
-      : { customDomain: decodeURIComponent(domain), deletedAt: null },
+    where: {
+      slug,
+      customDomain: domain ? decodeURIComponent(domain) : undefined,
+      deletedAt: null,
+    },
     include: {
       blocks: true,
       user: !!user,
@@ -67,14 +72,27 @@ export default async function PageLayout({
 }) {
   const session = await auth();
 
-  const [integrations, layout, pageTheme, pageSettings] = await Promise.all([
-    getTeamIntegrations(),
-    getPageLayout(params.slug),
-    getPageTheme(params.slug, params.domain),
-    getPageSettings(params.slug),
-  ]);
+  const useSlug =
+    decodeURIComponent(params.domain) === process.env.NEXT_PUBLIC_ROOT_DOMAIN;
 
-  const { data, isEditMode } = await fetchData(params.slug, params.domain);
+  const commonParams = {
+    slug: useSlug ? params.slug : undefined,
+    domain: useSlug ? undefined : params.domain,
+  };
+
+  const [
+    { data: page, isEditMode },
+    integrations,
+    layout,
+    pageTheme,
+    pageSettings,
+  ] = await Promise.all([
+    getPageData(commonParams),
+    getTeamIntegrations(),
+    getPageLayout(commonParams),
+    getPageTheme(commonParams),
+    getPageSettings(commonParams),
+  ]);
 
   const currentUserIsOwner = pageTheme?.teamId === session?.currentTeamId;
 
@@ -88,7 +106,7 @@ export default async function PageLayout({
     initialData[`/api/pages/${params.slug}/settings`] = pageSettings;
   }
 
-  data.blocks.forEach((block) => {
+  page?.blocks.forEach((block) => {
     initialData[`/api/blocks/${block.id}`] = block.data;
   });
 

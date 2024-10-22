@@ -1,16 +1,21 @@
 import { auth } from '@/lib/auth';
 import prisma from '@/lib/prisma';
 
-export async function getPageTheme(pageSlug: string, domain: string) {
+export async function getPageTheme({
+  slug,
+  domain,
+}: {
+  slug?: string;
+  domain?: string;
+}) {
   const session = await auth();
 
-  const useSlug =
-    decodeURIComponent(domain) === process.env.NEXT_PUBLIC_ROOT_DOMAIN;
-
   const page = await prisma.page.findUnique({
-    where: useSlug
-      ? { slug: pageSlug, deletedAt: null }
-      : { customDomain: decodeURIComponent(domain), deletedAt: null },
+    where: {
+      deletedAt: null,
+      slug,
+      customDomain: domain ? decodeURIComponent(domain) : undefined,
+    },
     select: {
       theme: true,
       backgroundImage: true,

@@ -1,17 +1,20 @@
 import { auth } from '@/lib/auth';
 import prisma from '@/lib/prisma';
 
-export async function getPageLayout(pageSlug: string) {
+export async function getPageLayout({
+  slug,
+  domain,
+}: {
+  slug?: string;
+  domain?: string;
+}) {
   const session = await auth();
-
-  if (!pageSlug) {
-    return null;
-  }
 
   const page = await prisma.page.findUnique({
     where: {
       deletedAt: null,
-      slug: pageSlug,
+      slug,
+      customDomain: domain ? decodeURIComponent(domain) : undefined,
     },
   });
 

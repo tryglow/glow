@@ -3,7 +3,13 @@
 import { auth } from '@/lib/auth';
 import prisma from '@/lib/prisma';
 
-export async function getPageSettings(pageSlug: string) {
+export async function getPageSettings({
+  slug,
+  domain,
+}: {
+  slug?: string;
+  domain?: string;
+}) {
   const session = await auth();
 
   if (!session) {
@@ -13,7 +19,8 @@ export async function getPageSettings(pageSlug: string) {
   const page = await prisma.page.findUnique({
     where: {
       deletedAt: null,
-      slug: pageSlug,
+      slug,
+      customDomain: domain ? decodeURIComponent(domain) : undefined,
       team: {
         members: {
           some: {

@@ -15,18 +15,23 @@ export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 export const dynamicParams = true;
 
-const getPageData = async (slug: string, domain: string) => {
-  const useSlug =
-    decodeURIComponent(domain) === process.env.NEXT_PUBLIC_ROOT_DOMAIN;
-
+const getPageData = async ({
+  slug,
+  domain,
+}: {
+  slug?: string;
+  domain?: string;
+}) => {
   const session = await auth();
 
   const user = session?.user;
 
   const page = await prisma.page.findUnique({
-    where: useSlug
-      ? { slug, deletedAt: null }
-      : { customDomain: decodeURIComponent(domain), deletedAt: null },
+    where: {
+      deletedAt: null,
+      slug,
+      customDomain: domain ? decodeURIComponent(domain) : undefined,
+    },
     include: {
       blocks: true,
       user: !!user,
@@ -40,7 +45,13 @@ export async function generateMetadata(
   { params }: { params: { slug: string; domain: string } },
   parent: ResolvingMetadata
 ): Promise<Metadata> {
-  const page = await getPageData(params.slug, params.domain);
+  const useSlug =
+    decodeURIComponent(params.domain) === process.env.NEXT_PUBLIC_ROOT_DOMAIN;
+
+  const page = await getPageData({
+    slug: useSlug ? params.slug : undefined,
+    domain: useSlug ? undefined : params.domain,
+  });
 
   const parentMeta = await parent;
 
@@ -65,9 +76,17 @@ export default async function Page({ params }: { params: Params }) {
 
   const isLoggedIn = !!session?.user;
 
+  const useSlug =
+    decodeURIComponent(params.domain) === process.env.NEXT_PUBLIC_ROOT_DOMAIN;
+
+  const commonParams = {
+    slug: useSlug ? params.slug : undefined,
+    domain: useSlug ? undefined : params.domain,
+  };
+
   const [layout, page] = await Promise.all([
-    getPageLayout(params.slug),
-    getPageData(params.slug, params.domain),
+    getPageLayout(commonParams),
+    getPageData(commonParams),
   ]);
 
   if (!page) {
