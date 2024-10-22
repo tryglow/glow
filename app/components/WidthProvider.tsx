@@ -24,20 +24,21 @@ export function WidthProvideRGL<Config extends BasicProps>(
     const elementRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
+      const newElement = elementRef.current;
       const resizeObserver = new ResizeObserver((entries) => {
-        if (elementRef.current) {
+        if (newElement) {
           const newWidth = entries[0].contentRect.width;
           setWidth(newWidth);
         }
       });
 
-      if (elementRef.current) {
-        resizeObserver.observe(elementRef.current);
+      if (newElement) {
+        resizeObserver.observe(newElement);
       }
 
       return () => {
-        if (elementRef.current) {
-          resizeObserver.unobserve(elementRef.current);
+        if (newElement) {
+          resizeObserver.unobserve(newElement);
         }
         resizeObserver.disconnect();
       };

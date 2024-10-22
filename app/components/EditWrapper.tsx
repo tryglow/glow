@@ -73,6 +73,7 @@ export function EditWrapper({ children, layoutProps }: Props) {
     if (nextToAddBlock) {
       handleAddNewBlock([], nextToAddBlock, null, true);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [nextToAddBlock]);
 
   const handleAddNewBlock = async (
