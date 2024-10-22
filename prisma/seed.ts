@@ -117,6 +117,48 @@ async function main() {
       colorBgBase: defaultThemeSeeds.Forest.colorBgBase,
     },
   });
+
+  // Lilac Theme
+  await prisma.theme.upsert({
+    where: {
+      id: '0192b479-69c1-7bb4-936d-26f9e3a2024f',
+    },
+    update: {},
+    create: {
+      id: '0192b479-69c1-7bb4-936d-26f9e3a2024f',
+      name: 'Lilac',
+      createdById: initialUser.id,
+      isDefault: true,
+      colorBgPrimary: defaultThemeSeeds.Lilac.colorBgPrimary,
+      colorBgSecondary: defaultThemeSeeds.Lilac.colorBgSecondary,
+      colorBorderPrimary: defaultThemeSeeds.Lilac.colorBorderPrimary,
+      colorLabelPrimary: defaultThemeSeeds.Lilac.colorLabelPrimary,
+      colorLabelSecondary: defaultThemeSeeds.Lilac.colorLabelSecondary,
+      colorLabelTertiary: defaultThemeSeeds.Lilac.colorLabelTertiary,
+      colorBgBase: defaultThemeSeeds.Lilac.colorBgBase,
+    },
+  });
+
+  // OrangePunch Theme
+  await prisma.theme.upsert({
+    where: {
+      id: '44ddcc5a-aa85-45b9-b333-3ddcbe7d7db3',
+    },
+    update: {},
+    create: {
+      id: '44ddcc5a-aa85-45b9-b333-3ddcbe7d7db3',
+      name: 'Orange Punch',
+      createdById: initialUser.id,
+      isDefault: true,
+      colorBgPrimary: defaultThemeSeeds.OrangePunch.colorBgPrimary,
+      colorBgSecondary: defaultThemeSeeds.OrangePunch.colorBgSecondary,
+      colorBorderPrimary: defaultThemeSeeds.OrangePunch.colorBorderPrimary,
+      colorLabelPrimary: defaultThemeSeeds.OrangePunch.colorLabelPrimary,
+      colorLabelSecondary: defaultThemeSeeds.OrangePunch.colorLabelSecondary,
+      colorLabelTertiary: defaultThemeSeeds.OrangePunch.colorLabelTertiary,
+      colorBgBase: defaultThemeSeeds.OrangePunch.colorBgBase,
+    },
+  });
 }
 
 main()

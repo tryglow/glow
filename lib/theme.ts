@@ -1,6 +1,12 @@
 import { JsonValue } from '@prisma/client/runtime/library';
 
-export type DefaultThemeNames = 'Default' | 'Purple' | 'Black' | 'Forest';
+export type DefaultThemeNames =
+  | 'Default'
+  | 'Purple'
+  | 'Black'
+  | 'Forest'
+  | 'Lilac'
+  | 'OrangePunch';
 
 export const defaultThemes: { id: string; name: DefaultThemeNames }[] = [
   {
@@ -63,6 +69,26 @@ export const defaultThemeSeeds: Record<DefaultThemeNames, any> = {
     colorLabelPrimary: { h: 0, l: 100, s: 0 },
     colorLabelSecondary: { h: 141.18, l: 0.8392, s: 0.4146 },
     colorLabelTertiary: { h: 0, l: 0.9804, s: 0 },
+  },
+  Lilac: {
+    id: '0192b479-69c1-7bb4-936d-26f9e3a2024f',
+    colorBgBase: { a: 1, h: 244.86, l: 0.85, s: 1 },
+    colorBgPrimary: { h: 244.86, l: 0.92, s: 0.91 },
+    colorBgSecondary: { h: 0, l: 0, s: 0 },
+    colorBorderPrimary: { h: 244.86, l: 0.76, s: 0.48 },
+    colorLabelPrimary: { h: 250.0, l: 0.18, s: 0.32 },
+    colorLabelSecondary: { h: 250.0, l: 0.18, s: 0.32 },
+    colorLabelTertiary: { h: 250.0, l: 0.18, s: 0.32 },
+  },
+  OrangePunch: {
+    id: '44ddcc5a-aa85-45b9-b333-3ddcbe7d7db3',
+    colorBgBase: { h: 226.15, l: 0.1, s: 0.48 },
+    colorBgPrimary: { h: 13.5, l: 0.53, s: 0.67 },
+    colorBgSecondary: { h: 33.3, l: 0.48, s: 0.95 },
+    colorBorderPrimary: { h: 226.15, l: 0.1, s: 0.48 },
+    colorLabelPrimary: { h: 144, l: 0.69, s: 0.78 },
+    colorLabelSecondary: { h: 144, l: 0.97, s: 0.76 },
+    colorLabelTertiary: { h: 144, l: 0.98, s: 0 },
   },
 };
 
