@@ -12,35 +12,28 @@ interface Props {
   children: ReactNode;
   value: SWRConfiguration;
   session: Session | null;
+  currentUserIsOwner: boolean;
 }
 
-const WithSidebarProvider = ({
+export const GlowProviders = ({
   children,
+  value,
+  currentUserIsOwner,
   session,
-}: Pick<Props, 'children' | 'session'>) => {
-  if (!session) {
-    return <>{children}</>;
-  }
-
-  return (
-    <SidebarProvider
-      security="s"
-      style={
-        {
-          '--sidebar-width': '390px',
-        } as React.CSSProperties
-      }
-    >
-      {children}
-    </SidebarProvider>
-  );
-};
-
-export const GlowProviders = ({ children, value, session }: Props) => {
+}: Props) => {
   return (
     <SWRConfig value={{ ...value, fetcher }}>
       <SessionProvider session={session}>
-        <WithSidebarProvider session={session}>{children}</WithSidebarProvider>
+        <SidebarProvider
+          style={
+            {
+              '--sidebar-width': '390px',
+            } as React.CSSProperties
+          }
+          skipSidebar={!currentUserIsOwner}
+        >
+          {children}
+        </SidebarProvider>
       </SessionProvider>
     </SWRConfig>
   );

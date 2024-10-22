@@ -53,6 +53,7 @@ const SidebarProvider = React.forwardRef<
     defaultOpen?: boolean;
     open?: boolean;
     onOpenChange?: (open: boolean) => void;
+    skipSidebar?: boolean;
   }
 >(
   (
@@ -63,6 +64,7 @@ const SidebarProvider = React.forwardRef<
       className,
       style,
       children,
+      skipSidebar = false,
       ...props
     },
     ref
@@ -129,6 +131,14 @@ const SidebarProvider = React.forwardRef<
       }),
       [state, open, setOpen, isMobile, openMobile, setOpenMobile, toggleSidebar]
     );
+
+    if (skipSidebar) {
+      return (
+        <SidebarContext.Provider value={contextValue}>
+          <TooltipProvider delayDuration={0}>{children}</TooltipProvider>
+        </SidebarContext.Provider>
+      );
+    }
 
     return (
       <SidebarContext.Provider value={contextValue}>

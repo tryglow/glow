@@ -113,6 +113,7 @@ export default async function PageLayout({
   return (
     <GlowProviders
       session={session}
+      currentUserIsOwner={currentUserIsOwner}
       value={{
         fallback: initialData,
         revalidateOnFocus: isEditMode,
@@ -131,7 +132,7 @@ export default async function PageLayout({
       )}
 
       {pageTheme?.publishedAt && !currentUserIsOwner ? (
-        <main className="bg-sys-bg-base">
+        <main className="bg-sys-bg-base min-h-screen">
           <div className="w-full max-w-[672px] mx-auto px-3 md:px-6 gap-3 pt-16 pb-8">
             {children}
           </div>

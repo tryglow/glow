@@ -75,7 +75,9 @@ type SidebarView =
   | 'forms'
   | 'analytics';
 
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+export function EditSidebar({
+  ...props
+}: React.ComponentProps<typeof Sidebar>) {
   const { setOpen, isMobile } = useSidebar();
   const [sidebarView, setSidebarView] = useState<SidebarView>('blocks');
 
