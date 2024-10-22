@@ -6,13 +6,7 @@ export async function GET(
 ) {
   const url = new URL(req.url);
 
-  let hostname = url.hostname;
-
-  if (process.env.NODE_ENV === 'development') {
-    hostname = 'localhost:3000';
-  }
-
-  const page = await getPageTheme({ slug: params.pageSlug, domain: hostname });
+  const page = await getPageTheme({ slug: params.pageSlug });
 
   if (!page) {
     return Response.json({
