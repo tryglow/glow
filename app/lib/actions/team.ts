@@ -26,7 +26,7 @@ export async function switchTeam(teamId: string) {
 
   try {
     await unstable_update({
-      ...session?.user,
+      ...session,
       currentTeamId: teamId,
     });
   } catch (error) {

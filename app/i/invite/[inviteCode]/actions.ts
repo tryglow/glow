@@ -92,7 +92,7 @@ export async function acceptInvite(inviteCode: string) {
   });
 
   await unstable_update({
-    ...session?.user,
+    ...session,
     currentTeamId: team.id,
   });
 

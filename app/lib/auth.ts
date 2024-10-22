@@ -151,7 +151,9 @@ export const { auth, signIn, signOut, handlers, unstable_update } = NextAuth({
 
       if (trigger === 'update' && session) {
         token.teamId = session.currentTeamId;
-        token.features.showGlowTour = session.features.showGlowTour;
+        if (session?.features?.showGlowTour) {
+          token.features = { showGlowTour: session.features.showGlowTour };
+        }
       }
 
       return token;
