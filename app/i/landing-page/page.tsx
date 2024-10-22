@@ -3,9 +3,7 @@ import clsx from 'clsx';
 import Image from 'next/image';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
-import { ReactNode } from 'react';
 
-import { SpotifyPlayingNowMockup } from '@/app/i/landing-page/ui-mockups';
 import { LoginWidget } from '@/components/LoginWidget';
 
 import { auth } from '@/app/lib/auth';
@@ -14,20 +12,10 @@ import { cn } from '@/lib/utils';
 
 import { Button } from '@/components/ui/button';
 
+import { MarketingContainer } from '@/app/components/MarketingContainer';
 import { FrquentlyAskedQuestions } from './faq';
 import { ShowLoginAlert } from './show-login-alert';
 import styles from './styles.module.scss';
-
-export const Container = (props: {
-  className?: string;
-  children: ReactNode;
-}) => {
-  return (
-    <div className={cn('max-w-5xl mx-auto px-4', props.className)}>
-      {props.children}
-    </div>
-  );
-};
 
 const featuredProfiles: {
   name: string;
@@ -145,11 +133,9 @@ const fetchCurrentTeamPages = async () => {
   };
 };
 
-export default async function LandingPage(
-  props: {
-    searchParams: Promise<{ force: string }>;
-  }
-) {
+export default async function LandingPage(props: {
+  searchParams: Promise<{ force: string }>;
+}) {
   const searchParams = await props.searchParams;
   const { force } = searchParams;
 
@@ -171,7 +157,7 @@ export default async function LandingPage(
     <div className="min-h-screen">
       <ShowLoginAlert />
       <section className="bg-gradient-to-b from-[#bbb5ff] to-[#f4cbdc] py-24 md:py-0">
-        <Container>
+        <MarketingContainer>
           <div className="grid grid-cols-1 md:grid-cols-6 items-center">
             <div className="md:col-span-4 md:pr-16">
               <h1
@@ -287,11 +273,11 @@ export default async function LandingPage(
               />
             </div>
           </div>
-        </Container>
+        </MarketingContainer>
       </section>
 
       <section className="my-20">
-        <Container>
+        <MarketingContainer>
           <h2 className="text-3xl md:text-4xl font-semibold tracking-tight mb-8">
             Explore
           </h2>
@@ -356,11 +342,11 @@ export default async function LandingPage(
               })}
             </div>
           </div>
-        </Container>
+        </MarketingContainer>
       </section>
 
       <section className="my-20">
-        <Container>
+        <MarketingContainer>
           <h2 className="text-3xl md:text-4xl font-semibold tracking-tight mb-8">
             What makes Glow special?
           </h2>
@@ -429,15 +415,13 @@ export default async function LandingPage(
               </div>
             </div>
           </div>
-        </Container>
+        </MarketingContainer>
       </section>
 
       <section className="my-24 ">
-        <Container>
+        <MarketingContainer>
           <div className="grid grid-cols-1 md:grid-cols-2 items-center gap-10">
-            <div className="w-full px-8 py-8 md:py-16 bg-gradient-to-tr from-[#4e54c8] to-[#8f94fb] rounded-xl">
-              <SpotifyPlayingNowMockup />
-            </div>
+            <div className="w-full px-8 py-8 md:py-16 bg-gradient-to-tr from-[#4e54c8] to-[#8f94fb] rounded-xl"></div>
             <div className="flex flex-col items-start gap-2">
               <span className="text-xs font-bold uppercase bg-yellow-300 text-yellow-900 px-2 py-1 rounded-full">
                 New
@@ -452,22 +436,22 @@ export default async function LandingPage(
               </p>
             </div>
           </div>
-        </Container>
+        </MarketingContainer>
       </section>
 
       <section className="my-24">
-        <Container>
+        <MarketingContainer>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <h2 className="text-3xl md:text-4xl font-semibold tracking-tight">
               Frequently Asked <br /> Questions
             </h2>
             <FrquentlyAskedQuestions />
           </div>
-        </Container>
+        </MarketingContainer>
       </section>
 
       <section className="py-8 md:py-24">
-        <Container>
+        <MarketingContainer>
           <div className="bg-[#e2e5ea] rounded-xl overflow-hidden">
             <div className="grid grid-cols-1 md:grid-cols-2 items-center gap-8">
               <div className="flex-1 flex flex-col gap-2 col-span-1 max-w-md py-8 md:py-16 px-8">
@@ -512,7 +496,7 @@ export default async function LandingPage(
               />
             </div>
           </div>
-        </Container>
+        </MarketingContainer>
       </section>
     </div>
   );

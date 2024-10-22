@@ -1,7 +1,6 @@
+import { MarketingContainer } from '@/app/components/MarketingContainer';
 import Link from 'next/link';
 import { SVGProps } from 'react';
-
-import { Container } from '@/app/i/landing-page/page';
 
 const navigation = {
   main: [
@@ -47,7 +46,7 @@ const navigation = {
 export default function MarketingFooter() {
   return (
     <footer className="bg-white py-8">
-      <Container>
+      <MarketingContainer>
         <div className=" border-t border-gray-900/10 pt-8 md:flex md:items-center md:justify-between">
           <div className="flex space-x-6 md:order-2">
             {navigation.social.map((item) => (
@@ -75,7 +74,7 @@ export default function MarketingFooter() {
             </Link>
           </p>
         </div>
-      </Container>
+      </MarketingContainer>
     </footer>
   );
 }

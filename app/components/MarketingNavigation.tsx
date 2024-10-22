@@ -5,8 +5,7 @@ import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import { ReactNode, useState } from 'react';
 
-import { Container } from '@/app/i/landing-page/page';
-
+import { MarketingContainer } from '@/app/components/MarketingContainer';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { usePathname } from 'next/navigation';
@@ -27,7 +26,7 @@ export default function MarketingNavigation({ children }: Props) {
           pathname === '/' && 'bg-[#bbb5ff]'
         )}
       >
-        <Container className="py-4">
+        <MarketingContainer className="py-4">
           <nav className="flex items-center justify-between gap-x-6">
             <div className="flex lg:flex-1">
               <Link href="/" className="-m-1.5 p-1.5 flex items-center gap-2">
@@ -56,7 +55,7 @@ export default function MarketingNavigation({ children }: Props) {
               </button>
             </div>
           </nav>
-        </Container>
+        </MarketingContainer>
         <Dialog
           as="div"
           className="lg:hidden"
