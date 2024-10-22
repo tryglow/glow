@@ -65,11 +65,11 @@ const featuredProfiles: {
     bg: '#2c2443',
   },
   {
-    name: 'Hystruct',
-    label: 'Web scraping made easy',
-    slug: 'hystruct',
+    name: 'Arjun Sharda',
+    label: 'Executive Director @ TLEEM',
+    slug: 'arjun',
     avatarUrl:
-      'https://cdn.glow.as/block-ebc6bb3e-72c2-45f9-af7d-6137fc99bd47/f606307f-02fc-47fc-b3d4-84e9eba360e2',
+      'https://cdn.glow.as/block-4cc796c0-018b-46e7-af22-77e3ac421882/32b1a2eb-2a3f-4133-aee2-9b016bc38cc8',
     bg: '#000',
   },
   {
@@ -80,6 +80,14 @@ const featuredProfiles: {
       'https://cdn.glow.as/block-33c6e82d-8ef3-4c37-92ec-c8fb123e1bc8/59169aa9-6524-400a-bd5e-d7b6d62e965b',
     bg: '#f5f5f4',
     isLight: true,
+  },
+  {
+    name: 'Hystruct',
+    label: 'Web scraping made easy',
+    slug: 'hystruct',
+    avatarUrl:
+      'https://cdn.glow.as/block-ebc6bb3e-72c2-45f9-af7d-6137fc99bd47/f606307f-02fc-47fc-b3d4-84e9eba360e2',
+    bg: '#000',
   },
   {
     name: 'Jonas K',
