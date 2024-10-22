@@ -22,7 +22,7 @@ export function EditBlockToolbar({ blockId, blockType }: Props) {
   const router = useRouter();
   const params = useParams();
   const slug = params.slug;
-  const { setOpen, setOpenMobile } = useSidebar();
+  const { setOpen, setOpenMobile, setSidebarView } = useSidebar();
 
   const { setCurrentEditingBlock } = useEditModeContext();
 
@@ -92,11 +92,13 @@ export function EditBlockToolbar({ blockId, blockType }: Props) {
           onTouchStart={() => {
             setOpen(true);
             setOpenMobile(true);
+            setSidebarView('blockForm');
             setCurrentEditingBlock({ id: blockId, type: blockType });
           }}
           onClick={() => {
             setOpen(true);
             setOpenMobile(true);
+            setSidebarView('blockForm');
             setCurrentEditingBlock({ id: blockId, type: blockType });
           }}
         >

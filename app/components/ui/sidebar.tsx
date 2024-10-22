@@ -34,6 +34,8 @@ type SidebarContext = {
   setOpenMobile: (open: boolean) => void;
   isMobile: boolean;
   toggleSidebar: () => void;
+  sidebarView: SidebarView;
+  setSidebarView: (view: SidebarView) => void;
 };
 
 const SidebarContext = React.createContext<SidebarContext | null>(null);
@@ -46,6 +48,15 @@ function useSidebar() {
 
   return context;
 }
+
+export type SidebarView =
+  | 'blocks'
+  | 'themes'
+  | 'settings'
+  | 'integrations'
+  | 'blockForm'
+  | 'forms'
+  | 'analytics';
 
 const SidebarProvider = React.forwardRef<
   HTMLDivElement,
@@ -75,6 +86,7 @@ const SidebarProvider = React.forwardRef<
     // This is the internal state of the sidebar.
     // We use openProp and setOpenProp for control from outside the component.
     const [_open, _setOpen] = React.useState(defaultOpen);
+    const [sidebarView, setSidebarView] = React.useState<SidebarView>('blocks');
     const open = openProp ?? _open;
     const setOpen = React.useCallback(
       (value: boolean | ((value: boolean) => boolean)) => {
@@ -128,8 +140,20 @@ const SidebarProvider = React.forwardRef<
         openMobile,
         setOpenMobile,
         toggleSidebar,
+        sidebarView,
+        setSidebarView,
       }),
-      [state, open, setOpen, isMobile, openMobile, setOpenMobile, toggleSidebar]
+      [
+        state,
+        open,
+        setOpen,
+        isMobile,
+        openMobile,
+        setOpenMobile,
+        toggleSidebar,
+        sidebarView,
+        setSidebarView,
+      ]
     );
 
     if (skipSidebar) {

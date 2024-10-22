@@ -147,7 +147,7 @@ interface Props {
 export function DraggableBlockButton({ type }: Props) {
   const { setDraggingItem, setNextToAddBlock } = useEditModeContext();
 
-  const { isMobile, setOpen } = useSidebar();
+  const { isMobile, setOpen, setSidebarView } = useSidebar();
 
   const blockConfig = config[type];
 

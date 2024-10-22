@@ -21,7 +21,6 @@ import {
   useSidebar,
 } from '@/app/components/ui/sidebar';
 import { useEditModeContext } from '@/app/contexts/Edit';
-import { useEffect, useState } from 'react';
 import { SidebarAnalytics } from './SidebarAnalytics';
 import { SidebarBlockForm } from './SidebarBlockForm';
 import { SidebarBlocks } from './SidebarBlocks';
@@ -80,17 +79,9 @@ type SidebarView =
 export function EditSidebar({
   ...props
 }: React.ComponentProps<typeof Sidebar>) {
-  const { setOpen, isMobile } = useSidebar();
-  const [sidebarView, setSidebarView] = useState<SidebarView>('blocks');
+  const { setOpen, isMobile, sidebarView, setSidebarView } = useSidebar();
 
   const { currentEditingBlock } = useEditModeContext();
-
-  useEffect(() => {
-    if (currentEditingBlock) {
-      setSidebarView('blockForm');
-      setOpen(true);
-    }
-  }, [currentEditingBlock, setOpen]);
 
   return (
     <>
