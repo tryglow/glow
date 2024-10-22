@@ -479,12 +479,12 @@ export default async function LandingPage({
                 </p>
 
                 <div className="mt-6">
-                  <div className="inline-flex flex-row items-center rounded-full bg-white pl-4 border border-slate-200 shadow-sm w-auto">
+                  <div className="w-full md:w-auto inline-flex flex-row items-center rounded-full bg-white pl-4 border border-slate-200 shadow-sm">
                     <span className="text-slate-600 font-medium">glow.as/</span>
                     <input
                       type="text"
                       placeholder="name"
-                      className="bg-transparent border-0 px-0 focus:outline-none focus:ring-0 rounded-full"
+                      className="bg-transparent border-0 px-0 focus:outline-none focus:ring-0 rounded-full w-full"
                     />
                     <LoginWidget
                       isSignup
@@ -492,7 +492,7 @@ export default async function LandingPage({
                         <Button
                           variant="default"
                           size="xl"
-                          className="font-bold flex group rounded-full"
+                          className="font-bold flex group rounded-full px-6 md:px-10"
                         >
                           Claim Page
                           <ArrowRightIcon className="w-5 h-5 ml-2 -mr-6 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 group-hover:-mr-4 transition-all ease-in-out duration-200" />
