@@ -1,6 +1,5 @@
 'use client';
 
-import { Page, Team } from '@prisma/client';
 import { ReactNode, useMemo } from 'react';
 import { Layout, Responsive, ResponsiveProps } from 'react-grid-layout';
 
@@ -20,22 +19,16 @@ interface Props {
   layout: PageConfig;
   children: ReactNode[];
   editMode?: boolean;
-  teamPages: Page[] | null;
   isPotentiallyMobile: boolean;
   isLoggedIn: boolean;
-  usersTeams?: Team[];
-  currentTeamId?: string;
 }
 
 export default function Grid({
   layout,
   children,
   editMode,
-  teamPages,
   isLoggedIn,
   isPotentiallyMobile = false,
-  usersTeams,
-  currentTeamId,
 }: Props) {
   const defaultLayoutProps: ResponsiveProps = {
     useCSSTransforms: true,
