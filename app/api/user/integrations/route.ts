@@ -1,12 +1,10 @@
 import { auth } from '@/lib/auth';
-import prisma from '@/lib/prisma';
+import { getTeamIntegrations } from './actions';
 
-export async function GET(req: Request) {
+export async function GET() {
   const session = await auth();
 
-  const user = session?.user;
-
-  if (!user) {
+  if (!session) {
     return Response.json({
       error: {
         message: 'Authentication required',
@@ -14,17 +12,7 @@ export async function GET(req: Request) {
     });
   }
 
-  const integrations = await prisma.integration.findMany({
-    select: {
-      id: true,
-      createdAt: true,
-      type: true,
-    },
-    where: {
-      userId: user.id,
-      deletedAt: null,
-    },
-  });
+  const integrations = await getTeamIntegrations();
 
   return Response.json(integrations);
 }
