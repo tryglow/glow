@@ -62,10 +62,14 @@ export const InstagramLatestPostServerUI: FunctionComponent<{
                   loop
                 />
               ) : (
-                <img
-                  src={post?.imageUrl}
-                  className="absolute w-full h-full object-cover"
-                />
+                <>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={post?.imageUrl}
+                    alt=""
+                    className="absolute w-full h-full object-cover"
+                  />
+                </>
               )}
               <div className="absolute h-32 w-full bg-gradient-to-b from-transparent to-black bottom-0 z-10 px-6 py-6 flex flex-row justify-between items-end">
                 <span className="flex flex-col">

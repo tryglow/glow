@@ -3,6 +3,21 @@ import { useEditModeContext } from '@/app/contexts/Edit';
 
 import { Blocks } from '@/lib/blocks/types';
 
+import dragIcon from '@/app/assets/ui/drag.svg';
+import blockContentIcon from '@/app/assets/ui/type-content.svg';
+import blockGithubCommitsThisMonthIcon from '@/app/assets/ui/type-github-commits-this-month.svg';
+import blockHeaderIcon from '@/app/assets/ui/type-header.svg';
+import blockImageIcon from '@/app/assets/ui/type-image.svg';
+import blockInstagramLatestPostIcon from '@/app/assets/ui/type-instagram-latest-post.svg';
+import blockLinkBarIcon from '@/app/assets/ui/type-link-bar.svg';
+import blockLinkBoxIcon from '@/app/assets/ui/type-link-box.svg';
+import blockMapIcon from '@/app/assets/ui/type-map.svg';
+import blockSpotifyPlayingNowIcon from '@/app/assets/ui/type-spotify-playing-now.svg';
+import blockStackIcon from '@/app/assets/ui/type-stack.svg';
+import blockWaitlistEmailIcon from '@/app/assets/ui/type-waitlist-email.svg';
+
+import Image from 'next/image';
+
 export const config: Record<
   Blocks,
   {
@@ -18,7 +33,7 @@ export const config: Record<
   header: {
     title: 'Header',
     label: 'A primary title and optional subtitle',
-    icon: '/assets/ui/type-header.svg',
+    icon: blockHeaderIcon,
     drag: {
       w: 12,
       h: 6,
@@ -27,7 +42,7 @@ export const config: Record<
   content: {
     title: 'Content',
     label: 'A block of text',
-    icon: '/assets/ui/type-content.svg',
+    icon: blockContentIcon,
     drag: {
       w: 12,
       h: 6,
@@ -36,7 +51,7 @@ export const config: Record<
   image: {
     title: 'Image',
     label: 'Nothing more, nothing less',
-    icon: '/assets/ui/type-image.svg',
+    icon: blockImageIcon,
     drag: {
       w: 8,
       h: 8,
@@ -45,7 +60,7 @@ export const config: Record<
   stack: {
     title: 'Stack',
     label: 'A list of items',
-    icon: '/assets/ui/type-stack.svg',
+    icon: blockStackIcon,
     drag: {
       w: 6,
       h: 8,
@@ -54,7 +69,7 @@ export const config: Record<
   'github-commits-this-month': {
     title: 'Github Commits (month)',
     label: 'The number of commits this month for a user',
-    icon: '/assets/ui/type-github-commits-this-month.svg',
+    icon: blockGithubCommitsThisMonthIcon,
     drag: {
       w: 6,
       h: 6,
@@ -63,7 +78,7 @@ export const config: Record<
   'spotify-playing-now': {
     title: 'Spotify Playing Now',
     label: 'The song you are currently playing on Spotify',
-    icon: '/assets/ui/type-spotify-playing-now.svg',
+    icon: blockSpotifyPlayingNowIcon,
     drag: {
       w: 12,
       h: 4,
@@ -72,7 +87,7 @@ export const config: Record<
   'spotify-embed': {
     title: 'Spotify Embed',
     label: 'Embed a Spotify playlist or song',
-    icon: '/assets/ui/type-spotify-playing-now.svg',
+    icon: blockSpotifyPlayingNowIcon,
     drag: {
       w: 12,
       h: 4,
@@ -81,7 +96,7 @@ export const config: Record<
   'instagram-latest-post': {
     title: 'Latest Instagram post',
     label: 'The latest post from your connected Instagram account',
-    icon: '/assets/ui/type-instagram-latest-post.svg',
+    icon: blockInstagramLatestPostIcon,
     drag: {
       w: 12,
       h: 4,
@@ -90,7 +105,7 @@ export const config: Record<
   map: {
     title: 'Map',
     label: 'A map with a pin',
-    icon: '/assets/ui/type-map.svg',
+    icon: blockMapIcon,
     drag: {
       w: 12,
       h: 6,
@@ -99,7 +114,7 @@ export const config: Record<
   'link-box': {
     title: 'Link Box',
     label: 'Display a nicely formatted link',
-    icon: '/assets/ui/type-link-box.svg',
+    icon: blockLinkBoxIcon,
     drag: {
       w: 12,
       h: 2,
@@ -108,7 +123,7 @@ export const config: Record<
   'link-bar': {
     title: 'Link Bar',
     label: 'A row of links to social media',
-    icon: '/assets/ui/type-link-bar.svg',
+    icon: blockLinkBarIcon,
     drag: {
       w: 12,
       h: 2,
@@ -117,7 +132,7 @@ export const config: Record<
   'waitlist-email': {
     title: 'GetWaitlist Email',
     label: 'A form to collect emails for your getwaitlist.com project',
-    icon: '/assets/ui/type-waitlist-email.svg',
+    icon: blockWaitlistEmailIcon,
     drag: {
       w: 12,
       h: 5,
@@ -138,15 +153,15 @@ export function DraggableBlockButton({ type }: Props) {
 
   const content = (
     <>
-      <img
-        src="/assets/ui/drag.svg"
+      <Image
+        src={dragIcon}
         className="mr-3 hidden md:block"
         width={9}
         height={15}
         alt=""
       />
       <div className="w-9 h-9 bg-stone-100 rounded-md flex items-center mr-3 flex-shrink-0">
-        <img src={blockConfig.icon} className="w-9 h-9" alt="" />
+        <Image src={blockConfig.icon} className="w-9 h-9" alt="" />
       </div>
       <div className="flex flex-col">
         <span className="font-semibold text-stone-900 text-sm">

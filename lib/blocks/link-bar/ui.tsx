@@ -17,7 +17,12 @@ export function LinkBar(props: BlockProps) {
         {data?.links.map((link) => {
           return (
             <Link key={link.link} href={link.link}>
-              <img src={link?.icon?.src} className="w-10 h-10 rounded-md" />
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={link?.icon?.src}
+                className="w-10 h-10 rounded-md"
+                alt=""
+              />
             </Link>
           );
         })}

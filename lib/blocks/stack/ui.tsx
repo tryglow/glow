@@ -31,6 +31,7 @@ export const Stack: FunctionComponent<BlockProps> = (props) => {
               rel={item.link ? 'noopener noreferrer' : undefined}
               className="flex items-center gap-4"
             >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={item.icon.src}
                 alt=""

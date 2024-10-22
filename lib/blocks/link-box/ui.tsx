@@ -27,7 +27,8 @@ export function LinkBox(props: BlockProps) {
       }
     >
       <div className="flex flex-row gap-4 items-center">
-        <img src={data?.icon?.src} className="w-10 h-10 rounded-md" />
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src={data?.icon?.src} className="w-10 h-10 rounded-md" alt="" />
         <div className="flex flex-col">
           <span className="font-semibold text-base text-sys-label-primary">
             {data?.title}

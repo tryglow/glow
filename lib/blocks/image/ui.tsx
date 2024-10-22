@@ -13,7 +13,12 @@ export const Image: FunctionComponent<BlockProps> = (props) => {
 
   return (
     <CoreBlock className="relative !p-0 overflow-hidden" {...props}>
-      <img src={data?.src} className="absolute w-full h-full object-cover" />
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src={data?.src}
+        className="absolute w-full h-full object-cover"
+        alt=""
+      />
     </CoreBlock>
   );
 };
