@@ -247,28 +247,28 @@ export default async function LandingPage({
                 <Image
                   width={28}
                   height={28}
-                  className="inline-block h-7 w-7 rounded-full ring-2 ring-white"
+                  className="inline-block h-7 w-7 rounded-full ring-2 ring-[##ebc7e2]"
                   src="https://cdn.glow.as/block-9077b37e-2c6c-4457-aa30-13f44f38ec15/16608f2e-8492-425e-ba0c-777c61755a08"
                   alt=""
                 />
                 <Image
                   width={28}
                   height={28}
-                  className="inline-block h-7 w-7 rounded-full ring-2 ring-white"
+                  className="inline-block h-7 w-7 rounded-full ring-2 ring-[##ebc7e2]"
                   src="https://cdn.glow.as/666b7445-c171-4ad7-a21d-eb1954b7bd40/0885d7ec-9af4-4430-94f4-ad1a033c2704"
                   alt=""
                 />
                 <Image
                   width={28}
                   height={28}
-                  className="inline-block h-7 w-7 rounded-full ring-2 ring-white"
+                  className="inline-block h-7 w-7 rounded-full ring-2 ring-[##ebc7e2]"
                   src="https://cdn.glow.as/block-9077b37e-2c6c-4457-aa30-13f44f38ec15/94c2926b-a54e-488e-8464-6e44dc5afce4"
                   alt=""
                 />
                 <Image
                   width={28}
                   height={28}
-                  className="inline-block h-7 w-7 rounded-full ring-2 ring-white"
+                  className="inline-block h-7 w-7 rounded-full ring-2 ring-[##ebc7e2]"
                   src="https://cdn.glow.as/block-9077b37e-2c6c-4457-aa30-13f44f38ec15/76af84b5-0e47-41fc-852b-458020c75d71"
                   alt=""
                 />
