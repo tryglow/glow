@@ -2,7 +2,7 @@
 
 import { PlusIcon } from '@heroicons/react/16/solid';
 
-import { Container } from '@/app/i/landing-page/page';
+import { MarketingContainer } from '@/app/components/MarketingContainer';
 import { LoginWidget } from '@/components/LoginWidget';
 
 import { getCheckoutLink } from '@/lib/stripe';
@@ -64,7 +64,7 @@ export function PricingTable({ isLoggedIn }: { isLoggedIn: boolean }) {
   return (
     <div className="relative pt-16 sm:pt-16 pb-16">
       <div className="absolute inset-x-0 bottom-0 top-48 bg-gradient-to-b from-white to-stone-100" />
-      <Container className="relative z-10">
+      <MarketingContainer className="relative z-10">
         <div className="grid grid-cols-1 gap-10 lg:grid-cols-3">
           {tiers.map((tier) => (
             <div
@@ -151,7 +151,7 @@ export function PricingTable({ isLoggedIn }: { isLoggedIn: boolean }) {
             </div>
           ))}
         </div>
-      </Container>
+      </MarketingContainer>
     </div>
   );
 }
