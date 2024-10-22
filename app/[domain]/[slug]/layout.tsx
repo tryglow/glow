@@ -61,16 +61,21 @@ const getPageData = async ({
   };
 };
 
-export default async function PageLayout({
-  children,
-  params,
-}: {
-  children: React.ReactNode;
-  params: {
-    slug: string;
-    domain: string;
-  };
-}) {
+export default async function PageLayout(
+  props: {
+    children: React.ReactNode;
+    params: Promise<{
+      slug: string;
+      domain: string;
+    }>;
+  }
+) {
+  const params = await props.params;
+
+  const {
+    children
+  } = props;
+
   const session = await auth();
 
   const useSlug =

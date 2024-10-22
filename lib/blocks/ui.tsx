@@ -46,7 +46,7 @@ export function renderBlock(block: any, pageId: string, isEditMode: boolean) {
     case 'image':
       return (
         // eslint-disable-next-line jsx-a11y/alt-text
-        <Image {...sharedProps} />
+        (<Image {...sharedProps} />)
       );
     case 'instagram-latest-post':
       return (

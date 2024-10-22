@@ -145,11 +145,12 @@ const fetchCurrentTeamPages = async () => {
   };
 };
 
-export default async function LandingPage({
-  searchParams,
-}: {
-  searchParams: { force: string };
-}) {
+export default async function LandingPage(
+  props: {
+    searchParams: Promise<{ force: string }>;
+  }
+) {
+  const searchParams = await props.searchParams;
   const { force } = searchParams;
 
   if (!force) {

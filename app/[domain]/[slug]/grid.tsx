@@ -27,7 +27,9 @@ interface Props {
 // which will make the logged-out app a bit lighter, as well as remove the
 // need to import the polyfills in the EditWrapper
 const DynamicEditWrapper = dynamic(
-  () => import('@/app/components/EditWrapper').then((mod) => mod.EditWrapper),
+  () => import('@/app/components/EditWrapper').then((mod) => ({
+    default: mod.EditWrapper
+  })),
   { ssr: false }
 );
 

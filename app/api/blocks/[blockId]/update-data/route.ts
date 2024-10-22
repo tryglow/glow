@@ -5,10 +5,8 @@ import { blocksConfig } from '@/lib/blocks/config';
 import { Blocks } from '@/lib/blocks/types';
 import prisma from '@/lib/prisma';
 
-export async function POST(
-  req: Request,
-  { params }: { params: { blockId: string } }
-) {
+export async function POST(req: Request, props: { params: Promise<{ blockId: string }> }) {
+  const params = await props.params;
   const session = await auth();
 
   if (!session) {

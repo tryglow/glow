@@ -11,7 +11,9 @@ import { Props as DynamicMapboxMapProps } from './ui-client';
 
 // Dynamically import MapboxMap
 const DynamicMapboxMap = dynamic<DynamicMapboxMapProps>(
-  () => import('./ui-client').then((mod) => mod.MapboxMap),
+  () => import('./ui-client').then((mod) => ({
+    default: mod.MapboxMap
+  })),
   { ssr: false }
 );
 

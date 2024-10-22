@@ -19,11 +19,12 @@ const getInvite = async (inviteCode: string) => {
   return invite;
 };
 
-export default async function AcceptInvitePage({
-  params,
-}: {
-  params: { inviteCode: string };
-}) {
+export default async function AcceptInvitePage(
+  props: {
+    params: Promise<{ inviteCode: string }>;
+  }
+) {
+  const params = await props.params;
   const session = await auth();
 
   const invite = await getInvite(params.inviteCode);

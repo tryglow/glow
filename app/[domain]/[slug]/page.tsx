@@ -42,9 +42,10 @@ const getPageData = async ({
 };
 
 export async function generateMetadata(
-  { params }: { params: { slug: string; domain: string } },
+  props: { params: Promise<{ slug: string; domain: string }> },
   parent: ResolvingMetadata
 ): Promise<Metadata> {
+  const params = await props.params;
   const useSlug =
     decodeURIComponent(params.domain) === process.env.NEXT_PUBLIC_ROOT_DOMAIN;
 
@@ -71,7 +72,8 @@ export type InitialDataUsersIntegrations = Pick<
   'id' | 'createdAt' | 'type'
 >[];
 
-export default async function Page({ params }: { params: Params }) {
+export default async function Page(props: { params: Promise<Params> }) {
+  const params = await props.params;
   const session = await auth();
 
   const isLoggedIn = !!session?.user;
@@ -111,7 +113,7 @@ export default async function Page({ params }: { params: Params }) {
     redirect(`//${page.customDomain}`);
   }
 
-  const headersList = headers();
+  const headersList = await headers();
   const isMobile = isUserAgentMobile(headersList.get('user-agent'));
 
   const pageLayout = layout as unknown as PageConfig;

@@ -1,9 +1,7 @@
 import { getPageLayout } from './actions';
 
-export async function GET(
-  req: Request,
-  { params }: { params: { pageSlug: string } }
-) {
+export async function GET(req: Request, props: { params: Promise<{ pageSlug: string }> }) {
+  const params = await props.params;
   const pageSlug = params.pageSlug;
 
   if (!pageSlug) {

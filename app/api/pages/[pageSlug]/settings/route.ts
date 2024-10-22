@@ -1,10 +1,8 @@
 import { auth } from '@/app/lib/auth';
 import { getPageSettings } from './actions';
 
-export async function GET(
-  req: Request,
-  { params }: { params: { pageSlug: string } }
-) {
+export async function GET(req: Request, props: { params: Promise<{ pageSlug: string }> }) {
+  const params = await props.params;
   const session = await auth();
 
   if (!session) {

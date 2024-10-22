@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev --turbo",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
@@ -18,7 +18,7 @@
     "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
   },
   "dependencies": {
-    "@auth/prisma-adapter": "^2.4.2",
+    "@auth/prisma-adapter": "^2.7.2",
     "@aws-sdk/client-s3": "^3.621.0",
     "@aws-sdk/lib-storage": "^3.621.0",
     "@headlessui/react": "^2.1.2",
@@ -55,13 +55,13 @@
     "formik-validator-zod": "^2.0.1",
     "lucide-react": "^0.418.0",
     "mapbox-gl": "^3.5.1",
-    "next": "^14.2.11",
-    "next-auth": "^5.0.0-beta.22",
+    "next": "15.0.0",
+    "next-auth": "^5.0.0-beta.25",
     "prettier-plugin-organize-imports": "^4.1.0",
     "prisma": "^5.17.0",
-    "react": "^18.3",
+    "react": "19.0.0-rc-65a56d0e-20241020",
     "react-color": "^2.19.3",
-    "react-dom": "^18.3",
+    "react-dom": "19.0.0-rc-65a56d0e-20241020",
     "react-grid-layout": "^1.4.4",
     "resend": "^4.0.0",
     "sass": "^1.77.8",
@@ -78,17 +78,21 @@
     "@trivago/prettier-plugin-sort-imports": "^4.3.0",
     "@types/mapbox-gl": "^3.4.0",
     "@types/node": "^20",
-    "@types/react": "^18.3",
+    "@types/react": "npm:types-react@19.0.0-rc.1",
     "@types/react-color": "^3.0.12",
-    "@types/react-dom": "^18.3",
+    "@types/react-dom": "npm:types-react-dom@19.0.0-rc.1",
     "@types/react-grid-layout": "^1.3.5",
     "@types/uuid": "^10.0.0",
     "autoprefixer": "^10.4.19",
     "eslint": "^8",
-    "eslint-config-next": "14.0.4",
+    "eslint-config-next": "15.0.0",
     "postcss": "^8",
     "tailwindcss": "^3.4.6",
     "ts-node": "^10.9.2",
     "typescript": "^5"
+  },
+  "overrides": {
+    "@types/react": "npm:types-react@19.0.0-rc.1",
+    "@types/react-dom": "npm:types-react-dom@19.0.0-rc.1"
   }
 }

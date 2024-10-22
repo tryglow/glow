@@ -1,10 +1,8 @@
 import { auth } from '@/app/lib/auth';
 import prisma from '@/lib/prisma';
 
-export async function GET(
-  req: Request,
-  { params }: { params: { blockId: string } }
-) {
+export async function GET(req: Request, props: { params: Promise<{ blockId: string }> }) {
+  const params = await props.params;
   const session = await auth();
 
   const blockId = params.blockId;

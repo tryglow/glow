@@ -3,10 +3,8 @@ import { Prisma } from '@prisma/client';
 import { auth } from '@/app/lib/auth';
 import prisma from '@/lib/prisma';
 
-export async function POST(
-  req: Request,
-  { params }: { params: { blockId: string } }
-) {
+export async function POST(req: Request, props: { params: Promise<{ blockId: string }> }) {
+  const params = await props.params;
   const session = await auth();
 
   if (!session) {

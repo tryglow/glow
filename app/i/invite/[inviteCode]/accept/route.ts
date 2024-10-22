@@ -5,10 +5,8 @@ import { auth } from '@/app/lib/auth';
 
 import { acceptInvite, verifyInviteCodeHash } from '../actions';
 
-export async function GET(
-  request: NextRequest,
-  { params }: { params: { inviteCode: string } }
-) {
+export async function GET(request: NextRequest, props: { params: Promise<{ inviteCode: string }> }) {
+  const params = await props.params;
   const session = await auth();
 
   if (!session?.user) {
