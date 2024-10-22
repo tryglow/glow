@@ -34,18 +34,13 @@ export default function MarketingNavigation({ children }: Props) {
               </Link>
             </div>
             <div className="flex flex-1 items-center justify-end gap-x-3">
-              <Button asChild variant="ghost" className="hidden md:flex">
+              <Button asChild variant="ghost" className="hidden sm:flex">
                 <Link href="/i/pricing">Pricing</Link>
               </Button>
-              <Button asChild variant="ghost" className="hidden md:flex">
-                <Link href="https://github.com/tryglow/glow">GitHub</Link>
-              </Button>
               {children}
-            </div>
-            <div className="flex lg:hidden">
               <button
                 type="button"
-                className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700"
+                className="-m-2.5 inline-flex sm:hidden items-center justify-center rounded-md p-2.5 text-gray-700"
                 onClick={() => setMobileMenuOpen(true)}
               >
                 <span className="sr-only">Open main menu</span>
@@ -62,7 +57,7 @@ export default function MarketingNavigation({ children }: Props) {
         >
           <div className="fixed inset-0 z-10" />
           <Dialog.Panel className="fixed inset-y-0 right-0 z-10 w-full overflow-y-auto bg-white px-4 py-4 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
-            <div className="flex items-center gap-x-6">
+            <div className="flex items-center gap-x-3">
               <Link
                 href="/"
                 className="-m-1.5 p-1.5 flex items-center gap-2 flex-1"
@@ -88,32 +83,13 @@ export default function MarketingNavigation({ children }: Props) {
             </div>
             <div className="mt-6 flow-root">
               <div className="-my-6 divide-y divide-gray-500/10">
-                <div className="flex flex-col gap-2 py-6">
-                  <Button
-                    asChild
-                    variant="default"
-                    className="w-full"
-                    size="lg"
-                    onClick={() => {
-                      setMobileMenuOpen(false);
-                    }}
-                  >
-                    <Link href="/i/auth/signup">Get started</Link>
-                  </Button>
-                  <Button
-                    asChild
-                    variant="secondary"
-                    className="w-full"
-                    size="lg"
-                    onClick={() => {
-                      setMobileMenuOpen(false);
-                    }}
-                  >
-                    <Link href="/i/auth/signup">Login</Link>
-                  </Button>
-                </div>
-
                 <div className="py-6">
+                  <Link
+                    href="/i/pricing"
+                    className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                  >
+                    Pricing
+                  </Link>
                   <Link
                     href="https://x.com/tryglow"
                     className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"

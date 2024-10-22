@@ -57,14 +57,14 @@ export default async function IPageLayout({ children }: Props) {
           <>
             <LoginWidget
               trigger={
-                <Button variant="ghost" className="hidden lg:block">
+                <Button variant="ghost" className="block">
                   Log in
                 </Button>
               }
             />
             <LoginWidget
               isSignup
-              trigger={<Button className="hidden lg:block">Get started</Button>}
+              trigger={<Button className="block">Get started</Button>}
             />
           </>
         )}
