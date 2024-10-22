@@ -24,17 +24,21 @@ import {
   PopoverTrigger,
 } from '@/components/ui/popover';
 import { toast } from '@/components/ui/use-toast';
+import { useSession } from 'next-auth/react';
 
 interface Props {
   usersTeams?: Partial<Team>[] | null;
-  currentTeamId?: string;
 }
 
-export function TeamSwitcher({ usersTeams, currentTeamId }: Props) {
+export function TeamSwitcher({ usersTeams }: Props) {
   const [open, setOpen] = useState(false);
 
   const router = useRouter();
-  const currentTeam = usersTeams?.find((team) => team.id === currentTeamId);
+
+  const { data: session, update: updateSession } = useSession();
+  const currentTeam = usersTeams?.find(
+    (team) => team.id === session?.currentTeamId
+  );
 
   const handleSwitchTeam = async (teamId: string) => {
     if (!teamId) {
@@ -57,6 +61,7 @@ export function TeamSwitcher({ usersTeams, currentTeamId }: Props) {
       });
 
       router.refresh();
+      updateSession();
     }
   };
 
@@ -107,7 +112,9 @@ export function TeamSwitcher({ usersTeams, currentTeamId }: Props) {
                     <CheckIcon
                       className={cn(
                         'ml-auto h-4 w-4',
-                        team?.id === currentTeamId ? 'opacity-100' : 'opacity-0'
+                        team?.id === session?.currentTeamId
+                          ? 'opacity-100'
+                          : 'opacity-0'
                       )}
                     />
                   </CommandItem>

@@ -16,7 +16,6 @@ import { TeamSwitcher } from '@/components/TeamSwitcher';
 import { UserWidget } from '@/components/UserWidget';
 import { fetcher } from '@/lib/fetch';
 import { PlusCircleIcon } from 'lucide-react';
-import { useSession } from 'next-auth/react';
 import useSWR from 'swr';
 
 export function GlobalNavigation({ isEditMode }: { isEditMode: boolean }) {
@@ -31,8 +30,6 @@ export function GlobalNavigation({ isEditMode }: { isEditMode: boolean }) {
     '/api/user/current-team-pages',
     fetcher
   );
-
-  const { data: session } = useSession();
 
   return (
     <>
@@ -57,10 +54,7 @@ export function GlobalNavigation({ isEditMode }: { isEditMode: boolean }) {
 
               <div className="flex gap-2">
                 {usersTeams?.length && usersTeams?.length > 1 && (
-                  <TeamSwitcher
-                    usersTeams={usersTeams}
-                    currentTeamId={session?.currentTeamId}
-                  />
+                  <TeamSwitcher usersTeams={usersTeams} />
                 )}
                 <PageSwitcher teamPages={teamPages} />
 
