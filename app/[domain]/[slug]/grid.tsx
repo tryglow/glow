@@ -6,9 +6,9 @@ import { Layout, Responsive, ResponsiveProps } from 'react-grid-layout';
 import { EditModeContextProvider } from '@/app/contexts/Edit';
 
 import { EditLayout } from '@/app/components/EditLayout';
-import { EditWrapper } from '@/components/EditWrapper';
 import { GlobalNavigation } from '@/components/GlobalNavigation';
 import { WidthProvideRGL } from '@/components/WidthProvider';
+import dynamic from 'next/dynamic';
 
 export interface PageConfig {
   sm: Layout[];
@@ -22,6 +22,14 @@ interface Props {
   isPotentiallyMobile: boolean;
   isLoggedIn: boolean;
 }
+
+// Dynamically import EditWrapper so it doesn't get imported on the server
+// which will make the logged-out app a bit lighter, as well as remove the
+// need to import the polyfills in the EditWrapper
+const DynamicEditWrapper = dynamic(
+  () => import('@/app/components/EditWrapper').then((mod) => mod.EditWrapper),
+  { ssr: false }
+);
 
 export default function Grid({
   layout,
@@ -59,7 +67,9 @@ export default function Grid({
       <EditModeContextProvider>
         <GlobalNavigation isEditMode />
         <EditLayout>
-          <EditWrapper layoutProps={defaultLayoutProps}>{children}</EditWrapper>
+          <DynamicEditWrapper layoutProps={defaultLayoutProps}>
+            {children}
+          </DynamicEditWrapper>
         </EditLayout>
       </EditModeContextProvider>
     );
