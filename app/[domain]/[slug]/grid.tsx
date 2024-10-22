@@ -6,6 +6,7 @@ import { Layout, Responsive, ResponsiveProps } from 'react-grid-layout';
 
 import { EditModeContextProvider } from '@/app/contexts/Edit';
 
+import { EditLayout } from '@/app/components/EditLayout';
 import { EditWrapper } from '@/components/EditWrapper';
 import { GlobalNavigation } from '@/components/GlobalNavigation';
 import { WidthProvideRGL } from '@/components/WidthProvider';
@@ -63,26 +64,17 @@ export default function Grid({
   if (editMode) {
     return (
       <EditModeContextProvider>
-        <GlobalNavigation
-          teamPages={teamPages}
-          isEditMode
-          usersTeams={usersTeams}
-          currentTeamId={currentTeamId}
-        />
-        <EditWrapper layoutProps={defaultLayoutProps}>{children}</EditWrapper>
+        <GlobalNavigation isEditMode />
+        <EditLayout>
+          <EditWrapper layoutProps={defaultLayoutProps}>{children}</EditWrapper>
+        </EditLayout>
       </EditModeContextProvider>
     );
   }
 
   return (
     <>
-      {isLoggedIn && (
-        <GlobalNavigation
-          teamPages={teamPages}
-          usersTeams={usersTeams}
-          currentTeamId={currentTeamId}
-        />
-      )}
+      {isLoggedIn && <GlobalNavigation isEditMode={false} />}
       <ResponsiveReactGridLayout
         layouts={{
           lg: layout.sm,

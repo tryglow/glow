@@ -8,8 +8,7 @@ import { renderBlock } from '@/lib/blocks/ui';
 import prisma from '@/lib/prisma';
 import { isUserAgentMobile } from '@/lib/user-agent';
 
-import { GlowProviders } from '@/components/GlowProviders';
-
+import { getPageSettings } from '@/app/api/pages/[pageSlug]/settings/actions';
 import Grid, { PageConfig } from './grid';
 
 export const dynamic = 'force-dynamic';
@@ -154,6 +153,7 @@ export default async function Page({ params }: { params: Params }) {
   const session = await auth();
 
   const pageLayout = layout as unknown as PageConfig;
+  const pageSettings = await getPageSettings(params.slug);
 
   const initialData: Record<string, any> = {
     [`/api/pages/${params.slug}/layout`]: layout,
@@ -161,6 +161,7 @@ export default async function Page({ params }: { params: Params }) {
 
   if (isEditMode) {
     initialData['/api/user/integrations'] = integrations;
+    initialData[`/api/pages/${params.slug}/settings`] = pageSettings;
   }
 
   data.blocks.forEach((block) => {
@@ -170,34 +171,24 @@ export default async function Page({ params }: { params: Params }) {
   const mergedIds = [...pageLayout.sm, ...pageLayout.xxs].map((item) => item.i);
 
   return (
-    <GlowProviders
-      session={session}
-      value={{
-        fallback: initialData,
-        revalidateOnFocus: isEditMode,
-        revalidateOnReconnect: isEditMode,
-        revalidateIfStale: isEditMode,
-      }}
+    <Grid
+      isPotentiallyMobile={isMobile}
+      layout={pageLayout}
+      editMode={isEditMode}
+      teamPages={teamPages}
+      usersTeams={usersTeams}
+      isLoggedIn={isLoggedIn}
+      currentTeamId={session?.currentTeamId}
     >
-      <Grid
-        isPotentiallyMobile={isMobile}
-        layout={pageLayout}
-        editMode={isEditMode}
-        teamPages={teamPages}
-        usersTeams={usersTeams}
-        isLoggedIn={isLoggedIn}
-        currentTeamId={session?.currentTeamId}
-      >
-        {data.blocks
-          .filter((block) => mergedIds.includes(block.id))
-          .map((block) => {
-            return (
-              <section key={block.id}>
-                {renderBlock(block, data.id, isEditMode)}
-              </section>
-            );
-          })}
-      </Grid>
-    </GlowProviders>
+      {data.blocks
+        .filter((block) => mergedIds.includes(block.id))
+        .map((block) => {
+          return (
+            <section key={block.id}>
+              {renderBlock(block, data.id, isEditMode)}
+            </section>
+          );
+        })}
+    </Grid>
   );
 }

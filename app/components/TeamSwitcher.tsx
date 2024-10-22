@@ -26,7 +26,7 @@ import {
 import { toast } from '@/components/ui/use-toast';
 
 interface Props {
-  usersTeams?: Team[] | null;
+  usersTeams?: Partial<Team>[] | null;
   currentTeamId?: string;
 }
 
@@ -91,7 +91,7 @@ export function TeamSwitcher({ usersTeams, currentTeamId }: Props) {
                 return (
                   <CommandItem
                     key={team.id}
-                    onSelect={() => handleSwitchTeam(team.id)}
+                    onSelect={() => handleSwitchTeam(team.id as string)}
                     className="text-sm"
                   >
                     <Avatar className="mr-2 h-5 w-5">

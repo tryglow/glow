@@ -1,5 +1,6 @@
 'use client';
 
+import { Blocks } from '@/lib/blocks/types';
 import {
   ReactNode,
   createContext,
@@ -17,6 +18,13 @@ type EditModeContextValue = {
   nextToAddBlock: any;
   editLayoutMode: EditLayoutModes;
   setEditLayoutMode: (newLayoutMode: any) => void;
+  currentEditingBlock: { id: string; type: Blocks } | null;
+  setCurrentEditingBlock: (
+    newCurrentEditingBlock: {
+      id: string;
+      type: Blocks;
+    } | null
+  ) => void;
 };
 
 const EditModeContext = createContext<EditModeContextValue | undefined>(
@@ -42,6 +50,10 @@ export const EditModeContextProvider: React.FC<{ children: ReactNode }> = ({
   const [nextToAddBlock, setNextToAddBlock] = useState();
   const [editLayoutMode, setEditLayoutMode] =
     useState<EditLayoutModes>('desktop');
+  const [currentEditingBlock, setCurrentEditingBlock] = useState<{
+    id: string;
+    type: Blocks;
+  } | null>(null);
 
   const contextValue: EditModeContextValue = {
     draggingItem,
@@ -50,6 +62,8 @@ export const EditModeContextProvider: React.FC<{ children: ReactNode }> = ({
     setEditLayoutMode,
     nextToAddBlock,
     setNextToAddBlock,
+    currentEditingBlock,
+    setCurrentEditingBlock,
   };
 
   useEffect(() => {

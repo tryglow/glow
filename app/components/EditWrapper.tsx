@@ -75,7 +75,6 @@ export function EditWrapper({ children, layoutProps }: Props) {
   }, [layout]);
 
   useEffect(() => {
-    console.log('nextToAddBlock', nextToAddBlock);
     if (nextToAddBlock) {
       handleAddNewBlock([], nextToAddBlock, null, true);
     }
@@ -97,7 +96,7 @@ export function EditWrapper({ children, layoutProps }: Props) {
       i: newItemId,
       w: isMobile ? layoutItem.w : draggingItem.w,
       x: isMobile ? 0 : lastItem.x,
-      y: isMobile ? Infinity : lastItem.y,
+      y: isMobile ? 0 : lastItem.y - 1,
       minW: 4,
       minH: 2,
     };
@@ -154,21 +153,17 @@ export function EditWrapper({ children, layoutProps }: Props) {
     });
   };
 
+  // Function to handle layout changes
   const handleLayoutChange = async (
     newLayout: Layout[],
     currentLayouts: Layouts
   ) => {
+    // If the new layout is empty or there's no existing layout, exit early
     if (newLayout.length === 0 || !layout) {
       return;
     }
 
-    /**
-     * handleLayoutChange is called quite often, so we need to make sure that
-     * the layout has actually changed before we send a request to the server.
-     *
-     * I have a feeling that this might cause some issues in the future, but
-     * for now it works.
-     */
+    // Helper function to sort and normalize layout for comparison
     const sortAndNormalizeLayout = (layout: Layout[]) => {
       return layout
         .sort((a, b) => a.i.localeCompare(b.i))
@@ -183,6 +178,7 @@ export function EditWrapper({ children, layoutProps }: Props) {
         );
     };
 
+    // Stringify sorted layouts for comparison
     const sortedNewLayout = JSON.stringify(sortAndNormalizeLayout(newLayout));
     const sortedLayout = JSON.stringify(
       sortAndNormalizeLayout(
@@ -190,22 +186,25 @@ export function EditWrapper({ children, layoutProps }: Props) {
       )
     );
 
-    // Both layouts are the same, so we can skip the request
+    // If layouts are the same, no need to update
     if (sortedNewLayout === sortedLayout) {
       return;
     }
 
+    // If there's a temporary block, exit early
     if (newLayout.some((block) => block.i === 'tmp-block')) {
       return;
     }
 
+    // Prepare the next layout based on the edit mode
     const nextLayout = {
       xxs: editLayoutMode === 'mobile' ? newLayout : layout.xxs,
       sm: editLayoutMode === 'desktop' ? newLayout : layout.sm,
     };
 
+    // Handle cases where a new block might have been added
     if (newLayout.length !== (layout.xxs.length || layout.sm.length)) {
-      // find element that is different
+      // Find the new block
       const difference = newLayout.filter((item) => {
         if (editLayoutMode === 'mobile') {
           return !layout.xxs.some((item2) => item2.i === item.i);
@@ -213,17 +212,18 @@ export function EditWrapper({ children, layoutProps }: Props) {
         return !layout.sm.some((item2) => item2.i === item.i);
       });
 
+      // If there's exactly one new block, add it to the other layout
       if (difference.length === 1) {
         if (editLayoutMode === 'mobile') {
           nextLayout.sm.push(difference[0]);
-        }
-        if (editLayoutMode === 'desktop') {
+        } else {
           nextLayout.xxs.push(difference[0]);
         }
       }
     }
 
     try {
+      // Send the updated layout to the server
       const req = await fetch('/api/page/config/update', {
         method: 'POST',
         headers: {
@@ -237,6 +237,7 @@ export function EditWrapper({ children, layoutProps }: Props) {
 
       const res = await req.json();
 
+      // Handle server-side errors
       if (res.error) {
         toast({
           variant: 'error',
@@ -246,13 +247,10 @@ export function EditWrapper({ children, layoutProps }: Props) {
         return;
       }
 
-      // toast({
-      //   title: 'Layout saved',
-      // });
-
+      // Update the layout in the client-side cache
       mutateLayout(nextLayout);
     } catch (error) {
-      console.log(error);
+      console.error('Failed to update layout:', error);
       toast({
         variant: 'error',
         title: 'Something went wrong',
@@ -276,12 +274,12 @@ export function EditWrapper({ children, layoutProps }: Props) {
       <div
         className={cn(
           'min-h-screen bg-black/0 transition-colors hover:bg-black/5 w-full mx-auto pb-24 md:pb-0',
-          editLayoutMode === 'mobile' ? 'max-w-[400px]' : 'max-w-[768px]'
+          editLayoutMode === 'mobile' ? 'max-w-[400px]' : 'max-w-[624px]'
         )}
       >
         <ResponsiveReactGridLayout
           {...editableLayoutProps}
-          className="!overflow-auto"
+          className="!overflow-auto w-full min-h-[100vh]"
           layouts={{
             lg: layout?.sm ?? [],
             md: layout?.sm ?? [],
@@ -293,7 +291,6 @@ export function EditWrapper({ children, layoutProps }: Props) {
           {optimisticItems}
         </ResponsiveReactGridLayout>
       </div>
-      <DynamicBlockSheet />
     </>
   );
 }

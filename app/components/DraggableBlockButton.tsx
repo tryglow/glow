@@ -1,3 +1,4 @@
+import { useSidebar } from '@/app/components/ui/sidebar';
 import { useEditModeContext } from '@/app/contexts/Edit';
 
 import { Blocks } from '@/lib/blocks/types';
@@ -126,11 +127,12 @@ export const config: Record<
 
 interface Props {
   type: Blocks;
-  onClose: () => void;
 }
 
-export function DraggableBlockButton({ type, onClose }: Props) {
+export function DraggableBlockButton({ type }: Props) {
   const { setDraggingItem, setNextToAddBlock } = useEditModeContext();
+
+  const { isMobile, setOpen } = useSidebar();
 
   const blockConfig = config[type];
 
@@ -138,7 +140,7 @@ export function DraggableBlockButton({ type, onClose }: Props) {
     <>
       <img
         src="/assets/ui/drag.svg"
-        className="mr-3 opacity-0 md:opacity-100"
+        className="mr-3 hidden md:block"
         width={9}
         height={15}
         alt=""
@@ -187,7 +189,10 @@ export function DraggableBlockButton({ type, onClose }: Props) {
             h: blockConfig.drag.h,
             type,
           });
-          onClose();
+
+          if (isMobile && setOpen) {
+            setOpen(false);
+          }
         }}
       >
         {content}

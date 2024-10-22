@@ -21,7 +21,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 
 interface Props {
-  usersTeams?: Team[];
+  usersTeams?: Partial<Team>[];
 }
 
 export function UserWidget({ usersTeams }: Props) {

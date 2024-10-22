@@ -2,21 +2,14 @@
 
 import { PencilSquareIcon, TrashIcon } from '@heroicons/react/24/outline';
 import { useParams, useRouter } from 'next/navigation';
-import { useState } from 'react';
 import useSWR from 'swr';
 
 import { PageConfig } from '@/app/[domain]/[slug]/grid';
 
 import { Blocks } from '@/lib/blocks/types';
 
-import { config } from '@/components/DraggableBlockButton';
-import { EditForm } from '@/components/EditForm';
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-} from '@/components/ui/sheet';
+import { useSidebar } from '@/app/components/ui/sidebar';
+import { useEditModeContext } from '@/app/contexts/Edit';
 import { useToast } from '@/components/ui/use-toast';
 
 interface Props {
@@ -29,8 +22,10 @@ export function EditBlockToolbar({ blockId, blockType }: Props) {
   const router = useRouter();
   const params = useParams();
   const slug = params.slug;
+  const { setOpen, setOpenMobile } = useSidebar();
 
-  const [open, setOpen] = useState(false);
+  const { setCurrentEditingBlock } = useEditModeContext();
+
   const { mutate } = useSWR(`/api/blocks/${blockId}`);
   const { data: layout, mutate: mutateLayout } = useSWR<PageConfig>(
     `/api/pages/${slug}/layout`
@@ -96,9 +91,13 @@ export function EditBlockToolbar({ blockId, blockType }: Props) {
           className="relative inline-flex items-center rounded-l-full bg-white px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-stone-100 focus:z-10"
           onTouchStart={() => {
             setOpen(true);
+            setOpenMobile(true);
+            setCurrentEditingBlock({ id: blockId, type: blockType });
           }}
           onClick={() => {
             setOpen(true);
+            setOpenMobile(true);
+            setCurrentEditingBlock({ id: blockId, type: blockType });
           }}
         >
           <PencilSquareIcon width={16} height={16} className="text-slate-700" />
@@ -112,19 +111,6 @@ export function EditBlockToolbar({ blockId, blockType }: Props) {
           <TrashIcon width={16} height={16} className="text-slate-700" />
         </button>
       </span>
-      <Sheet open={open} onOpenChange={setOpen}>
-        <SheetContent className="noDrag">
-          <SheetHeader className="border-b border-stone-200 pb-2 mb-4">
-            <SheetTitle>Editing {config[blockType].title}</SheetTitle>
-          </SheetHeader>
-
-          <EditForm
-            onClose={() => setOpen(false)}
-            blockId={blockId}
-            blockType={blockType}
-          />
-        </SheetContent>
-      </Sheet>
     </>
   );
 }
