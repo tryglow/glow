@@ -44,7 +44,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={saans.className}>
-      <body className="bg-sys-bg-base min-h-screen">
+      <body className="bg-stone-50 min-h-screen">
         {children}
         <Toaster />
       </body>

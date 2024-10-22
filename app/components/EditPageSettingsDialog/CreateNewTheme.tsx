@@ -8,7 +8,6 @@ import { toast } from '@/app/components/ui/use-toast';
 import { fetcher } from '@/lib/fetch';
 import { HSLColor, hslToHex, themeFields } from '@/lib/theme';
 import { Theme } from '@prisma/client';
-import { useRouter } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
 import { SketchPicker } from 'react-color';
 import useSWR, { mutate } from 'swr';
@@ -37,7 +36,6 @@ export function CreateEditThemeForm({
   onCreateSuccess?: (newThemeId: string) => void;
 }) {
   const [themeName, setThemeName] = useState('');
-  const router = useRouter();
 
   const { data: themes } = useSWR<Theme[]>('/api/themes', fetcher);
 
@@ -223,7 +221,7 @@ function ColorField({
 
       <style>
         {`:root {
-            --${variable}: ${value.hsl.h}deg ${value.hsl.s * 100}% ${value.hsl.l * 100}%;
+            --${variable}: ${value.hsl.h}deg ${value.hsl.s * 100}% ${value.hsl.l * 100}% !important;
        }`}
       </style>
     </>

@@ -1,11 +1,11 @@
 'use client';
 
-import { Page, Team } from '@prisma/client';
 import { ReactNode, useMemo } from 'react';
 import { Layout, Responsive, ResponsiveProps } from 'react-grid-layout';
 
 import { EditModeContextProvider } from '@/app/contexts/Edit';
 
+import { EditLayout } from '@/app/components/EditLayout';
 import { EditWrapper } from '@/components/EditWrapper';
 import { GlobalNavigation } from '@/components/GlobalNavigation';
 import { WidthProvideRGL } from '@/components/WidthProvider';
@@ -19,22 +19,16 @@ interface Props {
   layout: PageConfig;
   children: ReactNode[];
   editMode?: boolean;
-  teamPages: Page[] | null;
   isPotentiallyMobile: boolean;
   isLoggedIn: boolean;
-  usersTeams?: Team[];
-  currentTeamId?: string;
 }
 
 export default function Grid({
   layout,
   children,
   editMode,
-  teamPages,
   isLoggedIn,
   isPotentiallyMobile = false,
-  usersTeams,
-  currentTeamId,
 }: Props) {
   const defaultLayoutProps: ResponsiveProps = {
     useCSSTransforms: true,
@@ -63,26 +57,17 @@ export default function Grid({
   if (editMode) {
     return (
       <EditModeContextProvider>
-        <GlobalNavigation
-          teamPages={teamPages}
-          isEditMode
-          usersTeams={usersTeams}
-          currentTeamId={currentTeamId}
-        />
-        <EditWrapper layoutProps={defaultLayoutProps}>{children}</EditWrapper>
+        <GlobalNavigation isEditMode />
+        <EditLayout>
+          <EditWrapper layoutProps={defaultLayoutProps}>{children}</EditWrapper>
+        </EditLayout>
       </EditModeContextProvider>
     );
   }
 
   return (
     <>
-      {isLoggedIn && (
-        <GlobalNavigation
-          teamPages={teamPages}
-          usersTeams={usersTeams}
-          currentTeamId={currentTeamId}
-        />
-      )}
+      {isLoggedIn && <GlobalNavigation isEditMode={false} />}
       <ResponsiveReactGridLayout
         layouts={{
           lg: layout.sm,

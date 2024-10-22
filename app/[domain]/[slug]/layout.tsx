@@ -1,4 +1,3 @@
-import { Theme } from '@prisma/client';
 import Link from 'next/link';
 
 import {
@@ -8,26 +7,52 @@ import {
 
 import { auth } from '@/lib/auth';
 import prisma from '@/lib/prisma';
-import { defaultThemeSeeds, themeColorToCssValue } from '@/lib/theme';
 
+import { RenderPageTheme } from '@/app/[domain]/[slug]/render-page-theme';
+import { getPageLayout } from '@/app/api/pages/[pageSlug]/layout/actions';
+import { getPageSettings } from '@/app/api/pages/[pageSlug]/settings/actions';
+import { getPageTheme } from '@/app/api/pages/[pageSlug]/theme/actions';
+import { getTeamIntegrations } from '@/app/api/user/integrations/actions';
+import { GlowProviders } from '@/app/components/GlowProviders';
 import { Button } from '@/components/ui/button';
+import { notFound } from 'next/navigation';
 
 export const dynamic = 'force-dynamic';
 
-const fetchPageTheme = (slug: string, domain: string) => {
+const fetchData = async (slug: string, domain: string) => {
   const useSlug =
     decodeURIComponent(domain) === process.env.NEXT_PUBLIC_ROOT_DOMAIN;
-  return prisma.page.findUnique({
+
+  let isEditMode = false;
+
+  const session = await auth();
+
+  const user = session?.user;
+
+  const data = await prisma.page.findUnique({
     where: useSlug
       ? { slug, deletedAt: null }
       : { customDomain: decodeURIComponent(domain), deletedAt: null },
-    select: {
-      theme: true,
-      backgroundImage: true,
-      publishedAt: true,
-      teamId: true,
+    include: {
+      blocks: true,
+      user: !!user,
     },
   });
+
+  if (!data) notFound();
+
+  if (user && data?.teamId === session?.currentTeamId) {
+    isEditMode = true;
+  }
+
+  if (data.publishedAt == null && !isEditMode) {
+    return notFound();
+  }
+
+  return {
+    data,
+    isEditMode,
+  };
 };
 
 export default async function PageLayout({
@@ -42,21 +67,41 @@ export default async function PageLayout({
 }) {
   const session = await auth();
 
-  let renderTheme: Partial<Theme> = defaultThemeSeeds.Default;
+  const [integrations, layout, pageTheme, pageSettings] = await Promise.all([
+    getTeamIntegrations(),
+    getPageLayout(params.slug),
+    getPageTheme(params.slug, params.domain),
+    getPageSettings(params.slug),
+  ]);
 
-  const page = await fetchPageTheme(params.slug, params.domain);
+  const { data, isEditMode } = await fetchData(params.slug, params.domain);
 
-  const currentUserIsOwner = page?.teamId === session?.currentTeamId;
+  const currentUserIsOwner = pageTheme?.teamId === session?.currentTeamId;
 
-  // We should only show the custom theme if the page is published or the user is logged in
-  if (page?.publishedAt || currentUserIsOwner) {
-    if (page?.theme?.id) {
-      renderTheme = page.theme;
-    }
+  const initialData: Record<string, any> = {
+    [`/api/pages/${params.slug}/layout`]: layout,
+    [`/api/pages/${params.slug}/theme`]: pageTheme,
+  };
+
+  if (isEditMode) {
+    initialData['/api/user/integrations'] = integrations;
+    initialData[`/api/pages/${params.slug}/settings`] = pageSettings;
   }
 
+  data.blocks.forEach((block) => {
+    initialData[`/api/blocks/${block.id}`] = block.data;
+  });
+
   return (
-    <>
+    <GlowProviders
+      session={session}
+      value={{
+        fallback: initialData,
+        revalidateOnFocus: isEditMode,
+        revalidateOnReconnect: isEditMode,
+        revalidateIfStale: isEditMode,
+      }}
+    >
       {!session?.user && (
         <Button
           variant="default"
@@ -67,34 +112,29 @@ export default async function PageLayout({
         </Button>
       )}
 
-      <div className="w-full max-w-2xl mx-auto px-3 md:px-6 gap-3 pt-16 pb-8">
-        {children}
-      </div>
+      {pageTheme?.publishedAt && !currentUserIsOwner ? (
+        <main className="bg-sys-bg-base">
+          <div className="w-full max-w-[768px] mx-auto px-3 md:px-6 gap-3 pt-16 pb-8">
+            {children}
+          </div>
+        </main>
+      ) : (
+        children
+      )}
 
-      {(page?.publishedAt || currentUserIsOwner) && (
+      {(pageTheme?.publishedAt || currentUserIsOwner) && (
         <>
-          {page?.backgroundImage && (
+          {pageTheme?.backgroundImage && (
             <style>
               {`body {
-                background: url(${page.backgroundImage}) no-repeat center center / cover fixed;
+                background: url(${pageTheme.backgroundImage}) no-repeat center center / cover fixed;
                 }`}
             </style>
           )}
         </>
       )}
 
-      <style>
-        {`:root {
-          --color-sys-bg-base: ${themeColorToCssValue(renderTheme.colorBgBase)};
-          --color-sys-bg-primary: ${themeColorToCssValue(renderTheme.colorBgPrimary)};
-          --color-sys-bg-secondary: ${themeColorToCssValue(renderTheme.colorBgSecondary)};
-          --color-sys-bg-border: ${themeColorToCssValue(renderTheme.colorBorderPrimary)};
-          
-          --color-sys-label-primary: ${themeColorToCssValue(renderTheme.colorLabelPrimary)};
-          --color-sys-label-secondary: ${themeColorToCssValue(renderTheme.colorLabelSecondary)};
-          --color-sys-label-tertiary: ${themeColorToCssValue(renderTheme.colorLabelTertiary)};
-        }`}
-      </style>
+      <RenderPageTheme pageSlug={params.slug} />
 
       {session?.user && (
         <>
@@ -102,6 +142,6 @@ export default async function PageLayout({
           <TeamOnboardingDialog />
         </>
       )}
-    </>
+    </GlowProviders>
   );
 }

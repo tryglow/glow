@@ -1,4 +1,5 @@
 import { PrismaClient } from '@prisma/client';
+import { defaultThemeSeeds } from '../lib/theme';
 
 const prisma = new PrismaClient();
 
@@ -44,41 +45,13 @@ async function main() {
       name: 'Default',
       createdById: initialUser.id,
       isDefault: true,
-      colorBgPrimary: {
-        h: 0,
-        s: 0,
-        l: 100,
-      },
-      colorBgSecondary: {
-        h: 0,
-        s: 0,
-        l: 90.2,
-      },
-      colorLabelPrimary: {
-        h: 240,
-        s: 3.45,
-        l: 11.37,
-      },
-      colorLabelSecondary: {
-        h: 0,
-        s: 0,
-        l: 16,
-      },
-      colorBorderPrimary: {
-        h: 0,
-        s: 0,
-        l: 91.76,
-      },
-      colorLabelTertiary: {
-        h: 0,
-        s: 0,
-        l: 98.04,
-      },
-      colorBgBase: {
-        h: 60,
-        s: 4.76,
-        l: 96,
-      },
+      colorBgPrimary: defaultThemeSeeds.Default.colorBgPrimary,
+      colorBgSecondary: defaultThemeSeeds.Default.colorBgSecondary,
+      colorBorderPrimary: defaultThemeSeeds.Default.colorBorderPrimary,
+      colorLabelPrimary: defaultThemeSeeds.Default.colorLabelPrimary,
+      colorLabelSecondary: defaultThemeSeeds.Default.colorLabelSecondary,
+      colorLabelTertiary: defaultThemeSeeds.Default.colorLabelTertiary,
+      colorBgBase: defaultThemeSeeds.Default.colorBgBase,
     },
   });
 
@@ -93,41 +66,13 @@ async function main() {
       name: 'Purple',
       createdById: initialUser.id,
       isDefault: true,
-      colorBgPrimary: {
-        h: 255,
-        s: 29,
-        l: 13.5,
-      },
-      colorBgSecondary: {
-        h: 0,
-        s: 0,
-        l: 0,
-      },
-      colorLabelPrimary: {
-        h: 0,
-        s: 0,
-        l: 100,
-      },
-      colorLabelSecondary: {
-        h: 293.33,
-        s: 7.44,
-        l: 76.27,
-      },
-      colorBorderPrimary: {
-        h: 253.55,
-        s: 19.69,
-        l: 28.37,
-      },
-      colorLabelTertiary: {
-        h: 0,
-        s: 0,
-        l: 98.04,
-      },
-      colorBgBase: {
-        h: 255.48,
-        s: 30.1,
-        l: 20.2,
-      },
+      colorBgPrimary: defaultThemeSeeds.Purple.colorBgPrimary,
+      colorBgSecondary: defaultThemeSeeds.Purple.colorBgSecondary,
+      colorBorderPrimary: defaultThemeSeeds.Purple.colorBorderPrimary,
+      colorLabelPrimary: defaultThemeSeeds.Purple.colorLabelPrimary,
+      colorLabelSecondary: defaultThemeSeeds.Purple.colorLabelSecondary,
+      colorLabelTertiary: defaultThemeSeeds.Purple.colorLabelTertiary,
+      colorBgBase: defaultThemeSeeds.Purple.colorBgBase,
     },
   });
 
@@ -142,41 +87,13 @@ async function main() {
       name: 'Black',
       createdById: initialUser.id,
       isDefault: true,
-      colorBgPrimary: {
-        h: 0,
-        s: 0,
-        l: 0,
-      },
-      colorBgSecondary: {
-        h: 0,
-        s: 0,
-        l: 90.2,
-      },
-      colorLabelPrimary: {
-        h: 0,
-        s: 0,
-        l: 100,
-      },
-      colorLabelSecondary: {
-        h: 0,
-        s: 0,
-        l: 98.04,
-      },
-      colorBorderPrimary: {
-        h: 0,
-        s: 0,
-        l: 16.07,
-      },
-      colorLabelTertiary: {
-        h: 0,
-        s: 0,
-        l: 98.04,
-      },
-      colorBgBase: {
-        h: 0,
-        s: 0,
-        l: 0,
-      },
+      colorBgPrimary: defaultThemeSeeds.Black.colorBgPrimary,
+      colorBgSecondary: defaultThemeSeeds.Black.colorBgSecondary,
+      colorBorderPrimary: defaultThemeSeeds.Black.colorBorderPrimary,
+      colorLabelPrimary: defaultThemeSeeds.Black.colorLabelPrimary,
+      colorLabelSecondary: defaultThemeSeeds.Black.colorLabelSecondary,
+      colorLabelTertiary: defaultThemeSeeds.Black.colorLabelTertiary,
+      colorBgBase: defaultThemeSeeds.Black.colorBgBase,
     },
   });
 
@@ -191,41 +108,13 @@ async function main() {
       name: 'Forest',
       createdById: initialUser.id,
       isDefault: true,
-      colorBgPrimary: {
-        h: 140,
-        s: 9.88,
-        l: 31,
-      },
-      colorBgSecondary: {
-        h: 0,
-        s: 0,
-        l: 90.2,
-      },
-      colorLabelPrimary: {
-        h: 0,
-        s: 0,
-        l: 100,
-      },
-      colorLabelSecondary: {
-        h: 141.18,
-        s: 41.46,
-        l: 83.92,
-      },
-      colorBorderPrimary: {
-        h: 140,
-        s: 9.88,
-        l: 31,
-      },
-      colorLabelTertiary: {
-        h: 0,
-        s: 0,
-        l: 98.04,
-      },
-      colorBgBase: {
-        h: 141.18,
-        s: 8.13,
-        l: 41,
-      },
+      colorBgPrimary: defaultThemeSeeds.Forest.colorBgPrimary,
+      colorBgSecondary: defaultThemeSeeds.Forest.colorBgSecondary,
+      colorBorderPrimary: defaultThemeSeeds.Forest.colorBorderPrimary,
+      colorLabelPrimary: defaultThemeSeeds.Forest.colorLabelPrimary,
+      colorLabelSecondary: defaultThemeSeeds.Forest.colorLabelSecondary,
+      colorLabelTertiary: defaultThemeSeeds.Forest.colorLabelTertiary,
+      colorBgBase: defaultThemeSeeds.Forest.colorBgBase,
     },
   });
 }

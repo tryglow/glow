@@ -1,20 +1,21 @@
-import { getPageLayout } from './actions';
+import { auth } from '@/lib/auth';
+import { getPageSettings } from './actions';
 
 export async function GET(
   req: Request,
   { params }: { params: { pageSlug: string } }
 ) {
-  const pageSlug = params.pageSlug;
+  const session = await auth();
 
-  if (!pageSlug) {
+  if (!session) {
     return Response.json({
       error: {
-        message: 'Missing required fields',
+        message: 'Unauthorized',
       },
     });
   }
 
-  const page = await getPageLayout(pageSlug);
+  const page = await getPageSettings(params.pageSlug);
 
   if (!page) {
     return Response.json({
@@ -24,5 +25,5 @@ export async function GET(
     });
   }
 
-  return Response.json({ sm: page.sm, xxs: page.xxs });
+  return Response.json(page);
 }

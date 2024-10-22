@@ -32,16 +32,11 @@ export type FormValues = {
 };
 
 interface Props {
-  onCancel: () => void;
   initialValues: FormValues;
   pageId: string;
 }
 
-export function EditPageSettingsGeneral({
-  onCancel,
-  initialValues,
-  pageId,
-}: Props) {
+export function EditPageSettingsGeneral({ initialValues, pageId }: Props) {
   const params = useParams();
   const router = useRouter();
   const { toast } = useToast();
@@ -83,7 +78,6 @@ export function EditPageSettingsGeneral({
         title: 'Your page settings have been updated',
       });
       router.refresh();
-      onCancel();
     } catch (error) {
       toast({
         variant: 'error',
@@ -146,7 +140,7 @@ export function EditPageSettingsGeneral({
                   id="pageSlug"
                   error={errors.pageSlug}
                 />
-                <div className="px-3 py-4 rounded-lg ring-1 ring-black/10 relative bg-[#fffbec] flex flex-col gap-1">
+                <div className="hidden px-3 py-4 rounded-lg ring-1 ring-black/10 relative bg-[#fffbec] flex flex-col gap-1">
                   <span className="text-sm text-black font-semibold">
                     Custom Domain 👀
                   </span>
@@ -186,7 +180,11 @@ export function EditPageSettingsGeneral({
               </div>
               <div className="mt-4">
                 <Label htmlFor="published">Delete your page</Label>
-                <div className="flex flex-col md:flex-row items-center mt-3 bg-red-100 p-2 rounded-lg">
+                <span className="text-sm mt-1 block">
+                  Deleting your page is irreversible and your page username will
+                  be available to use by other users.
+                </span>
+                <div className="flex flex-col items-start mt-3 bg-red-100 p-2 rounded-lg">
                   <Button
                     type="button"
                     variant="destructive"
@@ -194,21 +192,11 @@ export function EditPageSettingsGeneral({
                   >
                     Delete Page
                   </Button>
-
-                  <label className="text-sm mt-3 md:mt-0 md:ml-3 max-w-80">
-                    Deleting your page is irreversible and your page username
-                    will be available to use by other users.
-                  </label>
                 </div>
               </div>
             </div>
 
             <DialogFooter>
-              {onCancel && (
-                <Button variant="secondary" onClick={onCancel}>
-                  ← Cancel
-                </Button>
-              )}
               <Button type="submit">
                 {isSubmitting && (
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />

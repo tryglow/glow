@@ -8,7 +8,7 @@ import * as Yup from 'yup';
 import { createPage } from '@/app/api/page/actions';
 
 import { regexSlug } from '@/lib/slugs';
-import { DefaultThemeNames, defaultThemeSeeds } from '@/lib/theme';
+import { defaultThemeSeeds } from '@/lib/theme';
 
 import { Button } from '@/components/ui/button';
 import { DialogFooter } from '@/components/ui/dialog';
@@ -16,6 +16,7 @@ import { Label } from '@/components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { useToast } from '@/components/ui/use-toast';
 
+import { PageThemePreview } from '@/app/components/PageThemePreview';
 import { FormField } from './FormField';
 
 const FormSchema = Yup.object().shape({
@@ -139,9 +140,7 @@ export function CreatePageForm({ onCancel }: Props) {
                           />
 
                           <div className="items-center rounded-md border-2 border-muted p-1 hover:border-accent">
-                            <PageThemePreview
-                              themeName={themeName as DefaultThemeNames}
-                            />
+                            <PageThemePreview themeValues={themeValues} />
                           </div>
                           <span className="block w-full p-2 text-center font-medium">
                             {themeName}
@@ -173,61 +172,3 @@ export function CreatePageForm({ onCancel }: Props) {
     </Formik>
   );
 }
-
-export const PageThemePreview = ({
-  themeName,
-}: {
-  themeName: DefaultThemeNames;
-}) => {
-  const selectedTheme = defaultThemeSeeds[themeName];
-
-  console.log(selectedTheme);
-
-  return (
-    <div
-      className="space-y-2 rounded-sm p-2"
-      style={{
-        backgroundColor: `hsl(${selectedTheme.colorBgBase.h} ${selectedTheme.colorBgBase.s * 100} ${selectedTheme.colorBgBase.l * 100})`,
-      }}
-    >
-      <div
-        className="flex items-center space-x-2 rounded-md p-2 shadow-sm"
-        style={{
-          backgroundColor: `hsl(${selectedTheme.colorBgPrimary.h} ${selectedTheme.colorBgPrimary.s * 100} ${selectedTheme.colorBgPrimary.l * 100})`,
-        }}
-      >
-        <div
-          className="h-4 w-4 rounded-full"
-          style={{
-            backgroundColor: `hsl(${selectedTheme.colorLabelPrimary.h} ${selectedTheme.colorLabelPrimary.s * 100} ${selectedTheme.colorLabelPrimary.l * 100})`,
-          }}
-        />
-        <div
-          className="h-2 w-[100px] rounded-lg"
-          style={{
-            backgroundColor: `hsl(${selectedTheme.colorLabelSecondary.h} ${selectedTheme.colorLabelSecondary.s * 100} ${selectedTheme.colorLabelSecondary.l * 100})`,
-          }}
-        />
-      </div>
-      <div
-        className="space-y-2 rounded-md p-2 shadow-sm"
-        style={{
-          backgroundColor: `hsl(${selectedTheme.colorBgPrimary.h} ${selectedTheme.colorBgPrimary.s * 100} ${selectedTheme.colorBgPrimary.l * 100})`,
-        }}
-      >
-        <div
-          className="h-2 w-[80px] rounded-lg"
-          style={{
-            backgroundColor: `hsl(${selectedTheme.colorLabelPrimary.h} ${selectedTheme.colorLabelPrimary.s * 100} ${selectedTheme.colorLabelPrimary.l * 100})`,
-          }}
-        />
-        <div
-          className="h-2 w-[100px] rounded-lg"
-          style={{
-            backgroundColor: `hsl(${selectedTheme.colorLabelSecondary.h} ${selectedTheme.colorLabelSecondary.s * 100} ${selectedTheme.colorLabelSecondary.l * 100})`,
-          }}
-        />
-      </div>
-    </div>
-  );
-};

@@ -99,7 +99,7 @@ export const themeFields = [
   },
   {
     id: 'colorBorderPrimary',
-    variable: 'color-sys-border-primary',
+    variable: 'color-sys-bg-border',
     label: 'Primary border',
   },
 ];

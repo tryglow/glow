@@ -139,13 +139,7 @@ function BlockSheetContent({
           <div className="overflow-y-auto overscroll-none">
             <div className="space-y-3 flex flex-col">
               {filteredBlocks.map((block) => {
-                return (
-                  <DraggableBlockButton
-                    key={block}
-                    type={block}
-                    onClose={() => setOpen(false)}
-                  />
-                );
+                return <DraggableBlockButton key={block} type={block} />;
               })}
             </div>
           </div>

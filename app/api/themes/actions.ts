@@ -146,3 +146,57 @@ export async function fetchTheme(themeId: string) {
     theme,
   };
 }
+
+export async function setPageTheme(pageSlug: string, themeId: string) {
+  const session = await auth();
+
+  if (!session || !session.currentTeamId) {
+    return {
+      error: 'Unauthorized',
+    };
+  }
+
+  if (!pageSlug) {
+    return {
+      error: 'Page slug is required',
+    };
+  }
+
+  if (!themeId) {
+    return {
+      error: 'Theme ID is required',
+    };
+  }
+
+  try {
+    await prisma.page.update({
+      where: {
+        slug: pageSlug,
+        deletedAt: null,
+        team: {
+          members: {
+            some: {
+              userId: session.user.id,
+            },
+          },
+        },
+      },
+      data: {
+        theme: {
+          connect: {
+            id: themeId,
+          },
+        },
+      },
+    });
+
+    return {
+      success: true,
+    };
+  } catch (error) {
+    console.error(error);
+    return {
+      error: 'Failed to set page theme',
+    };
+  }
+}

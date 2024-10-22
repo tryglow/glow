@@ -26,16 +26,11 @@ export type FormValues = {
 };
 
 interface Props {
-  onCancel: () => void;
   initialValues: FormValues;
   pageId: string;
 }
 
-export function EditPageSettingsDesign({
-  onCancel,
-  initialValues,
-  pageId,
-}: Props) {
+export function EditPageSettingsDesign({ initialValues, pageId }: Props) {
   const params = useParams();
   const router = useRouter();
   const { toast } = useToast();
@@ -69,7 +64,6 @@ export function EditPageSettingsDesign({
         title: 'Your page settings have been updated',
       });
       router.refresh();
-      onCancel();
     } catch (error) {
       toast({
         variant: 'error',
@@ -185,11 +179,6 @@ export function EditPageSettingsDesign({
             </div>
 
             <DialogFooter>
-              {onCancel && (
-                <Button variant="secondary" onClick={onCancel}>
-                  ← Cancel
-                </Button>
-              )}
               <Button type="submit">
                 {isSubmitting && (
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
