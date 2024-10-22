@@ -1,3 +1,4 @@
+'server only';
 import { TeamInvite } from '@prisma/client';
 import { Resend } from 'resend';
 

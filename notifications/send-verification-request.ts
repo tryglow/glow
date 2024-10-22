@@ -1,3 +1,5 @@
+'server only';
+
 import { Resend } from 'resend';
 import VerificationCodeEmail from './login-verification-email';
 

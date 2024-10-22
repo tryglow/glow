@@ -1,3 +1,5 @@
+'server only';
+
 import { Resend } from 'resend';
 
 const teamWelcomeText = `Welcome to Glow for teams! We're excited to have you on board. Your subscription is active, and you now have access to all of our Pro features. We've also created a new team for you, so you can start collaborating!`;

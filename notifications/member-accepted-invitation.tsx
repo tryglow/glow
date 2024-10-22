@@ -1,3 +1,5 @@
+'server only';
+
 import { Resend } from 'resend';
 
 export async function sendMemberAcceptedInvitationEmail({

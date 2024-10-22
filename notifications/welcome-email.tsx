@@ -1,3 +1,4 @@
+'server only';
 import { Resend } from 'resend';
 
 export async function sendWelcomeEmail(email: string) {
