@@ -1,4 +1,9 @@
 /** @type {import('next').NextConfig} */
+
+const createMDX = require('@next/mdx');
+
+const withMDX = createMDX();
+
 const nextConfig = {
   rewrites: async () => [
     {
@@ -13,6 +18,7 @@ const nextConfig = {
       permanent: true,
     },
   ],
+  pageExtensions: ['js', 'jsx', 'mdx', 'ts', 'tsx'],
   logging: {
     fetches: {
       fullUrl: true,
@@ -34,4 +40,4 @@ const nextConfig = {
   },
 };
 
-module.exports = nextConfig;
+module.exports = withMDX(nextConfig);
