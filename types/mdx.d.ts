@@ -9,6 +9,8 @@ export interface ArticleMetadata {
 
 export interface LearnPostMetadata {
   title: string;
+  publishDate: string;
+  category: 'link-in-bio' | 'glow';
 }
 
 declare module '*.mdx' {

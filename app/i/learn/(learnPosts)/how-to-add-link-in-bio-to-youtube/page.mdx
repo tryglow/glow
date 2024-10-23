@@ -1,0 +1,32 @@
+import { ArticleTemplate } from '../../learn-template';
+
+export const metadata = {
+  title: 'How can I add a link in bio to YouTube?',
+  publishDate: '2024-10-22',
+  category: 'link-in-bio',
+};
+
+To add a link in your YouTube channel bio:
+
+1. Sign in to YouTube:
+
+   - Use a browser or the YouTube app to log into your account.
+
+2. Access Your Channel:
+
+   - Click your profile picture in the top right, then select "Your Channel."
+
+3. Edit Your About Section:
+
+   - Go to the "About" tab.
+   - Click on the pencil icon to edit your channel description.
+   - In the description, paste the link you want to add (e.g., a website or social media profile).
+
+4. Save Changes:
+
+- Click "Save" to update your bio.
+  The link will now appear in your channel’s "About" section, making it easy for viewers to explore more about you.
+
+export default function MDXArticle(props) {
+  return <ArticleTemplate meta={metadata}>{props.children}</ArticleTemplate>;
+}

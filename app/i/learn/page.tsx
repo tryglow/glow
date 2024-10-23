@@ -10,8 +10,31 @@ export const metadata: Metadata = {
   title: 'Learn - Glow',
 };
 
+export const learnPostCategories: Record<
+  LearnPost['category'],
+  {
+    title: string;
+  }
+> = {
+  glow: {
+    title: 'Glow',
+  },
+  'link-in-bio': {
+    title: 'Link in Bio',
+  },
+};
+
 export default async function LearnLandingPage() {
   const learnPosts = await getLearnPosts();
+
+  const learnPostsByCategory = learnPosts.reduce(
+    (acc, post) => {
+      acc[post.category] = acc[post.category] || [];
+      acc[post.category].push(post);
+      return acc;
+    },
+    {} as Record<LearnPost['category'], LearnPost[]>
+  );
 
   return (
     <main>
@@ -32,18 +55,34 @@ export default async function LearnLandingPage() {
         </MarketingContainer>
       </div>
       <MarketingContainer className="pt-16">
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-          {learnPosts.map((post: LearnPost) => {
-            return (
-              <div key={post.slug}>
-                <article>
-                  <h2 className="font-display text-2xl font-semibold text-slate-800">
-                    <Link href={`/i/learn/${post.slug}`}>{post.title}</Link>
-                  </h2>
-                </article>
-              </div>
-            );
-          })}
+        <div className="divide-y divide-slate-200 space-y-8">
+          {Object.entries(learnPostsByCategory).map(
+            ([category, posts]: [string, LearnPost[]]) => {
+              return (
+                <div key={category} className="pt-8">
+                  <h3 className="text-pretty text-2xl font-black text-slate-900 tracking-tight mb-8">
+                    {
+                      learnPostCategories[
+                        category as keyof typeof learnPostCategories
+                      ].title
+                    }
+                  </h3>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    {posts.map((post) => (
+                      <article key={post.title}>
+                        <h2 className="font-display text-xl font-medium text-slate-800">
+                          <Link href={`/i/learn/${post.slug}`}>
+                            {post.title}
+                          </Link>
+                        </h2>
+                      </article>
+                    ))}
+                  </div>
+                </div>
+              );
+            }
+          )}
         </div>
       </MarketingContainer>
     </main>

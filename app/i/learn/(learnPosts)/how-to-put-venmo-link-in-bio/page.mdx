@@ -1,0 +1,26 @@
+import { ArticleTemplate } from '../../learn-template';
+
+export const metadata = {
+  title: 'How can I put a Venmo link in my bio?',
+  publishDate: '2024-10-22',
+  category: 'glow',
+};
+
+To add a Venmo link to your Glow page:
+
+1. Login to your Glow account.
+
+2. On the Right, click on "Blocks"
+
+3. Drag and drop the "Link Box" or "Link Bar" block to your page.
+
+4. Hover over the block, and click on the edit icon.
+
+5. Add your Venmo link to the "Link" field.
+
+Your Venmo link will now be visible on your Glow page.
+
+export default function MDXArticle(props) {
+return <ArticleTemplate meta={metadata}>{props.children}</ArticleTemplate>;
+
+}

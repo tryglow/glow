@@ -1,9 +1,9 @@
 import { MarketingContainer } from '@/app/components/MarketingContainer';
-import { ArticleMetadata } from '@/types/mdx';
+import { LearnPostMetadata } from '@/types/mdx';
 
 interface Props {
   children: React.ReactNode;
-  meta: ArticleMetadata;
+  meta: LearnPostMetadata;
 }
 
 export function ArticleTemplate({ children, meta }: Props) {
