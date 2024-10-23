@@ -2,6 +2,7 @@
 
 import { ArticleMetadata } from '@/types/mdx';
 import { readdir } from 'fs/promises';
+import path from 'path';
 
 type Article = {
   slug: string;
@@ -9,7 +10,7 @@ type Article = {
 
 export async function getArticles(): Promise<Article[]> {
   const slugs = (
-    await readdir('./app/i/blog/(posts)', {
+    await readdir(path.join(process.cwd(), './app/i/blog/(posts)'), {
       withFileTypes: true,
     })
   ).filter((dirent) => dirent.isDirectory());
