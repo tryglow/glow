@@ -188,9 +188,9 @@ export default async function LandingPage(props: {
                   styles.subtitle
                 )}
               >
-                Glow is the open source personal page builder that integrates
-                with your favorite platforms to keep your page fresh, so that
-                you can focus on creating.
+                Glow is the open source link-in-bio that integrates with your
+                favorite platforms to keep your page fresh, so that you can
+                focus on creating.
               </span>
 
               <div
