@@ -13,7 +13,7 @@ import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 
 import { MarketingContainer } from '@/app/components/MarketingContainer';
-import { FrquentlyAskedQuestions } from './faq';
+import { FrequentlyAskedQuestions } from './faq';
 import { ShowLoginAlert } from './show-login-alert';
 import styles from './styles.module.scss';
 
@@ -279,76 +279,7 @@ export default async function LandingPage(props: {
       <section className="my-20">
         <MarketingContainer>
           <h2 className="text-3xl md:text-4xl font-semibold tracking-tight mb-8">
-            Explore
-          </h2>
-
-          <div className="w-screen overflow-x-auto no-scrollbar ml-[calc(((100vw_-_100%)_/_2)_*_-1)] pl-[calc((100vw_-_100%)_/_2)] -mt-8">
-            <div className="w-auto flex gap-4 py-8">
-              {featuredProfiles.map((profile) => {
-                return (
-                  <Link
-                    href={profile.slug}
-                    key={profile.slug}
-                    className="group z-20 relative"
-                  >
-                    <div
-                      className={`border border-black/10 rounded-xl w-[270px] h-[180px] px-5 py-6 shadow-sm group-hover:shadow-xl group-hover:-translate-y-1 transition-all duration-200 ease-in-out bg-cover`}
-                      style={{
-                        backgroundColor: profile.bg,
-                        backgroundImage: `url(${profile.bgImage})`,
-                      }}
-                    >
-                      <ArrowUpRightIcon
-                        className={clsx(
-                          'absolute top-2 right-2 w-6 h-6 opacity-0 group-hover:opacity-100 transition-opacity duration-200 ease-in-out',
-                          profile.isLight
-                            ? 'text-stone-800/20'
-                            : 'text-white/20'
-                        )}
-                      />
-                      <div className="flex flex-col">
-                        <Image
-                          src={profile.avatarUrl}
-                          width={56}
-                          height={56}
-                          className={clsx(
-                            'w-14 h-14 rounded-lg outline outline-3',
-                            profile.isLight
-                              ? 'outline-stone-200'
-                              : 'outline-white/10'
-                          )}
-                          alt=""
-                        />
-                        <span
-                          className={clsx(
-                            'font-bold text-lg mt-2 ',
-                            profile.isLight ? 'text-stone-900' : 'text-white'
-                          )}
-                        >
-                          {profile.name}
-                        </span>
-                        <span
-                          className={clsx(
-                            'font-normal text-sm',
-                            profile.isLight ? 'text-stone-700' : 'text-white/70'
-                          )}
-                        >
-                          {profile.label}
-                        </span>
-                      </div>
-                    </div>
-                  </Link>
-                );
-              })}
-            </div>
-          </div>
-        </MarketingContainer>
-      </section>
-
-      <section className="my-20">
-        <MarketingContainer>
-          <h2 className="text-3xl md:text-4xl font-semibold tracking-tight mb-8">
-            What makes Glow special?
+            The ultimate link-in-bio
           </h2>
 
           <div className="grid grid-cols-1 md:grid-cols-3 md:grid-rows-2 gap-6 w-full">
@@ -418,6 +349,75 @@ export default async function LandingPage(props: {
         </MarketingContainer>
       </section>
 
+      <section className="my-20">
+        <MarketingContainer>
+          <h2 className="text-3xl md:text-4xl font-semibold tracking-tight mb-8">
+            Explore
+          </h2>
+
+          <div className="w-screen overflow-x-auto no-scrollbar ml-[calc(((100vw_-_100%)_/_2)_*_-1)] pl-[calc((100vw_-_100%)_/_2)] -mt-8">
+            <div className="w-auto flex gap-4 py-8">
+              {featuredProfiles.map((profile) => {
+                return (
+                  <Link
+                    href={profile.slug}
+                    key={profile.slug}
+                    className="group z-20 relative"
+                  >
+                    <div
+                      className={`border border-black/10 rounded-xl w-[270px] h-[180px] px-5 py-6 shadow-sm group-hover:shadow-xl group-hover:-translate-y-1 transition-all duration-200 ease-in-out bg-cover`}
+                      style={{
+                        backgroundColor: profile.bg,
+                        backgroundImage: `url(${profile.bgImage})`,
+                      }}
+                    >
+                      <ArrowUpRightIcon
+                        className={clsx(
+                          'absolute top-2 right-2 w-6 h-6 opacity-0 group-hover:opacity-100 transition-opacity duration-200 ease-in-out',
+                          profile.isLight
+                            ? 'text-stone-800/20'
+                            : 'text-white/20'
+                        )}
+                      />
+                      <div className="flex flex-col">
+                        <Image
+                          src={profile.avatarUrl}
+                          width={56}
+                          height={56}
+                          className={clsx(
+                            'w-14 h-14 rounded-lg outline outline-3',
+                            profile.isLight
+                              ? 'outline-stone-200'
+                              : 'outline-white/10'
+                          )}
+                          alt=""
+                        />
+                        <span
+                          className={clsx(
+                            'font-bold text-lg mt-2 ',
+                            profile.isLight ? 'text-stone-900' : 'text-white'
+                          )}
+                        >
+                          {profile.name}
+                        </span>
+                        <span
+                          className={clsx(
+                            'font-normal text-sm',
+                            profile.isLight ? 'text-stone-700' : 'text-white/70'
+                          )}
+                        >
+                          {profile.label}
+                        </span>
+                      </div>
+                    </div>
+                  </Link>
+                );
+              })}
+            </div>
+          </div>
+        </MarketingContainer>
+      </section>
+
       <section className="my-24 ">
         <MarketingContainer>
           <div className="grid grid-cols-1 md:grid-cols-2 items-center gap-10">
@@ -445,7 +445,7 @@ export default async function LandingPage(props: {
             <h2 className="text-3xl md:text-4xl font-semibold tracking-tight">
               Frequently Asked <br /> Questions
             </h2>
-            <FrquentlyAskedQuestions />
+            <FrequentlyAskedQuestions />
           </div>
         </MarketingContainer>
       </section>
