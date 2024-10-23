@@ -37,7 +37,7 @@ export default async function ArticlesLandingPage() {
       </div>
       <MarketingContainer className="pt-16">
         <div className="mx-auto max-w-2xl lg:max-w-none">
-          <div className="space-y-24 lg:space-y-32">
+          <div className="space-y-16">
             {articles.map((article) => {
               const author = authors.find(
                 (author) => author.id === article.author
@@ -80,7 +80,14 @@ export default async function ArticlesLandingPage() {
                               <div className="font-semibold">
                                 {author?.name}
                               </div>
-                              <div>{author?.position}</div>
+                              {author?.glowLink && (
+                                <Link
+                                  href={author.glowLink}
+                                  className="text-slate-500"
+                                >
+                                  glow.as/{author.glowUsername}
+                                </Link>
+                              )}
                             </div>
                           </dd>
                         </dl>

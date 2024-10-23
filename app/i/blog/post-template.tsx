@@ -12,6 +12,8 @@ type Author = {
   position: string;
   avatar: string;
   link: string;
+  glowLink: string;
+  glowUsername: string;
 };
 
 export const authors: Author[] = [
@@ -22,6 +24,8 @@ export const authors: Author[] = [
     avatar:
       'https://cdn.glow.as/block-f5a2d44d-6933-4a51-a9e2-9fbb27923585/f4fdd080-46be-483f-9b04-e5646efb157d',
     link: 'https://x.com/alexjpate',
+    glowUsername: 'alex',
+    glowLink: 'https://alex.now',
   },
 ];
 
