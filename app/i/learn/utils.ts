@@ -2,6 +2,7 @@
 
 import { LearnPostMetadata } from '@/types/mdx';
 import { readdir } from 'fs/promises';
+import path from 'path';
 
 export type LearnPost = {
   slug: string;
@@ -9,7 +10,7 @@ export type LearnPost = {
 
 export async function getLearnPosts(): Promise<LearnPost[]> {
   const slugs = (
-    await readdir('./app/i/learn/(learnPosts)', {
+    await readdir(path.join(process.cwd(), './app/i/learn/(learnPosts)'), {
       withFileTypes: true,
     })
   ).filter((dirent) => dirent.isDirectory());
