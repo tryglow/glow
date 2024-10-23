@@ -21,6 +21,18 @@ export function FrquentlyAskedQuestions() {
           favourite songs on Spotify, or a link to your latest products.
         </AccordionContent>
       </AccordionItem>
+      <AccordionItem value="what-is-link-in-bio">
+        <AccordionTrigger className="text-lg font-medium">
+          What does link in bio mean?
+        </AccordionTrigger>
+        <AccordionContent className="text-lg text-black/60">
+          A link in bio is a single link that you can use to house all of the
+          links that you want to share with your audience. Whether you&apos;re a
+          creator sharing links to your social media profiles, or a business
+          sharing links to your products and services, a link in bio is a great
+          way to share all your content in one place.
+        </AccordionContent>
+      </AccordionItem>
       <AccordionItem value="why-do-i-need-it">
         <AccordionTrigger className="text-lg font-medium">
           Why do I need Glow?
