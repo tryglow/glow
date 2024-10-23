@@ -48,7 +48,7 @@ export default async function LearnLandingPage() {
                 </span>
               </h1>
               <div className="mt-6 max-w-3xl text-xl text-slate-900">
-                <p>Common questions and answers about link-in-bio.</p>
+                <p>Common questions and answers about Glow and link-in-bio.</p>
               </div>
             </div>
           </div>

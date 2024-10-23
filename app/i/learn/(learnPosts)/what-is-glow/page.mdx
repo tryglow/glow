@@ -1,0 +1,14 @@
+import { ArticleTemplate } from '../../learn-template';
+
+export const metadata = {
+  title: 'What is Glow?',
+  publishDate: '2024-09-14',
+  category: 'glow',
+};
+
+Glow is a single link that you can use to house all the links to your social media profiles, websites, and other content. It's a great way to share all your content in one place, whether it be your favourite songs on Spotify, or a link to your latest products.
+
+export default function MDXArticle(props) {
+return <ArticleTemplate meta={metadata}>{props.children}</ArticleTemplate>;
+
+}

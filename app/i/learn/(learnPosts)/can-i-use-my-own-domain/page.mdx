@@ -1,0 +1,14 @@
+import { ArticleTemplate } from '../../learn-template';
+
+export const metadata = {
+  title: 'Can I use my own domain?',
+  publishDate: '2024-09-14',
+  category: 'glow',
+};
+
+We're currently rolling out custom domains to a select group of users. If you're interested in trying it out, please reach out to us by sending an email to team@glow.as
+
+export default function MDXArticle(props) {
+return <ArticleTemplate meta={metadata}>{props.children}</ArticleTemplate>;
+
+}

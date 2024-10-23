@@ -1,0 +1,14 @@
+import { ArticleTemplate } from '../../learn-template';
+
+export const metadata = {
+  title: 'Is Glow free?',
+  publishDate: '2024-09-14',
+  category: 'glow',
+};
+
+Yes. Creating a page is free. In the future we might offer premium blocks, however creating a page for personal use will always be free.
+
+export default function MDXArticle(props) {
+return <ArticleTemplate meta={metadata}>{props.children}</ArticleTemplate>;
+
+}
