@@ -13,6 +13,7 @@ import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 
 import { MarketingContainer } from '@/app/components/MarketingContainer';
+import { SpotifyPlayingNowMockup } from '@/app/i/landing-page/ui-mockups';
 import { FrequentlyAskedQuestions } from './faq';
 import { ShowLoginAlert } from './show-login-alert';
 import styles from './styles.module.scss';
@@ -421,7 +422,9 @@ export default async function LandingPage(props: {
       <section className="my-24 ">
         <MarketingContainer>
           <div className="grid grid-cols-1 md:grid-cols-2 items-center gap-10">
-            <div className="w-full px-8 py-8 md:py-16 bg-gradient-to-tr from-[#4e54c8] to-[#8f94fb] rounded-xl"></div>
+            <div className="w-full px-8 py-8 md:py-16 bg-gradient-to-tr from-[#4e54c8] to-[#8f94fb] rounded-xl">
+              <SpotifyPlayingNowMockup />
+            </div>
             <div className="flex flex-col items-start gap-2">
               <span className="text-xs font-bold uppercase bg-yellow-300 text-yellow-900 px-2 py-1 rounded-full">
                 New
