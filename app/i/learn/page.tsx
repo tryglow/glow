@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   title: 'Learn - Glow',
 };
 
-export const learnPostCategories: Record<
+const learnPostCategories: Record<
   LearnPost['category'],
   {
     title: string;
