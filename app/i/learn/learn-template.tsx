@@ -13,6 +13,7 @@ export function ArticleTemplate({ children, meta }: Props) {
         itemScope
         itemProp="mainEntity"
         itemType="https://schema.org/Question"
+        className="flex flex-col min-h-[calc(100vh-12rem)]"
       >
         <section className="bg-gradient-to-b from-[#f6dc99] to-[#ffc0af] pb-16">
           <MarketingContainer>
@@ -38,7 +39,7 @@ export function ArticleTemplate({ children, meta }: Props) {
             </div>
           </MarketingContainer>
         </section>
-        <section className="py-8">
+        <section className="py-8 flex-1">
           <MarketingContainer>
             <div
               itemScope
