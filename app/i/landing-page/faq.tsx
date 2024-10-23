@@ -60,7 +60,7 @@ export function FrequentlyAskedQuestions() {
 
   return (
     <>
-      <Accordion type="single" collapsible>
+      <Accordion type="single" collapsible className="w-full">
         {questions.map((question) => {
           return (
             <AccordionItem key={question.question} value={question.question}>

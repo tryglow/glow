@@ -445,7 +445,12 @@ export default async function LandingPage(props: {
             <h2 className="text-3xl md:text-4xl font-semibold tracking-tight">
               Frequently Asked <br /> Questions
             </h2>
-            <FrequentlyAskedQuestions />
+            <div className="flex flex-col items-start w-full flex-1 gap-4">
+              <FrequentlyAskedQuestions />
+              <Link href="/i/learn" className="text-sm text-slate-600">
+                View more →
+              </Link>
+            </div>
           </div>
         </MarketingContainer>
       </section>
