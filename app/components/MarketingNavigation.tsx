@@ -21,10 +21,10 @@ export default function MarketingNavigation({ children }: Props) {
   return (
     <>
       <header
-        className={cn(
-          'bg-white relative z-10',
-          pathname === '/' && 'bg-[#bbb5ff]'
-        )}
+        className={cn('bg-white relative z-10', {
+          'bg-[#bbb5ff]': pathname === '/' || pathname.startsWith('/i/blog'),
+          'bg-[#f6dc99]': pathname.startsWith('/i/learn'),
+        })}
       >
         <MarketingContainer className="py-4">
           <nav className="flex items-center justify-between gap-x-6">
@@ -43,6 +43,12 @@ export default function MarketingNavigation({ children }: Props) {
             <div className="flex flex-1 items-center justify-end gap-x-3">
               <Button asChild variant="ghost" className="hidden sm:flex">
                 <Link href="/i/pricing">Pricing</Link>
+              </Button>
+              <Button asChild variant="ghost" className="hidden sm:flex">
+                <Link href="/i/blog">Blog</Link>
+              </Button>
+              <Button asChild variant="ghost" className="hidden sm:flex">
+                <Link href="/i/learn">Learn</Link>
               </Button>
               {children}
               <button
@@ -96,6 +102,18 @@ export default function MarketingNavigation({ children }: Props) {
                     className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
                   >
                     Pricing
+                  </Link>
+                  <Link
+                    href="/i/learn"
+                    className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                  >
+                    Learn
+                  </Link>
+                  <Link
+                    href="/i/blog"
+                    className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                  >
+                    Blog
                   </Link>
                   <Link
                     href="https://x.com/tryglow"

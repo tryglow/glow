@@ -1,0 +1,28 @@
+import { ArticleTemplate } from '../../learn-template';
+
+export const metadata = {
+  title: 'How can I add a link in bio to Instagram?',
+  publishDate: '2024-10-23',
+};
+
+To add a link to your Instagram bio:
+
+1. Open Instagram and Go to Your Profile:
+
+   - Tap your profile icon at the bottom right corner of the app.
+
+2. Edit Your Profile:
+
+   - Tap the "Edit Profile" button.
+
+3. Add Your Link:
+
+   - Find the "Website" field and type or paste the link you want to add.
+   - Tap "Done" or "Save" to update your profile.
+
+Your link will now be visible in your bio, making it easy for your followers to click and visit the site.
+
+export default function MDXArticle(props) {
+return <ArticleTemplate meta={metadata}>{props.children}</ArticleTemplate>;
+
+}

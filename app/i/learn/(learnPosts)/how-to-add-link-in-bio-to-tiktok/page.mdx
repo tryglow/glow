@@ -1,0 +1,26 @@
+import { ArticleTemplate } from '../../learn-template';
+
+export const metadata = {
+  title: 'How can I add a link in bio to TikTok?',
+  publishDate: '2024-10-22',
+};
+
+To add a link to your TikTok bio:
+
+1. Switch to a Business Account:
+
+- Go to your profile, tap the menu (three lines) at the top right, then select "Settings and privacy."
+- Tap "Account" and choose "Switch to Business Account." This step is essential, as personal accounts don't have the bio link feature.
+
+2. Edit Your Profile:
+
+- After switching, go back to your profile.
+- Tap "Edit profile" and look for the "Website" field.
+- Enter your desired link here, then save.
+
+Now, your link will appear in your bio, making it easy for your followers to click and explore.
+
+export default function MDXArticle(props) {
+return <ArticleTemplate meta={metadata}>{props.children}</ArticleTemplate>;
+
+}

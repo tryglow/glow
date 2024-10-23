@@ -1,0 +1,13 @@
+import { ArticleTemplate } from '../../learn-template';
+
+export const metadata = {
+  title: 'What is a link-in-bio?',
+  publishDate: '2024-10-22',
+};
+
+A "link in bio" is a single URL found in the biography section of a social media profile, typically on platforms like Instagram or TikTok. It serves as a gateway to additional content, like websites, articles, online stores, or multiple links to other platforms, making it a convenient way for followers to explore more about you or your work.
+
+export default function MDXArticle(props) {
+return <ArticleTemplate meta={metadata}>{props.children}</ArticleTemplate>;
+
+}
