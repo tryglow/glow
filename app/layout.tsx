@@ -15,7 +15,7 @@ const saans = localFont({
 export const metadata: Metadata = {
   title: 'Glow - The dynamic personal page builder - Link-in-bio',
   description:
-    'The dynamic personal page builder. Glow makes it easy to create your own dynamic link-in-bio page.',
+    'Create your own dynamic link in bio page effortlessly with Glow, the personal page builder designed to help you stand out and connect with your audience.',
   metadataBase: new URL('https://glow.as'),
   openGraph: {
     images: [
@@ -26,7 +26,8 @@ export const metadata: Metadata = {
     type: 'website',
     url: 'https://glow.as',
     title: 'Glow',
-    description: 'The dynamic personal page builder',
+    description:
+      'Create your own dynamic link in bio page effortlessly with Glow, the personal page builder designed to help you stand out and connect with your audience.',
     siteName: 'Glow',
   },
   twitter: {
