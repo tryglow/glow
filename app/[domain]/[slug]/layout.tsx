@@ -61,29 +61,25 @@ const getPageData = async ({
   };
 };
 
-export default async function PageLayout(
-  props: {
-    children: React.ReactNode;
-    params: Promise<{
-      slug: string;
-      domain: string;
-    }>;
-  }
-) {
+export default async function PageLayout(props: {
+  children: React.ReactNode;
+  params: Promise<{
+    slug: string;
+    domain: string;
+  }>;
+}) {
   const params = await props.params;
 
-  const {
-    children
-  } = props;
+  const { children } = props;
 
   const session = await auth();
 
-  const useSlug =
-    decodeURIComponent(params.domain) === process.env.NEXT_PUBLIC_ROOT_DOMAIN;
+  const isCustomDomain =
+    decodeURIComponent(params.domain) !== process.env.NEXT_PUBLIC_ROOT_DOMAIN;
 
   const commonParams = {
-    slug: useSlug ? params.slug : undefined,
-    domain: useSlug ? undefined : params.domain,
+    slug: isCustomDomain ? undefined : params.slug,
+    domain: isCustomDomain ? params.domain : undefined,
   };
 
   const [

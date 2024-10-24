@@ -46,12 +46,12 @@ export async function generateMetadata(
   parent: ResolvingMetadata
 ): Promise<Metadata> {
   const params = await props.params;
-  const useSlug =
-    decodeURIComponent(params.domain) === process.env.NEXT_PUBLIC_ROOT_DOMAIN;
+  const isCustomDomain =
+    decodeURIComponent(params.domain) !== process.env.NEXT_PUBLIC_ROOT_DOMAIN;
 
   const page = await getPageData({
-    slug: useSlug ? params.slug : undefined,
-    domain: useSlug ? undefined : params.domain,
+    slug: isCustomDomain ? undefined : params.slug,
+    domain: isCustomDomain ? params.domain : undefined,
   });
 
   const parentMeta = await parent;
@@ -59,6 +59,11 @@ export async function generateMetadata(
   return {
     title: `${page?.metaTitle} - Glow` || parentMeta.title?.absolute,
     description: page?.metaDescription || parentMeta.description,
+    alternates: {
+      canonical: isCustomDomain
+        ? `https://${params.domain}`
+        : `https://${process.env.NEXT_PUBLIC_ROOT_DOMAIN}/${params.slug}`,
+    },
   };
 }
 
