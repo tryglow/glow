@@ -279,8 +279,31 @@ export default async function LandingPage(props: {
 
       <section className="my-20">
         <MarketingContainer>
-          <h2 className="text-3xl md:text-4xl font-semibold tracking-tight mb-8">
+          <h2 className="text-3xl md:text-4xl font-semibold tracking-tight mb-2">
             The ultimate link-in-bio
+          </h2>
+          <p className="text-base md:text-lg text-pretty">
+            Use our drag-and-drop builder to create your page.
+          </p>
+          <div className="mt-8 md:mt-16 sm:h-auto relative w-full h-full [--radius:theme(borderRadius.xl)]">
+            <div className="absolute -inset-[var(--padding)] rounded-[calc(var(--radius)+var(--padding))] shadow-sm ring-1 ring-black/5 [--padding:theme(spacing.2)]"></div>
+            <video
+              autoPlay
+              muted
+              loop
+              playsInline
+              className="h-full rounded-[var(--radius)] w-full shadow-2xl ring-1 ring-black/10"
+            >
+              <source src="/assets/landing-page-demo.mp4" type="video/mp4" />
+            </video>
+          </div>
+        </MarketingContainer>
+      </section>
+
+      <section className="my-20">
+        <MarketingContainer>
+          <h2 className="text-3xl md:text-4xl font-semibold tracking-tight mb-8">
+            What makes Glow special?
           </h2>
 
           <div className="grid grid-cols-1 md:grid-cols-3 md:grid-rows-2 gap-6 w-full">
