@@ -99,18 +99,21 @@ export default function MarketingNavigation({ children }: Props) {
                 <div className="py-6">
                   <Link
                     href="/i/pricing"
+                    onClick={() => setMobileMenuOpen(false)}
                     className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
                   >
                     Pricing
                   </Link>
                   <Link
                     href="/i/learn"
+                    onClick={() => setMobileMenuOpen(false)}
                     className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
                   >
                     Learn
                   </Link>
                   <Link
                     href="/i/blog"
+                    onClick={() => setMobileMenuOpen(false)}
                     className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
                   >
                     Blog
