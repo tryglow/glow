@@ -1,2 +1,7 @@
 User-Agent: *
+Allow: /
 Disallow: /api/
+Disallow: /_next
+
+
+Sitemap: https://glow.as/sitemap.xml
