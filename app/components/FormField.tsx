@@ -11,12 +11,13 @@ interface Props {
   labelDetail?: ReactNode;
   placeholder?: string;
   fieldType?: 'input' | 'textarea' | 'select';
-  type?: 'text' | 'email' | 'number';
+  type?: 'text' | 'email' | 'number' | 'checkbox';
   error?: string | undefined;
   isTextArea?: boolean;
   children?: ReactNode;
   withPrefix?: string;
   className?: string;
+  disabled?: boolean;
 }
 
 export function FormField({
@@ -30,6 +31,7 @@ export function FormField({
   error,
   type = 'text',
   withPrefix,
+  disabled,
   className,
 }: Props) {
   const InputComponent = withPrefix ? FormInputWithPrefix : FormInput;
@@ -41,7 +43,7 @@ export function FormField({
           {labelDetail}
         </div>
       </Label>
-      <div className="relative mt-1 rounded-md shadow-sm">
+      <div className="relative mt-1 rounded-md">
         <InputComponent
           fieldType={fieldType}
           type={type}
@@ -51,6 +53,7 @@ export function FormField({
           ariaInvalid={error ? 'true' : 'false'}
           ariaDescribedby={`${name}-error`}
           prefix={withPrefix}
+          disabled={disabled}
         >
           {children}
         </InputComponent>

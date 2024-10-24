@@ -31,18 +31,28 @@ export function EditForm({
         avatar: {
           src: initialValues?.avatar?.src ?? '',
         },
+        showVerifiedBadge: initialValues?.showVerifiedBadge ?? false,
       }}
       validationSchema={HeaderSchema}
       onSubmit={onSubmit}
       enableReinitialize={true}
     >
-      {({ isSubmitting, setFieldValue, errors }) => (
+      {({ isSubmitting, setFieldValue, errors, values }) => (
         <Form className="w-full flex flex-col gap-2">
           <FormField
             label="Title"
             name="title"
             id="title"
             error={errors.title}
+            // disabled={values.showVerifiedBadge === true}
+          />
+          <FormField
+            label="Show verified badge"
+            name="showVerifiedBadge"
+            id="showVerifiedBadge"
+            error={errors.showVerifiedBadge}
+            type="checkbox"
+            className="justify-self-start hidden"
           />
           <FormField
             label="Subtitle"

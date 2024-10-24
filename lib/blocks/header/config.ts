@@ -6,6 +6,7 @@ export interface HeaderBlockConfig {
   avatar: {
     src: string;
   };
+  showVerifiedBadge: boolean;
 }
 
 export const defaults: HeaderBlockConfig = {
@@ -14,6 +15,7 @@ export const defaults: HeaderBlockConfig = {
   },
   title: 'Hello World',
   description: 'Welcome to your new page',
+  showVerifiedBadge: false,
 };
 
 export const HeaderSchema = Yup.object().shape({
@@ -22,4 +24,5 @@ export const HeaderSchema = Yup.object().shape({
   avatar: Yup.object().shape({
     src: Yup.string(),
   }),
+  showVerifiedBadge: Yup.boolean(),
 });

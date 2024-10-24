@@ -110,6 +110,7 @@ model Page {
   customDomain    String?   @unique
   team            Team?     @relation(fields: [teamId], references: [id])
   teamId          String?
+  verifiedAt      DateTime?
 }
 
 model Block {

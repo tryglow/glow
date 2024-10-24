@@ -1,5 +1,5 @@
 import { Content } from '@/lib/blocks/content/ui';
-import { Header } from '@/lib/blocks/header/ui';
+import { Header } from '@/lib/blocks/header/ui-client';
 import { Stack } from '@/lib/blocks/stack/ui';
 
 import { GitHubCommitsThisMonth } from './github-commits-this-month/ui-client';
@@ -38,7 +38,7 @@ export function renderBlock(block: any, pageId: string, isEditMode: boolean) {
 
   switch (block.type) {
     case 'header':
-      return <Header {...sharedProps} />;
+      return <Header {...sharedProps} {...block.data} />;
     case 'content':
       return <Content {...sharedProps} />;
     case 'stack':
@@ -46,7 +46,7 @@ export function renderBlock(block: any, pageId: string, isEditMode: boolean) {
     case 'image':
       return (
         // eslint-disable-next-line jsx-a11y/alt-text
-        (<Image {...sharedProps} />)
+        <Image {...sharedProps} />
       );
     case 'instagram-latest-post':
       return (

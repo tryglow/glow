@@ -7,7 +7,7 @@ interface Props {
   name: string;
   id: string;
   placeholder?: string;
-  type?: 'text' | 'email' | 'number';
+  type?: 'text' | 'email' | 'number' | 'checkbox';
   initialValue?: string;
   hasError?: boolean;
   ariaDescribedby?: string;
@@ -15,6 +15,7 @@ interface Props {
   fieldType?: 'input' | 'textarea' | 'select';
   children?: ReactNode;
   prefix?: string;
+  disabled?: boolean;
 }
 
 export function FormInput({
@@ -27,6 +28,7 @@ export function FormInput({
   ariaDescribedby,
   fieldType = 'input',
   children,
+  disabled,
 }: Props) {
   return (
     <Field
@@ -35,13 +37,15 @@ export function FormInput({
       placeholder={placeholder}
       type={type}
       className={cn(
-        'block w-full rounded-md border-0 px-3 py-1.5 ring-1 ring-inset focus:ring-2 focus:ring-inset sm:text-sm sm:leading-6',
+        'block rounded-md border-0 px-3 py-1.5 ring-1 ring-inset focus:ring-2 focus:ring-inset sm:text-sm sm:leading-6',
+        type !== 'checkbox' && 'w-full',
         hasError
           ? 'text-red-900 ring-red-300 placeholder:text-red-300 focus:ring-red-500'
           : 'text-gray-900 ring-input placeholder:text-gray-400 focus:ring-gray-500'
       )}
       aria-invalid={ariaInvalid}
       aria-describedby={ariaDescribedby}
+      disabled={disabled}
     >
       {fieldType === 'select' ? children : undefined}
     </Field>
