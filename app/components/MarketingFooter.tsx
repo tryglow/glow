@@ -118,7 +118,7 @@ export default function MarketingFooter() {
       <MarketingContainer>
         <div className="pb-16">
           <div className="grid grid-cols-2 gap-y-10 pb-6 lg:grid-cols-6 lg:gap-8">
-            <div className="col-span-2 flex">
+            <div className="col-span-3 flex">
               <div className="space-y-6">
                 <Link className="block max-w-fit" href="/">
                   <div className="flex items-center gap-2">
@@ -158,7 +158,7 @@ export default function MarketingFooter() {
                 </Link>
               </div>
             </div>
-            <div className="col-span-2 grid grid-cols-2 gap-x-8 gap-y-12 lg:col-span-4 lg:grid-cols-subgrid lg:pt-6">
+            <div className="col-span-2 grid grid-cols-2 gap-x-8 gap-y-12 lg:col-span-3 lg:grid-cols-3 lg:pt-6">
               <>
                 <div>
                   <SitemapHeading>Product</SitemapHeading>
@@ -178,13 +178,6 @@ export default function MarketingFooter() {
                       What is Glow?
                     </SitemapLink>
                     <SitemapLink href="/i/blog">Blog</SitemapLink>
-                  </SitemapLinks>
-                </div>
-                <div>
-                  <SitemapHeading>Explore</SitemapHeading>
-                  <SitemapLinks>
-                    <SitemapLink href="#">Help center</SitemapLink>
-                    <SitemapLink href="#">Community</SitemapLink>
                   </SitemapLinks>
                 </div>
                 <div>
