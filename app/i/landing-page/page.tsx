@@ -108,7 +108,7 @@ const featuredProfiles: {
   },
 ];
 
-const title = ['Your', 'personal', 'page', 'that', 'is', 'always', 'current.'];
+const title = ['Your', 'link-in-bio', 'that', 'is', 'always', 'current.'];
 
 const fetchCurrentTeamPages = async () => {
   const session = await auth();
@@ -172,7 +172,7 @@ export default async function LandingPage(props: {
                     <span
                       key={word}
                       className={
-                        ['personal', 'page'].includes(word)
+                        ['link-in-bio'].includes(word)
                           ? 'text-white'
                           : 'text-[#241f3d]'
                       }
