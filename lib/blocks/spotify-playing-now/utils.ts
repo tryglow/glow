@@ -4,7 +4,7 @@ import { requestToken } from '@/app/api/services/spotify/callback/utils';
 
 import prisma from '@/lib/prisma';
 
-import { encrypt } from '@/lib/encrypt';
+import { decrypt, encrypt } from '@/lib/encrypt';
 import { SpotifyIntegrationConfig } from './config';
 
 async function fetchPlayingNow(accessToken: string) {
@@ -142,21 +142,23 @@ export const fetchData = async (pageId: string) => {
       },
     });
 
-    if (!data || !data.config) {
+    if (!data || !data.encryptedConfig) {
       console.log('No integration found for current page');
       return null;
     }
 
-    const config = data.config as unknown as SpotifyIntegrationConfig;
+    const decryptedConfig = await decrypt<SpotifyIntegrationConfig>(
+      data.encryptedConfig
+    );
 
-    if (!config.accessToken) {
+    if (!decryptedConfig.accessToken) {
       console.log(
         `Spotify accessToken or refreshToken doesn't exist: Integration ID: ${data.id}`
       );
       return null;
     }
 
-    const spotifyData = await fetchSpotifyData(config, false, data.id);
+    const spotifyData = await fetchSpotifyData(decryptedConfig, false, data.id);
     return spotifyData;
   } catch (error) {
     console.log(error);
