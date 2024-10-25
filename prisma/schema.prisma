@@ -127,16 +127,17 @@ model Block {
 }
 
 model Integration {
-  id        String    @id @default(uuid())
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  userId    String
-  teamId    String?
-  team      Team?     @relation(fields: [teamId], references: [id])
-  user      User      @relation(fields: [userId], references: [id])
-  type      String
-  config    Json
-  deletedAt DateTime?
+  id              String    @id @default(uuid())
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  userId          String
+  teamId          String?
+  team            Team?     @relation(fields: [teamId], references: [id])
+  user            User      @relation(fields: [userId], references: [id])
+  type            String
+  config          Json
+  encryptedConfig String?
+  deletedAt       DateTime?
 }
 
 model Theme {
