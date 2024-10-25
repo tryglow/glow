@@ -42,28 +42,29 @@ model VerificationToken {
 }
 
 model User {
-  id                   String        @id @default(uuid())
+  id                   String                @id @default(uuid())
   name                 String?
-  email                String?       @unique
+  email                String?               @unique
   emailVerified        DateTime?
   image                String?
   accounts             Account[]
-  createdAt            DateTime      @default(now())
-  updatedAt            DateTime      @updatedAt
+  createdAt            DateTime              @default(now())
+  updatedAt            DateTime              @updatedAt
   pages                Page[]
   Integration          Integration[]
   Theme                Theme[]
-  isAdmin              Boolean       @default(false)
+  isAdmin              Boolean               @default(false)
   acceptedInviteAt     DateTime?
-  assignedInviteCodes  InviteCode[]  @relation("AssignedInviteCodes")
-  claimedInvitedCodes  InviteCode[]  @relation("ClaimedInviteCodes")
+  assignedInviteCodes  InviteCode[]          @relation("AssignedInviteCodes")
+  claimedInvitedCodes  InviteCode[]          @relation("ClaimedInviteCodes")
   teamId               String?
   teams                TeamUser[]
-  plan                 String        @default("free")
+  plan                 String                @default("free")
   stripeCustomerId     String?
   stripeSubscriptionId String?
-  hasPremiumAccess     Boolean       @default(false)
-  hasTeamAccess        Boolean       @default(false)
+  hasPremiumAccess     Boolean               @default(false)
+  hasTeamAccess        Boolean               @default(false)
+  verificationRequests VerificationRequest[]
 }
 
 model Team {
@@ -91,26 +92,27 @@ model TeamUser {
 }
 
 model Page {
-  id              String    @id @default(uuid())
-  createdAt       DateTime  @default(now())
-  updatedAt       DateTime  @updatedAt
-  publishedAt     DateTime?
-  deletedAt       DateTime?
-  userId          String
-  user            User      @relation(fields: [userId], references: [id])
-  slug            String    @unique
-  config          Json
-  mobileConfig    Json?
-  blocks          Block[]
-  metaTitle       String?
-  metaDescription String?
-  themeId         String?
-  theme           Theme?    @relation(fields: [themeId], references: [id])
-  backgroundImage String?
-  customDomain    String?   @unique
-  team            Team?     @relation(fields: [teamId], references: [id])
-  teamId          String?
-  verifiedAt      DateTime?
+  id                   String                @id @default(uuid())
+  createdAt            DateTime              @default(now())
+  updatedAt            DateTime              @updatedAt
+  publishedAt          DateTime?
+  deletedAt            DateTime?
+  userId               String
+  user                 User                  @relation(fields: [userId], references: [id])
+  slug                 String                @unique
+  config               Json
+  mobileConfig         Json?
+  blocks               Block[]
+  metaTitle            String?
+  metaDescription      String?
+  themeId              String?
+  theme                Theme?                @relation(fields: [themeId], references: [id])
+  backgroundImage      String?
+  customDomain         String?               @unique
+  team                 Team?                 @relation(fields: [teamId], references: [id])
+  teamId               String?
+  verifiedAt           DateTime?
+  verificationRequests VerificationRequest[]
 }
 
 model Block {
@@ -180,4 +182,26 @@ model TeamInvite {
   claimedAt   DateTime?
   claimedBy   TeamUser? @relation("ClaimedInvites", fields: [claimedById], references: [id])
   claimedById String?
+}
+
+enum VerificationRequestStatus {
+  PENDING
+  APPROVED
+  REJECTED
+  CANCELLED
+}
+
+model VerificationRequest {
+  id                 String                    @id @default(uuid())
+  createdAt          DateTime                  @default(now())
+  updatedAt          DateTime                  @updatedAt
+  pageId             String
+  page               Page                      @relation(fields: [pageId], references: [id])
+  status             VerificationRequestStatus @default(PENDING)
+  requestedByUserId  String
+  requestedBy        User                      @relation(fields: [requestedByUserId], references: [id])
+  rejectedReason     String?
+  verifiedAt         DateTime?
+  rejectedAt         DateTime?
+  requestedPageTitle String
 }

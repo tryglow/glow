@@ -21,6 +21,13 @@ import { Label } from '@/components/ui/label';
 import { Switch } from '@/components/ui/switch';
 import { useToast } from '@/components/ui/use-toast';
 
+import VerificationRequestDialog from '@/app/components/VerificationRequestDialog';
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from '@/app/components/ui/collapsible';
+import { ChevronDownIcon } from '@radix-ui/react-icons';
 import { FormField } from '../FormField';
 import { updateGeneralPageSettings } from './actions';
 import { generalPageSettingsSchema } from './shared';
@@ -41,6 +48,7 @@ export function EditPageSettingsGeneral({ initialValues, pageId }: Props) {
   const router = useRouter();
   const { toast } = useToast();
   const [showConfirmDelete, setShowConfirmDelete] = useState(false);
+  const [showVerificationDialog, setShowVerificationDialog] = useState(false);
 
   const onSubmit = async (
     values: FormValues,
@@ -178,22 +186,54 @@ export function EditPageSettingsGeneral({ initialValues, pageId }: Props) {
                   </label>
                 </div>
               </div>
-              <div className="mt-4">
-                <Label htmlFor="published">Delete your page</Label>
-                <span className="text-sm mt-1 block">
-                  Deleting your page is irreversible and your page username will
-                  be available to use by other users.
-                </span>
-                <div className="flex flex-col items-start mt-3 bg-red-100 p-2 rounded-lg">
+
+              <Collapsible className="mt-4 group">
+                <CollapsibleTrigger className="w-full py-2 px-3 bg-stone-100 rounded-lg">
+                  <div className="flex justify-between items-center w-full">
+                    <span className="font-semibold">Page Verification</span>
+                    <ChevronDownIcon className="w-4 h-4 group-data-[state=open]:rotate-180" />
+                  </div>
+                </CollapsibleTrigger>
+                <CollapsibleContent className="px-3 py-2 bg-stone-100 rounded-lg">
+                  <span className="text-sm mt-1 block">
+                    Verified pages are highlighted with a badge. Click below to
+                    begin the verification process.
+                  </span>
+
+                  <Button
+                    type="button"
+                    variant="outline"
+                    className="mt-4"
+                    onClick={() => setShowVerificationDialog(true)}
+                  >
+                    Begin Page Verification
+                  </Button>
+                </CollapsibleContent>
+              </Collapsible>
+
+              <Collapsible className="mt-4 group">
+                <CollapsibleTrigger className="w-full py-2 px-3 bg-stone-100 rounded-lg">
+                  <div className="flex justify-between items-center w-full">
+                    <span className="font-semibold">Deleting your page</span>
+                    <ChevronDownIcon className="w-4 h-4 group-data-[state=open]:rotate-180" />
+                  </div>
+                </CollapsibleTrigger>
+                <CollapsibleContent className="px-3 py-2 bg-stone-100 rounded-lg">
+                  <span className="text-sm mt-1 block">
+                    Deleting your page is irreversible and your page username
+                    will be available to use by other users.
+                  </span>
+
                   <Button
                     type="button"
                     variant="destructive"
+                    className="mt-4"
                     onClick={() => setShowConfirmDelete(true)}
                   >
                     Delete Page
                   </Button>
-                </div>
-              </div>
+                </CollapsibleContent>
+              </Collapsible>
             </div>
 
             <DialogFooter>
@@ -230,6 +270,12 @@ export function EditPageSettingsGeneral({ initialValues, pageId }: Props) {
           </DialogFooter>
         </DialogContent>
       </Dialog>
+
+      <VerificationRequestDialog
+        open={showVerificationDialog}
+        onOpenChange={setShowVerificationDialog}
+        pageId={pageId}
+      />
     </>
   );
 }

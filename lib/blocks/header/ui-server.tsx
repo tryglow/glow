@@ -23,15 +23,24 @@ const VerifiedBadge = () => {
   );
 };
 
-export async function HeaderServerUI({ pageId }: { pageId: string }) {
+export async function HeaderServerUI({
+  pageId,
+  verifiedPageTitle,
+  title,
+}: {
+  pageId: string;
+  verifiedPageTitle: string;
+  title: string;
+}) {
   const shouldShowVerifiedBadge = await verifyVerificationStatus(pageId);
 
-  if (!shouldShowVerifiedBadge) {
-    return null;
+  if (!shouldShowVerifiedBadge || !verifiedPageTitle) {
+    return title;
   }
 
   return (
     <Dialog>
+      {verifiedPageTitle}
       <DialogTrigger asChild>
         <button type="button">
           <VerifiedBadge />

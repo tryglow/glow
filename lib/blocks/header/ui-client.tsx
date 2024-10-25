@@ -12,6 +12,7 @@ export const Header: FunctionComponent<BlockProps & HeaderBlockConfig> = ({
   description,
   avatar,
   showVerifiedBadge,
+  verifiedPageTitle,
   ...otherProps
 }) => {
   return (
@@ -27,11 +28,16 @@ export const Header: FunctionComponent<BlockProps & HeaderBlockConfig> = ({
           />
         )}
         <h1 className="font-bold text-4xl mb-1 text-sys-label-primary flex items-center gap-2">
-          {title}
-          {showVerifiedBadge && (
+          {showVerifiedBadge ? (
             <Suspense>
-              <HeaderServerUI pageId={otherProps.pageId} />
+              <HeaderServerUI
+                pageId={otherProps.pageId}
+                verifiedPageTitle={verifiedPageTitle}
+                title={title}
+              />
             </Suspense>
+          ) : (
+            title
           )}
         </h1>
         <p className="text-2xl text-sys-label-secondary">{description}</p>

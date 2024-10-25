@@ -37,6 +37,7 @@ export async function getPageSettings({
       metaDescription: true,
       backgroundImage: true,
       themeId: true,
+      verifiedAt: true,
     },
   });
 

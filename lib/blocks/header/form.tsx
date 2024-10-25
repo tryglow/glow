@@ -6,6 +6,12 @@ import { FormFileUpload } from '@/components/FormFileUpload';
 
 import { Button } from '@/components/ui/button';
 
+import { Checkbox } from '@/app/components/ui/checkbox';
+import { Label } from '@/app/components/ui/label';
+import { fetcher } from '@/lib/fetch';
+import { Page } from '@prisma/client';
+import { useParams } from 'next/navigation';
+import useSWR from 'swr';
 import { EditFormProps } from '../types';
 import { HeaderBlockConfig, HeaderSchema } from './config';
 
@@ -15,6 +21,13 @@ export function EditForm({
   onClose,
   blockId,
 }: EditFormProps<HeaderBlockConfig>) {
+  const params = useParams();
+
+  const { data: pageSettings } = useSWR<Partial<Page>>(
+    `/api/pages/${params.slug}/settings`,
+    fetcher
+  );
+
   const onSubmit = async (
     values: HeaderBlockConfig,
     { setSubmitting }: FormikHelpers<HeaderBlockConfig>
@@ -32,6 +45,7 @@ export function EditForm({
           src: initialValues?.avatar?.src ?? '',
         },
         showVerifiedBadge: initialValues?.showVerifiedBadge ?? false,
+        verifiedPageTitle: initialValues?.verifiedPageTitle ?? '',
       }}
       validationSchema={HeaderSchema}
       onSubmit={onSubmit}
@@ -39,21 +53,44 @@ export function EditForm({
     >
       {({ isSubmitting, setFieldValue, errors, values }) => (
         <Form className="w-full flex flex-col gap-2">
-          <FormField
-            label="Title"
-            name="title"
-            id="title"
-            error={errors.title}
-            // disabled={values.showVerifiedBadge === true}
-          />
-          <FormField
-            label="Show verified badge"
-            name="showVerifiedBadge"
-            id="showVerifiedBadge"
-            error={errors.showVerifiedBadge}
-            type="checkbox"
-            className="justify-self-start hidden"
-          />
+          {values.showVerifiedBadge ? (
+            <FormField
+              label="Title"
+              name="verifiedPageTitle"
+              id="verifiedPageTitle"
+              error={errors.verifiedPageTitle}
+              disabled
+            />
+          ) : (
+            <FormField
+              label="Title"
+              name="title"
+              id="title"
+              error={errors.title}
+            />
+          )}
+
+          {pageSettings?.verifiedAt && (
+            <div className="flex items-start space-x-2 my-4">
+              <Checkbox
+                onCheckedChange={(checked) =>
+                  setFieldValue('showVerifiedBadge', checked)
+                }
+                id="showVerifiedBadge"
+                name="showVerifiedBadge"
+                checked={values.showVerifiedBadge}
+              />
+              <div className="flex flex-col gap-1">
+                <Label htmlFor="showVerifiedBadge">Show verified badge</Label>
+                <span className="text-sm text-stone-500">
+                  Your page has been verified by Glow. You can choose to show
+                  the verification badge, however the header title will only
+                  show the verified page name.
+                </span>
+              </div>
+            </div>
+          )}
+
           <FormField
             label="Subtitle"
             name="description"

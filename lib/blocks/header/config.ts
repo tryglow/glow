@@ -7,6 +7,7 @@ export interface HeaderBlockConfig {
     src: string;
   };
   showVerifiedBadge: boolean;
+  verifiedPageTitle: string;
 }
 
 export const defaults: HeaderBlockConfig = {
@@ -16,6 +17,7 @@ export const defaults: HeaderBlockConfig = {
   title: 'Hello World',
   description: 'Welcome to your new page',
   showVerifiedBadge: false,
+  verifiedPageTitle: '',
 };
 
 export const HeaderSchema = Yup.object().shape({
