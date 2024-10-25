@@ -4,6 +4,7 @@ import { refreshLongLivedToken } from '@/app/api/services/instagram/callback/uti
 
 import prisma from '@/lib/prisma';
 
+import { decrypt, encrypt } from '@/lib/encrypt';
 import { InstagramIntegrationConfig } from './config';
 
 function fetchLatestInstagramPost(
@@ -50,14 +51,17 @@ const fetchInstagramData = async (
     const refreshTokenData = await refreshTokenRequest.json();
 
     if (refreshTokenData?.access_token) {
+      const encryptedConfig = await encrypt({
+        accessToken: refreshTokenData.access_token,
+        instagramUserId: config.instagramUserId,
+      });
+
       await prisma.integration.update({
         where: {
           id: integrationId,
         },
         data: {
-          config: JSON.stringify({
-            accessToken: refreshTokenData.access_token,
-          }),
+          encryptedConfig,
         },
       });
 
@@ -122,14 +126,22 @@ export const fetchData = async ({
       },
     });
 
-    if (!instagramIntegration) {
+    if (!instagramIntegration || !instagramIntegration.encryptedConfig) {
       return null;
     }
 
-    const config =
-      instagramIntegration.config as unknown as InstagramIntegrationConfig;
+    let decryptedConfig: InstagramIntegrationConfig | null = null;
 
-    if (!config.accessToken) {
+    try {
+      decryptedConfig = await decrypt<InstagramIntegrationConfig>(
+        instagramIntegration.encryptedConfig
+      );
+    } catch (error) {
+      console.error('Failed to decrypt config', error);
+      return null;
+    }
+
+    if (!decryptedConfig.accessToken) {
       console.log(
         `Instagram accessToken or refreshToken doesn't exist: Integration ID: ${instagramIntegration.id}`
       );
@@ -137,7 +149,7 @@ export const fetchData = async ({
     }
 
     const instagramData = await fetchInstagramData(
-      config,
+      decryptedConfig,
       false,
       instagramIntegration.id,
       numberOfPosts

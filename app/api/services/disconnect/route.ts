@@ -52,6 +52,7 @@ export async function POST(request: Request) {
     data: {
       deletedAt: new Date(),
       config: {},
+      encryptedConfig: null,
     },
   });
 

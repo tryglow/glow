@@ -4,6 +4,7 @@ import { auth } from '@/app/lib/auth';
 import { SpotifyIntegrationConfig } from '@/lib/blocks/spotify-playing-now/config';
 import prisma from '@/lib/prisma';
 
+import { encrypt } from '@/lib/encrypt';
 import { requestToken } from './utils';
 
 export async function GET(request: Request) {
@@ -38,18 +39,22 @@ export async function GET(request: Request) {
       },
     });
 
+    const encryptedConfig = await encrypt({
+      accessToken: json.access_token,
+      refreshToken: json.refresh_token
+        ? json.refresh_token
+        : (existingIntegration?.config as unknown as SpotifyIntegrationConfig)
+            ?.refreshToken,
+    });
+
     const newData = {
-      // To be cleaned up once userId is dropped from the integration table
+      // TODO To be cleaned up once userId is dropped from the integration table
       userId: session.user.id,
       teamId: session.currentTeamId,
       type: 'spotify',
-      config: {
-        accessToken: json.access_token,
-        refreshToken: json.refresh_token
-          ? json.refresh_token
-          : (existingIntegration?.config as unknown as SpotifyIntegrationConfig)
-              ?.refreshToken,
-      },
+      encryptedConfig,
+      // TODO Remove this once we drop the old config field.
+      config: {},
     };
 
     if (existingIntegration) {

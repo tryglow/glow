@@ -1,6 +1,7 @@
 import { auth } from '@/app/lib/auth';
 import prisma from '@/lib/prisma';
 
+import { encrypt } from '@/lib/encrypt';
 import { fetchTwitterUserData, requestToken } from './utils';
 
 interface TwitterTokenResponse {
@@ -43,15 +44,18 @@ export async function GET(request: Request) {
 
     const userData = await userReq.json();
 
+    const encryptedConfig = await encrypt({
+      accessToken: data.access_token,
+      twitterUsername: userData.data.username,
+      twitterUserId: userData.data.id,
+    });
+
     await prisma.integration.create({
       data: {
         userId: session.user.id,
         type: 'twitter',
-        config: {
-          accessToken: data.access_token,
-          twitterUsername: userData.data.username,
-          twitterUserId: userData.data.id,
-        },
+        config: {},
+        encryptedConfig,
       },
     });
 

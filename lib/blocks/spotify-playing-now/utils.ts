@@ -4,6 +4,7 @@ import { requestToken } from '@/app/api/services/spotify/callback/utils';
 
 import prisma from '@/lib/prisma';
 
+import { encrypt } from '@/lib/encrypt';
 import { SpotifyIntegrationConfig } from './config';
 
 async function fetchPlayingNow(accessToken: string) {
@@ -50,16 +51,19 @@ const fetchSpotifyData = async (
 
     const refreshTokenData = await refreshTokenRequest.json();
 
+    const encryptedConfig = await encrypt({
+      accessToken: refreshTokenData.access_token,
+      refreshToken: refreshTokenData.refresh_token ?? config.refreshToken,
+    });
+
     if (refreshTokenData?.access_token) {
       const updatedIntegration = await prisma.integration.update({
         where: {
           id: integrationId,
         },
         data: {
-          config: {
-            refreshToken: refreshTokenData.refresh_token ?? config.refreshToken,
-            accessToken: refreshTokenData.access_token,
-          },
+          config: {},
+          encryptedConfig,
         },
       });
 

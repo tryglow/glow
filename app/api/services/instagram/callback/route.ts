@@ -3,6 +3,7 @@ import { NextResponse } from 'next/server';
 import { auth } from '@/app/lib/auth';
 import prisma from '@/lib/prisma';
 
+import { encrypt, isEncrypted } from '@/lib/encrypt';
 import { requestLongLivedToken, requestToken } from './utils';
 
 interface InstagramTokenResponse {
@@ -43,16 +44,27 @@ export async function GET(request: Request) {
 
     const longLivedToken = await longLivedTokenResponse.json();
 
+    const encryptedConfig = await encrypt({
+      accessToken: longLivedToken.access_token,
+      instagramUserId: data.user_id,
+    });
+
+    if (!(await isEncrypted(encryptedConfig))) {
+      return Response.json({
+        error: {
+          message: 'Failed to encrypt config',
+        },
+      });
+    }
+
     await prisma.integration.create({
       data: {
         // To be cleaned up once userId is dropped from the integration table
         userId: session.user.id,
         teamId: session.currentTeamId,
         type: 'instagram',
-        config: {
-          accessToken: longLivedToken.access_token,
-          instagramUserId: data.user_id,
-        },
+        config: {},
+        encryptedConfig,
       },
     });
 
