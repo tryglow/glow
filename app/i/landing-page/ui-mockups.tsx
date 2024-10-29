@@ -26,18 +26,37 @@ const CoreBlockMock = ({
   );
 };
 
+const mockSpotifyData: Record<
+  'fredAgain' | 'kites',
+  { name: string; artist: string; image: string }
+> = {
+  fredAgain: {
+    name: 'ten',
+    artist: 'Fred again',
+    image: 'https://i.scdn.co/image/ab67616d00001e026b8a4828e057b7dc1c4a4d39',
+  },
+  kites: {
+    name: 'Drunk in Japan',
+    artist: 'The Kites',
+    image: 'https://i.scdn.co/image/ab67616d00001e026b93f0e378afb5a40b419b34',
+  },
+};
+
 export const SpotifyPlayingNowMockup = ({
   className,
+  variant = 'fredAgain',
 }: {
   className?: string;
+  variant?: 'fredAgain' | 'kites';
 }) => {
+  const data = mockSpotifyData[variant];
   return (
     <CoreBlockMock
       className={cn('bg-gradient-to-tr from-[#0A0B0D] to-[#402650]', className)}
     >
       <div className="flex gap-3">
         <img
-          src="https://i.scdn.co/image/ab67616d00001e026b8a4828e057b7dc1c4a4d39"
+          src={data.image}
           className="w-16 h-16 object-cover rounded-lg"
           alt=""
         />
@@ -51,8 +70,8 @@ export const SpotifyPlayingNowMockup = ({
             </span>
             Playing Now
           </p>
-          <p className="text-md text-white font-bold">ten</p>
-          <p className="text-sm text-white">Fred again</p>
+          <p className="text-md text-white font-bold">{data.name}</p>
+          <p className="text-sm text-white">{data.artist}</p>
         </div>
 
         <SpotifyLogo />

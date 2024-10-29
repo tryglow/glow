@@ -180,7 +180,7 @@ export default async function LandingPage(props: {
                     width={28}
                     height={28}
                     className="inline-block h-7 w-7 rounded-full ring-2 ring-[##ebc7e2]"
-                    src="https://cdn.glow.as/block-9077b37e-2c6c-4457-aa30-13f44f38ec15/16608f2e-8492-425e-ba0c-777c61755a08"
+                    src="https://cdn.glow.as/block-4cc796c0-018b-46e7-af22-77e3ac421882/32b1a2eb-2a3f-4133-aee2-9b016bc38cc8"
                     alt=""
                   />
                   <Image
@@ -194,7 +194,7 @@ export default async function LandingPage(props: {
                     width={28}
                     height={28}
                     className="inline-block h-7 w-7 rounded-full ring-2 ring-[##ebc7e2]"
-                    src="https://cdn.glow.as/block-9077b37e-2c6c-4457-aa30-13f44f38ec15/94c2926b-a54e-488e-8464-6e44dc5afce4"
+                    src="https://cdn.glow.as/block-bda8e51a-9566-4fc0-88b8-0110937688b7/3155a632-e053-4c41-9d9e-a4092e98bcaf"
                     alt=""
                   />
                   <Image
@@ -490,7 +490,10 @@ export default async function LandingPage(props: {
         <MarketingContainer>
           <div className="grid grid-cols-1 md:grid-cols-2 items-center gap-10">
             <div className="w-full px-8 py-8 md:py-16 bg-gradient-to-tr from-[#4e54c8] to-[#8f94fb] rounded-xl">
-              <SpotifyPlayingNowMockup />
+              <SpotifyPlayingNowMockup
+                className="!border-black/10"
+                variant="kites"
+              />
             </div>
             <div className="flex flex-col items-start gap-2">
               <span className="text-xs font-bold uppercase bg-yellow-300 text-yellow-900 px-2 py-1 rounded-full">
@@ -579,7 +582,7 @@ export default async function LandingPage(props: {
           --color-sys-bg-base: ${themeColorToCssValue(defaultThemeSeeds.Default.colorBgBase)};
           --color-sys-bg-primary: ${themeColorToCssValue(defaultThemeSeeds.Default.colorBgPrimary)};
           --color-sys-bg-secondary: ${themeColorToCssValue(defaultThemeSeeds.Default.colorBgSecondary)};
-          --color-sys-bg-border: ${themeColorToCssValue(defaultThemeSeeds.Default.colorBorderPrimary)};
+          --color-sys-bg-border: 0deg 0% 84.73%;
           
           --color-sys-label-primary: ${themeColorToCssValue(defaultThemeSeeds.Default.colorLabelPrimary)};
           --color-sys-label-secondary: ${themeColorToCssValue(defaultThemeSeeds.Default.colorLabelSecondary)};
