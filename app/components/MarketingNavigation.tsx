@@ -22,7 +22,8 @@ export default function MarketingNavigation({ children }: Props) {
     <>
       <header
         className={cn('bg-white relative z-10', {
-          'bg-[#bbb5ff]': pathname === '/' || pathname.startsWith('/i/blog'),
+          'bg-slate-200': pathname === '/',
+          'bg-[#bbb5ff]': pathname.startsWith('/i/blog'),
           'bg-[#f6dc99]': pathname.startsWith('/i/learn'),
         })}
       >

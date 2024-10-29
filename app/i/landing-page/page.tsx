@@ -13,7 +13,15 @@ import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 
 import { MarketingContainer } from '@/app/components/MarketingContainer';
-import { SpotifyPlayingNowMockup } from '@/app/i/landing-page/ui-mockups';
+import {
+  GithubCommitsThisMonthMockup,
+  ImageMockup,
+  InstagramLatestPostMockup,
+  LinkBoxMockup,
+  SpotifyPlayingNowMockup,
+  StackMockup,
+} from '@/app/i/landing-page/ui-mockups';
+import { defaultThemeSeeds, themeColorToCssValue } from '@/lib/theme';
 import { FrequentlyAskedQuestions } from './faq';
 import { ShowLoginAlert } from './show-login-alert';
 import styles from './styles.module.scss';
@@ -108,7 +116,7 @@ const featuredProfiles: {
   },
 ];
 
-const title = ['Your', 'link-in-bio', 'that', 'is', 'always', 'current.'];
+const title = ['A', 'delightfully', 'rich', 'link-in-bio.'];
 
 const fetchCurrentTeamPages = async () => {
   const session = await auth();
@@ -157,10 +165,50 @@ export default async function LandingPage(props: {
   return (
     <div className="min-h-screen">
       <ShowLoginAlert />
-      <section className="bg-gradient-to-b from-[#bbb5ff] to-[#f4cbdc] py-24 md:py-0">
+      <section className="bg-gradient-to-t from-white to-slate-200 py-8 sm:py-16">
         <MarketingContainer>
           <div className="grid grid-cols-1 md:grid-cols-6 items-center">
-            <div className="md:col-span-4 md:pr-16">
+            <div className="md:col-span-3 md:pr-10">
+              <div
+                className={cn(
+                  'flex gap-4 items-center mb-4 md:mb-8',
+                  styles.socialProof
+                )}
+              >
+                <div className="flex -space-x-1 overflow-hidden">
+                  <Image
+                    width={28}
+                    height={28}
+                    className="inline-block h-7 w-7 rounded-full ring-2 ring-[##ebc7e2]"
+                    src="https://cdn.glow.as/block-9077b37e-2c6c-4457-aa30-13f44f38ec15/16608f2e-8492-425e-ba0c-777c61755a08"
+                    alt=""
+                  />
+                  <Image
+                    width={28}
+                    height={28}
+                    className="inline-block h-7 w-7 rounded-full ring-2 ring-[##ebc7e2]"
+                    src="https://cdn.glow.as/666b7445-c171-4ad7-a21d-eb1954b7bd40/0885d7ec-9af4-4430-94f4-ad1a033c2704"
+                    alt=""
+                  />
+                  <Image
+                    width={28}
+                    height={28}
+                    className="inline-block h-7 w-7 rounded-full ring-2 ring-[##ebc7e2]"
+                    src="https://cdn.glow.as/block-9077b37e-2c6c-4457-aa30-13f44f38ec15/94c2926b-a54e-488e-8464-6e44dc5afce4"
+                    alt=""
+                  />
+                  <Image
+                    width={28}
+                    height={28}
+                    className="inline-block h-7 w-7 rounded-full ring-2 ring-[##ebc7e2]"
+                    src="https://cdn.glow.as/block-9077b37e-2c6c-4457-aa30-13f44f38ec15/76af84b5-0e47-41fc-852b-458020c75d71"
+                    alt=""
+                  />
+                </div>
+                <span className="text-xs font-medium text-black/60 block">
+                  Trusted by 1000+ creators
+                </span>
+              </div>
               <h1
                 className={cn(
                   'text-5xl lg:text-6xl font-black text-black tracking-tight',
@@ -172,8 +220,8 @@ export default async function LandingPage(props: {
                     <span
                       key={word}
                       className={
-                        ['link-in-bio'].includes(word)
-                          ? 'text-white'
+                        ['link-in-bio.'].includes(word)
+                          ? 'bg-clip-text text-transparent bg-[linear-gradient(to_right,theme(colors.amber.500),theme(colors.pink.500))]'
                           : 'text-[#241f3d]'
                       }
                     >
@@ -184,7 +232,7 @@ export default async function LandingPage(props: {
               </h1>
               <span
                 className={cn(
-                  'text-xl md:text-2xl font-normal mt-3 md:mt-4 block text-[#241f3d]/80',
+                  'text-xl md:text-2xl font-normal mt-3 md:mt-4 block text-[#241f3d]/80 text-pretty',
                   styles.subtitle
                 )}
               >
@@ -230,48 +278,36 @@ export default async function LandingPage(props: {
                   </Link>
                 </Button>
               </div>
-
-              <div className="flex -space-x-1 overflow-hidden mt-4 md:mt-8">
-                <Image
-                  width={28}
-                  height={28}
-                  className="inline-block h-7 w-7 rounded-full ring-2 ring-[##ebc7e2]"
-                  src="https://cdn.glow.as/block-9077b37e-2c6c-4457-aa30-13f44f38ec15/16608f2e-8492-425e-ba0c-777c61755a08"
-                  alt=""
+            </div>
+            <div className="mt-8 md:mt-0 md:col-span-3">
+              <div className="md:rotate-6 grid grid-cols-10 grid-rows-16 gap-3 w-full md:-right-8 lg:-right-16 relative md:scale-90 lg:scale-100">
+                <LinkBoxMockup
+                  className={cn('col-span-5', styles.block2)}
+                  variant="x"
                 />
-                <Image
-                  width={28}
-                  height={28}
-                  className="inline-block h-7 w-7 rounded-full ring-2 ring-[##ebc7e2]"
-                  src="https://cdn.glow.as/666b7445-c171-4ad7-a21d-eb1954b7bd40/0885d7ec-9af4-4430-94f4-ad1a033c2704"
-                  alt=""
+                <LinkBoxMockup
+                  className={cn('col-span-5', styles.block3)}
+                  variant="instagram"
                 />
-                <Image
-                  width={28}
-                  height={28}
-                  className="inline-block h-7 w-7 rounded-full ring-2 ring-[##ebc7e2]"
-                  src="https://cdn.glow.as/block-9077b37e-2c6c-4457-aa30-13f44f38ec15/94c2926b-a54e-488e-8464-6e44dc5afce4"
-                  alt=""
+                <SpotifyPlayingNowMockup
+                  className={cn('col-span-10', styles.block1)}
                 />
-                <Image
-                  width={28}
-                  height={28}
-                  className="inline-block h-7 w-7 rounded-full ring-2 ring-[##ebc7e2]"
-                  src="https://cdn.glow.as/block-9077b37e-2c6c-4457-aa30-13f44f38ec15/76af84b5-0e47-41fc-852b-458020c75d71"
-                  alt=""
+                <GithubCommitsThisMonthMockup
+                  className={cn('col-span-5 md:col-span-4', styles.block6)}
+                />
+                <ImageMockup
+                  className={cn('col-span-5 md:col-span-6', styles.block4)}
+                />
+                <InstagramLatestPostMockup
+                  className={cn(
+                    'col-span-5 md:col-span-6 min-h-[200px]',
+                    styles.block5
+                  )}
+                />
+                <StackMockup
+                  className={cn('col-span-5 md:col-span-4', styles.block7)}
                 />
               </div>
-              <span className="text-xs font-medium text-black/60 block mt-1">
-                Trusted by 1000+ creators
-              </span>
-            </div>
-            <div className="hidden md:block md:col-span-2">
-              <Image
-                src="/assets/hero.png"
-                width={551}
-                height={1193}
-                alt="Screenshot of Glow"
-              />
             </div>
           </div>
         </MarketingContainer>
@@ -529,6 +565,18 @@ export default async function LandingPage(props: {
           </div>
         </MarketingContainer>
       </section>
+
+      <style>
+        {`:root {
+          --color-sys-bg-base: ${themeColorToCssValue(defaultThemeSeeds.Default.colorBgBase)};
+          --color-sys-bg-primary: ${themeColorToCssValue(defaultThemeSeeds.Default.colorBgPrimary)};
+          --color-sys-bg-secondary: ${themeColorToCssValue(defaultThemeSeeds.Default.colorBgSecondary)};
+          --color-sys-bg-border: ${themeColorToCssValue(defaultThemeSeeds.Default.colorBorderPrimary)};
+          
+          --color-sys-label-primary: ${themeColorToCssValue(defaultThemeSeeds.Default.colorLabelPrimary)};
+          --color-sys-label-secondary: ${themeColorToCssValue(defaultThemeSeeds.Default.colorLabelSecondary)};
+          }`}
+      </style>
     </div>
   );
 }
