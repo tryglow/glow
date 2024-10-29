@@ -191,9 +191,9 @@ export const StackMockup = ({ className }: { className?: string }) => {
   ];
 
   return (
-    <CoreBlockMock className={className}>
-      <h2 className="text-2xl font-medium text-sys-label-primary">Tools</h2>
-      <p className="text-md text-sys-label-secondary">My daily drivers</p>
+    <CoreBlockMock className={cn('bg-[#1c1917]', className)}>
+      <h2 className="text-2xl font-medium text-white">Tools</h2>
+      <p className="text-md text-white/80">My daily drivers</p>
 
       <div className="flex flex-col gap-6 mt-6">
         {items?.map((item) => {
@@ -205,10 +205,10 @@ export const StackMockup = ({ className }: { className?: string }) => {
                 className="w-10 h-10 rounded-md"
               />
               <div className="flex flex-col">
-                <h3 className="font-medium text-sys-label-primary text-lg mb-0">
+                <h3 className="font-medium text-white text-lg mb-0">
                   {item.title}
                 </h3>
-                <p className="text-sys-label-secondary -mt-1">{item.label}</p>
+                <p className="text-white/80 -mt-1">{item.label}</p>
               </div>
             </div>
           );
