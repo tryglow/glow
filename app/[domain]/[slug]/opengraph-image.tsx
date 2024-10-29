@@ -15,7 +15,7 @@ export const contentType = 'image/png';
 
 export default async function Image({ params }: { params: { slug: string } }) {
   const { data, error } = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/api/pages/${params.slug}/open-graph`
+    `${process.env.NEXT_PUBLIC_BASE_URL}/api/pages/${params.slug}/opengraph-image`
   ).then((res) => res.json());
 
   if (!data || error) {

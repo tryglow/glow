@@ -57,6 +57,16 @@ export async function generateMetadata(
   const parentMeta = await parent;
 
   return {
+    openGraph: {
+      images: [
+        `${process.env.NEXT_PUBLIC_BASE_URL}/${params.slug}/opengraph-image`,
+      ],
+    },
+    twitter: {
+      images: [
+        `${process.env.NEXT_PUBLIC_BASE_URL}/${params.slug}/opengraph-image`,
+      ],
+    },
     title: `${page?.metaTitle} - Glow` || parentMeta.title?.absolute,
     description: page?.metaDescription || parentMeta.description,
     alternates: {
