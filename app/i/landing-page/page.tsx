@@ -163,7 +163,7 @@ export default async function LandingPage(props: {
   }
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen overflow-x-hidden">
       <ShowLoginAlert />
       <section className="bg-gradient-to-t from-white to-slate-200 py-8 sm:py-16">
         <MarketingContainer>
@@ -315,7 +315,7 @@ export default async function LandingPage(props: {
 
       <section className="my-20">
         <MarketingContainer>
-          <h2 className="text-3xl md:text-4xl font-semibold tracking-tight mb-2">
+          <h2 className="text-3xl md:text-4xl font-black tracking-tight mb-2">
             The ultimate link-in-bio
           </h2>
           <p className="text-base md:text-lg text-pretty">
@@ -336,9 +336,9 @@ export default async function LandingPage(props: {
         </MarketingContainer>
       </section>
 
-      <section className="my-20">
+      <section className="my-20 md:my-32">
         <MarketingContainer>
-          <h2 className="text-3xl md:text-4xl font-semibold tracking-tight mb-8">
+          <h2 className="text-3xl md:text-4xl font-black tracking-tight mb-8">
             What makes Glow special?
           </h2>
 
@@ -352,7 +352,9 @@ export default async function LandingPage(props: {
                 alt=""
               />
               <div className="py-3 px-4 bg-white flex-1 flex flex-col justify-center">
-                <h3 className="text-lg font-semibold mb-2">Dynamic</h3>
+                <h3 className="text-lg font-black tracking-tight mb-1">
+                  Dynamic
+                </h3>
                 <p className="text-base text-black/80">
                   Glow does the hard work for you, fetching all of the latest
                   content to keep your page fresh.
@@ -368,7 +370,9 @@ export default async function LandingPage(props: {
                 alt=""
               />
               <div className="py-3 px-4 bg-white flex-1 flex flex-col justify-center">
-                <h3 className="text-lg font-semibold mb-2">Drag & drop</h3>
+                <h3 className="text-lg font-black tracking-tight mb-1">
+                  Drag & drop
+                </h3>
                 <p className="text-base text-black/80">
                   Build your page block by block in minutes.
                 </p>
@@ -383,7 +387,9 @@ export default async function LandingPage(props: {
                 alt=""
               />
               <div className="py-3 px-4 bg-white flex-1 flex flex-col justify-center">
-                <h3 className="text-lg font-semibold mb-2">Customizable</h3>
+                <h3 className="text-lg font-black tracking-tight mb-1">
+                  Customizable
+                </h3>
                 <p className="text-base text-black/80">
                   With a few clicks, you can customize the look and feel of your
                   page.
@@ -399,7 +405,9 @@ export default async function LandingPage(props: {
                 alt=""
               />
               <div className="py-3 px-4 bg-white flex-1 flex flex-col justify-center">
-                <h3 className="text-lg font-semibold mb-2">Works everywhere</h3>
+                <h3 className="text-lg font-black tracking-tight mb-1">
+                  Works everywhere
+                </h3>
                 <p className="text-base text-black/80">
                   Your page will look great on mobile and desktop.
                 </p>
@@ -411,7 +419,7 @@ export default async function LandingPage(props: {
 
       <section className="my-20">
         <MarketingContainer>
-          <h2 className="text-3xl md:text-4xl font-semibold tracking-tight mb-8">
+          <h2 className="text-3xl md:text-4xl font-black tracking-tight mb-8">
             Explore
           </h2>
 
@@ -488,7 +496,7 @@ export default async function LandingPage(props: {
               <span className="text-xs font-bold uppercase bg-yellow-300 text-yellow-900 px-2 py-1 rounded-full">
                 New
               </span>
-              <h2 className="text-3xl md:text-4xl font-semibold tracking-tight">
+              <h2 className="text-3xl md:text-4xl font-black tracking-tight">
                 Share what you&apos;re listening to
               </h2>
               <p className="text-base md:text-lg text-pretty">
@@ -504,7 +512,7 @@ export default async function LandingPage(props: {
       <section className="my-24">
         <MarketingContainer>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <h2 className="text-3xl md:text-4xl font-semibold tracking-tight">
+            <h2 className="text-3xl md:text-4xl font-black tracking-tight">
               Frequently Asked <br /> Questions
             </h2>
             <div className="flex flex-col items-start w-full flex-1 gap-4">
@@ -522,7 +530,7 @@ export default async function LandingPage(props: {
           <div className="bg-[#e2e5ea] rounded-xl overflow-hidden">
             <div className="grid grid-cols-1 md:grid-cols-2 items-center gap-8">
               <div className="flex-1 flex flex-col gap-2 col-span-1 max-w-md py-8 md:py-16 px-8">
-                <h2 className="text-3xl md:text-4xl font-semibold tracking-tight">
+                <h2 className="text-3xl md:text-4xl font-black tracking-tight">
                   Let&apos;s build your page
                 </h2>
                 <p className="text-base md:text-xl">

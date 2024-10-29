@@ -2,7 +2,7 @@ import { MarketingContainer } from '@/app/components/MarketingContainer';
 import Link from 'next/link';
 
 function SitemapHeading({ children }: { children: React.ReactNode }) {
-  return <h3 className="text-sm/6 font-medium text-gray-950/50">{children}</h3>;
+  return <h3 className="text-sm/6 font-bold text-gray-950/50">{children}</h3>;
 }
 
 function SitemapLinks({ children }: { children: React.ReactNode }) {
