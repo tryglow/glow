@@ -11,9 +11,10 @@ import { Props as DynamicMapboxMapProps } from './ui-client';
 
 // Dynamically import MapboxMap
 const DynamicMapboxMap = dynamic<DynamicMapboxMapProps>(
-  () => import('./ui-client').then((mod) => ({
-    default: mod.MapboxMap
-  })),
+  () =>
+    import('./ui-client').then((mod) => ({
+      default: mod.MapboxMap,
+    })),
   { ssr: false }
 );
 
@@ -27,6 +28,7 @@ export function Map(props: BlockProps) {
       <DynamicMapboxMap
         className="absolute w-full h-full object-cover"
         coords={data?.coords}
+        mapTheme={data?.mapTheme}
       />
     </CoreBlock>
   );

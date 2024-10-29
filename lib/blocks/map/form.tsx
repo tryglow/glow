@@ -13,8 +13,9 @@ import {
   CommandList,
 } from '@/components/ui/command';
 
+import { FormField } from '@/app/components/FormField';
 import { EditFormProps } from '../types';
-import { MapBlockConfig } from './config';
+import { MapBlockConfig, mapThemes } from './config';
 
 declare global {
   namespace google.maps.places {
@@ -50,13 +51,32 @@ export function EditForm({
     <Formik
       initialValues={{
         coords: initialValues?.coords,
+        mapTheme: initialValues?.mapTheme,
       }}
       onSubmit={handleSubmit}
       enableReinitialize={true}
     >
-      {({ values, isSubmitting }) => (
+      {({ values, isSubmitting, errors }) => (
         <Form className="w-full flex flex-col gap-2">
           <GoogleMapsAutoCompleteInput />
+
+          <div className="mt-4">
+            <FormField
+              fieldType="select"
+              label="Map theme"
+              name="mapTheme"
+              id="mapTheme"
+              error={errors.mapTheme}
+            >
+              {Object.entries(mapThemes).map(([key, { label }]) => {
+                return (
+                  <option value={key} key={key}>
+                    {label}
+                  </option>
+                );
+              })}
+            </FormField>
+          </div>
 
           <div className="flex flex-shrink-0 justify-between py-4 border-t border-stone-200">
             <Button variant="secondary" onClick={onClose}>
@@ -129,6 +149,7 @@ const GoogleMapsAutoCompleteInput = () => {
           await setFieldValue('coords', coords);
 
           await submitForm();
+          setOpen(false);
         } else {
           alert(
             'Geocode was not successful for the following reason: ' + status

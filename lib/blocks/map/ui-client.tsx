@@ -4,7 +4,7 @@ import mapboxgl, { Map } from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import { useEffect, useRef } from 'react';
 
-import { MapBlockConfig } from './config';
+import { MapBlockConfig, mapThemes } from './config';
 
 if (!process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN) {
   throw Error('Mapbox access token not found in environment variables');
@@ -16,9 +16,11 @@ export type Props = {
   className?: string;
 } & MapBlockConfig;
 
-export function MapboxMap({ className, coords }: Props) {
+export function MapboxMap({ className, coords, mapTheme }: Props) {
   const mapContainerRef = useRef<HTMLDivElement | null>(null);
   const mapBoxRef = useRef<Map | null>(null);
+
+  const mapBoxMapTheme = mapThemes[mapTheme] ?? mapThemes.STREETS.value;
 
   useEffect(() => {
     if (!mapContainerRef.current) return;
@@ -26,7 +28,7 @@ export function MapboxMap({ className, coords }: Props) {
     // Initialize map when component mounts
     mapBoxRef.current = new mapboxgl.Map({
       container: mapContainerRef.current,
-      style: 'mapbox://styles/mapbox/streets-v12', // Specify the map style
+      style: mapBoxMapTheme.value, // Specify the map style
       center: [coords.long, coords.lat], // Specify the initial map center coordinates
       zoom: 12, // Specify the initial zoom level
       interactive: false,
@@ -34,7 +36,7 @@ export function MapboxMap({ className, coords }: Props) {
 
     // Clean up on unmount
     return () => mapBoxRef.current?.remove();
-  }, [coords]); // Empty dependency array ensures map only initialized once
+  }, [coords, mapBoxMapTheme]); // Empty dependency array ensures map only initialized once
 
   useEffect(() => {
     if (!mapBoxRef.current || !mapContainerRef.current) return;
