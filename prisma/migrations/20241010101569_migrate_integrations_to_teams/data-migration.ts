@@ -18,7 +18,7 @@ async function main() {
       });
 
       for (const user of users) {
-        console.log('Migrating for user', user.id);
+        console.info('Migrating for user', user.id);
         const integrations = await tx.integration.findMany({
           where: {
             userId: user.id,

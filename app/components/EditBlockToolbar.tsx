@@ -84,7 +84,6 @@ export function EditBlockToolbar({ blockId, blockType }: Props) {
         title: 'Block deleted',
       });
     } catch (error) {
-      console.log(error);
       toast({
         variant: 'error',
         title: "We couldn't delete the block",

@@ -95,7 +95,6 @@ export function EditForm({
   );
 
   const handleDisconnect = async () => {
-    console.log(instagramIntegrations);
     if (!instagramIntegrations || instagramIntegrations?.length === 0) {
       return;
     }
@@ -116,7 +115,6 @@ export function EditForm({
         mutate('/api/user/integrations');
       }
     } catch (error) {
-      console.log(error);
       toast({
         title: 'Error disconnecting integration',
         description: 'Please try again later.',

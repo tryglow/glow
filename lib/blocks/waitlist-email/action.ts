@@ -28,7 +28,7 @@ export const submitSignupToWaitlistCom = async (formData: FormData) => {
       };
     }
   } catch (error) {
-    console.log(error);
+    console.error(error);
 
     return {
       errors: 'There was an error submitting your email. Please try again.',

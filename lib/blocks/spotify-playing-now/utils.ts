@@ -81,13 +81,13 @@ const fetchSpotifyData = async (
     }
   }
 
-  console.log('Headers Date', req.headers.get('date'));
+  console.info('Headers Date', req.headers.get('date'));
 
   if (req.status === 200) {
     const data = await req.json();
 
     const timestampDate = new Date(data.timestamp);
-    console.log(
+    console.info(
       'Playing Now Data last fetched:',
       timestampDate.toLocaleString()
     );
@@ -143,7 +143,7 @@ export const fetchData = async (pageId: string) => {
     });
 
     if (!data || !data.encryptedConfig) {
-      console.log('No integration found for current page');
+      console.info('No integration found for current page');
       return null;
     }
 
@@ -152,7 +152,7 @@ export const fetchData = async (pageId: string) => {
     );
 
     if (!decryptedConfig.accessToken) {
-      console.log(
+      console.info(
         `Spotify accessToken or refreshToken doesn't exist: Integration ID: ${data.id}`
       );
       return null;
@@ -161,7 +161,7 @@ export const fetchData = async (pageId: string) => {
     const spotifyData = await fetchSpotifyData(decryptedConfig, false, data.id);
     return spotifyData;
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return null;
   }
 };

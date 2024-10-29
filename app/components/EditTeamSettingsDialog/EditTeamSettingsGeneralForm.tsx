@@ -36,7 +36,6 @@ export function EditTeamSettingsGeneral({ onCancel, initialValues }: Props) {
       const response = await updateGeneralTeamSettings(values);
 
       if (response?.error) {
-        console.log(response.error);
         toast({
           variant: 'error',
           title: 'Something went wrong',

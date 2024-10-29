@@ -30,7 +30,6 @@ export async function switchTeam(teamId: string) {
       currentTeamId: teamId,
     });
   } catch (error) {
-    console.log('Error', error);
     return {
       error: 'Unable to switch team',
     };

@@ -58,7 +58,7 @@ export async function GET(request: Request) {
     };
 
     if (existingIntegration) {
-      console.log('Updating Spotify integration', existingIntegration.id);
+      console.info('Updating Spotify integration', existingIntegration.id);
       await prisma.integration.update({
         where: {
           id: existingIntegration.id,

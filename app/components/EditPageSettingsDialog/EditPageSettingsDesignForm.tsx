@@ -52,7 +52,7 @@ export function EditPageSettingsDesign({ initialValues, pageId }: Props) {
       );
 
       if (response?.error) {
-        console.log(response.error);
+        console.error(response.error);
         toast({
           variant: 'error',
           title: 'Something went wrong',

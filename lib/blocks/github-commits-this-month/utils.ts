@@ -46,7 +46,7 @@ export const fetchGithubData = async (githubUsername: string) => {
 
     return data.data;
   } catch (error) {
-    console.log('Issue fetching GitHub data', error);
+    console.error('Issue fetching GitHub data', error);
     return null;
   }
 };

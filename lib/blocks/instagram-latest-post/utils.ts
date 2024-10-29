@@ -142,7 +142,7 @@ export const fetchData = async ({
     }
 
     if (!decryptedConfig.accessToken) {
-      console.log(
+      console.error(
         `Instagram accessToken or refreshToken doesn't exist: Integration ID: ${instagramIntegration.id}`
       );
       return null;
@@ -157,7 +157,7 @@ export const fetchData = async ({
 
     return instagramData;
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return null;
   }
 };

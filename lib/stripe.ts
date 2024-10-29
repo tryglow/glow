@@ -26,7 +26,10 @@ export async function getOrCreateStripeCustomer() {
   }
 
   if (user.stripeCustomerId) {
-    console.log('User already has a stripe customer id', user.stripeCustomerId);
+    console.error(
+      'User already has a stripe customer id',
+      user.stripeCustomerId
+    );
     return user.stripeCustomerId;
   }
 

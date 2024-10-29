@@ -1,7 +1,6 @@
 'use client';
 
 import { Team, TeamInvite, User } from '@prisma/client';
-import { useParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 import { EditTeamSettingsGeneral } from '@/components/EditTeamSettingsDialog/EditTeamSettingsGeneralForm';
@@ -29,9 +28,6 @@ export function EditTeamSettingsDialog({ open, onOpenChange, onClose }: Props) {
     { user: Partial<User> }[] | null
   >([]);
   const [teamInvites, setTeamInvites] = useState<TeamInvite[] | null>([]);
-  const params = useParams();
-
-  console.log(teamSettings);
 
   useEffect(() => {
     const getPageData = async () => {

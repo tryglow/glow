@@ -38,7 +38,6 @@ export function EditTeamSettingsMembers({ onCancel, members, invites }: Props) {
       const response = await createTeamInvite(values);
 
       if (response?.error) {
-        console.log(response.error);
         toast({
           variant: 'error',
           title: 'Something went wrong',

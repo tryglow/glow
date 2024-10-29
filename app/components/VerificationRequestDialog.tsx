@@ -77,8 +77,6 @@ function VerificationRequestForm({
   const onSubmit = async (
     values: z.infer<typeof verificationRequestSchema>
   ) => {
-    console.log(values);
-
     const req = await createVerificationRequest({
       pageId,
       requestedPageTitle: values.requestedPageTitle,

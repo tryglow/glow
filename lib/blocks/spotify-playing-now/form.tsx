@@ -55,7 +55,7 @@ export function EditForm({}: EditFormProps<{}>) {
         mutate('/api/user/integrations');
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 

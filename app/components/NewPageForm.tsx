@@ -56,7 +56,6 @@ export function CreatePageForm({ onCancel }: Props) {
       });
 
       if (error) {
-        console.log(error);
         toast({
           variant: 'error',
           title: error.message,
@@ -80,7 +79,6 @@ export function CreatePageForm({ onCancel }: Props) {
         title: 'Page created',
       });
     } catch (error) {
-      console.log(error);
       toast({
         variant: 'error',
         title: "We couldn't create your page",

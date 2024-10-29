@@ -34,7 +34,7 @@ export function EditForm({ onClose, blockId, blockType }: Props) {
         });
       }
     } catch (error) {
-      console.log(
+      console.error(
         'There was an error updating the page config for the edit form',
         error
       );

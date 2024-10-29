@@ -10,13 +10,13 @@ export async function fetchData(spotifyAssetUrl: string) {
     const data = await req.json();
 
     if (data.error) {
-      console.log('Issue fetching Spotify data', data.error);
+      console.error('Issue fetching Spotify data', data.error);
       return null;
     }
 
     return data;
   } catch (error) {
-    console.log('Issue fetching Spotify data', error);
+    console.error('Issue fetching Spotify data', error);
     return null;
   }
 }
