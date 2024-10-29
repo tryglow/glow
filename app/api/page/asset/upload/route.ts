@@ -110,26 +110,36 @@ export async function POST(req: Request) {
 
   const assetConfig = assetContexts[context];
 
-  const convertedImage = await sharp(await firstFileOnly.arrayBuffer())
-    .resize(assetConfig.resize.width, assetConfig.resize.height)
-    .toFormat('webp', {
-      quality: assetConfig.quality,
-    })
-    .toBuffer();
+  const buffer = await firstFileOnly.arrayBuffer();
 
-  const fileName = `${assetConfig.keyPrefix}-${referenceId}/${randomUUID()}`;
+  const [webpImage, pngImage] = await Promise.all([
+    sharp(buffer)
+      .resize(assetConfig.resize.width, assetConfig.resize.height)
+      .toFormat('webp', {
+        quality: assetConfig.quality,
+      })
+      .toBuffer(),
+    sharp(buffer)
+      .resize(assetConfig.resize.width, assetConfig.resize.height)
+      .toFormat('png', {
+        quality: assetConfig.quality,
+      })
+      .toBuffer(),
+  ]);
 
-  const assetUpload = await uploadTemplateFile(
-    convertedImage,
-    fileName,
-    'image/webp'
-  );
+  const fileId = randomUUID();
+  const baseFileName = `${assetConfig.keyPrefix}-${referenceId}/${fileId}`;
 
-  if (isComplete(assetUpload)) {
+  const [webpUpload, pngUpload] = await Promise.all([
+    uploadTemplateFile(webpImage, baseFileName, 'image/webp'),
+    uploadTemplateFile(pngImage, `${baseFileName}.png`, 'image/png'),
+  ]);
+
+  if (isComplete(webpUpload) && isComplete(pngUpload)) {
     const fileLocation =
       process.env.NEXT_PUBLIC_APP_ENV === 'development'
-        ? `https://cdn.dev.glow.as/${assetUpload.Key}`
-        : `https://cdn.glow.as/${assetUpload.Key}`;
+        ? `https://cdn.dev.glow.as/${webpUpload.Key}`
+        : `https://cdn.glow.as/${webpUpload.Key}`;
 
     await track('assetUploaded', {
       userId: session.user.id,
