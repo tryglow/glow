@@ -13,7 +13,7 @@ const saans = localFont({
 });
 
 export const metadata: Metadata = {
-  title: 'Glow - The dynamic personal page builder - Link-in-bio',
+  title: 'Glow - A delightfully rich link-in-bio.',
   description:
     'Create your own dynamic link in bio page effortlessly with Glow, the personal page builder designed to help you stand out and connect with your audience.',
   metadataBase: new URL('https://glow.as'),
