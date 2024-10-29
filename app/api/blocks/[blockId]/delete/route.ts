@@ -3,7 +3,10 @@ import { Prisma } from '@prisma/client';
 import { auth } from '@/app/lib/auth';
 import prisma from '@/lib/prisma';
 
-export async function POST(req: Request, props: { params: Promise<{ blockId: string }> }) {
+export async function POST(
+  req: Request,
+  props: { params: Promise<{ blockId: string }> }
+) {
   const params = await props.params;
   const session = await auth();
 
@@ -47,6 +50,14 @@ export async function POST(req: Request, props: { params: Promise<{ blockId: str
     return Response.json({
       error: {
         message: 'Block not found',
+      },
+    });
+  }
+
+  if (block.type === 'header') {
+    return Response.json({
+      error: {
+        message: 'You cannot delete the header block',
       },
     });
   }

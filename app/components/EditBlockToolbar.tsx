@@ -31,7 +31,15 @@ export function EditBlockToolbar({ blockId, blockType }: Props) {
     `/api/pages/${slug}/layout`
   );
 
-  const handleDeleteBlock = async (blockId: string) => {
+  const handleDeleteBlock = async (blockId: string, blockType: Blocks) => {
+    if (blockType === 'header') {
+      toast({
+        variant: 'error',
+        title: 'You cannot delete the header block',
+      });
+      return;
+    }
+
     try {
       const req = await fetch('/api/page/blocks/delete', {
         method: 'POST',
@@ -107,8 +115,9 @@ export function EditBlockToolbar({ blockId, blockType }: Props) {
         <button
           type="button"
           className="relative -ml-px inline-flex items-center rounded-r-full bg-white px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-stone-100 focus:z-10"
-          onClick={() => handleDeleteBlock(blockId)}
-          onTouchStart={() => handleDeleteBlock(blockId)}
+          disabled={blockType === 'header'}
+          onClick={() => handleDeleteBlock(blockId, blockType)}
+          onTouchStart={() => handleDeleteBlock(blockId, blockType)}
         >
           <TrashIcon width={16} height={16} className="text-slate-700" />
         </button>

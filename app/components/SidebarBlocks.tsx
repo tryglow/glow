@@ -10,7 +10,6 @@ import { Blocks } from '@/lib/blocks/types';
 import { useEffect, useState } from 'react';
 
 const blocks: Blocks[] = [
-  'header',
   'content',
   'link-box',
   'link-bar',
