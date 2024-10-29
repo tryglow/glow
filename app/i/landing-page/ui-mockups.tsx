@@ -17,7 +17,7 @@ const CoreBlockMock = ({
       className={cn(
         'h-full overflow-hidden relative max-w-[624px]',
         !isFrameless &&
-          'bg-sys-bg-primary border-sys-bg-border border p-6 rounded-3xl shadow-sm',
+          'bg-sys-bg-primary border-sys-bg-border border p-6 rounded-[1.3rem] shadow-sm',
         className
       )}
     >

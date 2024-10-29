@@ -205,7 +205,7 @@ export default async function LandingPage(props: {
                     alt=""
                   />
                 </div>
-                <span className="text-xs font-medium text-black/60 block">
+                <span className="text-xs font-medium text-slate-500 block">
                   Trusted by 1000+ creators
                 </span>
               </div>
@@ -232,7 +232,7 @@ export default async function LandingPage(props: {
               </h1>
               <span
                 className={cn(
-                  'text-xl md:text-2xl font-normal mt-3 md:mt-4 block text-[#241f3d]/80 text-pretty',
+                  'text-xl md:text-[1.4rem] font-normal mt-3 md:mt-4 block text-[#241f3d]/80 text-pretty',
                   styles.subtitle
                 )}
               >
@@ -272,7 +272,7 @@ export default async function LandingPage(props: {
                   <Link
                     href="/jack"
                     target="_blank"
-                    className="text-black/40 text-left pl-0"
+                    className="text-slate-500 text-xs font-medium text-left pl-0"
                   >
                     See an example page →
                   </Link>
@@ -280,7 +280,7 @@ export default async function LandingPage(props: {
               </div>
             </div>
             <div className="mt-8 md:mt-0 md:col-span-3">
-              <div className="md:rotate-6 grid grid-cols-10 grid-rows-16 gap-3 w-full md:-right-8 lg:-right-16 relative md:scale-90 lg:scale-100">
+              <div className="md:rotate-6 grid grid-cols-10 grid-rows-16 gap-3 w-full md:-right-8 lg:-right-16 relative">
                 <LinkBoxMockup
                   className={cn('col-span-5', styles.block2)}
                   variant="x"
