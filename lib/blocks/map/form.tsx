@@ -146,12 +146,19 @@ const GoogleMapsAutoCompleteInput = () => {
             long: firstResult.location.lng(),
           };
 
-          await setFieldValue('coords', coords);
+          try {
+            await setFieldValue('coords', coords);
+          } catch (error) {
+            console.error(error);
+          } finally {
+            setTimeout(async () => {
+              await submitForm();
+            }, 100);
+          }
 
-          await submitForm();
           setOpen(false);
         } else {
-          alert(
+          console.error(
             'Geocode was not successful for the following reason: ' + status
           );
         }

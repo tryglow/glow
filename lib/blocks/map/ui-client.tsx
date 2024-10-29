@@ -16,14 +16,14 @@ export type Props = {
   className?: string;
 } & MapBlockConfig;
 
-export function MapboxMap({ className, coords, mapTheme }: Props) {
+export function MapboxMap({ className, mapTheme, coords }: Props) {
   const mapContainerRef = useRef<HTMLDivElement | null>(null);
   const mapBoxRef = useRef<Map | null>(null);
 
   const mapBoxMapTheme = mapThemes[mapTheme] ?? mapThemes.STREETS.value;
 
   useEffect(() => {
-    if (!mapContainerRef.current) return;
+    if (!mapContainerRef.current || !coords) return;
 
     // Initialize map when component mounts
     mapBoxRef.current = new mapboxgl.Map({
