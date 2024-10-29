@@ -13,6 +13,7 @@ import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 
 import { MarketingContainer } from '@/app/components/MarketingContainer';
+import { ProductHuntChart } from '@/app/i/landing-page/producthunt-chart';
 import {
   GithubCommitsThisMonthMockup,
   ImageMockup,
@@ -281,31 +282,32 @@ export default async function LandingPage(props: {
             </div>
             <div className="mt-8 md:mt-0 md:col-span-3">
               <div className="md:rotate-6 grid grid-cols-10 grid-rows-16 gap-3 w-full md:-right-8 lg:-right-16 relative">
-                <LinkBoxMockup
-                  className={cn('col-span-5', styles.block2)}
-                  variant="x"
-                />
-                <LinkBoxMockup
-                  className={cn('col-span-5', styles.block3)}
-                  variant="instagram"
-                />
-                <SpotifyPlayingNowMockup
-                  className={cn('col-span-10', styles.block1)}
-                />
-                <GithubCommitsThisMonthMockup
-                  className={cn('col-span-5 md:col-span-4', styles.block6)}
-                />
+                <div className="col-span-10 md:col-span-5 flex flex-col gap-3">
+                  <SpotifyPlayingNowMockup
+                    className={cn('col-span-5', styles.block1)}
+                  />
+                  <GithubCommitsThisMonthMockup
+                    className={cn('col-span-5 md:col-span-4', styles.block6)}
+                  />
+                </div>
+                <StackMockup className={cn('col-span-5', styles.block7)} />
                 <ImageMockup
-                  className={cn('col-span-5 md:col-span-6', styles.block4)}
-                />
-                <InstagramLatestPostMockup
                   className={cn(
-                    'col-span-5 md:col-span-6 min-h-[200px]',
-                    styles.block5
+                    'col-span-5 md:col-span-10 min-h-[140px]  ',
+                    styles.block4
                   )}
                 />
-                <StackMockup
-                  className={cn('col-span-5 md:col-span-4', styles.block7)}
+                <div className="col-span-10 md:col-span-5 flex flex-col gap-3">
+                  <LinkBoxMockup className={styles.block2} />
+                  <InstagramLatestPostMockup
+                    className={cn(
+                      'col-span-10 min-h-[160px] md:min-h-[240px] md:col-span-5',
+                      styles.block5
+                    )}
+                  />
+                </div>
+                <ProductHuntChart
+                  className={cn('col-span-10 md:col-span-5', styles.block8)}
                 />
               </div>
             </div>

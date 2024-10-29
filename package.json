@@ -68,6 +68,7 @@
     "react-color": "^2.19.3",
     "react-dom": "19.0.0-rc-65a56d0e-20241020",
     "react-grid-layout": "^1.4.4",
+    "recharts": "^2.13.0",
     "resend": "^4.0.0",
     "sass": "^1.77.8",
     "server-only": "^0.0.1",
@@ -100,6 +101,7 @@
   },
   "overrides": {
     "@types/react": "npm:types-react@19.0.0-rc.1",
-    "@types/react-dom": "npm:types-react-dom@19.0.0-rc.1"
+    "@types/react-dom": "npm:types-react-dom@19.0.0-rc.1",
+    "react-is": "^19.0.0-rc-69d4b800-20241021"
   }
 }

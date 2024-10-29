@@ -70,7 +70,8 @@
 .block4,
 .block5,
 .block6,
-.block7 {
+.block7,
+.block8 {
   animation: fadeIn 800ms cubic-bezier(0.22, 0.61, 0.36, 1);
   animation-fill-mode: forwards;
   opacity: 0;
@@ -105,6 +106,10 @@ $baseBlockDelay: 900ms;
 
 .block7 {
   animation-delay: $baseBlockDelay + 600ms;
+}
+
+.block8 {
+  animation-delay: $baseBlockDelay + 700ms;
 }
 
 @keyframes fadeInUp {
