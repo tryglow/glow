@@ -202,9 +202,8 @@ export const StackMockup = ({ className }: { className?: string }) => {
 export const ImageMockup = ({ className }: { className?: string }) => {
   return (
     <CoreBlockMock className={cn('relative !p-0 overflow-hidden', className)}>
-      {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
-        src="https://cdn.glow.as/block-fa524aa6-8aac-4195-a819-a0f6957aeab8/3cb2aee1-c3c9-40c9-993d-d1fbc097a797"
+        src="https://cdn.glow.as/block-610e4b68-f485-4730-b374-8c69fcec6928/8fca8b36-3f2d-48be-9519-5bb566044cbb"
         className="absolute w-full h-full object-cover"
         alt=""
       />
