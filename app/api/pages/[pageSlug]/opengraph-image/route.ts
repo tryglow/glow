@@ -1,7 +1,10 @@
 import 'server-only';
 
 import { getPageTheme } from '@/app/api/pages/[pageSlug]/theme/actions';
-import { HeaderBlockConfig } from '@/lib/blocks/header/config';
+import {
+  HeaderBlockConfig,
+  defaults as headerDefaults,
+} from '@/lib/blocks/header/config';
 import prisma from '@/lib/prisma';
 
 const getHeaderBlock = async (pageSlug: string) => {
@@ -56,6 +59,12 @@ export async function GET(
 
   const headerBlockData = headerBlock?.data as unknown as HeaderBlockConfig;
 
+  let avatarSrc = headerBlockData?.avatar?.src;
+
+  if (avatarSrc !== headerDefaults.avatar.src) {
+    avatarSrc = `${avatarSrc}.png`;
+  }
+
   return Response.json({
     data: {
       theme: {
@@ -65,7 +74,7 @@ export async function GET(
       },
       headerTitle: headerBlockData?.title ?? `@${pageSlug}`,
       headerDescription: headerBlockData?.description,
-      avatarSrc: headerBlockData?.avatar?.src,
+      avatarSrc,
     },
   });
 }
