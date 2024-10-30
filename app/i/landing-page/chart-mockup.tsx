@@ -40,7 +40,7 @@ export function ChartMockup({
       <CardHeader className="items-center pb-0">
         <CardTitle>
           <Link
-            href={`https://www.producthunt.com/posts/glow-6c09d7c4-ece2-4466-b8ed-c17542f44294`}
+            href={`https://www.producthunt.com/posts/glow-f8793a5a-7d57-4793-9431-4d8e6a8e1851`}
             target="_blank"
             className="flex items-center gap-1"
           >
