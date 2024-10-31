@@ -13,7 +13,6 @@ import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 
 import { MarketingContainer } from '@/app/components/MarketingContainer';
-import { ProductHuntChart } from '@/app/i/landing-page/producthunt-chart';
 import {
   GithubCommitsThisMonthMockup,
   ImageMockup,
@@ -297,18 +296,20 @@ export default async function LandingPage(props: {
                     styles.block4
                   )}
                 />
-                <div className="col-span-10 md:col-span-5 flex flex-col gap-3">
-                  <LinkBoxMockup className={styles.block2} />
-                  <InstagramLatestPostMockup
-                    className={cn(
-                      'col-span-10 min-h-[160px] md:min-h-[240px] md:col-span-5',
-                      styles.block5
-                    )}
-                  />
-                </div>
-                <ProductHuntChart
-                  className={cn('col-span-10 md:col-span-5', styles.block8)}
+                <InstagramLatestPostMockup
+                  className={cn(
+                    'col-span-10 min-h-[160px] md:min-h-[200px] md:col-span-5',
+                    styles.block5
+                  )}
                 />
+                <div className="col-span-10 md:col-span-5 flex flex-col gap-3">
+                  <LinkBoxMockup className={styles.block2} variant="x" />
+                  <LinkBoxMockup
+                    className={styles.block5}
+                    variant="instagram"
+                  />
+                  <LinkBoxMockup className={styles.block3} variant="linkedin" />
+                </div>
               </div>
             </div>
           </div>

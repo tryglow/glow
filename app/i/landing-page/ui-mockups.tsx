@@ -230,32 +230,54 @@ export const ImageMockup = ({ className }: { className?: string }) => {
   );
 };
 
+type LinkBoxVariant = 'x' | 'instagram' | 'linkedin';
+
 export const LinkBoxMockup = ({
   className,
   variant,
 }: {
   className?: string;
-  variant?: 'x' | 'instagram';
+  variant: LinkBoxVariant;
 }) => {
+  const variantData: Record<
+    LinkBoxVariant,
+    {
+      icon: string;
+      title: string;
+      username: string;
+    }
+  > = {
+    x: {
+      icon: 'https://cdn.glow.as/default-data/x-logo.png',
+      title: 'X / Twitter',
+      username: '@tryglow',
+    },
+    instagram: {
+      icon: 'https://cdn.glow.as/default-data/icons/instagram.svg',
+      title: 'Instagram',
+      username: '@getglowapp',
+    },
+    linkedin: {
+      icon: 'https://cdn.glow.as/default-data/icons/linkedin.svg',
+      title: 'LinkedIn',
+      username: '@getglowapp',
+    },
+  };
   return (
     <CoreBlockMock className={cn('items-center flex py-3 px-5', className)}>
       <div className="flex flex-row gap-4 items-center">
         <img
-          src={
-            variant === 'x'
-              ? 'https://cdn.glow.as/default-data/x-logo.png'
-              : 'https://cdn.glow.as/default-data/icons/instagram.svg'
-          }
+          src={variantData[variant].icon}
           className="w-10 h-10 rounded-md"
           alt=""
         />
         <div className="flex flex-col">
           <span className="font-semibold text-base text-sys-label-primary">
-            {variant === 'x' ? 'X / Twitter' : 'Instagram'}
+            {variantData[variant].title}
           </span>
 
           <span className="text-sys-label-secondary text-xs">
-            {variant === 'x' ? '@tryglow' : '@getglowapp'}
+            {variantData[variant].username}
           </span>
         </div>
       </div>
