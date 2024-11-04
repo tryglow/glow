@@ -25,6 +25,9 @@ const nextConfig: NextConfig = {
       fullUrl: true,
     },
   },
+  sassOptions: {
+    silenceDeprecations: ['legacy-js-api'],
+  },
   images: {
     remotePatterns: [
       {
