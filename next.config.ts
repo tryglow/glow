@@ -1,6 +1,8 @@
 import createMDX from '@next/mdx';
 import type { NextConfig } from 'next';
 
+import { withSentryConfig } from '@sentry/nextjs';
+
 const withMDX = createMDX();
 
 const nextConfig: NextConfig = {
@@ -39,4 +41,10 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default withMDX(nextConfig);
+export default withSentryConfig(withMDX(nextConfig), {
+  org: 'hyperdusk',
+  project: 'glow',
+  authToken: process.env.SENTRY_AUTH_TOKEN,
+  silent: false,
+  hideSourceMaps: true,
+});
