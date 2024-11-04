@@ -7,7 +7,6 @@ import { track } from '@vercel/analytics/server';
 import NextAuth from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import GoogleProvider from 'next-auth/providers/google';
-import ResendProvider from 'next-auth/providers/resend';
 
 import TwitterProvider from 'next-auth/providers/twitter';
 
@@ -38,11 +37,16 @@ export const { auth, signIn, signOut, handlers, unstable_update } = NextAuth({
       clientId: process.env.TWITTER_CLIENT_ID as string,
       clientSecret: process.env.TWITTER_CLIENT_SECRET as string,
     }),
-    ResendProvider({
-      apiKey: process.env.RESEND_API_KEY,
-      from: 'no-reply@glow.as',
+    /**
+     * This is used for the email link login
+     */
+    {
+      id: 'http-email',
+      name: 'Email',
+      type: 'email',
+      maxAge: 60 * 10,
       sendVerificationRequest,
-    }),
+    },
     /**
      * This provider is used for the app review process only. Some of the
      * integrations that we use (such as Spotify and Facebook) require us to

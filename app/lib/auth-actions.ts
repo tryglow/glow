@@ -7,7 +7,7 @@ export async function signOut() {
 }
 
 export async function signInWithEmail(email: string, redirectTo?: string) {
-  return await signIn('resend', { email, redirectTo, redirect: true });
+  return await signIn('http-email', { email, redirectTo, redirect: true });
 }
 
 export async function signInWithGoogle(redirectTo?: string) {
