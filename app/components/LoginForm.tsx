@@ -24,16 +24,9 @@ export function LoginForm({ onComplete, redirectTo }: Props) {
       return;
     }
 
-    try {
-      await signInWithEmail(email, redirectTo);
-      if (onComplete) {
-        onComplete();
-      }
-    } catch (e) {
-      toast({
-        title: 'Oh no. Something went wrong.',
-        description: 'Please try again',
-      });
+    await signInWithEmail(email, redirectTo);
+    if (onComplete) {
+      onComplete();
     }
   };
 
