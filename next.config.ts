@@ -44,7 +44,6 @@ const nextConfig: NextConfig = {
 export default withSentryConfig(withMDX(nextConfig), {
   org: 'hyperdusk',
   project: 'glow',
-  authToken: process.env.SENTRY_AUTH_TOKEN,
   silent: false,
   hideSourceMaps: true,
 });
