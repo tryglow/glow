@@ -1,3 +1,5 @@
+import { captureException } from '@sentry/nextjs';
+
 export async function fetchData(spotifyAssetUrl: string) {
   try {
     const req = await fetch(
@@ -10,13 +12,14 @@ export async function fetchData(spotifyAssetUrl: string) {
     const data = await req.json();
 
     if (data.error) {
-      console.error('Issue fetching Spotify data', data.error);
+      captureException(new Error(data.error));
       return null;
     }
 
     return data;
   } catch (error) {
-    console.error('Issue fetching Spotify data', error);
+    captureException(error);
+
     return null;
   }
 }

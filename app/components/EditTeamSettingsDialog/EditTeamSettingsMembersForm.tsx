@@ -10,6 +10,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/components/ui/use-toast';
 
+import { captureException } from '@sentry/nextjs';
 import { FormField } from '../FormField';
 import { createTeamInvite } from './actions';
 import { teamInviteSchema } from './shared';
@@ -54,6 +55,7 @@ export function EditTeamSettingsMembers({ onCancel, members, invites }: Props) {
       router.refresh();
       onCancel();
     } catch (error) {
+      captureException(error);
       toast({
         variant: 'error',
         title: 'Something went wrong',

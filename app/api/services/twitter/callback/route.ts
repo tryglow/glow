@@ -2,6 +2,7 @@ import { auth } from '@/app/lib/auth';
 import prisma from '@/lib/prisma';
 
 import { encrypt } from '@/lib/encrypt';
+import { captureException } from '@sentry/nextjs';
 import { fetchTwitterUserData, requestToken } from './utils';
 
 interface TwitterTokenResponse {
@@ -63,7 +64,7 @@ export async function GET(request: Request) {
       data: userData,
     });
   } catch (error) {
-    console.error('Error getting token', error);
+    captureException(error);
     return Response.json({
       error: {
         message: 'Error getting token',

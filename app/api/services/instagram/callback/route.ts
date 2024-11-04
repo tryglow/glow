@@ -4,6 +4,7 @@ import { auth } from '@/app/lib/auth';
 import prisma from '@/lib/prisma';
 
 import { encrypt, isEncrypted } from '@/lib/encrypt';
+import { captureException } from '@sentry/nextjs';
 import { requestLongLivedToken, requestToken } from './utils';
 
 interface InstagramTokenResponse {
@@ -72,7 +73,7 @@ export async function GET(request: Request) {
       `${process.env.NEXTAUTH_URL}/i/integration-callback/instagram`
     );
   } catch (error) {
-    console.error('Error getting token', error);
+    captureException(error);
     return Response.json({
       error: {
         message: 'Error getting token',

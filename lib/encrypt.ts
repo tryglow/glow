@@ -2,6 +2,7 @@
 
 import 'server-only';
 
+import { captureException } from '@sentry/nextjs';
 import crypto from 'crypto';
 
 const ALGORITHM = 'aes-256-gcm';
@@ -82,6 +83,7 @@ export async function encrypt(
     // Return as base64 string
     return Buffer.from(JSON.stringify(result)).toString('base64');
   } catch (error) {
+    captureException(error);
     throw new Error(`Encryption failed: ${(error as Error).message}`);
   }
 }
@@ -132,6 +134,7 @@ export async function decrypt<T = unknown>(
     // Parse and return the JSON
     return JSON.parse(decrypted) as T;
   } catch (error) {
+    captureException(error);
     throw new Error(`Decryption failed: ${(error as Error).message}`);
   }
 }

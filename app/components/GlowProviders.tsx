@@ -10,6 +10,7 @@ import { Button } from '@/app/components/ui/button';
 import { SidebarProvider } from '@/app/components/ui/sidebar';
 import { hideGlowTour } from '@/app/lib/auth-actions';
 import { fetcher } from '@/lib/fetch';
+import { captureException } from '@sentry/nextjs';
 
 interface Props {
   children: ReactNode;
@@ -33,7 +34,7 @@ const BlockContent = ({
     try {
       await hideGlowTour();
     } catch (error) {
-      console.error(error);
+      captureException(error);
     } finally {
       setIsOpen(false);
     }

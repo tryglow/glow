@@ -11,6 +11,7 @@ import { Blocks } from '@/lib/blocks/types';
 import { useSidebar } from '@/app/components/ui/sidebar';
 import { useEditModeContext } from '@/app/contexts/Edit';
 import { useToast } from '@/components/ui/use-toast';
+import { captureException } from '@sentry/nextjs';
 
 interface Props {
   blockId: string;
@@ -84,6 +85,7 @@ export function EditBlockToolbar({ blockId, blockType }: Props) {
         title: 'Block deleted',
       });
     } catch (error) {
+      captureException(error);
       toast({
         variant: 'error',
         title: "We couldn't delete the block",

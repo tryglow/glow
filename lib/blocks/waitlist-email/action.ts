@@ -1,5 +1,7 @@
 'use server';
 
+import { captureException } from '@sentry/nextjs';
+
 export const submitSignupToWaitlistCom = async (formData: FormData) => {
   const email = formData.get('email') as string;
   const waitlistId = formData.get('waitlist_id') as string;
@@ -28,7 +30,7 @@ export const submitSignupToWaitlistCom = async (formData: FormData) => {
       };
     }
   } catch (error) {
-    console.error(error);
+    captureException(error);
 
     return {
       errors: 'There was an error submitting your email. Please try again.',

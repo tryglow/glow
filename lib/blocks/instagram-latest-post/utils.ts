@@ -5,6 +5,7 @@ import { refreshLongLivedToken } from '@/app/api/services/instagram/callback/uti
 import prisma from '@/lib/prisma';
 
 import { decrypt, encrypt } from '@/lib/encrypt';
+import { captureException } from '@sentry/nextjs';
 import { InstagramIntegrationConfig } from './config';
 
 function fetchLatestInstagramPost(
@@ -137,14 +138,17 @@ export const fetchData = async ({
         instagramIntegration.encryptedConfig
       );
     } catch (error) {
-      console.error('Failed to decrypt config', error);
+      captureException(error);
       return null;
     }
 
     if (!decryptedConfig.accessToken) {
-      console.error(
-        `Instagram accessToken or refreshToken doesn't exist: Integration ID: ${instagramIntegration.id}`
+      captureException(
+        new Error(
+          `Instagram accessToken or refreshToken doesn't exist: Integration ID: ${instagramIntegration.id}`
+        )
       );
+
       return null;
     }
 
@@ -157,7 +161,8 @@ export const fetchData = async ({
 
     return instagramData;
   } catch (error) {
-    console.error(error);
+    captureException(error);
+
     return null;
   }
 };

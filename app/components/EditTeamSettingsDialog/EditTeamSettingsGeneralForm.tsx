@@ -9,6 +9,7 @@ import { Button } from '@/components/ui/button';
 import { DialogFooter } from '@/components/ui/dialog';
 import { useToast } from '@/components/ui/use-toast';
 
+import { captureException } from '@sentry/nextjs';
 import { FormField } from '../FormField';
 import { updateGeneralTeamSettings } from './actions';
 import { generalTeamSettingsSchema } from './shared';
@@ -51,6 +52,7 @@ export function EditTeamSettingsGeneral({ onCancel, initialValues }: Props) {
       router.refresh();
       onCancel();
     } catch (error) {
+      captureException(error);
       toast({
         variant: 'error',
         title: 'Something went wrong',

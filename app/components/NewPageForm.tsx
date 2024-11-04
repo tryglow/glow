@@ -17,6 +17,7 @@ import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { useToast } from '@/components/ui/use-toast';
 
 import { PageThemePreview } from '@/app/components/PageThemePreview';
+import { captureException } from '@sentry/nextjs';
 import { FormField } from './FormField';
 
 const FormSchema = Yup.object().shape({
@@ -79,6 +80,7 @@ export function CreatePageForm({ onCancel }: Props) {
         title: 'Page created',
       });
     } catch (error) {
+      captureException(error);
       toast({
         variant: 'error',
         title: "We couldn't create your page",

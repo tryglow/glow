@@ -4,6 +4,7 @@ import { auth } from '@/app/lib/auth';
 import { createNewPage } from '@/lib/page';
 import prisma from '@/lib/prisma';
 import { isForbiddenSlug, isReservedSlug, regexSlug } from '@/lib/slugs';
+import { captureException } from '@sentry/nextjs';
 
 async function checkUserHasEditAccess(slug: string) {
   const session = await auth();
@@ -59,6 +60,7 @@ export async function deletePage(slug: string) {
       success: true,
     };
   } catch (error) {
+    captureException(error);
     return {
       error: 'Something went wrong',
     };

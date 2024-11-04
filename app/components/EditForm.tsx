@@ -4,6 +4,7 @@ import { editForms } from '@/lib/blocks/edit';
 import { Blocks } from '@/lib/blocks/types';
 
 import { toast } from '@/components/ui/use-toast';
+import { captureException } from '@sentry/nextjs';
 
 interface Props {
   onClose: () => void;
@@ -34,10 +35,7 @@ export function EditForm({ onClose, blockId, blockType }: Props) {
         });
       }
     } catch (error) {
-      console.error(
-        'There was an error updating the page config for the edit form',
-        error
-      );
+      captureException(error);
     }
   };
 

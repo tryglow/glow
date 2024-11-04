@@ -5,6 +5,7 @@ import { requestToken } from '@/app/api/services/spotify/callback/utils';
 import prisma from '@/lib/prisma';
 
 import { decrypt, encrypt } from '@/lib/encrypt';
+import { captureException } from '@sentry/nextjs';
 import { SpotifyIntegrationConfig } from './config';
 
 async function fetchPlayingNow(accessToken: string) {
@@ -161,7 +162,7 @@ export const fetchData = async (pageId: string) => {
     const spotifyData = await fetchSpotifyData(decryptedConfig, false, data.id);
     return spotifyData;
   } catch (error) {
-    console.error(error);
+    captureException(error);
     return null;
   }
 };

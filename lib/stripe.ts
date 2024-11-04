@@ -5,6 +5,7 @@ import stripe from 'stripe';
 import { auth } from '@/app/lib/auth';
 import prisma from '@/lib/prisma';
 import { prices } from '@/lib/stripe-prices';
+import { captureMessage } from '@sentry/nextjs';
 
 const Stripe = new stripe(process.env.STRIPE_API_SECRET_KEY as string);
 
@@ -26,10 +27,13 @@ export async function getOrCreateStripeCustomer() {
   }
 
   if (user.stripeCustomerId) {
-    console.error(
-      'User already has a stripe customer id',
-      user.stripeCustomerId
-    );
+    captureMessage('User already has a stripe customer ID', {
+      level: 'info',
+      extra: {
+        stripeCustomerId: user.stripeCustomerId,
+      },
+    });
+
     return user.stripeCustomerId;
   }
 

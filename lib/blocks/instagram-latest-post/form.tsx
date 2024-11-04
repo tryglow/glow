@@ -15,6 +15,7 @@ import { EditFormProps } from '@/lib/blocks/types';
 
 import { Button } from '@/components/ui/button';
 import { toast } from '@/components/ui/use-toast';
+import { captureException } from '@sentry/nextjs';
 
 const InstagramLogo = () => {
   return (
@@ -115,6 +116,7 @@ export function EditForm({
         mutate('/api/user/integrations');
       }
     } catch (error) {
+      captureException(error);
       toast({
         title: 'Error disconnecting integration',
         description: 'Please try again later.',

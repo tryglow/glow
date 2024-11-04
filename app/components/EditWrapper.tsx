@@ -26,6 +26,7 @@ import { cn } from '@/lib/utils';
 import { CoreBlock } from '@/components/CoreBlock';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useToast } from '@/components/ui/use-toast';
+import { captureException } from '@sentry/nextjs';
 
 interface Props {
   children: ReactNode[];
@@ -246,7 +247,7 @@ export function EditWrapper({ children, layoutProps }: Props) {
       // Update the layout in the client-side cache
       mutateLayout(nextLayout);
     } catch (error) {
-      console.error('Failed to update layout:', error);
+      captureException(error);
       toast({
         variant: 'error',
         title: 'Something went wrong',

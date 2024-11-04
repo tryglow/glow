@@ -14,6 +14,7 @@ import {
 } from '@/components/ui/command';
 
 import { FormField } from '@/app/components/FormField';
+import { captureException } from '@sentry/nextjs';
 import { EditFormProps } from '../types';
 import { MapBlockConfig, mapThemes } from './config';
 
@@ -149,7 +150,7 @@ const GoogleMapsAutoCompleteInput = () => {
           try {
             await setFieldValue('coords', coords);
           } catch (error) {
-            console.error(error);
+            captureException(error);
           } finally {
             setTimeout(async () => {
               await submitForm();

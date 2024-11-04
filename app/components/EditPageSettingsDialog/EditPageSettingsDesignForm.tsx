@@ -13,6 +13,7 @@ import { CreateEditThemeForm } from '@/app/components/EditPageSettingsDialog/Cre
 import { fetcher } from '@/lib/fetch';
 import { PlusIcon } from '@heroicons/react/20/solid';
 import { Theme } from '@prisma/client';
+import { captureException } from '@sentry/nextjs';
 import { useState } from 'react';
 import useSWR from 'swr';
 import { FormField } from '../FormField';
@@ -52,7 +53,7 @@ export function EditPageSettingsDesign({ initialValues, pageId }: Props) {
       );
 
       if (response?.error) {
-        console.error(response.error);
+        captureException(response.error);
         toast({
           variant: 'error',
           title: 'Something went wrong',
@@ -65,6 +66,7 @@ export function EditPageSettingsDesign({ initialValues, pageId }: Props) {
       });
       router.refresh();
     } catch (error) {
+      captureException(error);
       toast({
         variant: 'error',
         title: 'Something went wrong',

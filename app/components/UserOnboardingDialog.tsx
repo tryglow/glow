@@ -12,6 +12,7 @@ import {
 } from '@/components/ui/dialog';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { useTour } from '@reactour/tour';
+import { captureException } from '@sentry/nextjs';
 import { useSession } from 'next-auth/react';
 import { useState } from 'react';
 
@@ -27,7 +28,7 @@ export function UserOnboardingDialog() {
     try {
       await hideGlowTour();
     } catch (error) {
-      console.error(error);
+      captureException(error);
     } finally {
       setDialogOpen(false);
     }

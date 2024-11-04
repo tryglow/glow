@@ -7,6 +7,7 @@ import { InitialDataUsersIntegrations } from '@/app/[domain]/[slug]/page';
 import { Button } from '@/components/ui/button';
 import { toast } from '@/components/ui/use-toast';
 
+import { captureException } from '@sentry/nextjs';
 import { EditFormProps } from '../types';
 
 const SpotifyLogo = () => {
@@ -55,7 +56,7 @@ export function EditForm({}: EditFormProps<{}>) {
         mutate('/api/user/integrations');
       }
     } catch (error) {
-      console.error(error);
+      captureException(error);
     }
   };
 

@@ -3,6 +3,7 @@
 import { ThemeData } from '@/app/components/EditPageSettingsDialog/shared';
 import { auth } from '@/app/lib/auth';
 import prisma from '@/lib/prisma';
+import { captureException } from '@sentry/nextjs';
 
 export async function createTheme({
   themeName,
@@ -52,7 +53,7 @@ export async function createTheme({
       },
     };
   } catch (error) {
-    console.error(error);
+    captureException(error);
     return {
       error: 'Failed to create theme',
     };
@@ -103,7 +104,7 @@ export async function updateTheme(themeId: string, data: ThemeData) {
       success: true,
     };
   } catch (error) {
-    console.error(error);
+    captureException(error);
     return {
       error: 'Failed to update theme',
     };
@@ -194,7 +195,7 @@ export async function setPageTheme(pageSlug: string, themeId: string) {
       success: true,
     };
   } catch (error) {
-    console.error(error);
+    captureException(error);
     return {
       error: 'Failed to set page theme',
     };

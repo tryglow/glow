@@ -4,8 +4,12 @@ import { auth } from '@/app/lib/auth';
 import { blocksConfig } from '@/lib/blocks/config';
 import { Blocks } from '@/lib/blocks/types';
 import prisma from '@/lib/prisma';
+import { captureException } from '@sentry/nextjs';
 
-export async function POST(req: Request, props: { params: Promise<{ blockId: string }> }) {
+export async function POST(
+  req: Request,
+  props: { params: Promise<{ blockId: string }> }
+) {
   const params = await props.params;
   const session = await auth();
 
@@ -81,6 +85,7 @@ export async function POST(req: Request, props: { params: Promise<{ blockId: str
       },
     });
   } catch (error) {
+    captureException(error);
     if (error instanceof ValidationError) {
       return Response.json({
         error: {

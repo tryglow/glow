@@ -5,6 +5,7 @@ import { SpotifyIntegrationConfig } from '@/lib/blocks/spotify-playing-now/confi
 import prisma from '@/lib/prisma';
 
 import { encrypt } from '@/lib/encrypt';
+import { captureException } from '@sentry/nextjs';
 import { requestToken } from './utils';
 
 export async function GET(request: Request) {
@@ -76,7 +77,7 @@ export async function GET(request: Request) {
       `${process.env.NEXTAUTH_URL}/i/integration-callback/spotify`
     );
   } catch (error) {
-    console.error('Error getting token', error);
+    captureException(error);
 
     NextResponse.json({ error: 'Error getting token' });
   }

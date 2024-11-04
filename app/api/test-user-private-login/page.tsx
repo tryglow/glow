@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 import { FormEvent, useState } from 'react';
 
 import { Button } from '@/components/ui/button';
+import { captureException } from '@sentry/nextjs';
 
 export default function TestUserPrivateLogin() {
   const [email, setEmail] = useState('');
@@ -26,7 +27,7 @@ export default function TestUserPrivateLogin() {
     });
 
     if (result?.error) {
-      console.error(result.error);
+      captureException(result.error);
     } else {
       router.push('/fb_test_page');
     }

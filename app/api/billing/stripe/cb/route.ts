@@ -5,6 +5,7 @@ import Stripe from 'stripe';
 
 import prisma from '@/lib/prisma';
 import { prices } from '@/lib/stripe-prices';
+import { captureException } from '@sentry/nextjs';
 
 const stripe = new Stripe(process.env.STRIPE_API_SECRET_KEY as string);
 
@@ -21,6 +22,7 @@ export async function POST(req: Request) {
       process.env.STRIPE_WEBHOOK_SECRET!
     );
   } catch (error) {
+    captureException(error);
     return NextResponse.json({ error: 'Invalid signature' }, { status: 400 });
   }
 

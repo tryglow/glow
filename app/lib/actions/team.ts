@@ -2,6 +2,7 @@
 
 import { auth, unstable_update } from '@/app/lib/auth';
 import prisma from '@/lib/prisma';
+import { captureException } from '@sentry/nextjs';
 
 export async function switchTeam(teamId: string) {
   const session = await auth();
@@ -30,6 +31,7 @@ export async function switchTeam(teamId: string) {
       currentTeamId: teamId,
     });
   } catch (error) {
+    captureException(error);
     return {
       error: 'Unable to switch team',
     };

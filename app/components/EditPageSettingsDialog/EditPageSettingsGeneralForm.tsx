@@ -28,6 +28,7 @@ import {
   CollapsibleTrigger,
 } from '@/app/components/ui/collapsible';
 import { ChevronDownIcon } from '@radix-ui/react-icons';
+import { captureException } from '@sentry/nextjs';
 import { FormField } from '../FormField';
 import { updateGeneralPageSettings } from './actions';
 import { generalPageSettingsSchema } from './shared';
@@ -63,7 +64,7 @@ export function EditPageSettingsGeneral({ initialValues, pageId }: Props) {
       );
 
       if (response?.error) {
-        console.error(response.error);
+        captureException(response.error);
         toast({
           variant: 'error',
           title: 'Something went wrong',
@@ -87,6 +88,7 @@ export function EditPageSettingsGeneral({ initialValues, pageId }: Props) {
       });
       router.refresh();
     } catch (error) {
+      captureException(error);
       toast({
         variant: 'error',
         title: 'Something went wrong',
@@ -116,6 +118,7 @@ export function EditPageSettingsGeneral({ initialValues, pageId }: Props) {
 
       router.push('/');
     } catch (error) {
+      captureException(error);
       toast({
         variant: 'error',
         title: 'Something went wrong',
