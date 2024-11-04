@@ -21,8 +21,6 @@ export async function sendVerificationRequest({
         url,
       },
     });
-
-    return true;
   } catch (error) {
     captureException(error);
   }
