@@ -82,7 +82,9 @@ export function UserWidget({ usersTeams }: Props) {
             Manage Billing
           </DropdownMenuItem>
 
-          <DropdownMenuItem onClick={() => signOut()}>Log out</DropdownMenuItem>
+          <DropdownMenuItem onClick={async () => await signOut()}>
+            Log out
+          </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
       <NewPageDialog
