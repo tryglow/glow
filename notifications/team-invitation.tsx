@@ -1,15 +1,22 @@
 import 'server-only';
 
 import { TeamInvite } from '@prisma/client';
-import { Resend } from 'resend';
+
+import { createLoopsClient, transactionalEmailIds } from '@/lib/loops';
+import { captureException } from '@sentry/nextjs';
 
 export async function sendTeamInvitationEmail(invite: TeamInvite) {
-  const resend = new Resend(process.env.RESEND_API_KEY);
+  const loops = createLoopsClient();
 
-  await resend.emails.send({
-    from: 'Glow <team@glow.as>',
-    to: [invite.email],
-    subject: "You've been invited to join a team on Glow!",
-    text: `You've been invited to join a team on Glow! To accept the invite, click the link below. If you weren't expecting to receive this email, please ignore it. \n\n https://glow.as/i/invite/${invite.code}`,
-  });
+  try {
+    await loops.sendTransactionalEmail({
+      transactionalId: transactionalEmailIds.invitationToTeam,
+      email: invite.email,
+      dataVariables: {
+        inviteUrl: `https://glow.as/i/invite/${invite.code}`,
+      },
+    });
+  } catch (error) {
+    captureException(error);
+  }
 }

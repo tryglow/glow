@@ -1,7 +1,8 @@
 import 'server-only';
 
-import { Resend } from 'resend';
-import VerificationCodeEmail from './login-verification-email';
+import { captureException } from '@sentry/nextjs';
+
+import { createLoopsClient, transactionalEmailIds } from '@/lib/loops';
 
 export async function sendVerificationRequest({
   identifier,
@@ -10,12 +11,17 @@ export async function sendVerificationRequest({
   identifier: string;
   url: string;
 }) {
-  const resend = new Resend(process.env.RESEND_API_KEY);
+  const loops = createLoopsClient();
 
-  await resend.emails.send({
-    from: 'no-reply@glow.as',
-    to: identifier,
-    subject: 'Log in to Glow',
-    react: VerificationCodeEmail({ url }),
-  });
+  try {
+    await loops.sendTransactionalEmail({
+      transactionalId: transactionalEmailIds.loginVerificationRequest,
+      email: identifier,
+      dataVariables: {
+        url,
+      },
+    });
+  } catch (error) {
+    captureException(error);
+  }
 }
