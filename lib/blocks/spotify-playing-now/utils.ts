@@ -3,9 +3,10 @@
 import { requestToken } from '@/app/api/services/spotify/callback/utils';
 
 import prisma from '@/lib/prisma';
+import safeAwait from 'safe-await';
 
 import { decrypt, encrypt } from '@/lib/encrypt';
-import { captureException } from '@sentry/nextjs';
+import { captureException, captureMessage } from '@sentry/nextjs';
 import { SpotifyIntegrationConfig } from './config';
 
 async function fetchPlayingNow(accessToken: string) {
@@ -41,10 +42,16 @@ const fetchSpotifyData = async (
   isRetry: boolean,
   integrationId: string
 ) => {
-  const req = await fetchPlayingNow(config.accessToken);
+  const [fetchPlayingNowError, fetchPlayingNowRequest] = await safeAwait(
+    fetchPlayingNow(config.accessToken)
+  );
 
-  // The access token might have expired. Try to refresh it.
-  if (req.status === 401 && !isRetry) {
+  if (fetchPlayingNowError) {
+    captureException(fetchPlayingNowError);
+  }
+
+  // Handle expired access token
+  if (fetchPlayingNowRequest?.status === 401 && !isRetry) {
     const refreshTokenRequest = await requestToken({
       isRefreshToken: true,
       refreshToken: config.refreshToken,
@@ -52,47 +59,33 @@ const fetchSpotifyData = async (
 
     const refreshTokenData = await refreshTokenRequest.json();
 
-    const encryptedConfig = await encrypt({
-      accessToken: refreshTokenData.access_token,
-      refreshToken: refreshTokenData.refresh_token ?? config.refreshToken,
-    });
-
     if (refreshTokenData?.access_token) {
-      const updatedIntegration = await prisma.integration.update({
-        where: {
-          id: integrationId,
-        },
-        data: {
-          config: {},
-          encryptedConfig,
-        },
-      });
+      const newConfig = {
+        accessToken: refreshTokenData.access_token,
+        refreshToken: refreshTokenData.refresh_token ?? config.refreshToken,
+      };
 
-      const updatedConfig =
-        updatedIntegration.config as unknown as SpotifyIntegrationConfig;
-
-      fetchSpotifyData(
-        {
-          accessToken: updatedConfig.accessToken,
-          refreshToken: updatedConfig.refreshToken,
-        },
-        true,
-        integrationId
+      const [updateIntegrationError] = await safeAwait(
+        prisma.integration.update({
+          where: { id: integrationId },
+          data: {
+            config: {},
+            encryptedConfig: await encrypt(newConfig),
+          },
+        })
       );
+
+      if (updateIntegrationError) {
+        captureException(updateIntegrationError);
+      }
+
+      return fetchSpotifyData(newConfig, true, integrationId);
     }
   }
 
-  console.info('Headers Date', req.headers.get('date'));
-
-  if (req.status === 200) {
-    const data = await req.json();
-
-    const timestampDate = new Date(data.timestamp);
-    console.info(
-      'Playing Now Data last fetched:',
-      timestampDate.toLocaleString()
-    );
-
+  // Return currently playing track if available
+  if (fetchPlayingNowRequest && fetchPlayingNowRequest?.status === 200) {
+    const data = await fetchPlayingNowRequest.json();
     return {
       artistName: data?.item?.artists[0]?.name,
       name: data?.item?.name,
@@ -102,11 +95,12 @@ const fetchSpotifyData = async (
     };
   }
 
-  // Is this is a retry, bail out to prevent an infinite loop.
+  // Prevent infinite loop on retry
   if (isRetry) {
     return null;
   }
 
+  // Fall back to recently played track
   const recentlyPlayedReq = await fetchRecentlyPlayed(config.accessToken);
   const recentlyPlayedData = await recentlyPlayedReq.json();
 
@@ -119,6 +113,8 @@ const fetchSpotifyData = async (
       isPlayingNow: false,
     };
   }
+
+  return null;
 };
 
 export const fetchData = async (pageId: string) => {
@@ -126,6 +122,7 @@ export const fetchData = async (pageId: string) => {
     const data = await prisma.integration.findFirst({
       where: {
         type: 'spotify',
+        deletedAt: null,
         team: {
           pages: {
             some: {
@@ -145,24 +142,44 @@ export const fetchData = async (pageId: string) => {
 
     if (!data || !data.encryptedConfig) {
       console.info('No integration found for current page');
-      return null;
+      return {
+        noIntegration: true,
+        data: null,
+      };
     }
 
-    const decryptedConfig = await decrypt<SpotifyIntegrationConfig>(
-      data.encryptedConfig
+    const [decryptedConfigError, decryptedConfig] = await safeAwait(
+      decrypt<SpotifyIntegrationConfig>(data.encryptedConfig)
     );
 
+    if (decryptedConfigError) {
+      captureException(decryptedConfigError);
+
+      return {
+        data: null,
+      };
+    }
+
     if (!decryptedConfig.accessToken) {
-      console.info(
+      captureMessage(
         `Spotify accessToken or refreshToken doesn't exist: Integration ID: ${data.id}`
       );
-      return null;
+
+      return {
+        data: null,
+      };
     }
 
     const spotifyData = await fetchSpotifyData(decryptedConfig, false, data.id);
-    return spotifyData;
+
+    return {
+      data: spotifyData,
+    };
   } catch (error) {
     captureException(error);
-    return null;
+
+    return {
+      data: null,
+    };
   }
 };

@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import Link from 'next/link';
 import { FunctionComponent } from 'react';
 
@@ -31,11 +32,22 @@ export const SpotifyLogo = () => {
 export const SpotifyPlayingNowServerUI: FunctionComponent<Props> = async ({
   pageId,
 }) => {
-  const data = await fetchData(pageId);
+  const res = await fetchData(pageId);
+
+  if (res?.noIntegration) {
+    return (
+      <div className="flex items-center justify-center h-full">
+        <span className="text-sm text-sys-label-secondary text-center">
+          Edit this block to connect your Spotify account.
+        </span>
+      </div>
+    );
+  }
+
+  const { data } = res;
 
   return (
     <div className="flex gap-3">
-      {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         src={data?.imageUrl}
         className="w-16 h-16 object-cover rounded-lg"
