@@ -316,6 +316,55 @@ export default async function LandingPage(props: {
         </MarketingContainer>
       </section>
 
+      <section className="my-20 md:mt-24 md:mb-48">
+        <MarketingContainer>
+          <h2 className="text-3xl font-black tracking-tight text-center mb-2">
+            Integrates with your favorite platforms
+          </h2>
+          <p className="text-base md:text-lg text-pretty mb-10 text-center">
+            Show live follower stats, photos, videos and more.
+          </p>
+
+          <div className="flex flex-wrap gap-8 md:gap-14 justify-center items-center">
+            <img
+              src="/assets/landing-page/logo-youtube.svg"
+              alt="YouTube logo"
+              className="max-w-[100px] max-h-6"
+            />
+            <img
+              src="/assets/landing-page/logo-x.svg"
+              alt="X logo"
+              className="max-w-[100px] max-h-6"
+            />
+            <img
+              src="/assets/landing-page/logo-github.svg"
+              alt="GitHub logo"
+              className="max-w-[100px] max-h-6"
+            />
+            <img
+              src="/assets/landing-page/logo-instagram.svg"
+              alt="Instagram logo"
+              className="max-w-[100px] max-h-6"
+            />
+            <img
+              src="/assets/landing-page/logo-spotify.svg"
+              alt="Spotify logo"
+              className="max-w-[100px] max-h-6"
+            />
+            <img
+              src="/assets/landing-page/logo-threads.svg"
+              alt="Threads logo"
+              className="max-w-[100px] max-h-6"
+            />
+            <img
+              src="/assets/landing-page/logo-tiktok.svg"
+              alt="TikTok logo"
+              className="max-w-[100px] max-h-6"
+            />
+          </div>
+        </MarketingContainer>
+      </section>
+
       <section className="my-20">
         <MarketingContainer>
           <h2 className="text-3xl md:text-4xl font-black tracking-tight mb-2">
