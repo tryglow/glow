@@ -7,38 +7,31 @@ import {
   SidebarMenu,
 } from '@/app/components/ui/sidebar';
 import { Blocks } from '@/lib/blocks/types';
+import { fetcher } from '@/lib/fetch';
 import { useEffect, useState } from 'react';
-
-const blocks: Blocks[] = [
-  'content',
-  'link-box',
-  'link-bar',
-  'stack',
-  'instagram-latest-post',
-  'image',
-  'map',
-  'github-commits-this-month',
-  'spotify-playing-now',
-  'spotify-embed',
-  'waitlist-email',
-  'youtube',
-  'threads-follower-count',
-];
+import useSWR from 'swr';
 
 export function SidebarBlocks() {
   const [search, setSearch] = useState('');
 
-  const [filteredBlocks, setFilteredBlocks] = useState(blocks);
+  const { data: enabledBlocks } = useSWR<Blocks[]>(
+    '/api/blocks/enabled-blocks',
+    fetcher
+  );
+
+  const [filteredBlocks, setFilteredBlocks] = useState(enabledBlocks);
 
   useEffect(() => {
     if (search === '') {
-      setFilteredBlocks(blocks);
+      setFilteredBlocks(enabledBlocks);
     }
 
-    setFilteredBlocks(
-      blocks.filter((block) => block.includes(search.toLowerCase()))
-    );
-  }, [search]);
+    if (enabledBlocks) {
+      setFilteredBlocks(
+        enabledBlocks.filter((block) => block.includes(search.toLowerCase()))
+      );
+    }
+  }, [search, enabledBlocks]);
 
   return (
     <>
@@ -56,7 +49,7 @@ export function SidebarBlocks() {
           <SidebarMenu>
             <div className="overflow-y-auto overscroll-none">
               <div className="space-y-2 flex flex-col" id="tour-blocks">
-                {filteredBlocks.map((block) => {
+                {filteredBlocks?.map((block) => {
                   return <DraggableBlockButton key={block} type={block} />;
                 })}
               </div>

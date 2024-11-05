@@ -9,6 +9,7 @@ import { auth } from '@/app/lib/auth';
 import prisma from '@/lib/prisma';
 
 import { RenderPageTheme } from '@/app/[domain]/[slug]/render-page-theme';
+import { getEnabledBlocks } from '@/app/api/blocks/enabled-blocks/actions';
 import { getPageLayout } from '@/app/api/pages/[pageSlug]/layout/actions';
 import { getPageSettings } from '@/app/api/pages/[pageSlug]/settings/actions';
 import { getPageTheme } from '@/app/api/pages/[pageSlug]/theme/actions';
@@ -88,12 +89,14 @@ export default async function PageLayout(props: {
     layout,
     pageTheme,
     pageSettings,
+    enabledBlocks,
   ] = await Promise.all([
     getPageData(commonParams),
     getTeamIntegrations(),
     getPageLayout(commonParams),
     getPageTheme(commonParams),
     getPageSettings(commonParams),
+    getEnabledBlocks(),
   ]);
 
   const currentUserIsOwner = pageTheme?.teamId === session?.currentTeamId;
@@ -105,6 +108,7 @@ export default async function PageLayout(props: {
 
   if (isEditMode) {
     initialData['/api/user/integrations'] = integrations;
+    initialData['/api/blocks/enabled-blocks'] = enabledBlocks;
     initialData[`/api/pages/${params.slug}/settings`] = pageSettings;
   }
 

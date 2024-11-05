@@ -36,6 +36,7 @@ export const blocksConfig: Record<
   {
     schema: Yup.Schema | null;
     defaults: any;
+    isBeta?: boolean;
   }
 > = {
   'link-box': {
@@ -93,5 +94,6 @@ export const blocksConfig: Record<
   'threads-follower-count': {
     defaults: threadsFollowerCountDefaults,
     schema: null,
+    isBeta: true,
   },
 };
