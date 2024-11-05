@@ -26,6 +26,7 @@ export async function getTeamIntegrations() {
       teamId,
       deletedAt: null,
     },
+    cacheStrategy: { ttl: 60 },
   });
 
   return integrations;
