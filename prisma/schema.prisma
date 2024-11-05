@@ -64,6 +64,7 @@ model User {
   stripeSubscriptionId String?
   hasPremiumAccess     Boolean               @default(false)
   hasTeamAccess        Boolean               @default(false)
+  hasBetaAccess        Boolean               @default(false)
   verificationRequests VerificationRequest[]
 }
 
