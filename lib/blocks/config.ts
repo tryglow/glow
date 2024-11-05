@@ -1,5 +1,9 @@
 import * as Yup from 'yup';
 
+import {
+  YouTubeBlockSchema,
+  defaults as youtubeDefaults,
+} from '@/lib/blocks/youtube/config';
 import { ContentSchema, defaults as contentDefaults } from './content/config';
 import {
   GithubCommitsThisMonthSchema,
@@ -80,5 +84,9 @@ export const blocksConfig: Record<
   'waitlist-email': {
     defaults: waitlistEmailDefaults,
     schema: WaitlistEmailBlockSchema,
+  },
+  youtube: {
+    defaults: youtubeDefaults,
+    schema: YouTubeBlockSchema,
   },
 };

@@ -10,7 +10,8 @@ export type Blocks =
   | 'map'
   | 'link-box'
   | 'link-bar'
-  | 'waitlist-email';
+  | 'waitlist-email'
+  | 'youtube';
 
 export interface EditFormProps<T> {
   initialValues: T;

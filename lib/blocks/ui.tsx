@@ -2,6 +2,7 @@ import { Content } from '@/lib/blocks/content/ui';
 import { Header } from '@/lib/blocks/header/ui-client';
 import { Stack } from '@/lib/blocks/stack/ui';
 
+import { YouTube } from '@/lib/blocks/youtube/ui';
 import { GitHubCommitsThisMonth } from './github-commits-this-month/ui-client';
 import { Image } from './image/ui';
 import InstagramLatestPost from './instagram-latest-post/ui-client';
@@ -79,5 +80,7 @@ export function renderBlock(block: any, pageId: string, isEditMode: boolean) {
       );
     case 'waitlist-email':
       return <WaitlistEmail {...sharedProps} />;
+    case 'youtube':
+      return <YouTube {...sharedProps} />;
   }
 }

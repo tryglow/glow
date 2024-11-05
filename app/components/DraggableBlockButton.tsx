@@ -15,7 +15,7 @@ import blockMapIcon from '@/app/assets/ui/type-map.svg';
 import blockSpotifyPlayingNowIcon from '@/app/assets/ui/type-spotify-playing-now.svg';
 import blockStackIcon from '@/app/assets/ui/type-stack.svg';
 import blockWaitlistEmailIcon from '@/app/assets/ui/type-waitlist-email.svg';
-
+import blockYoutubeIcon from '@/app/assets/ui/type-youtube.svg';
 import Image from 'next/image';
 
 export const config: Record<
@@ -136,6 +136,15 @@ export const config: Record<
     drag: {
       w: 12,
       h: 5,
+    },
+  },
+  youtube: {
+    title: 'YouTube',
+    label: 'Embed a YouTube video',
+    icon: blockYoutubeIcon,
+    drag: {
+      w: 12,
+      h: 6,
     },
   },
 };

@@ -21,6 +21,7 @@ const blocks: Blocks[] = [
   'spotify-playing-now',
   'spotify-embed',
   'waitlist-email',
+  'youtube',
 ];
 
 export function SidebarBlocks() {
