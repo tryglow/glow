@@ -14,6 +14,7 @@ import blockLinkBoxIcon from '@/app/assets/ui/type-link-box.svg';
 import blockMapIcon from '@/app/assets/ui/type-map.svg';
 import blockSpotifyPlayingNowIcon from '@/app/assets/ui/type-spotify-playing-now.svg';
 import blockStackIcon from '@/app/assets/ui/type-stack.svg';
+import blockThreadsFollowerCountIcon from '@/app/assets/ui/type-threads-follower-count.svg';
 import blockWaitlistEmailIcon from '@/app/assets/ui/type-waitlist-email.svg';
 import blockYoutubeIcon from '@/app/assets/ui/type-youtube.svg';
 import Image from 'next/image';
@@ -150,7 +151,7 @@ export const config: Record<
   'threads-follower-count': {
     title: 'Threads Follower Count',
     label: 'The number of followers on your Threads account',
-    icon: blockYoutubeIcon,
+    icon: blockThreadsFollowerCountIcon,
     drag: {
       w: 6,
       h: 6,
