@@ -25,6 +25,7 @@ export const config: Record<
     title: string;
     label: string;
     icon: string;
+    hidden?: boolean;
     drag: {
       h: number;
       w: number;
@@ -151,6 +152,7 @@ export const config: Record<
   'threads-follower-count': {
     title: 'Threads Follower Count',
     label: 'The number of followers on your Threads account',
+    hidden: true,
     icon: blockThreadsFollowerCountIcon,
     drag: {
       w: 6,
@@ -169,6 +171,10 @@ export function DraggableBlockButton({ type }: Props) {
   const { isMobile, setOpen, setSidebarView } = useSidebar();
 
   const blockConfig = config[type];
+
+  if (blockConfig.hidden) {
+    return null;
+  }
 
   const content = (
     <>
