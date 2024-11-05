@@ -5,6 +5,7 @@ import { notFound, useParams } from 'next/navigation';
 const integrations: Record<string, string> = {
   spotify: 'Spotify',
   instagram: 'Instagram',
+  threads: 'Threads',
 };
 
 export default function IntegrationSuccessPage() {
