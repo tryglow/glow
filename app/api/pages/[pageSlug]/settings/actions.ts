@@ -39,7 +39,6 @@ export async function getPageSettings({
       themeId: true,
       verifiedAt: true,
     },
-    cacheStrategy: { ttl: 60 },
   });
 
   if (!page) {

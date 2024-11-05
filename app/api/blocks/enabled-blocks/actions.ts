@@ -18,7 +18,6 @@ export async function getEnabledBlocks() {
         hasBetaAccess: true,
         isAdmin: true,
       },
-      cacheStrategy: { ttl: 60 },
     })
   );
 

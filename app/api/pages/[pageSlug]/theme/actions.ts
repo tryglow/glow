@@ -22,7 +22,6 @@ export async function getPageTheme({
       publishedAt: true,
       teamId: true,
     },
-    cacheStrategy: { ttl: 60 },
   });
 
   if (!page?.publishedAt && session?.currentTeamId !== page?.teamId) {

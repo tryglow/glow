@@ -18,7 +18,6 @@ export async function getPageLayout({
       slug,
       customDomain: domain ? decodeURIComponent(domain) : undefined,
     },
-    cacheStrategy: { ttl: 60 },
   });
 
   if (!page) {

@@ -44,7 +44,6 @@ const getPageData = async ({
       blocks: true,
       user: !!user,
     },
-    cacheStrategy: { ttl: 60 },
   });
 
   if (!data) notFound();
