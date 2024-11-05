@@ -147,6 +147,15 @@ export const config: Record<
       h: 6,
     },
   },
+  'threads-follower-count': {
+    title: 'Threads Follower Count',
+    label: 'The number of followers on your Threads account',
+    icon: blockYoutubeIcon,
+    drag: {
+      w: 6,
+      h: 6,
+    },
+  },
 };
 
 interface Props {

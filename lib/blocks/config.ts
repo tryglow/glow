@@ -24,6 +24,7 @@ import {
 } from './spotify-embed/config';
 import { defaults as spotifyPlayingNowDefaults } from './spotify-playing-now/config';
 import { StackSchema, defaults as stackDefaults } from './stack/config';
+import { defaults as threadsFollowerCountDefaults } from './threads-follower-count/config';
 import { Blocks } from './types';
 import {
   WaitlistEmailBlockSchema,
@@ -88,5 +89,9 @@ export const blocksConfig: Record<
   youtube: {
     defaults: youtubeDefaults,
     schema: YouTubeBlockSchema,
+  },
+  'threads-follower-count': {
+    defaults: threadsFollowerCountDefaults,
+    schema: null,
   },
 };

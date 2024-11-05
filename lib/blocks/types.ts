@@ -11,7 +11,8 @@ export type Blocks =
   | 'link-box'
   | 'link-bar'
   | 'waitlist-email'
-  | 'youtube';
+  | 'youtube'
+  | 'threads-follower-count';
 
 export interface EditFormProps<T> {
   initialValues: T;

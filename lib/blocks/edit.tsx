@@ -11,10 +11,10 @@ import { EditForm as MapForm } from './map/form';
 import { EditForm as SpotifyEmbedForm } from './spotify-embed/form';
 import { EditForm as SpotifyPlayingNowForm } from './spotify-playing-now/form';
 import { EditForm as StackForm } from './stack/form';
+import { EditForm as ThreadsFollowerCountForm } from './threads-follower-count/form';
 import { Blocks } from './types';
 import { EditForm as WaitlistEmailForm } from './waitlist-email/form';
 import { EditForm as YouTubeForm } from './youtube/form';
-
 export const editForms: Record<Blocks, JSXElementConstructor<any>> = {
   'link-box': LinkBoxForm,
   stack: StackForm,
@@ -29,4 +29,5 @@ export const editForms: Record<Blocks, JSXElementConstructor<any>> = {
   'spotify-embed': SpotifyEmbedForm,
   'waitlist-email': WaitlistEmailForm,
   youtube: YouTubeForm,
+  'threads-follower-count': ThreadsFollowerCountForm,
 };

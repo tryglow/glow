@@ -2,6 +2,7 @@ import { Content } from '@/lib/blocks/content/ui';
 import { Header } from '@/lib/blocks/header/ui-client';
 import { Stack } from '@/lib/blocks/stack/ui';
 
+import { ThreadsFollowerCount } from '@/lib/blocks/threads-follower-count/ui-client';
 import { YouTube } from '@/lib/blocks/youtube/ui';
 import { GitHubCommitsThisMonth } from './github-commits-this-month/ui-client';
 import { Image } from './image/ui';
@@ -82,5 +83,7 @@ export function renderBlock(block: any, pageId: string, isEditMode: boolean) {
       return <WaitlistEmail {...sharedProps} />;
     case 'youtube':
       return <YouTube {...sharedProps} />;
+    case 'threads-follower-count':
+      return <ThreadsFollowerCount {...sharedProps} />;
   }
 }

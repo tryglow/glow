@@ -22,6 +22,7 @@ const blocks: Blocks[] = [
   'spotify-embed',
   'waitlist-email',
   'youtube',
+  'threads-follower-count',
 ];
 
 export function SidebarBlocks() {
