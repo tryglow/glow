@@ -1,17 +1,14 @@
 'use client';
 
-import { signIn } from 'next-auth/react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 import { FormEvent, useState } from 'react';
 
+import { signInWithCredentials } from '@/app/lib/auth-actions';
 import { Button } from '@/components/ui/button';
-import { captureException } from '@sentry/nextjs';
 
 export default function TestUserPrivateLogin() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const router = useRouter();
 
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
@@ -20,17 +17,7 @@ export default function TestUserPrivateLogin() {
       alert('Please enter your email and password');
     }
 
-    const result = await signIn('credentials', {
-      redirect: false, // Prevents redirecting to the home page after login
-      email,
-      password,
-    });
-
-    if (result?.error) {
-      captureException(result.error);
-    } else {
-      router.push('/fb_test_page');
-    }
+    await signInWithCredentials(email, password);
   };
   return (
     <div className="w-full h-full min-h-screen flex flex-col items-center justify-center">

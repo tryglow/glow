@@ -53,6 +53,7 @@ export const { auth, signIn, signOut, handlers, unstable_update } = NextAuth({
      * provide test users for the review process.
      */
     CredentialsProvider({
+      id: 'credentials',
       name: 'Credentials',
       credentials: {
         email: { label: 'Email', type: 'email', placeholder: 'testuser' },
@@ -97,7 +98,7 @@ export const { auth, signIn, signOut, handlers, unstable_update } = NextAuth({
     jwt: async (params) => {
       const { user, token, trigger, session } = params;
 
-      if (trigger === 'signUp' && user.id) {
+      if (trigger === 'signUp' && user?.id) {
         // Show the tour
         token.features = { showGlowTour: true };
 
@@ -142,7 +143,7 @@ export const { auth, signIn, signOut, handlers, unstable_update } = NextAuth({
           where: {
             members: {
               some: {
-                userId: user.id,
+                userId: token.uid,
               },
             },
           },
