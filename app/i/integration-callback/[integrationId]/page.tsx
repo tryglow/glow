@@ -6,10 +6,12 @@ const integrations: Record<string, string> = {
   spotify: 'Spotify',
   instagram: 'Instagram',
   threads: 'Threads',
+  tiktok: 'TikTok',
 };
 
 export default function IntegrationSuccessPage() {
   const params = useParams();
+
   const { integrationId } = params;
 
   const integrationName = integrations[integrationId as string];

@@ -157,6 +157,24 @@ export const config: Record<
       h: 6,
     },
   },
+  'tiktok-follower-count': {
+    title: 'TikTok Follower Count',
+    label: 'The number of followers on your TikTok account',
+    icon: blockThreadsFollowerCountIcon,
+    drag: {
+      w: 6,
+      h: 6,
+    },
+  },
+  'tiktok-latest-post': {
+    title: 'TikTok Latest Post',
+    label: 'The latest post from your connected TikTok account',
+    icon: blockThreadsFollowerCountIcon,
+    drag: {
+      w: 6,
+      h: 6,
+    },
+  },
 };
 
 interface Props {

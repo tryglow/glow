@@ -25,6 +25,8 @@ import {
 import { defaults as spotifyPlayingNowDefaults } from './spotify-playing-now/config';
 import { StackSchema, defaults as stackDefaults } from './stack/config';
 import { defaults as threadsFollowerCountDefaults } from './threads-follower-count/config';
+import { defaults as tiktokFollowerCountDefaults } from './tiktok-follower-count/config';
+import { defaults as tiktokLatestPostDefaults } from './tiktok-latest-post/config';
 import { Blocks } from './types';
 import {
   WaitlistEmailBlockSchema,
@@ -93,6 +95,16 @@ export const blocksConfig: Record<
   },
   'threads-follower-count': {
     defaults: threadsFollowerCountDefaults,
+    schema: null,
+    isBeta: true,
+  },
+  'tiktok-follower-count': {
+    defaults: tiktokFollowerCountDefaults,
+    schema: null,
+    isBeta: true,
+  },
+  'tiktok-latest-post': {
+    defaults: tiktokLatestPostDefaults,
     schema: null,
     isBeta: true,
   },

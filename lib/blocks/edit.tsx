@@ -12,6 +12,8 @@ import { EditForm as SpotifyEmbedForm } from './spotify-embed/form';
 import { EditForm as SpotifyPlayingNowForm } from './spotify-playing-now/form';
 import { EditForm as StackForm } from './stack/form';
 import { EditForm as ThreadsFollowerCountForm } from './threads-follower-count/form';
+import { EditForm as TikTokFollowerCountForm } from './tiktok-follower-count/form';
+import { EditForm as TikTokLatestPostForm } from './tiktok-latest-post/form';
 import { Blocks } from './types';
 import { EditForm as WaitlistEmailForm } from './waitlist-email/form';
 import { EditForm as YouTubeForm } from './youtube/form';
@@ -30,4 +32,6 @@ export const editForms: Record<Blocks, JSXElementConstructor<any>> = {
   'waitlist-email': WaitlistEmailForm,
   youtube: YouTubeForm,
   'threads-follower-count': ThreadsFollowerCountForm,
+  'tiktok-follower-count': TikTokFollowerCountForm,
+  'tiktok-latest-post': TikTokLatestPostForm,
 };

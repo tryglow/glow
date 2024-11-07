@@ -12,7 +12,9 @@ export type Blocks =
   | 'link-bar'
   | 'waitlist-email'
   | 'youtube'
-  | 'threads-follower-count';
+  | 'threads-follower-count'
+  | 'tiktok-follower-count'
+  | 'tiktok-latest-post';
 
 export interface EditFormProps<T> {
   initialValues: T;

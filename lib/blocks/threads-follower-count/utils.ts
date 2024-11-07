@@ -1,6 +1,6 @@
 'use server';
 
-import { refreshLongLivedToken } from '@/app/api/services/instagram/callback/utils';
+import { refreshLongLivedToken } from '@/app/api/services/threads/callback/utils';
 
 import prisma from '@/lib/prisma';
 
