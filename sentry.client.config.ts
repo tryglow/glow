@@ -1,11 +1,17 @@
 import * as Sentry from '@sentry/nextjs';
 
-Sentry.init({
-  dsn: 'https://7692c634bc39f7547219a818a58e7c58@o29305.ingest.us.sentry.io/4508239475703808',
-  integrations: [Sentry.replayIntegration()],
+const SENTRY_DSN = process.env.NEXT_PUBLIC_SENTRY_DSN;
 
-  tracesSampleRate: 1.0,
+if (SENTRY_DSN) {
+  Sentry.init({
+    dsn: SENTRY_DSN,
+    integrations: [Sentry.replayIntegration()],
 
-  replaysSessionSampleRate: 0.1,
-  replaysOnErrorSampleRate: 1.0,
-});
+    tracesSampleRate: 1.0,
+
+    replaysSessionSampleRate: 0.1,
+    replaysOnErrorSampleRate: 1.0,
+  });
+} else {
+  console.warn(' ○ Running Glow without Sentry');
+}
