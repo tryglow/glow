@@ -140,6 +140,8 @@ model Integration {
   config          Json
   encryptedConfig String?
   deletedAt       DateTime?
+
+  @@index([type])
 }
 
 model Theme {
