@@ -12,6 +12,8 @@ export async function getPageLayout({
 }) {
   const session = await auth();
 
+  const tag = slug ? slug : domain?.replace('.', '-');
+
   const page = await prisma.page.findUnique({
     where: {
       deletedAt: null,
@@ -20,7 +22,7 @@ export async function getPageLayout({
     },
     cacheStrategy: {
       swr: session ? 0 : 120,
-      tags: [`page-${slug || domain}--layout`],
+      tags: [`page_${tag}__layout`],
     },
   });
 

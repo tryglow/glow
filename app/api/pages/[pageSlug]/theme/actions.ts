@@ -10,6 +10,8 @@ export async function getPageTheme({
 }) {
   const session = await auth();
 
+  const tag = slug ? slug : domain?.replace('.', '-');
+
   const page = await prisma.page.findUnique({
     where: {
       deletedAt: null,
@@ -24,7 +26,7 @@ export async function getPageTheme({
     },
     cacheStrategy: {
       swr: session ? 0 : 120,
-      tags: [`page-${slug || domain}--theme`],
+      tags: [`page_${tag}__theme`],
     },
   });
 
