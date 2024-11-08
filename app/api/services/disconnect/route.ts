@@ -35,6 +35,9 @@ export async function POST(request: Request) {
         },
       },
     },
+    select: {
+      type: true,
+    },
   });
 
   if (!integration) {

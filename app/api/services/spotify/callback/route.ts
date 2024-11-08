@@ -4,7 +4,7 @@ import { auth } from '@/app/lib/auth';
 import { SpotifyIntegrationConfig } from '@/lib/blocks/spotify-playing-now/config';
 import prisma from '@/lib/prisma';
 
-import { encrypt } from '@/lib/encrypt';
+import { decrypt, encrypt } from '@/lib/encrypt';
 import { captureException } from '@sentry/nextjs';
 import { requestToken } from './utils';
 
@@ -38,14 +38,25 @@ export async function GET(request: Request) {
         deletedAt: null,
         type: 'spotify',
       },
+      select: {
+        id: true,
+        encryptedConfig: true,
+      },
     });
+
+    let existingConfigDecrypted: SpotifyIntegrationConfig | null = null;
+
+    if (existingIntegration?.encryptedConfig) {
+      existingConfigDecrypted = await decrypt(
+        existingIntegration.encryptedConfig
+      );
+    }
 
     const encryptedConfig = await encrypt({
       accessToken: json.access_token,
       refreshToken: json.refresh_token
         ? json.refresh_token
-        : (existingIntegration?.config as unknown as SpotifyIntegrationConfig)
-            ?.refreshToken,
+        : existingConfigDecrypted?.refreshToken,
     });
 
     const newData = {
@@ -60,6 +71,7 @@ export async function GET(request: Request) {
 
     if (existingIntegration) {
       console.info('Updating Spotify integration', existingIntegration.id);
+
       await prisma.integration.update({
         where: {
           id: existingIntegration.id,

@@ -131,12 +131,9 @@ export const fetchData = async (pageId: string) => {
           },
         },
       },
-      include: {
-        user: {
-          select: {
-            pages: true,
-          },
-        },
+      select: {
+        id: true,
+        encryptedConfig: true,
       },
     });
 
