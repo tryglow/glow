@@ -155,7 +155,7 @@ export function CreatePageForm({ onCancel }: Props) {
 
             <DialogFooter>
               {onCancel && (
-                <Button variant="secondary" onClick={onCancel}>
+                <Button type="button" variant="secondary" onClick={onCancel}>
                   ← Cancel
                 </Button>
               )}
