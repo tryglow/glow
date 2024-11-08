@@ -22,7 +22,6 @@ async function main() {
         const integrations = await tx.integration.findMany({
           where: {
             deletedAt: null,
-            teamId: team.id,
           },
         });
 
@@ -92,7 +91,7 @@ async function main() {
     },
     {
       maxWait: 20000, // 10 seconds max wait to connect to prisma
-      timeout: 300000, // 5 minutes
+      timeout: 15000, // 15 seconds
       isolationLevel: Prisma.TransactionIsolationLevel.Serializable,
     }
   );
