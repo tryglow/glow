@@ -9,7 +9,9 @@ import { BlockProps } from '../ui';
 import { LinkBoxBlockConfig } from './config';
 
 export function LinkBox(props: BlockProps) {
-  const { data } = useSWR<LinkBoxBlockConfig>(`/api/blocks/${props.blockId}`);
+  const { data } = useSWR<{ data: LinkBoxBlockConfig }>(
+    `/api/blocks/${props.blockId}`
+  );
 
   return (
     <CoreBlock
@@ -20,7 +22,7 @@ export function LinkBox(props: BlockProps) {
         props.isEditable
           ? {}
           : {
-              href: data?.link ?? '',
+              href: data?.data?.link ?? '',
               target: '_blank',
               rel: 'noopener noreferrer',
             }
@@ -28,14 +30,18 @@ export function LinkBox(props: BlockProps) {
     >
       <div className="flex flex-row gap-4 items-center">
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={data?.icon?.src} className="w-10 h-10 rounded-md" alt="" />
+        <img
+          src={data?.data?.icon?.src}
+          className="w-10 h-10 rounded-md"
+          alt=""
+        />
         <div className="flex flex-col">
           <span className="font-semibold text-base text-sys-label-primary">
-            {data?.title}
+            {data?.data?.title}
           </span>
-          {data?.label && (
+          {data?.data?.label && (
             <span className="text-sys-label-secondary text-xs">
-              {data?.label}
+              {data?.data?.label}
             </span>
           )}
         </div>

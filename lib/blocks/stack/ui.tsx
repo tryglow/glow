@@ -9,19 +9,21 @@ import { BlockProps } from '../ui';
 import { StackBlockConfig } from './config';
 
 export const Stack: FunctionComponent<BlockProps> = (props) => {
-  const { data } = useSWR<StackBlockConfig>(`/api/blocks/${props.blockId}`);
+  const { data } = useSWR<{ data: StackBlockConfig }>(
+    `/api/blocks/${props.blockId}`
+  );
 
   if (!data) return null;
 
   return (
     <CoreBlock {...props}>
       <h2 className="text-2xl font-medium text-sys-label-primary">
-        {data?.title}
+        {data?.data?.title}
       </h2>
-      <p className="text-md text-sys-label-secondary">{data?.label}</p>
+      <p className="text-md text-sys-label-secondary">{data?.data?.label}</p>
 
       <div className="flex flex-col gap-6 mt-6">
-        {data?.items?.map((item) => {
+        {data?.data?.items?.map((item) => {
           const Component = item.link && !props.isEditable ? 'a' : 'div';
           return (
             <Component

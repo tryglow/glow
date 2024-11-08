@@ -19,16 +19,18 @@ const DynamicMapboxMap = dynamic<DynamicMapboxMapProps>(
 );
 
 export function Map(props: BlockProps) {
-  const { data } = useSWR<MapBlockConfig>(`/api/blocks/${props.blockId}`);
+  const { data } = useSWR<{ data: MapBlockConfig }>(
+    `/api/blocks/${props.blockId}`
+  );
 
-  if (!data?.coords) return null;
+  if (!data?.data?.coords) return null;
 
   return (
     <CoreBlock className="relative !p-0 overflow-hidden" {...props}>
       <DynamicMapboxMap
         className="absolute w-full h-full object-cover"
-        coords={data?.coords}
-        mapTheme={data?.mapTheme}
+        coords={data?.data?.coords}
+        mapTheme={data?.data?.mapTheme}
       />
     </CoreBlock>
   );
