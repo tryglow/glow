@@ -1,7 +1,18 @@
+import 'server-only';
+
 import { PrismaClient } from '@prisma/client';
+import { withAccelerate } from '@prisma/extension-accelerate';
+import { withOptimize } from '@prisma/extension-optimize';
 
 const prismaClientSingleton = () => {
-  return new PrismaClient();
+  if (!process.env.PRISMA_OPTIMIZE_API_KEY) {
+    console.warn('Prisma Optimize is not enabled');
+    return new PrismaClient().$extends(withAccelerate());
+  }
+
+  return new PrismaClient()
+    .$extends(withOptimize({ apiKey: process.env.PRISMA_OPTIMIZE_API_KEY }))
+    .$extends(withAccelerate());
 };
 
 type PrismaClientSingleton = ReturnType<typeof prismaClientSingleton>;
