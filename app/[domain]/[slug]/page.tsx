@@ -27,6 +27,7 @@ const getPageData = async ({
   const user = session?.user;
 
   const tag = slug ? slug : domain?.replace('.', '-').replace('-', '_');
+
   const page = await prisma.page.findUnique({
     where: {
       deletedAt: null,
@@ -37,10 +38,12 @@ const getPageData = async ({
       blocks: true,
       user: !!user,
     },
-    cacheStrategy: {
-      swr: session ? 0 : 120,
-      tags: [`page_${tag}__data`],
-    },
+    cacheStrategy: session
+      ? {
+          swr: 120,
+          tags: [`page_${tag}__data`],
+        }
+      : undefined,
   });
 
   return page;
