@@ -22,6 +22,7 @@ async function main() {
         const integrations = await tx.integration.findMany({
           where: {
             deletedAt: null,
+            teamId: team.id,
           },
         });
 
