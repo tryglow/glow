@@ -38,12 +38,6 @@ const getPageData = async ({
       blocks: true,
       user: !!user,
     },
-    cacheStrategy: session
-      ? {
-          swr: 120,
-          tags: [`page_${tag}__data`],
-        }
-      : undefined,
   });
 
   return page;

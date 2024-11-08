@@ -20,12 +20,6 @@ export async function getPageLayout({
       slug,
       customDomain: domain ? decodeURIComponent(domain) : undefined,
     },
-    cacheStrategy: session
-      ? {
-          swr: 120,
-          tags: [`page_${tag}__layout`],
-        }
-      : undefined,
   });
 
   if (!page) {
