@@ -69,7 +69,11 @@ export function EditForm({
         </span>
 
         <Button asChild className="mt-4">
-          <Link href="/api/services/tiktok" prefetch={false} target="_blank">
+          <Link
+            href={`/api/services/tiktok?blockId=${blockId}`}
+            prefetch={false}
+            target="_blank"
+          >
             Connect TikTok
           </Link>
         </Button>

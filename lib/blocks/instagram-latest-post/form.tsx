@@ -140,7 +140,11 @@ export function EditForm({
         </span>
 
         <Button asChild className="mt-4">
-          <Link href="/api/services/instagram" prefetch={false} target="_blank">
+          <Link
+            href={`/api/services/instagram?blockId=${blockId}`}
+            prefetch={false}
+            target="_blank"
+          >
             Connect Instagram
           </Link>
         </Button>
