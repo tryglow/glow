@@ -100,31 +100,29 @@ const fetchInstagramData = async (
 };
 
 export const fetchData = async ({
-  pageId,
+  blockId,
   numberOfPosts = 1,
 }: {
-  pageId: string;
+  blockId: string;
   numberOfPosts: number;
 }) => {
   try {
-    const instagramIntegration = await prisma.integration.findFirst({
-      where: {
-        type: 'instagram',
-        team: {
-          pages: {
-            some: {
-              id: pageId,
-            },
+    const block = await prisma.block.findUnique({
+      where: { id: blockId },
+      select: {
+        integration: {
+          where: {
+            type: 'instagram',
+          },
+          select: {
+            id: true,
+            encryptedConfig: true,
           },
         },
       },
-      select: {
-        id: true,
-        encryptedConfig: true,
-      },
     });
 
-    if (!instagramIntegration || !instagramIntegration.encryptedConfig) {
+    if (!block?.integration || !block.integration.encryptedConfig) {
       return null;
     }
 
@@ -132,7 +130,7 @@ export const fetchData = async ({
 
     try {
       decryptedConfig = await decrypt<InstagramIntegrationConfig>(
-        instagramIntegration.encryptedConfig
+        block.integration.encryptedConfig
       );
     } catch (error) {
       captureException(error);
@@ -142,7 +140,7 @@ export const fetchData = async ({
     if (!decryptedConfig.accessToken) {
       captureException(
         new Error(
-          `Instagram accessToken or refreshToken doesn't exist: Integration ID: ${instagramIntegration.id}`
+          `Instagram accessToken or refreshToken doesn't exist: Integration ID: ${block.integration.id}`
         )
       );
 
@@ -152,7 +150,7 @@ export const fetchData = async ({
     const instagramData = await fetchInstagramData(
       decryptedConfig,
       false,
-      instagramIntegration.id,
+      block.integration.id,
       numberOfPosts
     );
 

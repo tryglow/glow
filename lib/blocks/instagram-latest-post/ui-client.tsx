@@ -10,12 +10,12 @@ import { InstagramLatestPostServerUI, InstagramLogo } from './ui-server';
 
 export const InstagramLatestPost: FunctionComponent<
   BlockProps & InstagramLatestPostBlockConfig
-> = ({ pageId, numberOfPosts, ...otherProps }) => {
+> = ({ blockId, numberOfPosts, ...otherProps }) => {
   return (
-    <CoreBlock pageId={pageId} {...otherProps} className="!p-0">
+    <CoreBlock blockId={blockId} {...otherProps} className="!p-0">
       <Suspense fallback={<LoadingState />}>
         <InstagramLatestPostServerUI
-          pageId={pageId}
+          blockId={blockId}
           numberOfPosts={numberOfPosts}
         />
       </Suspense>

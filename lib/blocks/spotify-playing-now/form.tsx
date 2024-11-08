@@ -1,8 +1,6 @@
 import Link from 'next/link';
 import { useState } from 'react';
-import useSWR, { useSWRConfig } from 'swr';
-
-import { InitialDataUsersIntegrations } from '@/app/[domain]/[slug]/page';
+import { useSWRConfig } from 'swr';
 
 import { Button } from '@/components/ui/button';
 import { toast } from '@/components/ui/use-toast';
@@ -23,20 +21,13 @@ const SpotifyLogo = () => {
   );
 };
 
-export function EditForm({}: EditFormProps<{}>) {
+export function EditForm({ integration, blockId }: EditFormProps<{}>) {
   const [showConfirmDisconnect, setShowConfirmDisconnect] = useState(false);
-  const { data: usersIntegrations } = useSWR<InitialDataUsersIntegrations>(
-    `/api/user/integrations`
-  );
 
   const { mutate } = useSWRConfig();
 
-  const spotifyIntegrations = usersIntegrations?.filter(
-    (integration) => integration.type === 'spotify'
-  );
-
   const handleDisconnect = async () => {
-    if (!spotifyIntegrations || spotifyIntegrations?.length === 0) {
+    if (!integration) {
       return;
     }
 
@@ -44,7 +35,7 @@ export function EditForm({}: EditFormProps<{}>) {
       const response = await fetch('/api/services/disconnect', {
         method: 'POST',
         body: JSON.stringify({
-          integrationId: spotifyIntegrations[0].id,
+          integrationId: integration.id,
         }),
       });
 
@@ -53,14 +44,14 @@ export function EditForm({}: EditFormProps<{}>) {
           title: 'Integration disconnected',
         });
 
-        mutate('/api/user/integrations');
+        mutate(`/api/blocks/${blockId}`);
       }
     } catch (error) {
       captureException(error);
     }
   };
 
-  if (!spotifyIntegrations || spotifyIntegrations?.length === 0) {
+  if (!integration) {
     return (
       <div className="bg-stone-100 rounded-md flex flex-col items-center text-center px-4 py-8">
         <div className="bg-stone-200 rounded-md w-14 h-14 flex items-center justify-center">
@@ -75,15 +66,17 @@ export function EditForm({}: EditFormProps<{}>) {
         </span>
 
         <Button asChild className="mt-4">
-          <Link href="/api/services/spotify" prefetch={false} target="_blank">
+          <Link
+            href={`/api/services/spotify?blockId=${blockId}`}
+            prefetch={false}
+            target="_blank"
+          >
             Connect Spotify
           </Link>
         </Button>
       </div>
     );
   }
-
-  const connectedSince = spotifyIntegrations[0].createdAt;
 
   return (
     <div className="bg-stone-100 rounded-md flex flex-col items-center text-center px-4 py-8">
@@ -93,7 +86,7 @@ export function EditForm({}: EditFormProps<{}>) {
       <span className="font-medium text-lg text-stone-800 mt-3">Connected</span>
       <span className="font-normal text-stone-600 mt-1">
         Your Spotify account was connected on{' '}
-        {new Date(connectedSince).toLocaleDateString()}
+        {new Date(integration.createdAt).toLocaleDateString()}
       </span>
 
       {!showConfirmDisconnect && (

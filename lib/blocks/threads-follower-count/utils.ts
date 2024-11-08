@@ -111,26 +111,26 @@ const fetchThreadsData = async (
   }
 };
 
-export const fetchData = async ({ pageId }: { pageId: string }) => {
+export const fetchData = async (blockId: string) => {
   try {
-    const threadsIntegration = await prisma.integration.findFirst({
-      where: {
-        type: 'threads',
-        team: {
-          pages: {
-            some: {
-              id: pageId,
-            },
+    const block = await prisma.block.findUnique({
+      where: { id: blockId },
+      select: {
+        integration: {
+          where: {
+            type: 'threads',
+          },
+          select: {
+            id: true,
+            encryptedConfig: true,
           },
         },
       },
-      select: {
-        id: true,
-        encryptedConfig: true,
-      },
     });
 
-    if (!threadsIntegration || !threadsIntegration.encryptedConfig) {
+    const integration = block?.integration;
+
+    if (!integration || !integration.encryptedConfig) {
       return null;
     }
 
@@ -138,7 +138,7 @@ export const fetchData = async ({ pageId }: { pageId: string }) => {
 
     try {
       decryptedConfig = await decrypt<ThreadsIntegrationConfig>(
-        threadsIntegration.encryptedConfig
+        integration.encryptedConfig
       );
     } catch (error) {
       captureException(error);
@@ -148,7 +148,7 @@ export const fetchData = async ({ pageId }: { pageId: string }) => {
     if (!decryptedConfig.accessToken) {
       captureException(
         new Error(
-          `Threads accessToken or refreshToken doesn't exist: Integration ID: ${threadsIntegration.id}`
+          `Threads accessToken or refreshToken doesn't exist: Integration ID: ${integration.id}`
         )
       );
 
@@ -158,7 +158,7 @@ export const fetchData = async ({ pageId }: { pageId: string }) => {
     const threadsData = await fetchThreadsData(
       decryptedConfig,
       false,
-      threadsIntegration.id
+      integration.id
     );
 
     return threadsData;

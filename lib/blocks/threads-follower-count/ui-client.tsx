@@ -10,11 +10,11 @@ import { ThreadsFollowerCountServerUI } from './ui-server';
 
 export const ThreadsFollowerCount: FunctionComponent<
   BlockProps & ThreadsFollowerCountBlockConfig
-> = ({ pageId, ...otherProps }) => {
+> = ({ pageId, blockId, ...otherProps }) => {
   return (
-    <CoreBlock pageId={pageId} {...otherProps}>
+    <CoreBlock pageId={pageId} blockId={blockId} {...otherProps}>
       <Suspense fallback={<LoadingState />}>
-        <ThreadsFollowerCountServerUI pageId={pageId} />
+        <ThreadsFollowerCountServerUI blockId={blockId} />
       </Suspense>
     </CoreBlock>
   );

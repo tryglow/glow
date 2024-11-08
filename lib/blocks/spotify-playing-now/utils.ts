@@ -86,6 +86,7 @@ const fetchSpotifyData = async (
   // Return currently playing track if available
   if (fetchPlayingNowRequest && fetchPlayingNowRequest?.status === 200) {
     const data = await fetchPlayingNowRequest.json();
+
     return {
       artistName: data?.item?.artists[0]?.name,
       name: data?.item?.name,
@@ -117,27 +118,26 @@ const fetchSpotifyData = async (
   return null;
 };
 
-export const fetchData = async (pageId: string) => {
+export const fetchData = async (blockId: string) => {
   try {
-    const data = await prisma.integration.findFirst({
-      where: {
-        type: 'spotify',
-        deletedAt: null,
-        team: {
-          pages: {
-            some: {
-              id: pageId,
-            },
+    const block = await prisma.block.findUnique({
+      where: { id: blockId },
+      select: {
+        integration: {
+          where: {
+            type: 'spotify',
+          },
+          select: {
+            id: true,
+            encryptedConfig: true,
           },
         },
       },
-      select: {
-        id: true,
-        encryptedConfig: true,
-      },
     });
 
-    if (!data || !data.encryptedConfig) {
+    const integration = block?.integration;
+
+    if (!integration || !integration.encryptedConfig) {
       console.info('No integration found for current page');
       return {
         noIntegration: true,
@@ -146,7 +146,7 @@ export const fetchData = async (pageId: string) => {
     }
 
     const [decryptedConfigError, decryptedConfig] = await safeAwait(
-      decrypt<SpotifyIntegrationConfig>(data.encryptedConfig)
+      decrypt<SpotifyIntegrationConfig>(integration.encryptedConfig)
     );
 
     if (decryptedConfigError) {
@@ -159,7 +159,7 @@ export const fetchData = async (pageId: string) => {
 
     if (!decryptedConfig.accessToken) {
       captureMessage(
-        `Spotify accessToken or refreshToken doesn't exist: Integration ID: ${data.id}`
+        `Spotify accessToken or refreshToken doesn't exist: Integration ID: ${integration.id}`
       );
 
       return {
@@ -167,7 +167,11 @@ export const fetchData = async (pageId: string) => {
       };
     }
 
-    const spotifyData = await fetchSpotifyData(decryptedConfig, false, data.id);
+    const spotifyData = await fetchSpotifyData(
+      decryptedConfig,
+      false,
+      integration.id
+    );
 
     return {
       data: spotifyData,

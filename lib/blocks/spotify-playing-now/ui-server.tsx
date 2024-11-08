@@ -8,7 +8,7 @@ import styles from './styles.module.css';
 import { fetchData } from './utils';
 
 interface Props {
-  pageId: string;
+  blockId: string;
 }
 
 export const SpotifyLogo = () => {
@@ -30,9 +30,9 @@ export const SpotifyLogo = () => {
 };
 
 export const SpotifyPlayingNowServerUI: FunctionComponent<Props> = async ({
-  pageId,
+  blockId,
 }) => {
-  const res = await fetchData(pageId);
+  const res = await fetchData(blockId);
 
   if (res?.noIntegration) {
     return (

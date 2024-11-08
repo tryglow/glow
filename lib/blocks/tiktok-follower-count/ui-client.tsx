@@ -10,11 +10,16 @@ import { TikTokFollowerCountBlockConfig } from './config';
 
 export const TikTokFollowerCount: FunctionComponent<
   BlockProps & TikTokFollowerCountBlockConfig
-> = ({ pageId, ...otherProps }) => {
+> = ({ pageId, blockId, ...otherProps }) => {
   return (
-    <CoreBlock pageId={pageId} {...otherProps} className="@container">
+    <CoreBlock
+      pageId={pageId}
+      blockId={blockId}
+      {...otherProps}
+      className="@container"
+    >
       <Suspense fallback={<LoadingState />}>
-        <TikTokFollowerCountServerUI pageId={pageId} />
+        <TikTokFollowerCountServerUI blockId={blockId} />
       </Suspense>
     </CoreBlock>
   );

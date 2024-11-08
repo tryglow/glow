@@ -18,9 +18,9 @@ export const TikTokLogo = ({ fill = '#fff' }) => {
 };
 
 export const TikTokFollowerCountServerUI: FunctionComponent<{
-  pageId: string;
-}> = async ({ pageId }) => {
-  const data = await fetchData({ pageId });
+  blockId: string;
+}> = async ({ blockId }) => {
+  const data = await fetchData(blockId);
 
   if (!data) {
     return (

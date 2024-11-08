@@ -1,8 +1,6 @@
 import Link from 'next/link';
 import { useState } from 'react';
-import useSWR, { useSWRConfig } from 'swr';
-
-import { InitialDataUsersIntegrations } from '@/app/[domain]/[slug]/page';
+import { useSWRConfig } from 'swr';
 
 import { InstagramLatestPostBlockConfig } from '@/lib/blocks/instagram-latest-post/config';
 import { EditFormProps } from '@/lib/blocks/types';
@@ -19,20 +17,15 @@ const ThreadsLogo = () => {
   );
 };
 
-export function EditForm({}: EditFormProps<InstagramLatestPostBlockConfig>) {
+export function EditForm({
+  integration,
+  blockId,
+}: EditFormProps<InstagramLatestPostBlockConfig>) {
   const [showConfirmDisconnect, setShowConfirmDisconnect] = useState(false);
-  const { data: usersIntegrations } = useSWR<InitialDataUsersIntegrations>(
-    '/api/user/integrations'
-  );
-
   const { mutate } = useSWRConfig();
 
-  const threadsIntegrations = usersIntegrations?.filter(
-    (integration) => integration.type === 'threads'
-  );
-
   const handleDisconnect = async () => {
-    if (!threadsIntegrations || threadsIntegrations?.length === 0) {
+    if (!integration) {
       return;
     }
 
@@ -40,7 +33,7 @@ export function EditForm({}: EditFormProps<InstagramLatestPostBlockConfig>) {
       const response = await fetch('/api/services/disconnect', {
         method: 'POST',
         body: JSON.stringify({
-          integrationId: threadsIntegrations[0].id,
+          integrationId: integration.id,
         }),
       });
 
@@ -49,7 +42,7 @@ export function EditForm({}: EditFormProps<InstagramLatestPostBlockConfig>) {
           title: 'Integration disconnected',
         });
 
-        mutate('/api/user/integrations');
+        mutate(`/api/blocks/${blockId}`);
       }
     } catch (error) {
       captureException(error);
@@ -60,7 +53,7 @@ export function EditForm({}: EditFormProps<InstagramLatestPostBlockConfig>) {
     }
   };
 
-  if (!threadsIntegrations || threadsIntegrations?.length === 0) {
+  if (!integration) {
     return (
       <div className="bg-stone-100 rounded-md flex flex-col items-center text-center px-4 py-8">
         <div className="bg-stone-200 rounded-md w-14 h-14 flex items-center justify-center">
@@ -75,15 +68,17 @@ export function EditForm({}: EditFormProps<InstagramLatestPostBlockConfig>) {
         </span>
 
         <Button asChild className="mt-4">
-          <Link href="/api/services/threads" prefetch={false} target="_blank">
+          <Link
+            href={`/api/services/threads?blockId=${blockId}`}
+            prefetch={false}
+            target="_blank"
+          >
             Connect Threads
           </Link>
         </Button>
       </div>
     );
   }
-
-  const connectedSince = threadsIntegrations[0].createdAt;
 
   return (
     <>
@@ -96,7 +91,7 @@ export function EditForm({}: EditFormProps<InstagramLatestPostBlockConfig>) {
         </span>
         <span className="font-normal text-stone-600 mt-1">
           Your Threads account was connected on{' '}
-          {new Date(connectedSince).toLocaleDateString()}
+          {new Date(integration.createdAt).toLocaleDateString()}
         </span>
 
         {!showConfirmDisconnect && (

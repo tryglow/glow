@@ -24,10 +24,10 @@ export const InstagramLogo = ({ stroke = '#fff' }) => {
 };
 
 export const InstagramLatestPostServerUI: FunctionComponent<{
-  pageId: string;
+  blockId: string;
   numberOfPosts: number;
-}> = async ({ pageId, numberOfPosts }) => {
-  const data = await fetchData({ pageId, numberOfPosts });
+}> = async ({ blockId, numberOfPosts }) => {
+  const data = await fetchData({ blockId, numberOfPosts });
 
   if (!data) {
     return (

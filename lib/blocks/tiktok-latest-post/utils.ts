@@ -104,26 +104,24 @@ const fetchTikTokData = async (
   }
 };
 
-export const fetchData = async ({ pageId }: { pageId: string }) => {
+export const fetchData = async (blockId: string) => {
   try {
-    const tikTokIntegration = await prisma.integration.findFirst({
-      where: {
-        type: 'tiktok',
-        team: {
-          pages: {
-            some: {
-              id: pageId,
-            },
+    const block = await prisma.block.findUnique({
+      where: { id: blockId },
+      select: {
+        integration: {
+          where: {
+            type: 'tiktok',
+          },
+          select: {
+            id: true,
+            encryptedConfig: true,
           },
         },
       },
-      select: {
-        id: true,
-        encryptedConfig: true,
-      },
     });
 
-    if (!tikTokIntegration || !tikTokIntegration.encryptedConfig) {
+    if (!block?.integration || !block.integration.encryptedConfig) {
       return null;
     }
 
@@ -131,7 +129,7 @@ export const fetchData = async ({ pageId }: { pageId: string }) => {
 
     try {
       decryptedConfig = await decrypt<TikTokIntegrationConfig>(
-        tikTokIntegration.encryptedConfig
+        block.integration.encryptedConfig
       );
     } catch (error) {
       captureException(error);
@@ -141,7 +139,7 @@ export const fetchData = async ({ pageId }: { pageId: string }) => {
     if (!decryptedConfig.accessToken) {
       captureException(
         new Error(
-          `TikTok accessToken or refreshToken doesn't exist: Integration ID: ${tikTokIntegration.id}`
+          `TikTok accessToken or refreshToken doesn't exist: Integration ID: ${block.integration.id}`
         )
       );
 
@@ -151,7 +149,7 @@ export const fetchData = async ({ pageId }: { pageId: string }) => {
     const tikTokData = await fetchTikTokData(
       decryptedConfig,
       false,
-      tikTokIntegration.id
+      block.integration.id
     );
 
     return tikTokData;

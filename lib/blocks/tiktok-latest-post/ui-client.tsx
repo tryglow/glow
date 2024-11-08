@@ -10,11 +10,11 @@ import { TikTokLatestPostServerUI } from './ui-server';
 
 export const TikTokLatestPost: FunctionComponent<
   BlockProps & TikTokLatestPostBlockConfig
-> = ({ pageId, ...otherProps }) => {
+> = ({ pageId, blockId, ...otherProps }) => {
   return (
-    <CoreBlock pageId={pageId} {...otherProps} isFrameless>
+    <CoreBlock pageId={pageId} blockId={blockId} {...otherProps} isFrameless>
       <Suspense fallback={<LoadingState />}>
-        <TikTokLatestPostServerUI pageId={pageId} />
+        <TikTokLatestPostServerUI blockId={blockId} />
       </Suspense>
     </CoreBlock>
   );

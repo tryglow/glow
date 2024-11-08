@@ -9,16 +9,18 @@ import { SpotifyLogo, SpotifyPlayingNowServerUI } from './ui-server';
 
 export const SpotifyPlayingNow: FunctionComponent<BlockProps> = ({
   pageId,
+  blockId,
   ...otherProps
 }) => {
   return (
     <CoreBlock
       pageId={pageId}
+      blockId={blockId}
       className="bg-gradient-to-tr from-[#0A0B0D] to-[#402650]"
       {...otherProps}
     >
       <Suspense fallback={<LoadingState />}>
-        <SpotifyPlayingNowServerUI pageId={pageId} />
+        <SpotifyPlayingNowServerUI blockId={blockId} />
       </Suspense>
     </CoreBlock>
   );

@@ -2,9 +2,8 @@ import { Form, Formik, FormikHelpers } from 'formik';
 import { Loader2 } from 'lucide-react';
 import Link from 'next/link';
 import { useState } from 'react';
-import useSWR, { useSWRConfig } from 'swr';
+import { useSWRConfig } from 'swr';
 
-import { InitialDataUsersIntegrations } from '@/app/[domain]/[slug]/page';
 import { FormField } from '@/components/FormField';
 
 import {
@@ -82,21 +81,15 @@ export function EditForm({
   initialValues,
   onSave,
   onClose,
+  integration,
   blockId,
 }: EditFormProps<InstagramLatestPostBlockConfig>) {
   const [showConfirmDisconnect, setShowConfirmDisconnect] = useState(false);
-  const { data: usersIntegrations } = useSWR<InitialDataUsersIntegrations>(
-    '/api/user/integrations'
-  );
 
   const { mutate } = useSWRConfig();
 
-  const instagramIntegrations = usersIntegrations?.filter(
-    (integration) => integration.type === 'instagram'
-  );
-
   const handleDisconnect = async () => {
-    if (!instagramIntegrations || instagramIntegrations?.length === 0) {
+    if (!integration) {
       return;
     }
 
@@ -104,7 +97,7 @@ export function EditForm({
       const response = await fetch('/api/services/disconnect', {
         method: 'POST',
         body: JSON.stringify({
-          integrationId: instagramIntegrations[0].id,
+          integrationId: integration.id,
         }),
       });
 
@@ -113,7 +106,7 @@ export function EditForm({
           title: 'Integration disconnected',
         });
 
-        mutate('/api/user/integrations');
+        mutate(`/api/blocks/${blockId}`);
       }
     } catch (error) {
       captureException(error);
@@ -132,7 +125,7 @@ export function EditForm({
     onSave(values);
   };
 
-  if (!instagramIntegrations || instagramIntegrations?.length === 0) {
+  if (!integration) {
     return (
       <div className="bg-stone-100 rounded-md flex flex-col items-center text-center px-4 py-8">
         <div className="bg-stone-200 rounded-md w-14 h-14 flex items-center justify-center">
@@ -155,8 +148,6 @@ export function EditForm({
     );
   }
 
-  const connectedSince = instagramIntegrations[0].createdAt;
-
   return (
     <>
       <div className="bg-stone-100 rounded-md flex flex-col items-center text-center px-4 py-8">
@@ -168,7 +159,7 @@ export function EditForm({
         </span>
         <span className="font-normal text-stone-600 mt-1">
           Your Instagram account was connected on{' '}
-          {new Date(connectedSince).toLocaleDateString()}
+          {new Date(integration.createdAt).toLocaleDateString()}
         </span>
 
         {!showConfirmDisconnect && (

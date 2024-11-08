@@ -1,8 +1,6 @@
 import Link from 'next/link';
 import { useState } from 'react';
-import useSWR, { useSWRConfig } from 'swr';
-
-import { InitialDataUsersIntegrations } from '@/app/[domain]/[slug]/page';
+import { useSWRConfig } from 'swr';
 
 import { EditFormProps } from '@/lib/blocks/types';
 
@@ -19,20 +17,16 @@ const ThreadsLogo = () => {
   );
 };
 
-export function EditForm({}: EditFormProps<TikTokFollowerCountBlockConfig>) {
+export function EditForm({
+  integration,
+  blockId,
+}: EditFormProps<TikTokFollowerCountBlockConfig>) {
   const [showConfirmDisconnect, setShowConfirmDisconnect] = useState(false);
-  const { data: usersIntegrations } = useSWR<InitialDataUsersIntegrations>(
-    '/api/user/integrations'
-  );
 
   const { mutate } = useSWRConfig();
 
-  const tiktokIntegrations = usersIntegrations?.filter(
-    (integration) => integration.type === 'tiktok'
-  );
-
   const handleDisconnect = async () => {
-    if (!tiktokIntegrations || tiktokIntegrations?.length === 0) {
+    if (!integration) {
       return;
     }
 
@@ -40,7 +34,7 @@ export function EditForm({}: EditFormProps<TikTokFollowerCountBlockConfig>) {
       const response = await fetch('/api/services/disconnect', {
         method: 'POST',
         body: JSON.stringify({
-          integrationId: tiktokIntegrations[0].id,
+          integrationId: integration.id,
         }),
       });
 
@@ -49,7 +43,7 @@ export function EditForm({}: EditFormProps<TikTokFollowerCountBlockConfig>) {
           title: 'Integration disconnected',
         });
 
-        mutate('/api/user/integrations');
+        mutate(`/api/blocks/${blockId}`);
       }
     } catch (error) {
       captureException(error);
@@ -60,7 +54,7 @@ export function EditForm({}: EditFormProps<TikTokFollowerCountBlockConfig>) {
     }
   };
 
-  if (!tiktokIntegrations || tiktokIntegrations?.length === 0) {
+  if (!integration) {
     return (
       <div className="bg-stone-100 rounded-md flex flex-col items-center text-center px-4 py-8">
         <div className="bg-stone-200 rounded-md w-14 h-14 flex items-center justify-center">
@@ -83,8 +77,6 @@ export function EditForm({}: EditFormProps<TikTokFollowerCountBlockConfig>) {
     );
   }
 
-  const connectedSince = tiktokIntegrations[0].createdAt;
-
   return (
     <>
       <div className="bg-stone-100 rounded-md flex flex-col items-center text-center px-4 py-8">
@@ -96,7 +88,7 @@ export function EditForm({}: EditFormProps<TikTokFollowerCountBlockConfig>) {
         </span>
         <span className="font-normal text-stone-600 mt-1">
           Your TikTok account was connected on{' '}
-          {new Date(connectedSince).toLocaleDateString()}
+          {new Date(integration.createdAt).toLocaleDateString()}
         </span>
 
         {!showConfirmDisconnect && (
