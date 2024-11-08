@@ -12,13 +12,17 @@ export async function getPageLayout({
 }) {
   const session = await auth();
 
-  const tag = slug ? slug : domain?.replace('.', '-');
+  const tag = slug ? slug : domain?.replace('.', '-').replace('-', '_');
 
   const page = await prisma.page.findUnique({
     where: {
       deletedAt: null,
       slug,
       customDomain: domain ? decodeURIComponent(domain) : undefined,
+    },
+    cacheStrategy: {
+      swr: session ? 0 : 120,
+      tags: [`page_${tag}__layout`],
     },
   });
 
