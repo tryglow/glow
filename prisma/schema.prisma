@@ -118,14 +118,16 @@ model Page {
 }
 
 model Block {
-  id        String   @id @default(uuid())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  page      Page     @relation(fields: [pageId], references: [id])
-  pageId    String
-  type      String
-  config    Json
-  data      Json
+  id            String       @id @default(uuid())
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+  page          Page         @relation(fields: [pageId], references: [id])
+  pageId        String
+  type          String
+  config        Json
+  data          Json
+  integration   Integration? @relation(fields: [integrationId], references: [id])
+  integrationId String?
 }
 
 model Integration {
@@ -140,6 +142,7 @@ model Integration {
   config          Json
   encryptedConfig String?
   deletedAt       DateTime?
+  blocks          Block[]
 
   @@index([type])
 }
