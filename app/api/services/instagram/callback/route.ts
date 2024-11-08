@@ -3,7 +3,7 @@ import { NextResponse } from 'next/server';
 import { auth } from '@/app/lib/auth';
 import prisma from '@/lib/prisma';
 
-import { encrypt, isEncrypted } from '@/lib/encrypt';
+import { decrypt, encrypt, isEncrypted } from '@/lib/encrypt';
 import { captureException } from '@sentry/nextjs';
 import { requestLongLivedToken, requestToken } from './utils';
 
@@ -25,6 +25,8 @@ export async function GET(request: Request) {
   }
 
   const code = searchParams.get('code');
+
+  const state = searchParams.get('state');
 
   if (!code) {
     return Response.json({
@@ -58,7 +60,7 @@ export async function GET(request: Request) {
       });
     }
 
-    await prisma.integration.create({
+    const integration = await prisma.integration.create({
       data: {
         // To be cleaned up once userId is dropped from the integration table
         userId: session.user.id,
@@ -68,6 +70,20 @@ export async function GET(request: Request) {
         encryptedConfig,
       },
     });
+
+    // If the state is present, we need to update the block with the integration id
+    if (state) {
+      const decryptedState = await decrypt<{ blockId: string }>(state);
+
+      if (decryptedState?.blockId) {
+        const blockId = decryptedState.blockId;
+
+        await prisma.block.update({
+          where: { id: blockId },
+          data: { integrationId: integration.id },
+        });
+      }
+    }
 
     return NextResponse.redirect(
       `${process.env.NEXTAUTH_URL}/i/integration-callback/instagram`

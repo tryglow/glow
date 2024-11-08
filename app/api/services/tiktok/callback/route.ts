@@ -38,9 +38,11 @@ export async function GET(request: Request) {
 
   const state = searchParams.get('state');
 
-  const decryptedState = await decrypt(state ?? '');
+  const decryptedState = await decrypt<{ userId: string; blockId?: string }>(
+    state ?? ''
+  );
 
-  if (decryptedState !== session.user.id) {
+  if (decryptedState.userId !== session.user.id) {
     return Response.json({
       error: {
         message: 'Invalid state',
@@ -67,7 +69,7 @@ export async function GET(request: Request) {
       });
     }
 
-    await prisma.integration.create({
+    const integration = await prisma.integration.create({
       data: {
         // To be cleaned up once userId is dropped from the integration table
         userId: session.user.id,
@@ -77,6 +79,18 @@ export async function GET(request: Request) {
         encryptedConfig,
       },
     });
+
+    // If the state is present, we need to update the block with the integration id
+    if (state) {
+      if (decryptedState?.blockId) {
+        const blockId = decryptedState.blockId;
+
+        await prisma.block.update({
+          where: { id: blockId },
+          data: { integrationId: integration.id },
+        });
+      }
+    }
 
     return NextResponse.redirect(
       `${process.env.NEXTAUTH_URL}/i/integration-callback/tiktok`

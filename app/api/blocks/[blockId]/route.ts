@@ -1,7 +1,10 @@
 import { auth } from '@/app/lib/auth';
 import prisma from '@/lib/prisma';
 
-export async function GET(req: Request, props: { params: Promise<{ blockId: string }> }) {
+export async function GET(
+  req: Request,
+  props: { params: Promise<{ blockId: string }> }
+) {
   const params = await props.params;
   const session = await auth();
 
@@ -22,6 +25,13 @@ export async function GET(req: Request, props: { params: Promise<{ blockId: stri
         select: {
           publishedAt: true,
           teamId: true,
+        },
+      },
+      integration: {
+        select: {
+          id: true,
+          type: true,
+          createdAt: true,
         },
       },
     },
@@ -47,5 +57,8 @@ export async function GET(req: Request, props: { params: Promise<{ blockId: stri
     );
   }
 
-  return Response.json(block.data);
+  return Response.json({
+    data: block.data,
+    integration: block.integration,
+  });
 }

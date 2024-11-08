@@ -1,6 +1,12 @@
+import { encrypt } from '@/lib/encrypt';
 import { redirect } from 'next/navigation';
+import { NextRequest } from 'next/server';
 
-export async function GET() {
+export async function GET(request: NextRequest) {
+  const searchParams = request.nextUrl.searchParams;
+
+  const blockId = searchParams.get('blockId');
+
   if (!process.env.INSTAGRAM_CALLBACK_URL) {
     throw new Error('Missing INSTAGRAM_CALLBACK_URL');
   }
@@ -14,6 +20,9 @@ export async function GET() {
     redirect_uri: process.env.INSTAGRAM_CALLBACK_URL,
     scope: 'user_profile,user_media',
     response_type: 'code',
+    state: await encrypt({
+      blockId,
+    }),
   };
 
   const qs = new URLSearchParams(options).toString();

@@ -25,8 +25,6 @@ export function EditForm({
 
   const { mutate } = useSWRConfig();
 
-  console.log(integration);
-
   const handleDisconnect = async () => {
     if (!integration) {
       return;

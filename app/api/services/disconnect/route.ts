@@ -59,6 +59,15 @@ export async function POST(request: Request) {
     },
   });
 
+  await prisma.block.updateMany({
+    where: {
+      integrationId,
+    },
+    data: {
+      integrationId: null,
+    },
+  });
+
   await track('integrationDisconnected', {
     userId: session.user.id,
     integrationId: integrationId,

@@ -13,7 +13,7 @@ interface Props {
 }
 
 export function EditForm({ onClose, blockId, blockType }: Props) {
-  const { data: initialValues, mutate } = useSWR(`/api/blocks/${blockId}`);
+  const { data: blockData, mutate } = useSWR(`/api/blocks/${blockId}`);
 
   const onSave = async (values: any) => {
     try {
@@ -44,10 +44,11 @@ export function EditForm({ onClose, blockId, blockType }: Props) {
   return (
     <div className="max-h-[calc(100vh_-_90px)] overflow-y-auto">
       <CurrentEditForm
-        initialValues={initialValues}
+        initialValues={blockData.data}
         onSave={onSave}
         onClose={onClose}
         blockId={blockId}
+        integration={blockData.integration}
       />
     </div>
   );

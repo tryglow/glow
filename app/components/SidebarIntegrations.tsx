@@ -14,7 +14,7 @@ export function SidebarIntegrations() {
 
   return (
     <>
-      <SidebarContentHeader title="Integrations"></SidebarContentHeader>
+      <SidebarContentHeader title="Integrations" />
 
       <SidebarGroup>
         <SidebarGroupContent>
@@ -27,7 +27,7 @@ export function SidebarIntegrations() {
           ) : currentTeamIntegrations?.length ? (
             <div className="flex flex-col gap-2">
               {currentTeamIntegrations?.map((integration) => (
-                <div key={integration.id}>{integration.id}</div>
+                <div key={integration.id}>{integration.type}</div>
               ))}
             </div>
           ) : (

@@ -1,6 +1,7 @@
 import { auth } from '@/app/lib/auth';
 import { encrypt } from '@/lib/encrypt';
 import { redirect } from 'next/navigation';
+import { NextRequest } from 'next/server';
 
 const scopes = [
   'user.info.basic',
@@ -9,7 +10,11 @@ const scopes = [
   'video.list',
 ];
 
-export async function GET() {
+export async function GET(request: NextRequest) {
+  const searchParams = request.nextUrl.searchParams;
+
+  const blockId = searchParams.get('blockId');
+
   const session = await auth();
 
   if (!session) {
@@ -35,7 +40,10 @@ export async function GET() {
     response_type: 'code',
     // This is used to confirm the request has not been tampered with, when we
     // receive the callback.
-    state: await encrypt(session.user.id),
+    state: await encrypt({
+      userId: session.user.id,
+      blockId,
+    }),
   }).toString();
 
   url.search = qs;
