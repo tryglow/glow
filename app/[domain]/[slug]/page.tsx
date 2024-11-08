@@ -36,6 +36,10 @@ const getPageData = async ({
       blocks: true,
       user: !!user,
     },
+    cacheStrategy: {
+      swr: session ? 0 : 120,
+      tags: [`page-${slug || domain}-data`],
+    },
   });
 
   return page;
