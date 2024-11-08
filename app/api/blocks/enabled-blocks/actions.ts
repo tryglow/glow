@@ -37,5 +37,7 @@ export async function getEnabledBlocks() {
     }
   });
 
-  return enabledBlocks;
+  const filteredBlocks = enabledBlocks.filter((block) => block !== 'header');
+
+  return filteredBlocks;
 }
