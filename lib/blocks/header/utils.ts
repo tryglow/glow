@@ -9,6 +9,9 @@ export async function verifyVerificationStatus(pageId: string) {
         not: null,
       },
     },
+    select: {
+      id: true,
+    },
   });
 
   if (!page) {
