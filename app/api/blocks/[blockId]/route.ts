@@ -58,7 +58,7 @@ export async function GET(
   }
 
   return Response.json({
-    data: block.data,
+    blockData: block.data,
     integration: block.integration,
   });
 }

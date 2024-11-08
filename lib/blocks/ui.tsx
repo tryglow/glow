@@ -44,7 +44,7 @@ export function renderBlock(block: any, pageId: string, isEditMode: boolean) {
     case 'header':
       return <Header {...sharedProps} {...block.data} />;
     case 'content':
-      return <Content {...sharedProps} {...block.data} />;
+      return <Content {...sharedProps} />;
     case 'stack':
       return <Stack {...sharedProps} />;
     case 'image':

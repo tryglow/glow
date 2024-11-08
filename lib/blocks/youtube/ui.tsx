@@ -9,17 +9,19 @@ import { YouTubeBlockConfig } from '@/lib/blocks/youtube/config';
 import { BlockProps } from '../ui';
 
 export const YouTube: FunctionComponent<BlockProps> = (props) => {
-  const { data } = useSWR<{ data: YouTubeBlockConfig }>(
+  const { data } = useSWR<{ blockData: YouTubeBlockConfig }>(
     `/api/blocks/${props.blockId}`
   );
 
-  if (!data) return null;
+  const { blockData } = data || {};
+
+  if (!blockData) return null;
 
   return (
     <CoreBlock {...props} className="flex flex-col" isFrameless>
-      {data.data?.videoId !== '' ? (
+      {blockData?.videoId !== '' ? (
         <iframe
-          src={`https://www.youtube.com/embed/${data.data?.videoId}`}
+          src={`https://www.youtube.com/embed/${blockData?.videoId}`}
           allowFullScreen
           title="YouTube video player"
           frameBorder={0}

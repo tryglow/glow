@@ -13,9 +13,11 @@ import { submitSignupToWaitlistCom } from './action';
 import { WaitlistEmailBlockConfig } from './config';
 
 export const WaitlistEmail: FunctionComponent<BlockProps> = (props) => {
-  const { data } = useSWR<{ data: WaitlistEmailBlockConfig }>(
+  const { data } = useSWR<{ blockData: WaitlistEmailBlockConfig }>(
     `/api/blocks/${props.blockId}`
   );
+
+  const { blockData } = data || {};
 
   const [formSubmitted, setFormSubmitted] = useState(false);
 
@@ -38,7 +40,9 @@ export const WaitlistEmail: FunctionComponent<BlockProps> = (props) => {
       return;
     }
 
-    formData.append('waitlist_id', data?.data?.waitlistId);
+    if (blockData?.waitlistId) {
+      formData.append('waitlist_id', blockData?.waitlistId);
+    }
 
     const req = await submitSignupToWaitlistCom(formData);
 
@@ -65,10 +69,10 @@ export const WaitlistEmail: FunctionComponent<BlockProps> = (props) => {
   return (
     <CoreBlock {...props} className="flex flex-col">
       <h2 className="text-2xl font-medium text-sys-label-primary">
-        {data?.data?.title}
+        {blockData?.title}
       </h2>
       <p className="text-md text-sys-label-secondary mb-6">
-        {data?.data?.label}
+        {blockData?.label}
       </p>
 
       <form action={handleSubmit} className="mt-auto flex w-full">
@@ -86,7 +90,7 @@ export const WaitlistEmail: FunctionComponent<BlockProps> = (props) => {
         />
         <div className="ml-4 sm:flex-shrink-0">
           <SubmitButton
-            buttonLabel={data?.data?.buttonLabel}
+            buttonLabel={blockData?.buttonLabel || 'Submit'}
             disabled={!!formSubmitted}
           />
         </div>
