@@ -8,8 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "vercel:build": "prisma generate --no-engine && prisma migrate deploy && next build",
-    "db:migrate": "dotenv -e .env.local prisma migrate dev",
-    "db:seed": "dotenv -e .env.local prisma db seed --preview-feature",
+    "db:migrate": "prisma migrate dev",
+    "db:seed": "prisma db seed",
     "db:data-migration:move-users-to-teams": "ts-node ./prisma/migrations/20241010092756_migrate_users_to_teams/data-migration.ts",
     "db:data-migration:move-integrations-to-teams": "ts-node ./prisma/migrations/20241010101569_migrate_integrations_to_teams/data-migration.ts",
     "db:data-migration": "npm run db:data-migration:move-users-to-teams && npm run db:data-migration:move-integrations-to-teams"
@@ -58,6 +58,7 @@
     "clsx": "^2.1.1",
     "cmdk": "^0.2.0",
     "date-fns": "^4.1.0",
+    "dotenv": "^16.4.5",
     "formik": "^2.4.6",
     "formik-validator-zod": "^2.0.1",
     "loops": "^3.4.0",

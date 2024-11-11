@@ -15,6 +15,7 @@ import { EditForm as ThreadsFollowerCountForm } from './threads-follower-count/f
 import { Blocks } from './types';
 import { EditForm as WaitlistEmailForm } from './waitlist-email/form';
 import { EditForm as YouTubeForm } from './youtube/form';
+import { EditForm as AccordionForm } from './accordion/form';
 export const editForms: Record<Blocks, JSXElementConstructor<any>> = {
   'link-box': LinkBoxForm,
   stack: StackForm,
@@ -30,4 +31,5 @@ export const editForms: Record<Blocks, JSXElementConstructor<any>> = {
   'waitlist-email': WaitlistEmailForm,
   youtube: YouTubeForm,
   'threads-follower-count': ThreadsFollowerCountForm,
+  'accordion': AccordionForm
 };

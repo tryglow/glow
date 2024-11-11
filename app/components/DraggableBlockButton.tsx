@@ -157,6 +157,15 @@ export const config: Record<
       h: 6,
     },
   },
+  'accordion': {
+    title: 'Accordion',
+    label: 'A vertically stacked set of interactive headings',
+    icon: blockStackIcon,
+    drag: {
+      w: 6,
+      h: 6,
+    },
+  },
 };
 
 interface Props {
@@ -179,7 +188,7 @@ export function DraggableBlockButton({ type }: Props) {
         height={15}
         alt=""
       />
-      <div className="w-9 h-9 bg-stone-100 rounded-md flex items-center mr-3 flex-shrink-0">
+      <div className="w-9 h-9 bg-stone-100 rounded-md flex justify-center items-center mr-3 flex-shrink-0">
         <Image src={blockConfig.icon} className="w-9 h-9" alt="" />
       </div>
       <div className="flex flex-col">

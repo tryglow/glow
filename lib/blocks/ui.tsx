@@ -14,6 +14,7 @@ import SpotifyEmbed from './spotify-embed/ui-client';
 import SpotifyPlayingNow from './spotify-playing-now/ui-client';
 import { Blocks } from './types';
 import { WaitlistEmail } from './waitlist-email/ui';
+import { AccordionUI } from './accordion/ui';
 
 export interface BlockConfig {
   x: number;
@@ -85,5 +86,7 @@ export function renderBlock(block: any, pageId: string, isEditMode: boolean) {
       return <YouTube {...sharedProps} />;
     case 'threads-follower-count':
       return <ThreadsFollowerCount {...sharedProps} />;
+    case 'accordion':
+      return <AccordionUI {...sharedProps} />;
   }
 }
