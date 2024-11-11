@@ -18,6 +18,7 @@ import { GlowProviders } from '@/app/components/GlowProviders';
 import { UserOnboardingDialog } from '@/app/components/UserOnboardingDialog';
 import { Button } from '@/components/ui/button';
 import { notFound } from 'next/navigation';
+import Script from 'next/script';
 
 export const dynamic = 'force-dynamic';
 
@@ -169,6 +170,15 @@ export default async function PageLayout(props: {
           <TeamOnboardingDialog />
           <UserOnboardingDialog />
         </>
+      )}
+
+      {!isEditMode && process.env.NEXT_PUBLIC_TINYBIRD_TRACKER_TOKEN && (
+        <Script
+          defer
+          src="https://unpkg.com/@tinybirdco/flock.js"
+          data-host="https://api.us-west-2.aws.tinybird.co"
+          data-token={process.env.NEXT_PUBLIC_TINYBIRD_TRACKER_TOKEN}
+        />
       )}
     </GlowProviders>
   );
