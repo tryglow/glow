@@ -2,6 +2,7 @@ import { Content } from '@/lib/blocks/content/ui';
 import { Header } from '@/lib/blocks/header/ui-client';
 import { Stack } from '@/lib/blocks/stack/ui';
 
+import { Reactions } from '@/lib/blocks/reaction/ui';
 import { ThreadsFollowerCount } from '@/lib/blocks/threads-follower-count/ui-client';
 import TikTokFollowerCount from '@/lib/blocks/tiktok-follower-count/ui-client';
 import TikTokLatestPost from '@/lib/blocks/tiktok-latest-post/ui-client';
@@ -91,5 +92,7 @@ export function renderBlock(block: any, pageId: string, isEditMode: boolean) {
       return <TikTokFollowerCount {...sharedProps} />;
     case 'tiktok-latest-post':
       return <TikTokLatestPost {...sharedProps} />;
+    case 'reactions':
+      return <Reactions {...sharedProps} />;
   }
 }

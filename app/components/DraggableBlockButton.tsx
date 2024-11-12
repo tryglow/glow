@@ -12,6 +12,7 @@ import blockInstagramLatestPostIcon from '@/app/assets/ui/type-instagram-latest-
 import blockLinkBarIcon from '@/app/assets/ui/type-link-bar.svg';
 import blockLinkBoxIcon from '@/app/assets/ui/type-link-box.svg';
 import blockMapIcon from '@/app/assets/ui/type-map.svg';
+import blockReactionsIcon from '@/app/assets/ui/type-reactions.svg';
 import blockSpotifyPlayingNowIcon from '@/app/assets/ui/type-spotify-playing-now.svg';
 import blockStackIcon from '@/app/assets/ui/type-stack.svg';
 import blockThreadsFollowerCountIcon from '@/app/assets/ui/type-threads-follower-count.svg';
@@ -173,6 +174,15 @@ export const config: Record<
     drag: {
       w: 6,
       h: 6,
+    },
+  },
+  reactions: {
+    title: 'Reactions',
+    label: 'A button to react to your page',
+    icon: blockReactionsIcon,
+    drag: {
+      w: 4,
+      h: 4,
     },
   },
 };

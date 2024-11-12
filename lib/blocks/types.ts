@@ -14,8 +14,8 @@ export type Blocks =
   | 'youtube'
   | 'threads-follower-count'
   | 'tiktok-follower-count'
-  | 'tiktok-latest-post';
-
+  | 'tiktok-latest-post'
+  | 'reactions';
 export interface EditFormProps<T> {
   initialValues: T;
   onSave: (values: T) => void;

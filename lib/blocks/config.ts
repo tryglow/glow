@@ -1,5 +1,6 @@
 import * as Yup from 'yup';
 
+import { defaults as reactionDefaults } from '@/lib/blocks/reaction/config';
 import {
   YouTubeBlockSchema,
   defaults as youtubeDefaults,
@@ -105,6 +106,11 @@ export const blocksConfig: Record<
   },
   'tiktok-latest-post': {
     defaults: tiktokLatestPostDefaults,
+    schema: null,
+    isBeta: true,
+  },
+  reactions: {
+    defaults: reactionDefaults,
     schema: null,
     isBeta: true,
   },

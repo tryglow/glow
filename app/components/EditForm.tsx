@@ -28,7 +28,9 @@ export function EditForm({ onClose, blockId, blockType }: Props) {
       });
 
       if (req.ok) {
-        mutate(values);
+        mutate(values, {
+          optimisticData: values,
+        });
         toast({
           title: 'Saved!',
           description: 'Your changes have been saved.',
