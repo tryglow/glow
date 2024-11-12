@@ -25,6 +25,7 @@ import {
 import { defaults as spotifyPlayingNowDefaults } from './spotify-playing-now/config';
 import { StackSchema, defaults as stackDefaults } from './stack/config';
 import { defaults as threadsFollowerCountDefaults } from './threads-follower-count/config';
+import { defaults as AccordionBlockDefaults, AccordionSchema } from './accordion/config';
 import { Blocks } from './types';
 import {
   WaitlistEmailBlockSchema,
@@ -95,5 +96,10 @@ export const blocksConfig: Record<
     defaults: threadsFollowerCountDefaults,
     schema: null,
     isBeta: true,
+  },
+  'accordion': {
+    defaults: AccordionBlockDefaults,
+    schema: AccordionSchema,
+    // isBeta: true,
   },
 };
