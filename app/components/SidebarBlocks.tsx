@@ -19,7 +19,6 @@ export function SidebarBlocks() {
     fetcher
   );
 
-  !enabledBlocks?.includes('accordion') && enabledBlocks?.push('accordion')
   const [filteredBlocks, setFilteredBlocks] = useState(enabledBlocks);
 
   useEffect(() => {
