@@ -97,7 +97,6 @@ export const blocksConfig: Record<
   'threads-follower-count': {
     defaults: threadsFollowerCountDefaults,
     schema: null,
-    isBeta: true,
   },
   'tiktok-follower-count': {
     defaults: tiktokFollowerCountDefaults,
