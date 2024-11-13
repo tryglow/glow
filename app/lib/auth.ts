@@ -6,10 +6,11 @@ import { PrismaAdapter } from '@auth/prisma-adapter';
 import { track } from '@vercel/analytics/server';
 import NextAuth from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
+import GitHubProvider from 'next-auth/providers/github';
 import GoogleProvider from 'next-auth/providers/google';
-
 import TwitterProvider from 'next-auth/providers/twitter';
 
+import { CustomTiktok } from '@/app/lib/custom-tiktok-provider';
 import prisma from '@/lib/prisma';
 import { sendVerificationRequest } from '@/notifications/send-verification-request';
 
@@ -37,6 +38,12 @@ export const { auth, signIn, signOut, handlers, unstable_update } = NextAuth({
       clientId: process.env.TWITTER_CLIENT_ID as string,
       clientSecret: process.env.TWITTER_CLIENT_SECRET as string,
     }),
+    GitHubProvider({
+      clientId: process.env.GITHUB_CLIENT_ID as string,
+      clientSecret: process.env.GITHUB_CLIENT_SECRET as string,
+    }),
+    CustomTiktok,
+
     /**
      * This is used for the email link login
      */

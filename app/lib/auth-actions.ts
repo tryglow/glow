@@ -27,6 +27,10 @@ export async function signInWithTwitter(redirectTo?: string) {
   return await signIn('twitter', { redirectTo, redirect: true });
 }
 
+export async function signInWithTikTok(redirectTo?: string) {
+  return await signIn('tiktok', { redirectTo, redirect: true });
+}
+
 export async function hideGlowTour() {
   const session = await auth();
 
