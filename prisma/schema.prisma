@@ -115,6 +115,7 @@ model Page {
   teamId               String?
   verifiedAt           DateTime?
   verificationRequests VerificationRequest[]
+  orchestrations       Orchestration[]
 }
 
 model Block {
@@ -212,4 +213,19 @@ model VerificationRequest {
   verifiedAt         DateTime?
   rejectedAt         DateTime?
   requestedPageTitle String
+}
+
+enum OrchestrationType {
+  TIKTOK
+}
+
+model Orchestration {
+  id              String            @id @default(uuid())
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+  expiresAt       DateTime
+  pageGeneratedAt DateTime?
+  pageId          String?
+  page            Page?             @relation(fields: [pageId], references: [id])
+  type            OrchestrationType
 }
