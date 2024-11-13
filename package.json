@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev --hostname dev.glow --port 3000",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
@@ -19,6 +19,7 @@
     "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
   },
   "dependencies": {
+    "@auth/core": "^0.37.3",
     "@auth/prisma-adapter": "^2.7.3",
     "@aws-sdk/client-dynamodb": "^3.687.0",
     "@aws-sdk/client-s3": "^3.685.0",
