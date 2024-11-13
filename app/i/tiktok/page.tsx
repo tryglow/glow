@@ -2,6 +2,12 @@ import { MarketingContainer } from '@/app/components/MarketingContainer';
 import prisma from '@/lib/prisma';
 import { TikTokLoginButton } from './login-button';
 
+export const metadata = {
+  title: 'TikTok link-in-bio generator | Glow',
+  description:
+    'Use our magic generator to create your own customisable link-in-bio from your TikTok profile!',
+};
+
 export default async function TikTokGeneratePage() {
   const createNewOrchestration = async () => {
     'use server';
