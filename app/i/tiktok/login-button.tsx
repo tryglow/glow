@@ -29,7 +29,7 @@ export function TikTokLoginButton({
 }) {
   const handleClick = async () => {
     const orchestrationId = await action();
-    await signInWithTikTok(`/i/tiktok/generate/${orchestrationId}`);
+    await signInWithTikTok(`/i/tiktok/${orchestrationId}`);
   };
 
   return (

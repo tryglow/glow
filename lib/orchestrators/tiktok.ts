@@ -386,43 +386,43 @@ const setPageConfig = async ({
       static: true,
     },
     {
-      h: 5,
+      h: 4,
       i: contentBlockId,
       w: 12,
       x: 0,
-      y: 0,
+      y: 5,
       moved: false,
-      static: true,
+      static: false,
     },
     {
-      h: 5,
+      h: 4,
       i: tiktokFollowersBlockId,
       w: 12,
       x: 0,
-      y: 0,
+      y: 9,
       moved: false,
-      static: true,
+      static: false,
     },
     {
-      h: 5,
+      h: 8,
       i: stackBlockId,
       w: 12,
       x: 0,
-      y: 0,
+      y: 13,
       moved: false,
-      static: true,
+      static: false,
     },
   ];
 
   if (tiktokLatestVideoBlockId) {
     mobileConfig.push({
-      h: 5,
+      h: 12,
       i: tiktokLatestVideoBlockId,
-      w: 12,
-      x: 0,
-      y: 0,
+      w: 10,
+      x: 1,
+      y: 25,
       moved: false,
-      static: true,
+      static: false,
     });
   }
 
