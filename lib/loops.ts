@@ -11,7 +11,8 @@ export const transactionalEmailIds = {
 
 export const createLoopsClient = () => {
   if (!process.env.LOOPS_API_KEY) {
-    throw new Error('LOOPS_API_KEY is not set');
+    console.warn('LOOPS API KEY is not set');
+    return null;
   }
 
   return new LoopsClient(process.env.LOOPS_API_KEY);
