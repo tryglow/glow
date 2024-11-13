@@ -3,7 +3,7 @@ import { encrypt } from '@/lib/encrypt';
 import { redirect } from 'next/navigation';
 import { NextRequest } from 'next/server';
 
-const scopes = [
+export const scopes = [
   'user.info.basic',
   'user.info.profile',
   'user.info.stats',
