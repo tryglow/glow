@@ -10,9 +10,9 @@ import GitHubProvider from 'next-auth/providers/github';
 import GoogleProvider from 'next-auth/providers/google';
 import TwitterProvider from 'next-auth/providers/twitter';
 
-import { CustomTiktok } from '@/app/lib/custom-tiktok-provider';
 import prisma from '@/lib/prisma';
 import { sendVerificationRequest } from '@/notifications/send-verification-request';
+import TikTokProvider from '@auth/core/providers/tiktok';
 
 const temporaryTestUserForAppReview = {
   id: process.env.TMP_APP_REVIEW_USER_ID as string,
@@ -42,7 +42,10 @@ export const { auth, signIn, signOut, handlers, unstable_update } = NextAuth({
       clientId: process.env.GITHUB_CLIENT_ID as string,
       clientSecret: process.env.GITHUB_CLIENT_SECRET as string,
     }),
-    CustomTiktok,
+    TikTokProvider({
+      clientId: process.env.TIKTOK_CLIENT_KEY as string,
+      clientSecret: process.env.TIKTOK_CLIENT_SECRET as string,
+    }),
 
     /**
      * This is used for the email link login
