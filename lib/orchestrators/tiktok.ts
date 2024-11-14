@@ -294,6 +294,8 @@ const fetchTikTokProfile = async ({ accessToken }: { accessToken: string }) => {
 
   const { data, error } = await req.json();
 
+  console.log('ERROR', error);
+
   if (error) {
     captureException(error);
     return null;
