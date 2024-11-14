@@ -490,6 +490,8 @@ const getTikTokAccessToken = async () => {
     },
   });
 
+  console.log('TIKTOK ACCOUNT', tiktokAccount?.id);
+
   if (!tiktokAccount) {
     return null;
   }
