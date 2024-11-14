@@ -1,3 +1,10 @@
+export const scopes = [
+  'user.info.basic',
+  'user.info.profile',
+  'user.info.stats',
+  'video.list',
+];
+
 export async function requestToken({ code }: { code: string }) {
   if (!process.env.TIKTOK_CLIENT_KEY) {
     throw new Error('Missing TIKTOK_CLIENT_KEY');

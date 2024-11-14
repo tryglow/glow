@@ -10,6 +10,7 @@ import GitHubProvider from 'next-auth/providers/github';
 import GoogleProvider from 'next-auth/providers/google';
 import TwitterProvider from 'next-auth/providers/twitter';
 
+import { scopes as tiktokScopes } from '@/app/api/services/tiktok/callback/utils';
 import prisma from '@/lib/prisma';
 import { sendVerificationRequest } from '@/notifications/send-verification-request';
 import TikTokProvider from '@auth/core/providers/tiktok';
@@ -45,6 +46,11 @@ export const { auth, signIn, signOut, handlers, unstable_update } = NextAuth({
     TikTokProvider({
       clientId: process.env.TIKTOK_CLIENT_KEY as string,
       clientSecret: process.env.TIKTOK_CLIENT_SECRET as string,
+      authorization: {
+        params: {
+          scope: tiktokScopes.join(','),
+        },
+      },
     }),
 
     /**
