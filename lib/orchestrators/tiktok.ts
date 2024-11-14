@@ -297,7 +297,12 @@ const fetchTikTokProfile = async ({ accessToken }: { accessToken: string }) => {
     return null;
   }
 
-  const { data } = await req.json();
+  const { data, error } = await req.json();
+
+  if (error) {
+    captureException(error);
+    return null;
+  }
 
   return {
     followerCount: data.user.follower_count,
@@ -485,6 +490,10 @@ const getTikTokAccessToken = async () => {
     },
   });
 
+  if (!tiktokAccount) {
+    return null;
+  }
+
   return {
     refreshToken: tiktokAccount?.refresh_token,
     accessToken: tiktokAccount?.access_token,
@@ -566,13 +575,13 @@ export async function orchestrateTikTok(orchestrationId: string) {
 
   const tiktokTokens = await getTikTokAccessToken();
 
-  if (!tiktokTokens.accessToken) {
+  if (!tiktokTokens?.accessToken) {
     return {
       error: 'No access token found',
     };
   }
 
-  if (!tiktokTokens.refreshToken) {
+  if (!tiktokTokens?.refreshToken) {
     return {
       error: 'No refresh token found',
     };
@@ -581,6 +590,12 @@ export async function orchestrateTikTok(orchestrationId: string) {
   const tiktokData = await fetchTikTokProfile({
     accessToken: tiktokTokens.accessToken,
   });
+
+  if (!tiktokData) {
+    return {
+      error: 'Unable to fetch TikTok profile',
+    };
+  }
 
   const hasPublishedVideo = await checkHasPublishedVideo({
     accessToken: tiktokTokens.accessToken,
