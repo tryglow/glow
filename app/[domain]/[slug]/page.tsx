@@ -10,6 +10,8 @@ import { isUserAgentMobile } from '@/lib/user-agent';
 
 import { getPageLayout } from '@/app/api/pages/[pageSlug]/layout/actions';
 import Grid, { PageConfig } from './grid';
+import { nullable } from 'zod';
+import { NotNull } from 'yup';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
@@ -25,6 +27,9 @@ const getPageData = async ({
   const session = await auth();
 
   const user = session?.user;
+
+  console.log('domain => ', domain, slug);
+  
 
   const page = await prisma.page.findUnique({
     where: {

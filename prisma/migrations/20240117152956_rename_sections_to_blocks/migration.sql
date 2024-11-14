@@ -20,6 +20,7 @@ CREATE TABLE "Block" (
     "type" TEXT NOT NULL,
     "config" JSONB NOT NULL,
     "data" JSONB NOT NULL,
+    "contentStyles" JSONB,
 
     CONSTRAINT "Block_pkey" PRIMARY KEY ("id")
 );

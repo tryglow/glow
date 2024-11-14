@@ -9,7 +9,9 @@ import { YouTubeBlockConfig } from '@/lib/blocks/youtube/config';
 import { BlockProps } from '../ui';
 
 export const YouTube: FunctionComponent<BlockProps> = (props) => {
-  const { data } = useSWR<YouTubeBlockConfig>(`/api/blocks/${props.blockId}`);
+  const { data: resp } = useSWR<YouTubeBlockConfig>(`/api/blocks/${props.blockId}`);
+
+  const { data }: any = resp
 
   if (!data) return null;
 

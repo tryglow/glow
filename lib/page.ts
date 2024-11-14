@@ -5,6 +5,8 @@ import { auth } from '@/app/lib/auth';
 
 import { defaults as headerDefaults } from './blocks/header/config';
 import prisma from './prisma';
+import { textStyling } from './blocks/content/config';
+import { Prisma } from '@prisma/client';
 
 export const MAX_PAGES_PER_TEAM = 10;
 
@@ -66,6 +68,7 @@ export async function createNewPage(input: NewPageInput) {
             ...headerDefaults,
             title: `@${input.slug}`,
           },
+          contentStyles: textStyling
         },
       },
     },

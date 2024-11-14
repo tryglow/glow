@@ -47,5 +47,7 @@ export async function GET(req: Request, props: { params: Promise<{ blockId: stri
     );
   }
 
-  return Response.json(block.data);
+  console.log('block ==>>>> ', block);
+
+  return Response.json(block);
 }

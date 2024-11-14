@@ -9,7 +9,9 @@ import { BlockProps } from '../ui';
 import { ImageBlockConfig } from './config';
 
 export const Image: FunctionComponent<BlockProps> = (props) => {
-  const { data } = useSWR<ImageBlockConfig>(`/api/blocks/${props.blockId}`);
+  const { data: resp } = useSWR<ImageBlockConfig>(`/api/blocks/${props.blockId}`);
+
+  const { data }: any = resp
 
   return (
     <CoreBlock className="relative !p-0 overflow-hidden" {...props}>

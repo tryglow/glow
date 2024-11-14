@@ -14,7 +14,9 @@ import useSWR from 'swr'
 
 export const AccordionUI:FunctionComponent<BlockProps> = (props) => {
   
-  const { data } = useSWR<AccordionBlockConfig>(`/api/blocks/${props.blockId}`);
+  const { data: resp } = useSWR<AccordionBlockConfig>(`/api/blocks/${props.blockId}`);
+
+  const { data }: any = resp
 
   return (
     <CoreBlock {...props} isFrameless>

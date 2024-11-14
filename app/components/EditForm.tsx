@@ -5,6 +5,7 @@ import { Blocks } from '@/lib/blocks/types';
 
 import { toast } from '@/components/ui/use-toast';
 import { captureException } from '@sentry/nextjs';
+import { useEditModeContext } from '../contexts/Edit';
 
 interface Props {
   onClose: () => void;
@@ -13,7 +14,9 @@ interface Props {
 }
 
 export function EditForm({ onClose, blockId, blockType }: Props) {
-  const { data: initialValues, mutate } = useSWR(`/api/blocks/${blockId}`);
+  const { data, mutate } = useSWR(`/api/blocks/${blockId}`);
+  const { data: initialValues } = data
+  const { contentStyles } = useEditModeContext();
 
   const onSave = async (values: any) => {
     try {
@@ -24,6 +27,7 @@ export function EditForm({ onClose, blockId, blockType }: Props) {
         },
         body: JSON.stringify({
           newData: values,
+          contentStyles
         }),
       });
 
