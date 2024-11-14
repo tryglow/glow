@@ -9,12 +9,14 @@ import { BlockProps } from '../ui';
 import { LinkBarBlockConfig } from './config';
 
 export function LinkBar(props: BlockProps) {
-  const { data } = useSWR<LinkBarBlockConfig>(`/api/blocks/${props.blockId}`);
+  const { data: resp } = useSWR<LinkBarBlockConfig>(`/api/blocks/${props.blockId}`);
+
+  const { data }: any = resp
 
   return (
     <CoreBlock {...props} isFrameless className="items-center flex">
       <div className="flex flex-row gap-4 items-center justify-center w-full">
-        {data?.links.map((link) => {
+        {data?.links.map((link: any) => {
           return (
             <Link key={link.link} href={link.link}>
               {/* eslint-disable-next-line @next/next/no-img-element */}

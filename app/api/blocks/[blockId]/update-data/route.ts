@@ -23,7 +23,7 @@ export async function POST(
   const bodyData = await req.json();
   const blockId = params.blockId;
 
-  const { newData } = bodyData;
+  const { newData, contentStyles } = bodyData;
 
   if (!blockId || !newData) {
     return Response.json({
@@ -76,12 +76,14 @@ export async function POST(
       },
       data: {
         data: parsedData,
+        contentStyles: contentStyles
       },
     });
 
     return Response.json({
       data: {
         block: updatedBlock,
+        contentStyles: contentStyles
       },
     });
   } catch (error) {

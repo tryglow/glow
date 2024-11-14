@@ -19,7 +19,9 @@ const DynamicMapboxMap = dynamic<DynamicMapboxMapProps>(
 );
 
 export function Map(props: BlockProps) {
-  const { data } = useSWR<MapBlockConfig>(`/api/blocks/${props.blockId}`);
+  const { data: resp } = useSWR<MapBlockConfig>(`/api/blocks/${props.blockId}`);
+
+  const { data }: any = resp
 
   if (!data?.coords) return null;
 

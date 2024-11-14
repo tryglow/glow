@@ -9,7 +9,9 @@ import { BlockProps } from '../ui';
 import { LinkBoxBlockConfig } from './config';
 
 export function LinkBox(props: BlockProps) {
-  const { data } = useSWR<LinkBoxBlockConfig>(`/api/blocks/${props.blockId}`);
+  const { data: resp } = useSWR<LinkBoxBlockConfig>(`/api/blocks/${props.blockId}`);
+
+  const { data }: any = resp
 
   return (
     <CoreBlock

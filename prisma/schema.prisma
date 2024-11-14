@@ -125,6 +125,7 @@ model Block {
   type      String
   config    Json
   data      Json
+  contentStyles Json
 }
 
 model Integration {
