@@ -279,7 +279,7 @@ const createTiktokIntegration = async ({
   }
 };
 
-const fetchTikTokData = async ({ accessToken }: { accessToken: string }) => {
+const fetchTikTokProfile = async ({ accessToken }: { accessToken: string }) => {
   const options = {
     fields: 'avatar_url,display_name,follower_count,username',
   };
@@ -307,6 +307,43 @@ const fetchTikTokData = async ({ accessToken }: { accessToken: string }) => {
       avatarUrl: data.user.avatar_url,
     },
   };
+};
+
+const checkHasPublishedVideo = async ({
+  accessToken,
+}: {
+  accessToken: string;
+}) => {
+  const fields = ['id', 'title'];
+
+  const qs = new URLSearchParams({
+    fields: fields.join(','),
+  }).toString();
+
+  const req = await fetch(`https://open.tiktokapis.com/v2/video/list/?${qs}`, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+    method: 'POST',
+    next: {
+      revalidate: 60,
+    },
+    body: JSON.stringify({
+      max_count: 1,
+    }),
+  });
+
+  if (req.status !== 200) {
+    return false;
+  }
+
+  const { data } = await req.json();
+
+  if (data.videos && data.videos.length > 0) {
+    return true;
+  }
+
+  return false;
 };
 
 const setPageConfig = async ({
@@ -356,8 +393,8 @@ const setPageConfig = async ({
       h: 8,
       i: stackBlockId,
       w: 6,
-      x: 0,
-      y: 17,
+      x: tiktokLatestVideoBlockId ? 0 : 6,
+      y: tiktokLatestVideoBlockId ? 17 : 12,
       moved: false,
       static: false,
     },
@@ -537,7 +574,11 @@ export async function orchestrateTikTok(orchestrationId: string) {
     };
   }
 
-  const tiktokData = await fetchTikTokData({
+  const tiktokData = await fetchTikTokProfile({
+    accessToken: tiktokTokens.accessToken,
+  });
+
+  const hasPublishedVideo = await checkHasPublishedVideo({
     accessToken: tiktokTokens.accessToken,
   });
 
@@ -618,14 +659,8 @@ export async function orchestrateTikTok(orchestrationId: string) {
   const tiktokLatestVideoBlock = await createTikTokLatestVideoBlock({
     pageId: page.id,
     integrationId: tiktokIntegration.id,
-    hasLatestVideo: true,
+    hasLatestVideo: hasPublishedVideo,
   });
-
-  if (!tiktokLatestVideoBlock) {
-    return {
-      error: 'Unable to create TikTok latest video block',
-    };
-  }
 
   await setPageConfig({
     pageId: page.id,
@@ -633,7 +668,7 @@ export async function orchestrateTikTok(orchestrationId: string) {
     tiktokFollowersBlockId: tiktokFollowersBlock.id,
     contentBlockId: contentBlock.id,
     stackBlockId: stackBlock.id,
-    tiktokLatestVideoBlockId: tiktokLatestVideoBlock.id,
+    tiktokLatestVideoBlockId: tiktokLatestVideoBlock?.id,
   });
 
   await track('tiktokPageOrchestrated', {

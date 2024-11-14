@@ -26,9 +26,9 @@ const validateOrchestration = async (orchestrationId: string) => {
 export default async function TiktokCallbackPage({
   params,
 }: {
-  params: { orchestrationId: string };
+  params: Promise<{ orchestrationId: string }>;
 }) {
-  const { orchestrationId } = params;
+  const { orchestrationId } = await params;
 
   const orchestrationIsValid = await validateOrchestration(orchestrationId);
 
