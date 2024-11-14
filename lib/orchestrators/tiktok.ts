@@ -297,7 +297,7 @@ const fetchTikTokProfile = async ({ accessToken }: { accessToken: string }) => {
   console.log('Fetch tiktok profile error', error);
   console.log('Fetch tiktok profile data', data);
 
-  if (!error.ok) {
+  if (error.code !== 'ok') {
     captureException(error);
     return null;
   }
@@ -341,7 +341,7 @@ const checkHasPublishedVideo = async ({
   console.log('Check has published video data', data);
   console.log('Check has published video error', error);
 
-  if (!error.ok) {
+  if (error.code !== 'ok') {
     return false;
   }
 
