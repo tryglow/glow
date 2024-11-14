@@ -296,7 +296,7 @@ const fetchTikTokProfile = async ({ accessToken }: { accessToken: string }) => {
 
   console.log('ERROR', error);
 
-  if (error) {
+  if (!error.ok) {
     captureException(error);
     return null;
   }
@@ -337,7 +337,7 @@ const checkHasPublishedVideo = async ({
 
   const { data, error } = await req.json();
 
-  if (error) {
+  if (!error.ok) {
     return false;
   }
 
