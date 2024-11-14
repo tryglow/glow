@@ -2,7 +2,7 @@ import { uploadAsset } from '@/app/api/page/asset/upload/actions';
 import { auth } from '@/app/lib/auth';
 import { encrypt } from '@/lib/encrypt';
 import prisma from '@/lib/prisma';
-import { captureException } from '@sentry/nextjs';
+import { captureException, captureMessage } from '@sentry/nextjs';
 import { track } from '@vercel/analytics/server';
 import safeAwait from 'safe-await';
 
@@ -294,7 +294,8 @@ const fetchTikTokProfile = async ({ accessToken }: { accessToken: string }) => {
 
   const { data, error } = await req.json();
 
-  console.log('ERROR', error);
+  console.log('Fetch tiktok profile error', error);
+  console.log('Fetch tiktok profile data', data);
 
   if (!error.ok) {
     captureException(error);
@@ -336,6 +337,9 @@ const checkHasPublishedVideo = async ({
   });
 
   const { data, error } = await req.json();
+
+  console.log('Check has published video data', data);
+  console.log('Check has published video error', error);
 
   if (!error.ok) {
     return false;
@@ -608,6 +612,7 @@ export async function orchestrateTikTok(orchestrationId: string) {
   });
 
   if (!page) {
+    captureMessage('TIKTOK: Unable to create page');
     return {
       error: 'Unable to create page',
     };
@@ -626,6 +631,7 @@ export async function orchestrateTikTok(orchestrationId: string) {
   });
 
   if (!tiktokIntegration) {
+    captureMessage('TIKTOK: Unable to create TikTok integration');
     return {
       error: 'Unable to create TikTok integration',
     };
@@ -649,6 +655,7 @@ export async function orchestrateTikTok(orchestrationId: string) {
   });
 
   if (!contentBlock) {
+    captureMessage('TIKTOK: Unable to create content block');
     return {
       error: 'Unable to create content block',
     };
@@ -659,6 +666,7 @@ export async function orchestrateTikTok(orchestrationId: string) {
   });
 
   if (!stackBlock) {
+    captureMessage('TIKTOK: Unable to create stack block');
     return {
       error: 'Unable to create stack block',
     };
@@ -670,6 +678,7 @@ export async function orchestrateTikTok(orchestrationId: string) {
   });
 
   if (!tiktokFollowersBlock) {
+    captureMessage('TIKTOK: Unable to create TikTok followers block');
     return {
       error: 'Unable to create TikTok followers block',
     };
