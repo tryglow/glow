@@ -51,6 +51,14 @@ export const { auth, signIn, signOut, handlers, unstable_update } = NextAuth({
           scope: tiktokScopes.join(','),
         },
       },
+      profile(profile) {
+        return {
+          id: profile.data.user.open_id,
+          name: profile.data.user.display_name,
+          image: profile.data.user.avatar_url,
+          email: profile.data.user.email || null,
+        };
+      },
     }),
 
     /**

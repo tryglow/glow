@@ -498,6 +498,10 @@ const uploadAvatar = async ({
   avatarUrl: string;
   referenceId: string;
 }) => {
+  if (!avatarUrl) {
+    return null;
+  }
+
   const imageResponse = await fetch(avatarUrl);
 
   if (!imageResponse.ok || !imageResponse.body) {
