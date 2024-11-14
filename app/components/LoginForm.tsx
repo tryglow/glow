@@ -58,6 +58,7 @@ export function LoginForm({ onComplete, redirectTo }: Props) {
           redirectTo={redirectTo}
         />
         <LoginProviderButton provider="google" redirectTo={redirectTo} />
+        <LoginProviderButton provider="tiktok" redirectTo={redirectTo} />
       </div>
     </div>
   );

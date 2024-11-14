@@ -3,9 +3,13 @@
 import { ReactNode } from 'react';
 
 import { Button } from '@/app/components/ui/button';
-import { signInWithGoogle, signInWithTwitter } from '@/app/lib/auth-actions';
+import {
+  signInWithGoogle,
+  signInWithTikTok,
+  signInWithTwitter,
+} from '@/app/lib/auth-actions';
 
-type EnabledProviders = 'google' | 'twitter';
+type EnabledProviders = 'google' | 'twitter' | 'tiktok';
 
 const providerIcons: Record<EnabledProviders, ReactNode> = {
   google: (
@@ -44,6 +48,14 @@ const providerIcons: Record<EnabledProviders, ReactNode> = {
       />
     </svg>
   ),
+  tiktok: (
+    <svg viewBox="0 0 523 600" width={16} height={16} fill="none">
+      <path
+        fill="currentColor"
+        d="M444.42 120.81A143.38 143.38 0 0 1 379.18.75h-103L276 413.41a86.497 86.497 0 0 1-105.357 81.095A86.5 86.5 0 0 1 189.62 323.6a85.304 85.304 0 0 1 25.54 4V222.48a188.807 188.807 0 0 0-25.54-1.85C85.11 220.63.09 305.63.09 410.15a189.818 189.818 0 0 0 189.57 189.53c104.5 0 189.52-85 189.52-189.53V200.9A244.85 244.85 0 0 0 522.43 247V144a142.406 142.406 0 0 1-78.01-23.19Z"
+      />
+    </svg>
+  ),
 };
 
 const providerConfigs: Record<
@@ -69,6 +81,13 @@ const providerConfigs: Record<
     type: 'oauth',
     signinUrl: '/api/auth/signin/twitter',
     callbackUrl: '/api/auth/callback/twitter',
+  },
+  tiktok: {
+    id: 'tiktok',
+    name: 'TikTok',
+    type: 'oauth',
+    signinUrl: '/api/auth/signin/tiktok',
+    callbackUrl: '/api/auth/callback/tiktok',
   },
 };
 
@@ -116,11 +135,15 @@ export function LoginProviderButton({
         if (provider === 'twitter') {
           await signInWithTwitter(redirectTo);
         }
+
+        if (provider === 'tiktok') {
+          await signInWithTikTok(redirectTo);
+        }
       }}
       disabled={disabled}
     >
       {providerIcons[provider]}
-      <span className="ml-3">Continue with {prov.name}</span>
+      <span className="ml-3">{prov.name}</span>
     </Button>
   );
 }
