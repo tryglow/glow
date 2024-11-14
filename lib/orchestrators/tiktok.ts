@@ -292,11 +292,6 @@ const fetchTikTokProfile = async ({ accessToken }: { accessToken: string }) => {
     },
   });
 
-  if (req.status !== 200) {
-    captureException(new Error('Failed to fetch TikTok data'));
-    return null;
-  }
-
   const { data, error } = await req.json();
 
   if (error) {
@@ -338,11 +333,11 @@ const checkHasPublishedVideo = async ({
     }),
   });
 
-  if (req.status !== 200) {
+  const { data, error } = await req.json();
+
+  if (error) {
     return false;
   }
-
-  const { data } = await req.json();
 
   if (data.videos && data.videos.length > 0) {
     return true;
@@ -490,8 +485,6 @@ const getTikTokAccessToken = async () => {
     },
   });
 
-  console.log('TIKTOK ACCOUNT', tiktokAccount?.id);
-
   if (!tiktokAccount) {
     return null;
   }
@@ -576,7 +569,7 @@ export async function orchestrateTikTok(orchestrationId: string) {
   }
 
   // Tmp delay to allow token to be refreshed
-  await new Promise((resolve) => setTimeout(resolve, 2000));
+  await new Promise((resolve) => setTimeout(resolve, 1200));
 
   const tiktokTokens = await getTikTokAccessToken();
 
@@ -715,7 +708,7 @@ export async function orchestrateTikTok(orchestrationId: string) {
   });
 
   // Experience some delay to simulate the page being built
-  await new Promise((resolve) => setTimeout(resolve, 2000));
+  await new Promise((resolve) => setTimeout(resolve, 1200));
 
   return {
     success: true,
