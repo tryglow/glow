@@ -575,6 +575,9 @@ export async function orchestrateTikTok(orchestrationId: string) {
     };
   }
 
+  // Tmp delay to allow token to be refreshed
+  await new Promise((resolve) => setTimeout(resolve, 2000));
+
   const tiktokTokens = await getTikTokAccessToken();
 
   if (!tiktokTokens?.accessToken) {
