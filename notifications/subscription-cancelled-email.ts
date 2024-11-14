@@ -4,6 +4,10 @@ import { captureException } from '@sentry/nextjs';
 export async function sendSubscriptionCancelledEmail(email: string) {
   const loops = createLoopsClient();
 
+  if (!loops) {
+    return;
+  }
+
   try {
     await loops.sendTransactionalEmail({
       transactionalId: transactionalEmailIds.subscriptionCancelled,

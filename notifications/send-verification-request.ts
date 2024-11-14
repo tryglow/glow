@@ -13,6 +13,10 @@ export async function sendVerificationRequest({
 }) {
   const loops = createLoopsClient();
 
+  if (!loops) {
+    return;
+  }
+
   try {
     await loops.sendTransactionalEmail({
       transactionalId: transactionalEmailIds.loginVerificationRequest,

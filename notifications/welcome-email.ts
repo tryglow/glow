@@ -6,6 +6,10 @@ import { captureException } from '@sentry/nextjs';
 export async function sendWelcomeEmail(email: string) {
   const loops = createLoopsClient();
 
+  if (!loops) {
+    return;
+  }
+
   try {
     await loops.sendEvent({
       email,

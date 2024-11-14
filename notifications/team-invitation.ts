@@ -8,6 +8,10 @@ import { captureException } from '@sentry/nextjs';
 export async function sendTeamInvitationEmail(invite: TeamInvite) {
   const loops = createLoopsClient();
 
+  if (!loops) {
+    return;
+  }
+
   try {
     await loops.sendTransactionalEmail({
       transactionalId: transactionalEmailIds.invitationToTeam,

@@ -9,6 +9,10 @@ export async function sendSubscriptionCreatedEmail(
 ) {
   const loops = createLoopsClient();
 
+  if (!loops) {
+    return;
+  }
+
   const transactionalId =
     planType === 'premium'
       ? transactionalEmailIds.subscriptionCreatedPremium

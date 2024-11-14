@@ -13,6 +13,10 @@ export async function sendMemberAcceptedInvitationEmail({
 }) {
   const loops = createLoopsClient();
 
+  if (!loops) {
+    return;
+  }
+
   for (const email of teamEmails) {
     try {
       await loops.sendTransactionalEmail({
