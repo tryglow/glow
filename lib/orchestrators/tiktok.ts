@@ -26,7 +26,6 @@ const createPage = async ({
     prisma.page.findFirst({
       where: {
         slug: tiktokUsername,
-        deletedAt: null,
       },
     })
   );
