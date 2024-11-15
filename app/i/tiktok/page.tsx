@@ -31,10 +31,10 @@ export default async function TikTokGeneratePage() {
     <section className="w-full h-full bg-white py-32 min-h-screen">
       <MarketingContainer>
         <div className="flex flex-col items-center text-center max-w-xl mx-auto">
-          <h1 className="text-6xl font-black tracking-tighter text-stone-950 mb-2">
+          <h1 className="text-4xl md:text-6xl font-black tracking-tighter text-stone-950 mb-2 text-balance">
             Generate your own TikTok link-in-bio
           </h1>
-          <span className="text-stone-950/80 text-xl">
+          <span className="text-stone-950/80 text-xl text-balance">
             An automatically generated link in bio crafted for your TikTok.
           </span>
 
