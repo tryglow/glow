@@ -1,6 +1,9 @@
 import { MarketingContainer } from '@/app/components/MarketingContainer';
 import prisma from '@/lib/prisma';
+import Image from 'next/image';
 import { TikTokLoginButton } from './login-button';
+
+import tiktokHeroImage from './hero.png';
 
 export const metadata = {
   title: 'TikTok link-in-bio generator | Glow',
@@ -37,6 +40,14 @@ export default async function TikTokGeneratePage() {
 
           <TikTokLoginButton className="mt-8" action={createNewOrchestration} />
         </div>
+
+        <Image
+          src={tiktokHeroImage}
+          alt="TikTok link-in-bio"
+          width={1000}
+          height={1000}
+          className="mt-24"
+        />
       </MarketingContainer>
     </section>
   );
