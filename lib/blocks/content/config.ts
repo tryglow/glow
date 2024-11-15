@@ -27,6 +27,7 @@ export type FontColorType = {
 export type TextStylingType = {
   fontFamily: string;
   fontSize: string;
+  fontWeight: number;
   // color: FontColorType;
   color: string;
   letterSpacing: string;
@@ -42,12 +43,7 @@ export const textStyling: TextStyles = {
   title: {
     fontFamily: '',
     fontSize: '24px',
-    // color: {
-    //   r: "0",
-    //   g: "0",
-    //   b: "0",
-    //   a: "1",
-    // },
+    fontWeight: 400,
     color: 'rgb(0, 0, 0)',
     letterSpacing: '2px',
     lineHeight: '50px',
@@ -55,12 +51,7 @@ export const textStyling: TextStyles = {
   content: {
     fontFamily: '',
     fontSize: '17px',
-    // color: {
-    //   r: "0",
-    //   g: "0",
-    //   b: "0",
-    //   a: "1",
-    // },
+    fontWeight: 400,
     color: 'rgb(0, 0, 0)',
     letterSpacing: '2px',
     lineHeight: '20px',

@@ -17,7 +17,7 @@ export const Content: FunctionComponent<BlockProps> = (props) => {
 
   const { contentStyles, setContentStyles } = useEditModeContext();
 
-  console.log('contentStyles => ', content, styles);
+  console.log('contentStyles => ', contentStyles);
   
   useEffect(() => {
     setContentStyles(styles)
@@ -27,13 +27,13 @@ export const Content: FunctionComponent<BlockProps> = (props) => {
     <CoreBlock {...props} isFrameless>
       <div className="py-4 h-full overflow-hidden">
         <h2 
-          className="text-2xl font-medium text-sys-label-primary"
+          // className="text-2xl font-medium text-sys-label-primary"
           style={contentStyles?.title}  
         >
           {content?.title}
         </h2>
         <p 
-          className="text-lg text-sys-label-secondary"
+          // className="text-lg text-sys-label-secondary"
           style={contentStyles?.content}
         >{content?.content}</p>
       </div>
