@@ -49,6 +49,18 @@ export const TextStyling = ({ name }: Prop) => {
     
   }
 
+  const handleFontWeightChange = (e: any) => {
+    // console.log('handleChange => ', e.target.value);
+    
+    const value = e.target.value
+    console.log('value =>>> ', value);
+    
+    name === 'title' ?
+    setContentStyles((prev: any) => ({...prev,  title: {...prev.title, fontWeight: Number(value)}})) :
+    setContentStyles((prev: any) => ({...prev,  content: {...prev.content, fontWeight: Number(value)}}))
+    
+  }
+
   const handleLetterSpacingChange = (e: any) => {
     // console.log('handleChange => ', e.target.value);
     
@@ -121,14 +133,19 @@ export const TextStyling = ({ name }: Prop) => {
           />}
 
         </div>
+        {/* Font Weight */}
+        <div className='col-span-6'>
+          <p className='mb-2'>Font Weight</p>
+          <Slider defaultValue={[selectedElement?.fontWeight]} max={800} min={100} step={100} onChange={handleFontWeightChange} />
+        </div>
         {/* Letter Spacing */}
         <div className='col-span-6'>
-          <p className='mb-1'>Letter Spacing</p>
+          <p className='mb-2'>Letter Spacing</p>
           <Slider defaultValue={[selectedElement?.letterSpacing.replace("px", "")]} max={50} step={1} onChange={handleLetterSpacingChange} />
         </div>
         {/* Line Spacing */}
         <div className='col-span-6'>
-          <p className='mb-1'>Line Spacing</p>
+          <p className='mb-2'>Line Spacing</p>
           <Slider defaultValue={[selectedElement?.lineHeight.replace("px", "")]} max={150} step={1} onChange={handleLineSpacingChange} />
         </div>
       </div>
