@@ -53,7 +53,9 @@
         "TWITTER_CLIENT_SECRET",
         "TWITTER_CHALLENGE",
         "PRODUCTHUNT_API_TOKEN",
-        "LOOPS_API_KEY"
+        "LOOPS_API_KEY",
+        "AUTH_SECRET",
+        "PORT"
       ]
     },
     "lint": {
@@ -114,7 +116,9 @@
         "TWITTER_CLIENT_SECRET",
         "TWITTER_CHALLENGE",
         "PRODUCTHUNT_API_TOKEN",
-        "LOOPS_API_KEY"
+        "LOOPS_API_KEY",
+        "AUTH_SECRET",
+        "PORT"
       ]
     },
     "db:generate": {
