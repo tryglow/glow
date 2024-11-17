@@ -50,7 +50,10 @@
         "TMP_APP_REVIEW_USER_PASSWORD",
         "TWITTER_CALLBACK_URL",
         "TWITTER_CLIENT_ID",
-        "TWITTER_CLIENT_SECRET"
+        "TWITTER_CLIENT_SECRET",
+        "TWITTER_CHALLENGE",
+        "PRODUCTHUNT_API_TOKEN",
+        "LOOPS_API_KEY"
       ]
     },
     "lint": {
@@ -108,7 +111,10 @@
         "TMP_APP_REVIEW_USER_PASSWORD",
         "TWITTER_CALLBACK_URL",
         "TWITTER_CLIENT_ID",
-        "TWITTER_CLIENT_SECRET"
+        "TWITTER_CLIENT_SECRET",
+        "TWITTER_CHALLENGE",
+        "PRODUCTHUNT_API_TOKEN",
+        "LOOPS_API_KEY"
       ]
     },
     "db:generate": {
