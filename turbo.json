@@ -4,7 +4,14 @@
     "build": {
       "dependsOn": ["^db:generate", "^build"],
       "outputs": [".next/**", "!.next/cache/**", "dist/**", "index.js"],
-      "inputs": ["$TURBO_DEFAULT", ".env*"]
+      "inputs": ["$TURBO_DEFAULT", ".env*"],
+      "env": [
+        "DATABASE_URL",
+        "SENTRY_AUTH_TOKEN",
+        "DIRECT_URL",
+        "REDIS_URL",
+        "SENTRY_DSN"
+      ]
     },
     "lint": {
       "dependsOn": ["^lint"]
