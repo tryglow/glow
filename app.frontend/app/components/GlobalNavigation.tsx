@@ -4,7 +4,7 @@ import {
   ComputerDesktopIcon,
   DevicePhoneMobileIcon,
 } from '@heroicons/react/24/outline';
-import { Page, Team } from '@prisma/client';
+import { Page, Team } from '@tryglow/prisma';
 import Link from 'next/link';
 
 import { useEditModeContext } from '@/app/contexts/Edit';

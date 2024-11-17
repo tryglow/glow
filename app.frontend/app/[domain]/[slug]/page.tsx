@@ -1,4 +1,4 @@
-import { Integration } from '@prisma/client';
+import { Integration } from '@tryglow/prisma';
 import type { Metadata, ResolvingMetadata } from 'next';
 import { headers } from 'next/headers';
 import { notFound, redirect } from 'next/navigation';

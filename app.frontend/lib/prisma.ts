@@ -1,8 +1,8 @@
 import 'server-only';
 
-import { PrismaClient } from '@prisma/client';
 import { withAccelerate } from '@prisma/extension-accelerate';
 import { withOptimize } from '@prisma/extension-optimize';
+import { PrismaClient } from '@tryglow/prisma';
 
 const prismaClientSingleton = () => {
   if (!process.env.PRISMA_OPTIMIZE_API_KEY) {

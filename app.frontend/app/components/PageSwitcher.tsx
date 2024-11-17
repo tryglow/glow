@@ -1,11 +1,11 @@
 'use client';
 
-import { Page } from '@prisma/client';
 import {
   CaretSortIcon,
   CheckIcon,
   PlusCircledIcon,
 } from '@radix-ui/react-icons';
+import { Page } from '@tryglow/prisma';
 import { useParams, useRouter } from 'next/navigation';
 import { useState } from 'react';
 

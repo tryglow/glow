@@ -9,7 +9,7 @@ import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/app/components/ui/checkbox';
 import { Label } from '@/app/components/ui/label';
 import { fetcher } from '@/lib/fetch';
-import { Page } from '@prisma/client';
+import { Page } from '@tryglow/prisma';
 import { useParams } from 'next/navigation';
 import useSWR from 'swr';
 import { EditFormProps } from '../types';

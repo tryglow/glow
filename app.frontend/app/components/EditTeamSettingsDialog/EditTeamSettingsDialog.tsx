@@ -1,6 +1,6 @@
 'use client';
 
-import { Team, TeamInvite, User } from '@prisma/client';
+import { Team, TeamInvite, User } from '@tryglow/prisma';
 import { useEffect, useState } from 'react';
 
 import { EditTeamSettingsGeneral } from '@/components/EditTeamSettingsDialog/EditTeamSettingsGeneralForm';

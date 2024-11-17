@@ -1,4 +1,4 @@
-import { Prisma } from '@prisma/client';
+import { Prisma } from '@tryglow/prisma';
 import { track } from '@vercel/analytics/server';
 
 import { auth } from '@/app/lib/auth';

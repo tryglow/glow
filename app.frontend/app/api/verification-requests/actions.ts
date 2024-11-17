@@ -2,7 +2,7 @@
 
 import { auth } from '@/app/lib/auth';
 import prisma from '@/lib/prisma';
-import { VerificationRequestStatus } from '@prisma/client';
+import { VerificationRequestStatus } from '@tryglow/prisma';
 
 export async function createVerificationRequest({
   pageId,

@@ -1,7 +1,7 @@
 'use client';
 import { fetcher } from '@/lib/fetch';
 import { defaultThemeSeeds, themeColorToCssValue } from '@/lib/theme';
-import { Theme } from '@prisma/client';
+import { Theme } from '@tryglow/prisma';
 import useSWR from 'swr';
 
 export function RenderPageTheme({ pageSlug }: { pageSlug: string }) {

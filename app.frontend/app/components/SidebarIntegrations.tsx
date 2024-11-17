@@ -4,7 +4,7 @@ import {
   SidebarGroupContent,
 } from '@/app/components/ui/sidebar';
 import { fetcher } from '@/lib/fetch';
-import { Integration } from '@prisma/client';
+import { Integration } from '@tryglow/prisma';
 import useSWR from 'swr';
 
 export function SidebarIntegrations() {

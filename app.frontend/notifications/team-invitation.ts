@@ -1,6 +1,6 @@
 import 'server-only';
 
-import { TeamInvite } from '@prisma/client';
+import { TeamInvite } from '@tryglow/prisma';
 
 import { createLoopsClient, transactionalEmailIds } from '@/lib/loops';
 import { captureException } from '@sentry/nextjs';

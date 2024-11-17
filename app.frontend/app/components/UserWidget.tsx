@@ -1,6 +1,6 @@
 'use client';
 
-import { Team } from '@prisma/client';
+import { Team } from '@tryglow/prisma';
 import { useSession } from 'next-auth/react';
 import { useState } from 'react';
 

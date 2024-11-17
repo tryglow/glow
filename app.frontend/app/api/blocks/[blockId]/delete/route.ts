@@ -1,4 +1,4 @@
-import { Prisma } from '@prisma/client';
+import { Prisma } from '@tryglow/prisma';
 
 import { auth } from '@/app/lib/auth';
 import prisma from '@/lib/prisma';

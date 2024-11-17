@@ -1,6 +1,6 @@
 'use client';
 
-import { TeamInvite, User } from '@prisma/client';
+import { TeamInvite, User } from '@tryglow/prisma';
 import { Form, Formik, FormikHelpers } from 'formik';
 import { withZodSchema } from 'formik-validator-zod';
 import { Loader2 } from 'lucide-react';

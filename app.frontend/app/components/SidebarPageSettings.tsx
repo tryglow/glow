@@ -5,7 +5,7 @@ import {
   SidebarGroupContent,
 } from '@/app/components/ui/sidebar';
 import { fetcher } from '@/lib/fetch';
-import { Page } from '@prisma/client';
+import { Page } from '@tryglow/prisma';
 import { useParams } from 'next/navigation';
 import useSWR from 'swr';
 

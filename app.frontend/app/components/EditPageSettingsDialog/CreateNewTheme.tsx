@@ -7,7 +7,7 @@ import { Label } from '@/app/components/ui/label';
 import { toast } from '@/app/components/ui/use-toast';
 import { fetcher } from '@/lib/fetch';
 import { HSLColor, hslToHex, themeFields } from '@/lib/theme';
-import { Theme } from '@prisma/client';
+import { Theme } from '@tryglow/prisma';
 import { useEffect, useRef, useState } from 'react';
 import { SketchPicker } from 'react-color';
 import useSWR, { mutate } from 'swr';
