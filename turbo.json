@@ -20,7 +20,8 @@
         "DATABASE_URL",
         "SENTRY_AUTH_TOKEN",
         "DIRECT_URL",
-        "REDIS_URL"
+        "REDIS_URL",
+        "SENTRY_DSN"
       ]
     },
     "db:generate": {
