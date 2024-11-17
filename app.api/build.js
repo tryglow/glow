@@ -8,6 +8,7 @@ await build({
   outdir: 'dist',
   write: true,
   entryPoints: [`./src/index.ts`],
+  inject: ['./cjs-shim.ts'],
   sourcemap: true,
   plugins: [
     dotenvRun({
