@@ -81,7 +81,7 @@
     "safe-await": "^2.0.0",
     "sass": "^1.77.8",
     "server-only": "^0.0.1",
-    "sharp": "0.33.5",
+    "sharp": "0.32.6",
     "stripe": "^17.3.1",
     "swr": "^2.2.5",
     "tailwind-merge": "^2.5.4",
