@@ -1,0 +1,22 @@
+{
+  "name": "@tryglow/prisma",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "types": "index.ts",
+  "scripts": {
+    "build": "tsc index.ts",
+    "test": "echo \"Error: no test specified\" && exit 0",
+    "db:generate": "prisma generate",
+    "db:push": "dotenvx -f ../.env prisma db push --skip-generate",
+    "dev:db:migrate": "dotenvx -f ../.env.local prisma migrate dev",
+    "dev:db:reset": "dotenvx -f ../.env.local prisma migrate reset",
+    "db:migrate": "prisma migrate dev",
+    "dev:db:seed": "dotenvx -f ../.env.local ts-node prisma/seed.ts"
+  },
+  "dependencies": {
+    "prisma": "^5.13.0",
+    "@prisma/client": "^5.13.0",
+    "typescript": "^5"
+  }
+}
