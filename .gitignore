@@ -20,6 +20,8 @@ dist
 # production
 /build
 
+package.prisma/index.js
+
 # misc
 .DS_Store
 *.pem
