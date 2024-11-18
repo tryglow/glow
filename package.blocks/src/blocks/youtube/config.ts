@@ -4,7 +4,7 @@ export interface YouTubeBlockConfig {
   videoId: string;
 }
 
-export const defaults: YouTubeBlockConfig = {
+export const youTubeBlockDefaults: YouTubeBlockConfig = {
   videoId: '',
 };
 

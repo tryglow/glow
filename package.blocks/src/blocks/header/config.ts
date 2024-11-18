@@ -10,7 +10,7 @@ export interface HeaderBlockConfig {
   verifiedPageTitle: string;
 }
 
-export const defaults: HeaderBlockConfig = {
+export const headerBlockDefaults: HeaderBlockConfig = {
   avatar: {
     src: 'https://cdn.glow.as/default-data/avatar.png',
   },

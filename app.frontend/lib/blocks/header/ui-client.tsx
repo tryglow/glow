@@ -1,11 +1,9 @@
+import { BlockProps } from '../ui';
+import { HeaderServerUI } from './ui-server';
+import { CoreBlock } from '@/components/CoreBlock';
+import { HeaderBlockConfig } from '@tryglow/blocks';
 import Image from 'next/image';
 import { FunctionComponent, Suspense } from 'react';
-
-import { CoreBlock } from '@/components/CoreBlock';
-
-import { BlockProps } from '../ui';
-import { HeaderBlockConfig } from './config';
-import { HeaderServerUI } from './ui-server';
 
 export const Header: FunctionComponent<BlockProps & HeaderBlockConfig> = ({
   title,

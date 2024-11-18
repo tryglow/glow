@@ -1,13 +1,11 @@
 'use client';
 
+import { BlockProps } from '../ui';
+import { Props as DynamicMapboxMapProps } from './ui-client';
+import { CoreBlock } from '@/components/CoreBlock';
+import { MapBlockConfig } from '@tryglow/blocks';
 import dynamic from 'next/dynamic';
 import useSWR from 'swr';
-
-import { CoreBlock } from '@/components/CoreBlock';
-
-import { BlockProps } from '../ui';
-import { MapBlockConfig } from './config';
-import { Props as DynamicMapboxMapProps } from './ui-client';
 
 // Dynamically import MapboxMap
 const DynamicMapboxMap = dynamic<DynamicMapboxMapProps>(

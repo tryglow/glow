@@ -1,12 +1,10 @@
 'use server';
 
 import { refreshLongLivedToken } from '@/app/api/services/tiktok/callback/utils';
-
-import prisma from '@/lib/prisma';
-
-import { TikTokIntegrationConfig } from '@/lib/blocks/tiktok-follower-count/config';
 import { decrypt, encrypt } from '@/lib/encrypt';
+import prisma from '@/lib/prisma';
 import { captureException } from '@sentry/nextjs';
+import { TikTokIntegrationConfig } from '@tryglow/blocks';
 
 function fetchTiktokProfile(accessToken: string) {
   const options = {

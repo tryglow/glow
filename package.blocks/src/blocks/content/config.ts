@@ -5,7 +5,7 @@ export interface ContentBlockConfig {
   content: string;
 }
 
-export const defaults: ContentBlockConfig = {
+export const contentBlockDefaults: ContentBlockConfig = {
   title: 'About',
   content:
     "So I don't have no time, I don't even have a minute to waste… I feel like every second of my life, I've got to find a way to keep motivating people before it's too late.",

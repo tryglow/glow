@@ -1,12 +1,10 @@
 'use server';
 
 import { refreshLongLivedToken } from '@/app/api/services/threads/callback/utils';
-
-import prisma from '@/lib/prisma';
-
-import { ThreadsIntegrationConfig } from '@/lib/blocks/threads-follower-count/config';
 import { decrypt, encrypt } from '@/lib/encrypt';
+import prisma from '@/lib/prisma';
 import { captureException } from '@sentry/nextjs';
+import { ThreadsIntegrationConfig } from '@tryglow/blocks';
 
 function fetchThreadsFollowerCount(accessToken: string, threadsUserId: string) {
   const options = {

@@ -1,8 +1,5 @@
-import { useLoadScript } from '@react-google-maps/api';
-import { Form, Formik, FormikHelpers, useFormikContext } from 'formik';
-import { Loader2 } from 'lucide-react';
-import { ChangeEvent, useEffect, useRef, useState } from 'react';
-
+import { EditFormProps } from '../types';
+import { FormField } from '@/app/components/FormField';
 import { Button } from '@/components/ui/button';
 import {
   Command,
@@ -12,11 +9,12 @@ import {
   CommandItem,
   CommandList,
 } from '@/components/ui/command';
-
-import { FormField } from '@/app/components/FormField';
+import { useLoadScript } from '@react-google-maps/api';
 import { captureException } from '@sentry/nextjs';
-import { EditFormProps } from '../types';
-import { MapBlockConfig, mapThemes } from './config';
+import { MapBlockConfig, mapThemes } from '@tryglow/blocks';
+import { Form, Formik, FormikHelpers, useFormikContext } from 'formik';
+import { Loader2 } from 'lucide-react';
+import { ChangeEvent, useEffect, useRef, useState } from 'react';
 
 declare global {
   namespace google.maps.places {

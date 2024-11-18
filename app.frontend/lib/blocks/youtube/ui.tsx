@@ -1,12 +1,10 @@
 'use client';
 
+import { BlockProps } from '../ui';
+import { CoreBlock } from '@/components/CoreBlock';
+import { YouTubeBlockConfig } from '@tryglow/blocks';
 import { FunctionComponent } from 'react';
 import useSWR from 'swr';
-
-import { CoreBlock } from '@/components/CoreBlock';
-
-import { YouTubeBlockConfig } from '@/lib/blocks/youtube/config';
-import { BlockProps } from '../ui';
 
 export const YouTube: FunctionComponent<BlockProps> = (props) => {
   const { data } = useSWR<{ blockData: YouTubeBlockConfig }>(

@@ -31,7 +31,7 @@ export interface MapBlockConfig {
   mapTheme: MapThemes;
 }
 
-export const defaults: MapBlockConfig = {
+export const mapBlockDefaults: MapBlockConfig = {
   coords: {
     long: 103.8591065,
     lat: 1.2837575,

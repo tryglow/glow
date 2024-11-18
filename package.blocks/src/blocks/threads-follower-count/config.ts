@@ -5,4 +5,5 @@ export interface ThreadsIntegrationConfig {
   threadsUserId: string;
 }
 
-export const defaults: ThreadsFollowerCountBlockConfig = {};
+export const threadsFollowerCountBlockDefaults: ThreadsFollowerCountBlockConfig =
+  {};

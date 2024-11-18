@@ -1,12 +1,3 @@
-import { Content } from '@/lib/blocks/content/ui';
-import { Header } from '@/lib/blocks/header/ui-client';
-import { Stack } from '@/lib/blocks/stack/ui';
-
-import { Reactions } from '@/lib/blocks/reaction/ui';
-import { ThreadsFollowerCount } from '@/lib/blocks/threads-follower-count/ui-client';
-import TikTokFollowerCount from '@/lib/blocks/tiktok-follower-count/ui-client';
-import TikTokLatestPost from '@/lib/blocks/tiktok-latest-post/ui-client';
-import { YouTube } from '@/lib/blocks/youtube/ui';
 import { GitHubCommitsThisMonth } from './github-commits-this-month/ui-client';
 import { Image } from './image/ui';
 import InstagramLatestPost from './instagram-latest-post/ui-client';
@@ -15,8 +6,16 @@ import { LinkBox } from './link-box/ui';
 import { Map } from './map/ui';
 import SpotifyEmbed from './spotify-embed/ui-client';
 import SpotifyPlayingNow from './spotify-playing-now/ui-client';
-import { Blocks } from './types';
 import { WaitlistEmail } from './waitlist-email/ui';
+import { Content } from '@/lib/blocks/content/ui';
+import { Header } from '@/lib/blocks/header/ui-client';
+import { Reactions } from '@/lib/blocks/reaction/ui';
+import { Stack } from '@/lib/blocks/stack/ui';
+import { ThreadsFollowerCount } from '@/lib/blocks/threads-follower-count/ui-client';
+import TikTokFollowerCount from '@/lib/blocks/tiktok-follower-count/ui-client';
+import TikTokLatestPost from '@/lib/blocks/tiktok-latest-post/ui-client';
+import { YouTube } from '@/lib/blocks/youtube/ui';
+import { Blocks } from '@tryglow/blocks';
 
 export interface BlockConfig {
   x: number;

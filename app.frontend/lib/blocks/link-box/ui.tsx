@@ -1,12 +1,10 @@
 'use client';
 
+import { BlockProps } from '../ui';
+import { CoreBlock } from '@/components/CoreBlock';
+import { LinkBoxBlockConfig } from '@tryglow/blocks';
 import Link from 'next/link';
 import useSWR from 'swr';
-
-import { CoreBlock } from '@/components/CoreBlock';
-
-import { BlockProps } from '../ui';
-import { LinkBoxBlockConfig } from './config';
 
 export function LinkBox(props: BlockProps) {
   const { data } = useSWR<{ blockData: LinkBoxBlockConfig }>(

@@ -1,20 +1,17 @@
+import { EditFormProps } from '../types';
+import { FormField } from '@/components/FormField';
+import { Button } from '@/components/ui/button';
+import { toast } from '@/components/ui/use-toast';
+import { captureException } from '@sentry/nextjs';
+import {
+  InstagramLatestPostBlockConfig,
+  InstagramLatestPostSchema,
+} from '@tryglow/blocks';
 import { Form, Formik, FormikHelpers } from 'formik';
 import { Loader2 } from 'lucide-react';
 import Link from 'next/link';
 import { useState } from 'react';
 import { useSWRConfig } from 'swr';
-
-import { FormField } from '@/components/FormField';
-
-import {
-  InstagramLatestPostBlockConfig,
-  InstagramLatestPostSchema,
-} from '@/lib/blocks/instagram-latest-post/config';
-import { EditFormProps } from '@/lib/blocks/types';
-
-import { Button } from '@/components/ui/button';
-import { toast } from '@/components/ui/use-toast';
-import { captureException } from '@sentry/nextjs';
 
 const InstagramLogo = () => {
   return (

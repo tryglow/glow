@@ -9,9 +9,10 @@ export interface InstagramIntegrationConfig {
   instagramUserId: string;
 }
 
-export const defaults: InstagramLatestPostBlockConfig = {
-  numberOfPosts: 1,
-};
+export const instagramLatestPostBlockDefaults: InstagramLatestPostBlockConfig =
+  {
+    numberOfPosts: 1,
+  };
 
 export const InstagramLatestPostSchema = Yup.object().shape({
   numberOfPosts: Yup.number()

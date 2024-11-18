@@ -4,7 +4,7 @@ export interface SpotifyEmbedBlockConfig {
   spotifyAssetUrl: string;
 }
 
-export const defaults: SpotifyEmbedBlockConfig = {
+export const spotifyEmbedBlockDefaults: SpotifyEmbedBlockConfig = {
   spotifyAssetUrl: 'https://open.spotify.com/track/5bIcHT2jjWqm9UVpIJwIId',
 };
 

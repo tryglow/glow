@@ -7,7 +7,7 @@ export interface WaitlistEmailBlockConfig {
   waitlistId: string;
 }
 
-export const defaults: WaitlistEmailBlockConfig = {
+export const waitlistEmailBlockDefaults: WaitlistEmailBlockConfig = {
   title: 'Join waitlist',
   label: 'Get early access to a new feature',
   buttonLabel: 'Join',

@@ -1,5 +1,5 @@
-import { ReactionBlockConfig } from '@/lib/blocks/reaction/config';
-import { EditFormProps } from '@/lib/blocks/types';
+import { EditFormProps } from '../types';
+import { ReactionBlockConfig } from '@tryglow/blocks';
 
 export function EditForm({}: EditFormProps<ReactionBlockConfig>) {
   return (

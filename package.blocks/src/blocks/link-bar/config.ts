@@ -9,7 +9,7 @@ export interface LinkBarBlockConfig {
   }[];
 }
 
-export const defaults: LinkBarBlockConfig = {
+export const linkBarBlockDefaults: LinkBarBlockConfig = {
   links: [
     {
       link: 'https://x.com/tryglow',

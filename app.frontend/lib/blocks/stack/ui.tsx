@@ -1,12 +1,10 @@
 'use client';
 
+import { BlockProps } from '../ui';
+import { CoreBlock } from '@/components/CoreBlock';
+import { StackBlockConfig } from '@tryglow/blocks';
 import { FunctionComponent } from 'react';
 import useSWR from 'swr';
-
-import { CoreBlock } from '@/components/CoreBlock';
-
-import { BlockProps } from '../ui';
-import { StackBlockConfig } from './config';
 
 export const Stack: FunctionComponent<BlockProps> = (props) => {
   const { data } = useSWR<{ blockData: StackBlockConfig }>(

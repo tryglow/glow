@@ -1,10 +1,8 @@
+import { fetchGithubData } from './utils';
+import { cn } from '@/lib/utils';
+import { GithubCommitsThisMonthBlockConfig } from '@tryglow/blocks';
 import Link from 'next/link';
 import { SVGProps } from 'react';
-
-import { cn } from '@/lib/utils';
-
-import { GithubCommitsThisMonthBlockConfig } from './config';
-import { fetchGithubData } from './utils';
 
 export const GithubLogo = (props: SVGProps<any>) => {
   return (

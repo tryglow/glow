@@ -1,16 +1,13 @@
-import { FieldArray, Form, Formik, FormikHelpers, getIn } from 'formik';
-import { Loader2 } from 'lucide-react';
-
+import { EditFormProps } from '../types';
 import { FormField } from '@/components/FormField';
 import { FormFileUpload } from '@/components/FormFileUpload';
 import { IconSelect } from '@/components/IconSelect';
-
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-
-import { EditFormProps } from '../types';
-import { StackBlockConfig, StackSchema } from './config';
+import { StackBlockConfig, StackSchema } from '@tryglow/blocks';
+import { FieldArray, Form, Formik, FormikHelpers, getIn } from 'formik';
+import { Loader2 } from 'lucide-react';
 
 export function EditForm({
   initialValues,

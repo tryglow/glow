@@ -2,6 +2,6 @@ export interface ReactionBlockConfig {
   showLove: boolean;
 }
 
-export const defaults: ReactionBlockConfig = {
+export const reactionBlockDefaults: ReactionBlockConfig = {
   showLove: true,
 };

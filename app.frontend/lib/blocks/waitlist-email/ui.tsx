@@ -1,16 +1,13 @@
 'use client';
 
+import { BlockProps } from '../ui';
+import { submitSignupToWaitlistCom } from './action';
+import { CoreBlock } from '@/components/CoreBlock';
+import { toast } from '@/components/ui/use-toast';
+import { WaitlistEmailBlockConfig } from '@tryglow/blocks';
 import { FunctionComponent, useState } from 'react';
 import { useFormStatus } from 'react-dom';
 import useSWR from 'swr';
-
-import { CoreBlock } from '@/components/CoreBlock';
-
-import { toast } from '@/components/ui/use-toast';
-
-import { BlockProps } from '../ui';
-import { submitSignupToWaitlistCom } from './action';
-import { WaitlistEmailBlockConfig } from './config';
 
 export const WaitlistEmail: FunctionComponent<BlockProps> = (props) => {
   const { data } = useSWR<{ blockData: WaitlistEmailBlockConfig }>(

@@ -1,13 +1,11 @@
 'server-only';
 
 import { requestToken } from '@/app/api/services/spotify/callback/utils';
-
-import prisma from '@/lib/prisma';
-import safeAwait from 'safe-await';
-
 import { decrypt, encrypt } from '@/lib/encrypt';
+import prisma from '@/lib/prisma';
 import { captureException, captureMessage } from '@sentry/nextjs';
-import { SpotifyIntegrationConfig } from './config';
+import { SpotifyIntegrationConfig } from '@tryglow/blocks';
+import safeAwait from 'safe-await';
 
 async function fetchPlayingNow(accessToken: string) {
   const req = await fetch(

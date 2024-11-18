@@ -1,12 +1,10 @@
 'use client';
 
+import { BlockProps } from '../ui';
+import { CoreBlock } from '@/components/CoreBlock';
+import { ImageBlockConfig } from '@tryglow/blocks';
 import { FunctionComponent } from 'react';
 import useSWR from 'swr';
-
-import { CoreBlock } from '@/components/CoreBlock';
-
-import { BlockProps } from '../ui';
-import { ImageBlockConfig } from './config';
 
 export const Image: FunctionComponent<BlockProps> = (props) => {
   const { data } = useSWR<{

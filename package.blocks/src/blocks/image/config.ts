@@ -4,7 +4,7 @@ export interface ImageBlockConfig {
   src: string;
 }
 
-export const defaults: ImageBlockConfig = {
+export const imageBlockDefaults: ImageBlockConfig = {
   src: 'https://cdn.glow.as/default-data/image.png',
 };
 

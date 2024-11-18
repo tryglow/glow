@@ -1,13 +1,11 @@
+import { Button } from '@/components/ui/button';
+import { toast } from '@/components/ui/use-toast';
+import { EditFormProps } from '@/lib/blocks/types';
+import { captureException } from '@sentry/nextjs';
+import { TikTokFollowerCountBlockConfig } from '@tryglow/blocks';
 import Link from 'next/link';
 import { useState } from 'react';
 import { useSWRConfig } from 'swr';
-
-import { EditFormProps } from '@/lib/blocks/types';
-
-import { Button } from '@/components/ui/button';
-import { toast } from '@/components/ui/use-toast';
-import { TikTokFollowerCountBlockConfig } from '@/lib/blocks/tiktok-follower-count/config';
-import { captureException } from '@sentry/nextjs';
 
 const ThreadsLogo = () => {
   return (

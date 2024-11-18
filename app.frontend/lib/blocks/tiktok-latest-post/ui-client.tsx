@@ -1,12 +1,9 @@
-import { FunctionComponent, Suspense } from 'react';
-
-import { CoreBlock } from '@/components/CoreBlock';
-
-import { Skeleton } from '@/components/ui/skeleton';
-
 import { BlockProps } from '../ui';
-import { TikTokLatestPostBlockConfig } from './config';
 import { TikTokLatestPostServerUI } from './ui-server';
+import { CoreBlock } from '@/components/CoreBlock';
+import { Skeleton } from '@/components/ui/skeleton';
+import { TikTokLatestPostBlockConfig } from '@tryglow/blocks';
+import { FunctionComponent, Suspense } from 'react';
 
 export const TikTokLatestPost: FunctionComponent<
   BlockProps & TikTokLatestPostBlockConfig

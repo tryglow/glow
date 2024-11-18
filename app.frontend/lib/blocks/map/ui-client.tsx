@@ -1,10 +1,9 @@
 'use client';
 
+import { MapBlockConfig, mapThemes } from '@tryglow/blocks';
 import mapboxgl, { Map } from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import { useEffect, useRef } from 'react';
-
-import { MapBlockConfig, mapThemes } from './config';
 
 if (!process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN) {
   throw Error('Mapbox access token not found in environment variables');

@@ -1,19 +1,16 @@
-import { Form, Formik, FormikHelpers } from 'formik';
-import { Loader2 } from 'lucide-react';
-
-import { FormField } from '@/components/FormField';
-import { FormFileUpload } from '@/components/FormFileUpload';
-
-import { Button } from '@/components/ui/button';
-
+import { EditFormProps } from '../types';
 import { Checkbox } from '@/app/components/ui/checkbox';
 import { Label } from '@/app/components/ui/label';
+import { FormField } from '@/components/FormField';
+import { FormFileUpload } from '@/components/FormFileUpload';
+import { Button } from '@/components/ui/button';
 import { fetcher } from '@/lib/fetch';
+import { HeaderBlockConfig, HeaderSchema } from '@tryglow/blocks';
 import { Page } from '@tryglow/prisma';
+import { Form, Formik, FormikHelpers } from 'formik';
+import { Loader2 } from 'lucide-react';
 import { useParams } from 'next/navigation';
 import useSWR from 'swr';
-import { EditFormProps } from '../types';
-import { HeaderBlockConfig, HeaderSchema } from './config';
 
 export function EditForm({
   initialValues,

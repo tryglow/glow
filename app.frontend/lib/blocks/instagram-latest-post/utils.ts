@@ -1,12 +1,10 @@
 'use server';
 
 import { refreshLongLivedToken } from '@/app/api/services/instagram/callback/utils';
-
-import prisma from '@/lib/prisma';
-
 import { decrypt, encrypt } from '@/lib/encrypt';
+import prisma from '@/lib/prisma';
 import { captureException } from '@sentry/nextjs';
-import { InstagramIntegrationConfig } from './config';
+import { InstagramIntegrationConfig } from '@tryglow/blocks';
 
 function fetchLatestInstagramPost(
   accessToken: string,

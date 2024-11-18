@@ -1,12 +1,9 @@
+import { EditFormProps } from '../types';
+import { FormField } from '@/components/FormField';
+import { Button } from '@/components/ui/button';
+import { YouTubeBlockConfig, YouTubeBlockSchema } from '@tryglow/blocks';
 import { Form, Formik, FormikHelpers } from 'formik';
 import { Loader2 } from 'lucide-react';
-
-import { FormField } from '@/components/FormField';
-
-import { Button } from '@/components/ui/button';
-
-import { EditFormProps } from '../types';
-import { YouTubeBlockConfig, YouTubeBlockSchema } from './config';
 
 export function EditForm({
   initialValues,

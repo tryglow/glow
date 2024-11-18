@@ -1,15 +1,12 @@
-import { Form, Formik, FormikHelpers } from 'formik';
-import { Loader2 } from 'lucide-react';
-
-import { FormField } from '@/components/FormField';
-
-import { Button } from '@/components/ui/button';
-
 import { EditFormProps } from '../types';
+import { FormField } from '@/components/FormField';
+import { Button } from '@/components/ui/button';
 import {
   GithubCommitsThisMonthBlockConfig,
   GithubCommitsThisMonthSchema,
-} from './config';
+} from '@tryglow/blocks';
+import { Form, Formik, FormikHelpers } from 'formik';
+import { Loader2 } from 'lucide-react';
 
 export function EditForm({
   initialValues,

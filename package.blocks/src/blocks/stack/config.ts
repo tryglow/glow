@@ -13,7 +13,7 @@ export interface StackBlockConfig {
   }[];
 }
 
-export const defaults: StackBlockConfig = {
+export const stackBlockDefaults: StackBlockConfig = {
   title: 'Stack',
   label: 'Some cool tools',
   items: [

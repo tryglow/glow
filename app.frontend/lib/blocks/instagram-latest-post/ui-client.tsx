@@ -1,12 +1,9 @@
-import { FunctionComponent, Suspense } from 'react';
-
-import { CoreBlock } from '@/components/CoreBlock';
-
-import { Skeleton } from '@/components/ui/skeleton';
-
 import { BlockProps } from '../ui';
-import { InstagramLatestPostBlockConfig } from './config';
 import { InstagramLatestPostServerUI, InstagramLogo } from './ui-server';
+import { CoreBlock } from '@/components/CoreBlock';
+import { Skeleton } from '@/components/ui/skeleton';
+import { InstagramLatestPostBlockConfig } from '@tryglow/blocks';
+import { FunctionComponent, Suspense } from 'react';
 
 export const InstagramLatestPost: FunctionComponent<
   BlockProps & InstagramLatestPostBlockConfig

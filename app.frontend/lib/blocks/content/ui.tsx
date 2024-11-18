@@ -1,12 +1,10 @@
 'use client';
 
-import { FunctionComponent } from 'react';
-
-import { CoreBlock } from '@/components/CoreBlock';
-
-import useSWR from 'swr';
 import { BlockProps } from '../ui';
-import { ContentBlockConfig } from './config';
+import { CoreBlock } from '@/components/CoreBlock';
+import { ContentBlockConfig } from '@tryglow/blocks';
+import { FunctionComponent } from 'react';
+import useSWR from 'swr';
 
 export const Content: FunctionComponent<BlockProps> = ({
   blockId,

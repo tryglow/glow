@@ -3,4 +3,4 @@ export interface SpotifyIntegrationConfig {
   refreshToken: string;
 }
 
-export const defaults = {};
+export const spotifyIntegrationDefaults = {};

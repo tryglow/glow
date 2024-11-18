@@ -5,4 +5,4 @@ export interface TikTokIntegrationConfig {
   refreshToken: string;
 }
 
-export const defaults: TikTokLatestPostBlockConfig = {};
+export const tiktokLatestPostBlockDefaults: TikTokLatestPostBlockConfig = {};

@@ -1,11 +1,7 @@
-import { CaretSortIcon } from '@radix-ui/react-icons';
-import { FieldArray, Form, Formik, FormikHelpers, getIn } from 'formik';
-import { Loader2 } from 'lucide-react';
-
+import { EditFormProps } from '../types';
 import { FormField } from '@/components/FormField';
 import { FormFileUpload } from '@/components/FormFileUpload';
 import { IconSelect } from '@/components/IconSelect';
-
 import { Button } from '@/components/ui/button';
 import {
   Collapsible,
@@ -14,9 +10,10 @@ import {
 } from '@/components/ui/collapsible';
 import { Label } from '@/components/ui/label';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-
-import { EditFormProps } from '../types';
-import { LinkBarBlockConfig, LinkBarSchema } from './config';
+import { CaretSortIcon } from '@radix-ui/react-icons';
+import { LinkBarBlockConfig, LinkBarSchema } from '@tryglow/blocks';
+import { FieldArray, Form, Formik, FormikHelpers, getIn } from 'formik';
+import { Loader2 } from 'lucide-react';
 
 export function EditForm({
   initialValues,

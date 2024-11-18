@@ -9,7 +9,7 @@ export interface LinkBoxBlockConfig {
   link: string;
 }
 
-export const defaults: LinkBoxBlockConfig = {
+export const linkBoxBlockDefaults: LinkBoxBlockConfig = {
   icon: {
     src: 'https://cdn.glow.as/default-data/x-logo.png',
   },

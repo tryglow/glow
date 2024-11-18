@@ -1,13 +1,11 @@
-import Link from 'next/link';
-import { useState } from 'react';
-import { useSWRConfig } from 'swr';
-
-import { InstagramLatestPostBlockConfig } from '@/lib/blocks/instagram-latest-post/config';
-import { EditFormProps } from '@/lib/blocks/types';
-
+import { EditFormProps } from '../types';
 import { Button } from '@/components/ui/button';
 import { toast } from '@/components/ui/use-toast';
 import { captureException } from '@sentry/nextjs';
+import { InstagramLatestPostBlockConfig } from '@tryglow/blocks';
+import Link from 'next/link';
+import { useState } from 'react';
+import { useSWRConfig } from 'swr';
 
 const ThreadsLogo = () => {
   return (
