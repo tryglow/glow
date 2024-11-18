@@ -21,12 +21,14 @@ export async function authenticateDecorator(
   request: FastifyRequest,
   reply: FastifyReply
 ): Promise<{ user: { id: string } } | HttpError> {
-  const authJwt = request.headers.authorization?.replace('Bearer ', '');
+  const authJwt = request.headers.authorization;
+  console.log('Node Env', process.env.NODE_ENV);
 
-  if (authJwt) {
+  if (authJwt && authJwt.startsWith('Bearer ')) {
+    console.log('Auth JWT', authJwt);
     try {
       const decodedJwt = await decode<JWT>({
-        token: authJwt,
+        token: authJwt.replace('Bearer ', ''),
         secret: process.env.AUTH_SECRET as string,
         salt:
           process.env.NODE_ENV === 'production'
