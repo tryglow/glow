@@ -7,6 +7,14 @@ import { FastifyRequest } from 'fastify';
 export const authConfig: ExpressAuthConfig = {
   secret: process.env.AUTH_SECRET,
   providers: [],
+  cookies: {
+    sessionToken: {
+      name:
+        process.env.NODE_ENV === 'production'
+          ? '__Secure-next-auth.session-token'
+          : 'authjs.session-token',
+    },
+  },
   callbacks: {
     session: async ({ session, token }) => {
       if (!session.user) return session;
