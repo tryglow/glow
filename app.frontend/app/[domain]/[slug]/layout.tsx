@@ -1,22 +1,19 @@
-import Link from 'next/link';
-
-import {
-  PremiumOnboardingDialog,
-  TeamOnboardingDialog,
-} from '@/components/PremiumOnboardingDialog';
-
-import { auth } from '@/app/lib/auth';
-import prisma from '@/lib/prisma';
-
 import { RenderPageTheme } from '@/app/[domain]/[slug]/render-page-theme';
-import { getEnabledBlocks } from '@/app/api/blocks/enabled-blocks/actions';
 import { getPageLayout } from '@/app/api/pages/[pageSlug]/layout/actions';
 import { getPageSettings } from '@/app/api/pages/[pageSlug]/settings/actions';
 import { getPageTheme } from '@/app/api/pages/[pageSlug]/theme/actions';
 import { getTeamIntegrations } from '@/app/api/user/integrations/actions';
 import { GlowProviders } from '@/app/components/GlowProviders';
 import { UserOnboardingDialog } from '@/app/components/UserOnboardingDialog';
+import { auth } from '@/app/lib/auth';
+import {
+  PremiumOnboardingDialog,
+  TeamOnboardingDialog,
+} from '@/components/PremiumOnboardingDialog';
 import { Button } from '@/components/ui/button';
+import { getEnabledBlocks } from '@/lib/actions';
+import prisma from '@/lib/prisma';
+import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import Script from 'next/script';
 
@@ -109,7 +106,8 @@ export default async function PageLayout(props: {
 
   if (isEditMode) {
     initialData['/api/user/integrations'] = integrations;
-    initialData['/api/blocks/enabled-blocks'] = enabledBlocks;
+    initialData[`${process.env.NEXT_PUBLIC_API_URL}/blocks/enabled-blocks`] =
+      enabledBlocks;
     initialData[`/api/pages/${params.slug}/settings`] = pageSettings;
   }
 

@@ -1,7 +1,9 @@
-import 'server-only';
-
+import { scopes as tiktokScopes } from '@/app/api/services/tiktok/callback/utils';
+import prisma from '@/lib/prisma';
 import { createContact } from '@/notifications/create-contact';
+import { sendVerificationRequest } from '@/notifications/send-verification-request';
 import { sendWelcomeEmail } from '@/notifications/welcome-email';
+import TikTokProvider from '@auth/core/providers/tiktok';
 import { PrismaAdapter } from '@auth/prisma-adapter';
 import { track } from '@vercel/analytics/server';
 import NextAuth from 'next-auth';
@@ -9,11 +11,8 @@ import CredentialsProvider from 'next-auth/providers/credentials';
 import GitHubProvider from 'next-auth/providers/github';
 import GoogleProvider from 'next-auth/providers/google';
 import TwitterProvider from 'next-auth/providers/twitter';
-
-import { scopes as tiktokScopes } from '@/app/api/services/tiktok/callback/utils';
-import prisma from '@/lib/prisma';
-import { sendVerificationRequest } from '@/notifications/send-verification-request';
-import TikTokProvider from '@auth/core/providers/tiktok';
+import { cookies } from 'next/headers';
+import 'server-only';
 
 const temporaryTestUserForAppReview = {
   id: process.env.TMP_APP_REVIEW_USER_ID as string,
@@ -189,3 +188,18 @@ export const { auth, signIn, signOut, handlers, unstable_update } = NextAuth({
     },
   },
 });
+
+export const getUserJwt = async () => {
+  const cookieStore = await cookies();
+  const authToken = cookieStore.get(
+    process.env.NODE_ENV === 'production'
+      ? '__Secure-authjs.session-token'
+      : 'authjs.session-token'
+  );
+
+  if (authToken?.value) {
+    return authToken.value;
+  }
+
+  return null;
+};

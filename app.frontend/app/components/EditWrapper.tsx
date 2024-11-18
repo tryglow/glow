@@ -1,5 +1,13 @@
 'use client';
+
+import { PageConfig } from '@/app/[domain]/[slug]/grid';
+import { useEditModeContext } from '@/app/contexts/Edit';
+import { CoreBlock } from '@/components/CoreBlock';
+import { Skeleton } from '@/components/ui/skeleton';
+import { useToast } from '@/components/ui/use-toast';
 import { enableDragDropTouch } from '@/lib/polyfills/drag-drop-touch.esm.min.js';
+import { cn } from '@/lib/utils';
+import { captureException } from '@sentry/nextjs';
 import { useParams, useRouter } from 'next/navigation';
 import {
   ReactNode,
@@ -17,16 +25,6 @@ import {
 } from 'react-grid-layout';
 import useSWR from 'swr';
 import { v4 as uuidv4 } from 'uuid';
-
-import { PageConfig } from '@/app/[domain]/[slug]/grid';
-import { useEditModeContext } from '@/app/contexts/Edit';
-
-import { cn } from '@/lib/utils';
-
-import { CoreBlock } from '@/components/CoreBlock';
-import { Skeleton } from '@/components/ui/skeleton';
-import { useToast } from '@/components/ui/use-toast';
-import { captureException } from '@sentry/nextjs';
 
 interface Props {
   children: ReactNode[];
@@ -119,7 +117,7 @@ export function EditWrapper({ children, layoutProps }: Props) {
         </div>,
       ]);
 
-      const req = await fetch('/api/page/blocks/add', {
+      const req = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/blocks/add`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

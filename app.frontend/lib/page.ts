@@ -1,10 +1,8 @@
+import prisma from './prisma';
+import { auth } from '@/app/lib/auth';
+import { headerBlockDefaults } from '@tryglow/blocks';
 import { track } from '@vercel/analytics/server';
 import { randomUUID } from 'crypto';
-
-import { auth } from '@/app/lib/auth';
-
-import { defaults as headerDefaults } from './blocks/header/config';
-import prisma from './prisma';
 
 export const MAX_PAGES_PER_TEAM = 10;
 
@@ -63,7 +61,7 @@ export async function createNewPage(input: NewPageInput) {
           type: 'header',
           config: {},
           data: {
-            ...headerDefaults,
+            ...headerBlockDefaults,
             title: `@${input.slug}`,
           },
         },

@@ -1,11 +1,10 @@
-import { sendSubscriptionCancelledEmail } from '@/notifications/subscription-cancelled-email';
-import { sendSubscriptionCreatedEmail } from '@/notifications/subscription-created-email';
-import { NextResponse } from 'next/server';
-import Stripe from 'stripe';
-
 import prisma from '@/lib/prisma';
 import { prices } from '@/lib/stripe-prices';
+import { sendSubscriptionCancelledEmail } from '@/notifications/subscription-cancelled-email';
+import { sendSubscriptionCreatedEmail } from '@/notifications/subscription-created-email';
 import { captureException } from '@sentry/nextjs';
+import { NextResponse } from 'next/server';
+import Stripe from 'stripe';
 
 const stripe = new Stripe(process.env.STRIPE_API_SECRET_KEY as string);
 

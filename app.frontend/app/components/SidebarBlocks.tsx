@@ -6,8 +6,8 @@ import {
   SidebarInput,
   SidebarMenu,
 } from '@/app/components/ui/sidebar';
-import { Blocks } from '@/lib/blocks/types';
 import { fetcher } from '@/lib/fetch';
+import { Blocks } from '@tryglow/blocks';
 import { useEffect, useState } from 'react';
 import useSWR from 'swr';
 
@@ -15,7 +15,7 @@ export function SidebarBlocks() {
   const [search, setSearch] = useState('');
 
   const { data: enabledBlocks } = useSWR<Blocks[]>(
-    '/api/blocks/enabled-blocks',
+    `${process.env.NEXT_PUBLIC_API_URL}/blocks/enabled-blocks`,
     fetcher
   );
 

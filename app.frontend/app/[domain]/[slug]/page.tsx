@@ -1,15 +1,13 @@
-import { Integration } from '@tryglow/prisma';
-import type { Metadata, ResolvingMetadata } from 'next';
-import { headers } from 'next/headers';
-import { notFound, redirect } from 'next/navigation';
-
+import Grid, { PageConfig } from './grid';
+import { getPageLayout } from '@/app/api/pages/[pageSlug]/layout/actions';
 import { auth } from '@/app/lib/auth';
 import { renderBlock } from '@/lib/blocks/ui';
 import prisma from '@/lib/prisma';
 import { isUserAgentMobile } from '@/lib/user-agent';
-
-import { getPageLayout } from '@/app/api/pages/[pageSlug]/layout/actions';
-import Grid, { PageConfig } from './grid';
+import { Integration } from '@tryglow/prisma';
+import type { Metadata, ResolvingMetadata } from 'next';
+import { headers } from 'next/headers';
+import { notFound, redirect } from 'next/navigation';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;

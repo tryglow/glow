@@ -1,7 +1,6 @@
 import createMDX from '@next/mdx';
-import type { NextConfig } from 'next';
-
 import { withSentryConfig } from '@sentry/nextjs';
+import type { NextConfig } from 'next';
 
 const withMDX = createMDX();
 
@@ -10,6 +9,10 @@ const nextConfig: NextConfig = {
     {
       source: '/',
       destination: '/i/landing-page',
+    },
+    {
+      source: '/new-api/:path*',
+      destination: 'http://localhost:3001/:path*',
     },
   ],
   redirects: async () => [

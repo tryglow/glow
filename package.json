@@ -27,7 +27,7 @@
     "prod:deploy:prisma": "prisma generate && prisma migrate deploy",
     "prod:build:api": "turbo run build --filter=@tryglow/api",
     "start:api": "turbo run start --filter=@tryglow/api",
-    "dev": "turbo watch dev",
+    "dev": "turbo watch dev:frontend dev:api",
     "lint": "turbo lint"
   },
   "packageManager": "npm@10.2.0"
