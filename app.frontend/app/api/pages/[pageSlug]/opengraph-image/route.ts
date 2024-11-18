@@ -1,11 +1,7 @@
-import 'server-only';
-
 import { getPageTheme } from '@/app/api/pages/[pageSlug]/theme/actions';
-import {
-  HeaderBlockConfig,
-  defaults as headerDefaults,
-} from '@/lib/blocks/header/config';
 import prisma from '@/lib/prisma';
+import { HeaderBlockConfig, headerBlockDefaults } from '@tryglow/blocks';
+import 'server-only';
 
 const getHeaderBlock = async (pageSlug: string) => {
   const header = await prisma.block.findFirst({
@@ -61,7 +57,7 @@ export async function GET(
 
   let avatarSrc = headerBlockData?.avatar?.src;
 
-  if (avatarSrc !== headerDefaults.avatar.src) {
+  if (avatarSrc !== headerBlockDefaults.avatar.src) {
     avatarSrc = `${avatarSrc}.png`;
   }
 

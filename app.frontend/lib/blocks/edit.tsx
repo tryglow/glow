@@ -1,5 +1,3 @@
-import { JSXElementConstructor } from 'react';
-
 import { EditForm as ContentEditForm } from './content/form';
 import { EditForm as GithubCommitsThisMonthForm } from './github-commits-this-month/form';
 import { EditForm as HeaderForm } from './header/form';
@@ -15,9 +13,10 @@ import { EditForm as StackForm } from './stack/form';
 import { EditForm as ThreadsFollowerCountForm } from './threads-follower-count/form';
 import { EditForm as TikTokFollowerCountForm } from './tiktok-follower-count/form';
 import { EditForm as TikTokLatestPostForm } from './tiktok-latest-post/form';
-import { Blocks } from './types';
 import { EditForm as WaitlistEmailForm } from './waitlist-email/form';
 import { EditForm as YouTubeForm } from './youtube/form';
+import { Blocks } from '@tryglow/blocks';
+import { JSXElementConstructor } from 'react';
 
 export const editForms: Record<Blocks, JSXElementConstructor<any>> = {
   'link-box': LinkBoxForm,

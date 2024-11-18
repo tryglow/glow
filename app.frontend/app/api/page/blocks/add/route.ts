@@ -1,9 +1,7 @@
-import { track } from '@vercel/analytics/server';
-
 import { auth } from '@/app/lib/auth';
-import { blocksConfig } from '@/lib/blocks/config';
-import { Blocks } from '@/lib/blocks/types';
 import prisma from '@/lib/prisma';
+import { blocks, Blocks } from '@tryglow/blocks';
+import { track } from '@vercel/analytics/server';
 
 export async function POST(req: Request) {
   const session = await auth();
@@ -73,7 +71,7 @@ export async function POST(req: Request) {
     });
   }
 
-  const defaultData = blocksConfig[block.type as Blocks].defaults;
+  const defaultData = blocks[block.type as Blocks].defaults;
 
   const newBlock = await prisma.block.create({
     data: {

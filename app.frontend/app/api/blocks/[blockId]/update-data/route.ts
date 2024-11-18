@@ -1,10 +1,8 @@
-import { ValidationError } from 'yup';
-
 import { auth } from '@/app/lib/auth';
-import { blocksConfig } from '@/lib/blocks/config';
-import { Blocks } from '@/lib/blocks/types';
 import prisma from '@/lib/prisma';
 import { captureException } from '@sentry/nextjs';
+import { blocks, Blocks } from '@tryglow/blocks';
+import { ValidationError } from 'yup';
 
 export async function POST(
   req: Request,
@@ -57,7 +55,7 @@ export async function POST(
     });
   }
 
-  const schema = blocksConfig[block.type as Blocks].schema;
+  const schema = blocks[block.type as Blocks].schema;
 
   if (!schema) {
     return Response.json({

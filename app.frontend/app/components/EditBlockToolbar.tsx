@@ -1,17 +1,14 @@
 'use client';
 
-import { PencilSquareIcon, TrashIcon } from '@heroicons/react/24/outline';
-import { useParams, useRouter } from 'next/navigation';
-import useSWR from 'swr';
-
 import { PageConfig } from '@/app/[domain]/[slug]/grid';
-
-import { Blocks } from '@/lib/blocks/types';
-
 import { useSidebar } from '@/app/components/ui/sidebar';
 import { useEditModeContext } from '@/app/contexts/Edit';
 import { useToast } from '@/components/ui/use-toast';
+import { PencilSquareIcon, TrashIcon } from '@heroicons/react/24/outline';
 import { captureException } from '@sentry/nextjs';
+import { Blocks } from '@tryglow/blocks';
+import { useParams, useRouter } from 'next/navigation';
+import useSWR from 'swr';
 
 interface Props {
   blockId: string;

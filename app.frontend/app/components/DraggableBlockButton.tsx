@@ -1,8 +1,3 @@
-import { useSidebar } from '@/app/components/ui/sidebar';
-import { useEditModeContext } from '@/app/contexts/Edit';
-
-import { Blocks } from '@/lib/blocks/types';
-
 import dragIcon from '@/app/assets/ui/drag.svg';
 import blockContentIcon from '@/app/assets/ui/type-content.svg';
 import blockGithubCommitsThisMonthIcon from '@/app/assets/ui/type-github-commits-this-month.svg';
@@ -18,6 +13,9 @@ import blockStackIcon from '@/app/assets/ui/type-stack.svg';
 import blockThreadsFollowerCountIcon from '@/app/assets/ui/type-threads-follower-count.svg';
 import blockWaitlistEmailIcon from '@/app/assets/ui/type-waitlist-email.svg';
 import blockYoutubeIcon from '@/app/assets/ui/type-youtube.svg';
+import { useSidebar } from '@/app/components/ui/sidebar';
+import { useEditModeContext } from '@/app/contexts/Edit';
+import { Blocks } from '@tryglow/blocks';
 import Image from 'next/image';
 
 export const config: Record<

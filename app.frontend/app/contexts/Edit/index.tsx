@@ -1,6 +1,6 @@
 'use client';
 
-import { Blocks } from '@/lib/blocks/types';
+import { Blocks } from '@tryglow/blocks';
 import {
   ReactNode,
   createContext,

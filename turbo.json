@@ -76,6 +76,7 @@
     },
     "start:api": {
       "dependsOn": ["build:api"],
+      "env": ["DATABASE_URL", "DIRECT_URL"],
       "inputs": ["$TURBO_DEFAULT$", ".env"]
     },
     "db:generate": {

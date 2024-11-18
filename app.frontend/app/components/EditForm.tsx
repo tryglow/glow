@@ -1,10 +1,8 @@
-import useSWR from 'swr';
-
-import { editForms } from '@/lib/blocks/edit';
-import { Blocks } from '@/lib/blocks/types';
-
 import { toast } from '@/components/ui/use-toast';
+import { editForms } from '@/lib/blocks/edit';
 import { captureException } from '@sentry/nextjs';
+import { Blocks } from '@tryglow/blocks';
+import useSWR from 'swr';
 
 interface Props {
   onClose: () => void;
