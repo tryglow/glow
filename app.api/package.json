@@ -6,21 +6,23 @@
   "license": "MIT",
   "dependencies": {
     "@auth/core": "^0.34.1",
+    "@auth/express": "^0.8.4",
     "@dotenv-run/esbuild": "^1.4.0",
     "@dotenvx/dotenvx": "^1.24.0",
-    "@fastify/basic-auth": "^5.1.1",
-    "@fastify/cors": "^9.0.1",
-    "@fastify/rate-limit": "^9.1.0",
-    "@fastify/sensible": "^5.6.0",
+    "@fastify/basic-auth": "^6.0.1",
+    "@fastify/cors": "^10.0.1",
+    "@fastify/express": "^4.0.1",
+    "@fastify/sensible": "^6.0.1",
     "@sentry/cli": "2.28.0",
     "@sentry/node": "^8.10.0",
     "@sentry/types": "^8.7.0",
     "@tryglow/prisma": "*",
+    "@tryglow/blocks": "*",
     "cross-env": "^7.0.3",
     "dotenv": "^16.4.5",
     "esbuild": "^0.21.3",
-    "fastify": "^4.27.0",
-    "fastify-cli": "^6.1.1",
+    "fastify": "^5.1.0",
+    "fastify-cli": "^7.0.1",
     "safe-await": "^2.0.0",
     "tsx": "^4.16.0",
     "zod": "^3.2"
@@ -30,10 +32,9 @@
     "typescript": "^5"
   },
   "scripts": {
-    "dev": "dotenvx run -- npx tsx watch src/index.ts",
-    "start": "node dist/index.js",
-    "build": "node build.js && npm run sentry:sourcemaps",
-    "generate": "npx tsx src/lib/generate-openapi.ts",
+    "dev:api": "dotenvx run -- tsx watch src .env",
+    "start:api": "node dist/index.js",
+    "build:api": "node build.js && npm run sentry:sourcemaps",
     "sentry:sourcemaps": "sentry-cli sourcemaps inject --org hyperdusk --project glow-api ./dist && sentry-cli sourcemaps upload ./dist --org hyperdusk --project glow-api"
   }
 }
