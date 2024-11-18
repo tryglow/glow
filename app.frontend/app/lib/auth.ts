@@ -29,6 +29,20 @@ export const { auth, signIn, signOut, handlers, unstable_update } = NextAuth({
     signIn: '/i/auth/signup',
     verifyRequest: '/i/auth/verify',
   },
+  cookies: {
+    sessionToken: {
+      name:
+        process.env.NODE_ENV === 'production'
+          ? `__Secure-next-auth.session-token`
+          : `next-auth.session-token`,
+      options: {
+        httpOnly: true,
+        sameSite: 'lax',
+        path: '/',
+        secure: process.env.NODE_ENV === 'production' ? true : false,
+      },
+    },
+  },
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID as string,
