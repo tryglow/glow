@@ -111,7 +111,7 @@ export default async function PageLayout(props: {
     initialData[`/api/pages/${params.slug}/settings`] = pageSettings;
   }
 
-  page?.blocks.forEach((block) => {
+  page?.blocks.forEach((block: any) => {
     initialData[`/api/blocks/${block.id}`] = {
       blockData: block.data,
     };
