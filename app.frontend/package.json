@@ -7,7 +7,7 @@
     "build:frontend": "next build",
     "start:frontend": "next start",
     "lint": "next lint",
-    "vercel:build": "prisma generate && prisma migrate deploy && next build"
+    "vercel:build": "prisma generate --no-engine && prisma migrate deploy && next build"
   },
   "prisma": {
     "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
