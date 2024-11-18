@@ -36,8 +36,7 @@ export const { auth, signIn, signOut, handlers, unstable_update } = NextAuth({
           ? `__Secure-next-auth.session-token`
           : `next-auth.session-token`,
       options: {
-        domain:
-          process.env.NODE_ENV === 'production' ? '.glow.as' : 'localhost:3000',
+        domain: process.env.NODE_ENV === 'production' ? '.glow.as' : undefined,
         httpOnly: true,
         sameSite: 'lax',
         path: '/',
