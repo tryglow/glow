@@ -73,7 +73,8 @@
         "SENTRY_AUTH_TOKEN",
         "SENTRY_DSN",
         "AUTH_SECRET",
-        "NODE_ENV"
+        "NODE_ENV",
+        "AUTH_TRUST_HOST"
       ],
       "inputs": ["$TURBO_DEFAULT$", ".env"]
     },
@@ -83,7 +84,13 @@
     },
     "start:api": {
       "dependsOn": ["build:api"],
-      "env": ["DATABASE_URL", "DIRECT_URL", "AUTH_SECRET", "NODE_ENV"],
+      "env": [
+        "DATABASE_URL",
+        "DIRECT_URL",
+        "AUTH_SECRET",
+        "NODE_ENV",
+        "AUTH_TRUST_HOST"
+      ],
       "inputs": ["$TURBO_DEFAULT$", ".env"]
     },
     "db:generate": {
