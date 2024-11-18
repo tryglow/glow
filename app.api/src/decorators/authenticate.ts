@@ -22,10 +22,8 @@ export async function authenticateDecorator(
   reply: FastifyReply
 ): Promise<{ user: { id: string } } | HttpError> {
   const authJwt = request.headers.authorization;
-  console.log('Node Env', process.env.NODE_ENV);
 
   if (authJwt && authJwt.startsWith('Bearer ')) {
-    console.log('Auth JWT', authJwt);
     try {
       const decodedJwt = await decode<JWT>({
         token: authJwt.replace('Bearer ', ''),
