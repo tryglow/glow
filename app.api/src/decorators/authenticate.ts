@@ -30,7 +30,7 @@ export async function authenticateDecorator(
         secret: process.env.AUTH_SECRET as string,
         salt:
           process.env.NODE_ENV === 'production'
-            ? '__Secure-authjs.session-token'
+            ? '__Secure-next-auth.session-token'
             : 'authjs.session-token',
       });
 
