@@ -39,6 +39,17 @@ fastify.decorate('authenticate', authenticateDecorator);
 
 Sentry.setupFastifyErrorHandler(fastify);
 
+fastify.addHook('onRequest', async (request, reply) => {
+  request.startTime = Date.now();
+});
+
+fastify.addHook('onResponse', async (request, reply) => {
+  if (request.startTime) {
+    const responseTime = Date.now() - request.startTime;
+    console.log(`Request to ${request.raw.url} took ${responseTime}ms`);
+  }
+});
+
 const start = async () => {
   try {
     const port = process.env.PORT ? parseInt(process.env.PORT) : 3001;
