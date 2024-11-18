@@ -122,6 +122,7 @@ export function EditWrapper({ children, layoutProps }: Props) {
         headers: {
           'Content-Type': 'application/json',
         },
+        credentials: 'include',
         body: JSON.stringify({
           block: {
             id: newItemId,
