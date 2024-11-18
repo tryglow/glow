@@ -26,13 +26,25 @@ async function getBlockHandler(
 ) {
   const { blockId } = request.params;
 
-  const session = await getSession(request);
+  const session = await request.server.authenticate(request, response);
+
+  if (!session?.user) {
+    return response.status(401).send({
+      error: {
+        message: 'Unauthorized',
+      },
+    });
+  }
 
   const block = await getBlockById(blockId);
 
   if (!block?.page.publishedAt) {
     if (session?.currentTeamId !== block?.page.teamId) {
-      return response.status(404).send({});
+      return response.status(404).send({
+        error: {
+          message: 'Block not found',
+        },
+      });
     }
   }
 
@@ -45,19 +57,20 @@ async function postCreateBlockHandler(
   }>,
   response: FastifyReply
 ) {
-  const session = await getSession(request);
+  const session = await request.server.authenticate(request, response);
 
   if (!session?.user) {
     return response.status(401).send({
-      message: 'error',
-      data: null,
+      error: {
+        message: 'Unauthorized',
+      },
     });
   }
 
   const { block, pageSlug } = request.body;
 
   if (!block || !pageSlug) {
-    return Response.json({
+    return response.status(400).send({
       error: {
         message: 'Missing required fields',
       },
