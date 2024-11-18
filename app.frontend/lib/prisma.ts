@@ -1,18 +1,8 @@
+import { PrismaClient } from '@tryglow/prisma';
 import 'server-only';
 
-import { withAccelerate } from '@prisma/extension-accelerate';
-import { withOptimize } from '@prisma/extension-optimize';
-import { PrismaClient } from '@tryglow/prisma';
-
 const prismaClientSingleton = () => {
-  if (!process.env.PRISMA_OPTIMIZE_API_KEY) {
-    console.warn('Prisma Optimize is not enabled');
-    return new PrismaClient().$extends(withAccelerate());
-  }
-
-  return new PrismaClient()
-    .$extends(withOptimize({ apiKey: process.env.PRISMA_OPTIMIZE_API_KEY }))
-    .$extends(withAccelerate());
+  return new PrismaClient();
 };
 
 type PrismaClientSingleton = ReturnType<typeof prismaClientSingleton>;
