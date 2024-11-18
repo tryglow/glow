@@ -68,7 +68,13 @@
       "cache": false
     },
     "build:api": {
-      "env": ["PORT", "SENTRY_AUTH_TOKEN", "SENTRY_DSN", "AUTH_SECRET"],
+      "env": [
+        "PORT",
+        "SENTRY_AUTH_TOKEN",
+        "SENTRY_DSN",
+        "AUTH_SECRET",
+        "NODE_ENV"
+      ],
       "inputs": ["$TURBO_DEFAULT$", ".env"]
     },
     "start:frontend": {
@@ -77,7 +83,7 @@
     },
     "start:api": {
       "dependsOn": ["build:api"],
-      "env": ["DATABASE_URL", "DIRECT_URL", "AUTH_SECRET"],
+      "env": ["DATABASE_URL", "DIRECT_URL", "AUTH_SECRET", "NODE_ENV"],
       "inputs": ["$TURBO_DEFAULT$", ".env"]
     },
     "db:generate": {
