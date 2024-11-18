@@ -25,8 +25,8 @@
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate dev --preview-feature",
     "prod:deploy:prisma": "prisma generate && prisma migrate deploy",
-    "prod:build:api": "turbo run build --filter=@tryglow/api",
-    "start:api": "turbo run start --filter=@tryglow/api",
+    "prod:build:api": "turbo run build:api --filter=@tryglow/api",
+    "start:api": "turbo run start:api --filter=@tryglow/api",
     "dev": "turbo watch dev:frontend dev:api",
     "lint": "turbo lint"
   },
