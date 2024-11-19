@@ -1,6 +1,7 @@
 import './globals.css';
 import './react-grid-layout.scss';
-import { PostHogProvider } from '@/app/posthog-provider';
+import { auth } from '@/app/lib/auth';
+import { PostHogIdentify, PostHogProvider } from '@/app/posthog-provider';
 import { Toaster } from '@/components/ui/toaster';
 import { Analytics } from '@vercel/analytics/react';
 import { Metadata } from 'next';
@@ -37,11 +38,12 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const session = await auth();
   return (
     <html lang="en" className={saans.className}>
       <PostHogProvider>
@@ -49,6 +51,12 @@ export default function RootLayout({
           {children}
           <Toaster />
         </body>
+        {session?.user && (
+          <PostHogIdentify
+            userId={session.user.id}
+            teamId={session.currentTeamId}
+          />
+        )}
       </PostHogProvider>
       <Analytics />
     </html>
