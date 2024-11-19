@@ -2,27 +2,15 @@ import { getUserJwt } from '@/app/lib/auth';
 
 export const apiServerFetch = async (
   path: string,
-  requestOptions: RequestInit = {},
-  options?: {
-    requiresAuth?: boolean;
-  }
+  requestOptions: RequestInit = {}
 ) => {
   let jwt;
+  const headers: Record<string, string> =
+    (requestOptions.headers as Record<string, string>) || {};
 
-  if (options?.requiresAuth) {
-    jwt = await getUserJwt();
+  jwt = await getUserJwt();
 
-    if (!jwt) {
-      throw new Error('No JWT found');
-    }
-  }
-
-  const headers: Record<string, string> = requestOptions.headers as Record<
-    string,
-    string
-  >;
-
-  if (options?.requiresAuth) {
+  if (jwt) {
     headers.Authorization = `Bearer ${jwt}`;
   }
 

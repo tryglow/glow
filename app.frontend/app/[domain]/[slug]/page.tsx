@@ -1,5 +1,8 @@
 import Grid, { PageConfig } from './grid';
-import { getPageLayout } from '@/app/api/pages/[pageSlug]/layout/actions';
+import {
+  getPageIdBySlugOrDomain,
+  getPageLayout,
+} from '@/app/lib/actions/page-actions';
 import { auth } from '@/app/lib/auth';
 import { renderBlock } from '@/lib/blocks/ui';
 import prisma from '@/lib/prisma';
@@ -8,29 +11,21 @@ import { Integration } from '@tryglow/prisma';
 import type { Metadata, ResolvingMetadata } from 'next';
 import { headers } from 'next/headers';
 import { notFound, redirect } from 'next/navigation';
+import { useSWRConfig } from 'swr';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 export const dynamicParams = true;
 
-const getPageData = async ({
-  slug,
-  domain,
-}: {
-  slug?: string;
-  domain?: string;
-}) => {
+const getPageData = async (pageId: string) => {
   const session = await auth();
 
   const user = session?.user;
 
-  const tag = slug ? slug : domain?.replace('.', '-').replace('-', '_');
-
   const page = await prisma.page.findUnique({
     where: {
       deletedAt: null,
-      slug,
-      customDomain: domain ? decodeURIComponent(domain) : undefined,
+      id: pageId,
     },
     include: {
       blocks: true,
@@ -49,10 +44,9 @@ export async function generateMetadata(
   const isCustomDomain =
     decodeURIComponent(params.domain) !== process.env.NEXT_PUBLIC_ROOT_DOMAIN;
 
-  const page = await getPageData({
-    slug: isCustomDomain ? undefined : params.slug,
-    domain: isCustomDomain ? params.domain : undefined,
-  });
+  const pageId = await getPageIdBySlugOrDomain(params.slug, params.domain);
+
+  const page = await getPageData(pageId);
 
   const parentMeta = await parent;
 
@@ -101,9 +95,11 @@ export default async function Page(props: { params: Promise<Params> }) {
     domain: useSlug ? undefined : params.domain,
   };
 
+  const pageId = await getPageIdBySlugOrDomain(params.slug, params.domain);
+
   const [layout, page] = await Promise.all([
-    getPageLayout(commonParams),
-    getPageData(commonParams),
+    getPageLayout(pageId),
+    getPageData(pageId),
   ]);
 
   if (!page) {

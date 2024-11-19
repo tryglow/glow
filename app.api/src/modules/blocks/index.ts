@@ -39,7 +39,9 @@ async function getBlockHandler(
 ) {
   const { blockId } = request.params;
 
-  const session = await request.server.authenticate(request, response);
+  const session = await request.server.authenticate(request, response, {
+    throwError: true,
+  });
 
   if (!session?.user) {
     return response.status(401).send({
@@ -149,7 +151,9 @@ async function getEnabledBlocksHandler(
   request: FastifyRequest,
   response: FastifyReply
 ) {
-  const session = await request.server.authenticate(request, response);
+  const session = await request.server.authenticate(request, response, {
+    throwError: false,
+  });
 
   if (!session?.user) {
     return response.status(401).send([]);

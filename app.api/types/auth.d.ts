@@ -20,7 +20,10 @@ declare module 'fastify' {
   interface FastifyInstance {
     authenticate: (
       request: FastifyRequest,
-      reply: FastifyReply
+      reply: FastifyReply,
+      options?: {
+        throwError?: boolean;
+      }
     ) => Promise<{ user: { id: string } } | HttpError>;
   }
 }

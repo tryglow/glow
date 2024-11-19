@@ -42,3 +42,13 @@ export async function getPageLayout(pageId: string) {
 
   return data;
 }
+
+export async function getPageBlocks(pageId: string) {
+  const res = await apiServerFetch(`/pages/${pageId}/blocks`, {
+    method: 'GET',
+  });
+
+  const data = await res.json();
+
+  return data;
+}

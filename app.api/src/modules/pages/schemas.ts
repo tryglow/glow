@@ -73,3 +73,20 @@ export const getPageThemeSchema = {
     },
   },
 };
+
+export const getPageBlocksSchema = {
+  response: {
+    200: {
+      type: 'object',
+      properties: {
+        blocks: {
+          type: 'array',
+          additionalProperties: true,
+        },
+        currentUserIsOwner: {
+          type: 'boolean',
+        },
+      },
+    },
+  },
+};

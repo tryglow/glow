@@ -3,7 +3,9 @@ import { getPageSettings } from '@/app/api/pages/[pageSlug]/settings/actions';
 import { getTeamIntegrations } from '@/app/api/user/integrations/actions';
 import { GlowProviders } from '@/app/components/GlowProviders';
 import { UserOnboardingDialog } from '@/app/components/UserOnboardingDialog';
+import { getEnabledBlocks } from '@/app/lib/actions/blocks';
 import {
+  getPageBlocks,
   getPageIdBySlugOrDomain,
   getPageLayout,
   getPageTheme,
@@ -14,54 +16,12 @@ import {
   TeamOnboardingDialog,
 } from '@/components/PremiumOnboardingDialog';
 import { Button } from '@/components/ui/button';
-import { getEnabledBlocks } from '@/lib/actions';
-import prisma from '@/lib/prisma';
+import { Integration } from '@prisma/client';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import Script from 'next/script';
 
 export const dynamic = 'force-dynamic';
-
-const getPageData = async ({
-  slug,
-  domain,
-}: {
-  slug?: string;
-  domain?: string;
-}) => {
-  let isEditMode = false;
-
-  const session = await auth();
-
-  const user = session?.user;
-
-  const data = await prisma.page.findUnique({
-    where: {
-      slug,
-      customDomain: domain ? decodeURIComponent(domain) : undefined,
-      deletedAt: null,
-    },
-    include: {
-      blocks: true,
-      user: !!user,
-    },
-  });
-
-  if (!data) notFound();
-
-  if (user && data?.teamId === session?.currentTeamId) {
-    isEditMode = true;
-  }
-
-  if (data.publishedAt == null && !isEditMode) {
-    return notFound();
-  }
-
-  return {
-    data,
-    isEditMode,
-  };
-};
 
 export default async function PageLayout(props: {
   children: React.ReactNode;
@@ -86,37 +46,40 @@ export default async function PageLayout(props: {
 
   const pageId = await getPageIdBySlugOrDomain(params.slug, params.domain);
 
-  const [
-    { data: page, isEditMode },
-    integrations,
-    pageLayout,
-    pageTheme,
-    pageSettings,
-    enabledBlocks,
-  ] = await Promise.all([
-    getPageData(commonParams),
-    getTeamIntegrations(),
-    getPageLayout(pageId),
-    getPageTheme(pageId),
-    getPageSettings(commonParams),
-    getEnabledBlocks(),
-  ]);
+  if (!pageId) {
+    notFound();
+  }
 
-  const currentUserIsOwner = pageTheme?.teamId === session?.currentTeamId;
+  let integrations: any;
+  let enabledBlocks: any;
+
+  if (session?.user) {
+    [integrations, enabledBlocks] = await Promise.all([
+      getTeamIntegrations(),
+      getEnabledBlocks(),
+    ]);
+  }
+
+  const [{ blocks, currentUserIsOwner }, pageLayout, pageTheme, pageSettings] =
+    await Promise.all([
+      getPageBlocks(pageId),
+      getPageLayout(pageId),
+      getPageTheme(pageId),
+      getPageSettings(commonParams),
+    ]);
 
   const initialData: Record<string, any> = {
-    // [`/api/pages/${params.slug}/layout`]: layout,
     [`/pages/${pageId}/layout`]: pageLayout,
     [`/pages/${pageId}/theme`]: pageTheme,
   };
 
-  if (isEditMode) {
+  if (currentUserIsOwner) {
     initialData['/api/user/integrations'] = integrations;
     initialData[`/blocks/enabled-blocks`] = enabledBlocks;
     initialData[`/api/pages/${params.slug}/settings`] = pageSettings;
   }
 
-  page?.blocks.forEach((block: any) => {
+  blocks.forEach((block: any) => {
     initialData[`/api/blocks/${block.id}`] = {
       blockData: block.data,
     };
@@ -129,9 +92,9 @@ export default async function PageLayout(props: {
       pageId={pageId}
       value={{
         fallback: initialData,
-        revalidateOnFocus: isEditMode,
-        revalidateOnReconnect: isEditMode,
-        revalidateIfStale: isEditMode,
+        revalidateOnFocus: currentUserIsOwner,
+        revalidateOnReconnect: currentUserIsOwner,
+        revalidateIfStale: currentUserIsOwner,
       }}
     >
       {!session?.user && (
@@ -176,14 +139,15 @@ export default async function PageLayout(props: {
         </>
       )}
 
-      {!isEditMode && process.env.NEXT_PUBLIC_TINYBIRD_TRACKER_TOKEN && (
-        <Script
-          defer
-          src="https://unpkg.com/@tinybirdco/flock.js"
-          data-host="https://api.us-west-2.aws.tinybird.co"
-          data-token={process.env.NEXT_PUBLIC_TINYBIRD_TRACKER_TOKEN}
-        />
-      )}
+      {!currentUserIsOwner &&
+        process.env.NEXT_PUBLIC_TINYBIRD_TRACKER_TOKEN && (
+          <Script
+            defer
+            src="https://unpkg.com/@tinybirdco/flock.js"
+            data-host="https://api.us-west-2.aws.tinybird.co"
+            data-token={process.env.NEXT_PUBLIC_TINYBIRD_TRACKER_TOKEN}
+          />
+        )}
     </GlowProviders>
   );
 }

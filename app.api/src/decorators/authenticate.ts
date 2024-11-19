@@ -1,5 +1,5 @@
 import fastify from '@/index';
-import { getSession } from '@/lib/auth';
+import { cookieName, getSession } from '@/lib/auth';
 import { decode } from '@auth/core/jwt';
 import { HttpError } from '@fastify/sensible';
 import { captureException } from '@sentry/node';
@@ -19,8 +19,13 @@ interface JWT {
 
 export async function authenticateDecorator(
   request: FastifyRequest,
-  reply: FastifyReply
-): Promise<{ user: { id: string } } | HttpError> {
+  reply: FastifyReply,
+  options: {
+    throwError?: boolean;
+  } = {
+    throwError: true,
+  }
+): Promise<{ user: { id: string }; currentTeamId: string } | HttpError | null> {
   const authJwt = request.headers.authorization;
 
   if (authJwt && authJwt.startsWith('Bearer ')) {
@@ -28,10 +33,7 @@ export async function authenticateDecorator(
       const decodedJwt = await decode<JWT>({
         token: authJwt.replace('Bearer ', ''),
         secret: process.env.AUTH_SECRET as string,
-        salt:
-          process.env.NODE_ENV === 'production'
-            ? '__Secure-next-auth.session-token'
-            : 'authjs.session-token',
+        salt: cookieName,
       });
 
       if (decodedJwt?.sub) {
@@ -39,11 +41,16 @@ export async function authenticateDecorator(
           user: {
             id: decodedJwt.sub,
           },
+          currentTeamId: decodedJwt.teamId,
         };
       }
     } catch (error) {
       captureException(error);
-      throw fastify.httpErrors.unauthorized();
+      if (options.throwError) {
+        throw fastify.httpErrors.unauthorized();
+      } else {
+        return null;
+      }
     }
   }
 
@@ -55,12 +62,21 @@ export async function authenticateDecorator(
         user: {
           id: session.user.id,
         },
+        currentTeamId: session.currentTeamId,
       };
     }
   } catch (error) {
     captureException(error);
-    throw fastify.httpErrors.unauthorized();
+    if (options.throwError) {
+      throw fastify.httpErrors.unauthorized();
+    } else {
+      return null;
+    }
   }
 
-  throw fastify.httpErrors.unauthorized();
+  if (options.throwError) {
+    throw fastify.httpErrors.unauthorized();
+  } else {
+    return null;
+  }
 }

@@ -157,6 +157,7 @@ export const GlowProviders = ({
 }: Props) => {
   const cache = new Map();
   cache.set('pageId', pageId);
+
   return (
     <SWRConfig value={{ ...value, fetcher, provider: () => cache }}>
       <SessionProvider session={session}>

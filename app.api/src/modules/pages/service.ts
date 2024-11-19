@@ -50,3 +50,27 @@ export async function getPageIdBySlugOrDomain(slug: string, domain: string) {
 
   return page?.id;
 }
+
+export async function getPageBlocks(pageId: string) {
+  const page = await prisma.page.findUnique({
+    where: {
+      id: pageId,
+      deletedAt: null,
+    },
+    select: {
+      teamId: true,
+      publishedAt: true,
+      blocks: {
+        select: {
+          id: true,
+          data: true,
+          type: true,
+          config: true,
+          integrationId: true,
+        },
+      },
+    },
+  });
+
+  return page;
+}

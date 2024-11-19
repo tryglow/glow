@@ -21,6 +21,11 @@ const temporaryTestUserForAppReview = {
   password: process.env.TMP_APP_REVIEW_USER_PASSWORD,
 };
 
+const cookieName =
+  process.env.NODE_ENV === 'production'
+    ? '__Secure-next-auth.session-token'
+    : 'authjs.session-token';
+
 export const { auth, signIn, signOut, handlers, unstable_update } = NextAuth({
   secret: process.env.NEXTAUTH_SECRET,
   adapter: PrismaAdapter(prisma),
@@ -31,10 +36,7 @@ export const { auth, signIn, signOut, handlers, unstable_update } = NextAuth({
   },
   cookies: {
     sessionToken: {
-      name:
-        process.env.NODE_ENV === 'production'
-          ? `__Secure-next-auth.session-token`
-          : `next-auth.session-token`,
+      name: cookieName,
       options: {
         domain: process.env.NODE_ENV === 'production' ? '.glow.as' : undefined,
         httpOnly: true,
@@ -206,11 +208,7 @@ export const { auth, signIn, signOut, handlers, unstable_update } = NextAuth({
 
 export const getUserJwt = async () => {
   const cookieStore = await cookies();
-  const authToken = cookieStore.get(
-    process.env.NODE_ENV === 'production'
-      ? '__Secure-authjs.session-token'
-      : 'authjs.session-token'
-  );
+  const authToken = cookieStore.get(cookieName);
 
   if (authToken?.value) {
     return authToken.value;

@@ -1,13 +1,21 @@
-import { getPageTheme } from '@/app/api/pages/[pageSlug]/theme/actions';
+import { getPageTheme } from '@/app/lib/actions/page-actions';
 import prisma from '@/lib/prisma';
 import { HeaderBlockConfig, headerBlockDefaults } from '@tryglow/blocks';
 import 'server-only';
 
-const getHeaderBlock = async (pageSlug: string) => {
+const getPageId = async (pageSlug: string) => {
+  const page = await prisma.page.findUnique({
+    where: { slug: pageSlug },
+  });
+
+  return page?.id;
+};
+
+const getHeaderBlock = async (pageId: string) => {
   const header = await prisma.block.findFirst({
     where: {
       page: {
-        slug: pageSlug,
+        id: pageId,
         deletedAt: null,
       },
       type: 'header',
@@ -40,9 +48,19 @@ export async function GET(
     });
   }
 
+  const pageId = await getPageId(pageSlug);
+
+  if (!pageId) {
+    return Response.json({
+      error: {
+        message: 'Page not found',
+      },
+    });
+  }
+
   const [pageTheme, headerBlock] = await Promise.all([
-    getPageTheme({ slug: params.pageSlug }),
-    getHeaderBlock(pageSlug),
+    getPageTheme(pageId),
+    getHeaderBlock(pageId),
   ]);
 
   if (!headerBlock || !headerBlock?.page.publishedAt) {

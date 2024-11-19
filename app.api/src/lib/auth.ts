@@ -4,16 +4,18 @@ import {
 } from '@auth/express';
 import { FastifyRequest } from 'fastify';
 
+export const cookieName =
+  process.env.NODE_ENV === 'production'
+    ? '__Secure-next-auth.session-token'
+    : 'authjs.session-token';
+
 export const authConfig: ExpressAuthConfig = {
   secret: process.env.AUTH_SECRET,
   providers: [],
   session: { strategy: 'jwt', maxAge: 24 * 60 * 60 },
   cookies: {
     sessionToken: {
-      name:
-        process.env.NODE_ENV === 'production'
-          ? `__Secure-next-auth.session-token`
-          : `next-auth.session-token`,
+      name: cookieName,
     },
   },
   callbacks: {
