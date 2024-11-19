@@ -51,3 +51,22 @@ export const deleteBlockSchema = {
     },
   },
 };
+
+export const updateBlockDataSchema = {
+  response: {
+    200: {
+      type: 'object',
+      properties: {
+        id: { type: 'string' },
+        updatedAt: { type: 'string' },
+      },
+      additionalProperties: false,
+    },
+  },
+  body: {
+    type: 'object',
+    properties: {
+      newData: { type: 'object' },
+    },
+  },
+};

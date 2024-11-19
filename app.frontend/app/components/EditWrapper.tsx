@@ -2,6 +2,7 @@
 
 import { PageConfig } from '@/app/[domain]/[slug]/grid';
 import { useEditModeContext } from '@/app/contexts/Edit';
+import { InternalApi } from '@/app/lib/api';
 import { CoreBlock } from '@/components/CoreBlock';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useToast } from '@/components/ui/use-toast';
@@ -123,28 +124,19 @@ export function EditWrapper({ children, layoutProps }: Props) {
         </div>,
       ]);
 
-      const req = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/blocks/add`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
+      const response = await InternalApi.post('/blocks/add', {
+        block: {
+          id: newItemId,
+          type: isMobile ? layoutItem.type : draggingItem.type,
         },
-        credentials: 'include',
-        body: JSON.stringify({
-          block: {
-            id: newItemId,
-            type: isMobile ? layoutItem.type : draggingItem.type,
-          },
-          pageSlug: params.slug,
-        }),
+        pageSlug: params.slug,
       });
 
-      const res = await req.json();
-
-      if (res.error) {
+      if (response.error) {
         toast({
           variant: 'error',
           title: 'Something went wrong',
-          description: res.error.message,
+          description: response.error.message,
         });
         return;
       }

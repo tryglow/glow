@@ -1,3 +1,4 @@
+import { InternalApi } from '@/app/lib/api';
 import { toast } from '@/components/ui/use-toast';
 import { editForms } from '@/lib/blocks/edit';
 import { internalApiFetcher } from '@/lib/fetch';
@@ -19,17 +20,14 @@ export function EditForm({ onClose, blockId, blockType }: Props) {
 
   const onSave = async (values: any) => {
     try {
-      const req = await fetch(`/api/blocks/${blockId}/update-data`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
+      const response = await InternalApi.post(
+        `/blocks/${blockId}/update-data`,
+        {
           newData: values,
-        }),
-      });
+        }
+      );
 
-      if (req.ok) {
+      if (response) {
         mutate(values, {
           optimisticData: values,
         });

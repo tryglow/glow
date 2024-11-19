@@ -136,3 +136,40 @@ export async function deleteBlockById(id: string, userId: string) {
     });
   }
 }
+
+export async function updateBlockData(blockId: string, newData: object) {
+  const block = await prisma.block.findUnique({
+    where: {
+      id: blockId,
+    },
+    select: {
+      type: true,
+    },
+  });
+
+  if (!block) {
+    throw new Error('Block not found');
+  }
+  const schema = blocks[block.type as Blocks].schema;
+
+  if (!schema) {
+    throw new Error('Block schema not found');
+  }
+
+  try {
+    const parsedData = await schema.validate(newData, { strict: true });
+
+    const updatedBlock = await prisma.block.update({
+      where: {
+        id: blockId,
+      },
+      data: {
+        data: parsedData,
+      },
+    });
+
+    return updatedBlock;
+  } catch (error) {
+    throw new Error('Error updating block data');
+  }
+}

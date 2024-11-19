@@ -4,12 +4,15 @@ import {
   deleteBlockSchema,
   getBlockSchema,
   getEnabledBlockSchema,
+  updateBlockDataSchema,
 } from './schemas';
 import {
+  checkUserHasAccessToBlock,
   createBlock,
   deleteBlockById,
   getBlockById,
   getEnabledBlocks,
+  updateBlockData,
 } from './service';
 import prisma from '@/lib/prisma';
 import { FastifyInstance, FastifyReply } from 'fastify';
@@ -30,6 +33,11 @@ export default async function blocksRoutes(
     '/enabled-blocks',
     { schema: getEnabledBlockSchema },
     getEnabledBlocksHandler
+  );
+  fastify.post(
+    '/:blockId/update-data',
+    { schema: updateBlockDataSchema },
+    updateBlockDataHandler
   );
 }
 
@@ -230,6 +238,41 @@ async function deleteBlockHandler(
     return response.status(400).send({
       error: {
         message: 'Sorry, there was an error deleting this block',
+      },
+    });
+  }
+}
+
+async function updateBlockDataHandler(
+  request: FastifyRequest<{
+    Params: { blockId: string };
+    Body: { newData: object };
+  }>,
+  response: FastifyReply
+) {
+  const session = await request.server.authenticate(request, response);
+
+  const { blockId } = request.params;
+
+  const { newData } = request.body;
+
+  const hasAccess = await checkUserHasAccessToBlock(blockId, session.user.id);
+
+  if (!hasAccess) {
+    return response.status(401).send({});
+  }
+
+  try {
+    const updatedBlock = await updateBlockData(blockId, newData);
+
+    return response.status(200).send({
+      id: updatedBlock.id,
+      updatedAt: updatedBlock.updatedAt,
+    });
+  } catch (error) {
+    return response.status(400).send({
+      error: {
+        message: 'Error updating block data',
       },
     });
   }
