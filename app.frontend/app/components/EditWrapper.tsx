@@ -217,26 +217,16 @@ export function EditWrapper({ children, layoutProps }: Props) {
     }
 
     try {
-      // Send the updated layout to the server
-      const req = await fetch('/api/page/config/update', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          pageSlug: params.slug,
-          newLayout: nextLayout,
-        }),
+      const response = await InternalApi.post(`/pages/${pageId}/layout`, {
+        newLayout: nextLayout,
       });
 
-      const res = await req.json();
-
       // Handle server-side errors
-      if (res.error) {
+      if (response.error) {
         toast({
           variant: 'error',
           title: 'Something went wrong',
-          description: res.error.message,
+          description: response.error.message,
         });
         return;
       }

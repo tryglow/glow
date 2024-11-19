@@ -1,20 +1,22 @@
 'use strict';
 
-import { getSession } from '../../lib/auth';
 import {
   getCurrentUserTeamPagesSchema,
   getPageBlocksSchema,
   getPageLayoutSchema,
   getPageSettingsSchema,
   getPageThemeSchema,
+  updatePageLayoutSchema,
 } from './schemas';
 import {
+  checkUserHasAccessToPage,
   getPageBlocks,
   getPageIdBySlugOrDomain,
   getPageLayoutById,
   getPageSettings,
   getPagesForTeamId,
   getPageThemeById,
+  updatePageLayout,
 } from './service';
 import { FastifyInstance, FastifyReply } from 'fastify';
 import { FastifyRequest } from 'fastify';
@@ -30,6 +32,12 @@ export default async function pagesRoutes(fastify: FastifyInstance, opts: any) {
     '/:pageId/layout',
     { schema: getPageLayoutSchema },
     getPageLayoutHandler
+  );
+
+  fastify.post(
+    '/:pageId/layout',
+    { schema: updatePageLayoutSchema },
+    updatePageLayoutHandler
   );
 
   fastify.get(
@@ -189,4 +197,28 @@ export async function getPageSettingsHandler(
   }
 
   return response.status(200).send(page);
+}
+
+async function updatePageLayoutHandler(
+  request: FastifyRequest<{
+    Params: { pageId: string };
+    Body: { newLayout: any };
+  }>,
+  response: FastifyReply
+) {
+  const session = await request.server.authenticate(request, response);
+
+  const { pageId } = request.params;
+
+  const userHasAccess = await checkUserHasAccessToPage(pageId, session.user.id);
+
+  if (!userHasAccess) {
+    return response.status(403).send({});
+  }
+
+  const { newLayout } = request.body;
+
+  const updatedPage = await updatePageLayout(pageId, newLayout);
+
+  return response.status(200).send(updatedPage);
 }

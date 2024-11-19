@@ -141,3 +141,16 @@ export const getPageSettingsSchema = {
     },
   },
 };
+
+export const updatePageLayoutSchema = {
+  response: {
+    200: {
+      type: 'object',
+      properties: {
+        id: {
+          type: 'string',
+        },
+      },
+    },
+  },
+};

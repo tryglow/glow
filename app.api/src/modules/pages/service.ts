@@ -111,3 +111,47 @@ export async function getPageSettings(pageId: string) {
 
   return page;
 }
+
+export async function updatePageLayout(
+  pageId: string,
+  newLayout: {
+    sm: any;
+    xxs: any;
+  }
+) {
+  const updatedPage = await prisma.page.update({
+    where: {
+      id: pageId,
+    },
+    data: {
+      config: newLayout.sm,
+      mobileConfig: newLayout.xxs,
+    },
+    select: {
+      id: true,
+    },
+  });
+
+  return updatedPage;
+}
+
+export async function checkUserHasAccessToPage(pageId: string, userId: string) {
+  const page = await prisma.page.count({
+    where: {
+      id: pageId,
+      team: {
+        members: {
+          some: {
+            userId,
+          },
+        },
+      },
+    },
+  });
+
+  if (page > 0) {
+    return true;
+  }
+
+  return false;
+}
