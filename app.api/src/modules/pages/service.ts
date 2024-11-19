@@ -89,3 +89,25 @@ export async function getPagesForTeamId(teamId: string) {
 
   return pages;
 }
+
+export async function getPageSettings(pageId: string) {
+  const page = await prisma.page.findUnique({
+    where: {
+      deletedAt: null,
+      id: pageId,
+    },
+    select: {
+      teamId: true,
+      id: true,
+      publishedAt: true,
+      slug: true,
+      metaTitle: true,
+      metaDescription: true,
+      backgroundImage: true,
+      themeId: true,
+      verifiedAt: true,
+    },
+  });
+
+  return page;
+}

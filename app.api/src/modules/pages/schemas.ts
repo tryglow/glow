@@ -107,3 +107,37 @@ export const getCurrentUserTeamPagesSchema = {
     },
   },
 };
+
+export const getPageSettingsSchema = {
+  response: {
+    200: {
+      type: 'object',
+      properties: {
+        id: {
+          type: 'string',
+        },
+        publishedAt: {
+          type: 'string',
+        },
+        slug: {
+          type: 'string',
+        },
+        metaTitle: {
+          type: 'string',
+        },
+        metaDescription: {
+          type: 'string',
+        },
+        backgroundImage: {
+          type: 'string',
+        },
+        themeId: {
+          type: 'string',
+        },
+        verifiedAt: {
+          type: 'string',
+        },
+      },
+    },
+  },
+};

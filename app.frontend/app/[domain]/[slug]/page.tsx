@@ -43,9 +43,13 @@ export async function generateMetadata(
   const isCustomDomain =
     decodeURIComponent(params.domain) !== process.env.NEXT_PUBLIC_ROOT_DOMAIN;
 
-  const pageId = await getPageIdBySlugOrDomain(params.slug, params.domain);
+  const corePage = await getPageIdBySlugOrDomain(params.slug, params.domain);
 
-  const page = await getPageData(pageId);
+  if (!corePage) {
+    return notFound();
+  }
+
+  const page = await getPageData(corePage.id);
 
   const parentMeta = await parent;
 
@@ -86,11 +90,15 @@ export default async function Page(props: { params: Promise<Params> }) {
 
   const isLoggedIn = !!session?.user;
 
-  const pageId = await getPageIdBySlugOrDomain(params.slug, params.domain);
+  const corePage = await getPageIdBySlugOrDomain(params.slug, params.domain);
+
+  if (!corePage) {
+    return notFound();
+  }
 
   const [layout, page] = await Promise.all([
-    getPageLayout(pageId),
-    getPageData(pageId),
+    getPageLayout(corePage.id),
+    getPageData(corePage.id),
   ]);
 
   if (!page) {

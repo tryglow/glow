@@ -1,5 +1,4 @@
 import { RenderPageTheme } from '@/app/[domain]/[slug]/render-page-theme';
-import { getPageSettings } from '@/app/api/pages/[pageSlug]/settings/actions';
 import { GlowProviders } from '@/app/components/GlowProviders';
 import { UserOnboardingDialog } from '@/app/components/UserOnboardingDialog';
 import { getEnabledBlocks } from '@/app/lib/actions/blocks';
@@ -8,6 +7,7 @@ import {
   getPageBlocks,
   getPageIdBySlugOrDomain,
   getPageLayout,
+  getPageSettings,
   getPageTheme,
 } from '@/app/lib/actions/page-actions';
 import { auth } from '@/app/lib/auth';
@@ -16,6 +16,7 @@ import {
   TeamOnboardingDialog,
 } from '@/components/PremiumOnboardingDialog';
 import { Button } from '@/components/ui/button';
+import { pages } from 'next/dist/build/templates/app-page';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import Script from 'next/script';
@@ -35,47 +36,44 @@ export default async function PageLayout(props: {
 
   const session = await auth();
 
-  const isCustomDomain =
-    decodeURIComponent(params.domain) !== process.env.NEXT_PUBLIC_ROOT_DOMAIN;
+  const page = await getPageIdBySlugOrDomain(params.slug, params.domain);
 
-  const commonParams = {
-    slug: isCustomDomain ? undefined : params.slug,
-    domain: isCustomDomain ? params.domain : undefined,
-  };
+  if (!page) {
+    return notFound();
+  }
 
-  const pageId = await getPageIdBySlugOrDomain(params.slug, params.domain);
-
-  if (!pageId) {
-    notFound();
+  if (!page.publishedAt && session?.currentTeamId !== page.teamId) {
+    return notFound();
   }
 
   let integrations: any;
   let enabledBlocks: any;
+  let pageSettings: any;
 
   if (session?.user) {
-    [integrations, enabledBlocks] = await Promise.all([
+    [integrations, enabledBlocks, pageSettings] = await Promise.all([
       getTeamIntegrations(),
       getEnabledBlocks(),
+      getPageSettings(page.id),
     ]);
   }
 
-  const [{ blocks, currentUserIsOwner }, pageLayout, pageTheme, pageSettings] =
+  const [{ blocks, currentUserIsOwner }, pageLayout, pageTheme] =
     await Promise.all([
-      getPageBlocks(pageId),
-      getPageLayout(pageId),
-      getPageTheme(pageId),
-      getPageSettings(commonParams),
+      getPageBlocks(page.id),
+      getPageLayout(page.id),
+      getPageTheme(page.id),
     ]);
 
   const initialData: Record<string, any> = {
-    [`/pages/${pageId}/layout`]: pageLayout,
-    [`/pages/${pageId}/theme`]: pageTheme,
+    [`/pages/${page.id}/layout`]: pageLayout,
+    [`/pages/${page.id}/theme`]: pageTheme,
   };
 
   if (currentUserIsOwner) {
     initialData['/integrations/me'] = integrations;
     initialData[`/blocks/enabled-blocks`] = enabledBlocks;
-    initialData[`/api/pages/${params.slug}/settings`] = pageSettings;
+    initialData[`/pages/${page.id}/settings`] = pageSettings;
   }
 
   blocks.forEach((block: any) => {
@@ -88,7 +86,7 @@ export default async function PageLayout(props: {
     <GlowProviders
       session={session}
       currentUserIsOwner={currentUserIsOwner}
-      pageId={pageId}
+      pageId={page.id}
       value={{
         fallback: initialData,
         revalidateOnFocus: currentUserIsOwner,
@@ -128,7 +126,7 @@ export default async function PageLayout(props: {
         </>
       )}
 
-      <RenderPageTheme pageId={pageId} />
+      <RenderPageTheme pageId={page.id} />
 
       {session?.user && (
         <>

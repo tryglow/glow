@@ -5,12 +5,14 @@ import {
   getCurrentUserTeamPagesSchema,
   getPageBlocksSchema,
   getPageLayoutSchema,
+  getPageSettingsSchema,
   getPageThemeSchema,
 } from './schemas';
 import {
   getPageBlocks,
   getPageIdBySlugOrDomain,
   getPageLayoutById,
+  getPageSettings,
   getPagesForTeamId,
   getPageThemeById,
 } from './service';
@@ -28,6 +30,12 @@ export default async function pagesRoutes(fastify: FastifyInstance, opts: any) {
     '/:pageId/layout',
     { schema: getPageLayoutSchema },
     getPageLayoutHandler
+  );
+
+  fastify.get(
+    '/:pageId/settings',
+    { schema: getPageSettingsSchema },
+    getPageSettingsHandler
   );
 
   fastify.get(
@@ -51,7 +59,9 @@ async function getPageLayoutHandler(
 ) {
   const { pageId } = request.params;
 
-  const session = await getSession(request);
+  const session = await request.server.authenticate(request, response, {
+    throwError: false,
+  });
 
   const page = await getPageLayoutById(pageId);
 
@@ -73,7 +83,9 @@ async function getPageThemeHandler(
 ) {
   const { pageId } = request.params;
 
-  const session = await getSession(request);
+  const session = await request.server.authenticate(request, response, {
+    throwError: false,
+  });
 
   const page = await getPageThemeById(pageId);
 
@@ -150,4 +162,31 @@ async function getCurrentUserTeamPagesHandler(
   const pages = await getPagesForTeamId(session.currentTeamId);
 
   return response.status(200).send(pages);
+}
+
+export async function getPageSettingsHandler(
+  request: FastifyRequest<{ Params: { pageId: string } }>,
+  response: FastifyReply
+) {
+  const session = await request.server.authenticate(request, response);
+
+  const { pageId } = request.params;
+
+  const page = await getPageSettings(pageId);
+
+  if (!page) {
+    return response.status(404).send({});
+  }
+
+  let currentUserIsOwner = false;
+
+  if (session?.user.id && page?.teamId === session?.currentTeamId) {
+    currentUserIsOwner = true;
+  }
+
+  if (page.publishedAt == null && !currentUserIsOwner) {
+    return response.status(404).send({});
+  }
+
+  return response.status(200).send(page);
 }

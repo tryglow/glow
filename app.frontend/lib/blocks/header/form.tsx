@@ -4,13 +4,12 @@ import { Label } from '@/app/components/ui/label';
 import { FormField } from '@/components/FormField';
 import { FormFileUpload } from '@/components/FormFileUpload';
 import { Button } from '@/components/ui/button';
-import { fetcher } from '@/lib/fetch';
+import { internalApiFetcher } from '@/lib/fetch';
 import { HeaderBlockConfig, HeaderSchema } from '@tryglow/blocks';
 import { Page } from '@tryglow/prisma';
 import { Form, Formik, FormikHelpers } from 'formik';
 import { Loader2 } from 'lucide-react';
-import { useParams } from 'next/navigation';
-import useSWR from 'swr';
+import useSWR, { useSWRConfig } from 'swr';
 
 export function EditForm({
   initialValues,
@@ -18,11 +17,13 @@ export function EditForm({
   onClose,
   blockId,
 }: EditFormProps<HeaderBlockConfig>) {
-  const params = useParams();
+  const { cache } = useSWRConfig();
+
+  const pageId = cache.get('pageId');
 
   const { data: pageSettings } = useSWR<Partial<Page>>(
-    `/api/pages/${params.slug}/settings`,
-    fetcher
+    `/pages/${pageId}/settings`,
+    internalApiFetcher
   );
 
   const onSubmit = async (

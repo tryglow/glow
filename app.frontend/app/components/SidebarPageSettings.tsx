@@ -4,17 +4,18 @@ import {
   SidebarGroup,
   SidebarGroupContent,
 } from '@/app/components/ui/sidebar';
-import { fetcher } from '@/lib/fetch';
+import { internalApiFetcher } from '@/lib/fetch';
 import { Page } from '@tryglow/prisma';
-import { useParams } from 'next/navigation';
-import useSWR from 'swr';
+import useSWR, { useSWRConfig } from 'swr';
 
 export function SidebarPageSettings() {
-  const params = useParams();
+  const { cache } = useSWRConfig();
+
+  const pageId = cache.get('pageId');
 
   const { data: pageSettings } = useSWR<Partial<Page>>(
-    `/api/pages/${params.slug}/settings`,
-    fetcher
+    `/pages/${pageId}/settings`,
+    internalApiFetcher
   );
 
   return (
