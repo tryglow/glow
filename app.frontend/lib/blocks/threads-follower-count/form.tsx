@@ -40,7 +40,7 @@ export function EditForm({
           title: 'Integration disconnected',
         });
 
-        mutate(`/api/blocks/${blockId}`);
+        mutate(`/blocks/${blockId}`);
       }
     } catch (error) {
       captureException(error);

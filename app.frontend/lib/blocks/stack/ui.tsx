@@ -2,13 +2,15 @@
 
 import { BlockProps } from '../ui';
 import { CoreBlock } from '@/components/CoreBlock';
+import { internalApiFetcher } from '@/lib/fetch';
 import { StackBlockConfig } from '@tryglow/blocks';
 import { FunctionComponent } from 'react';
 import useSWR from 'swr';
 
 export const Stack: FunctionComponent<BlockProps> = (props) => {
   const { data } = useSWR<{ blockData: StackBlockConfig }>(
-    `/api/blocks/${props.blockId}`
+    `/blocks/${props.blockId}`,
+    internalApiFetcher
   );
 
   const { blockData } = data || {};

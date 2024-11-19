@@ -3,6 +3,7 @@
 import { BlockProps } from '../ui';
 import { Props as DynamicMapboxMapProps } from './ui-client';
 import { CoreBlock } from '@/components/CoreBlock';
+import { internalApiFetcher } from '@/lib/fetch';
 import { MapBlockConfig } from '@tryglow/blocks';
 import dynamic from 'next/dynamic';
 import useSWR from 'swr';
@@ -18,7 +19,8 @@ const DynamicMapboxMap = dynamic<DynamicMapboxMapProps>(
 
 export function Map(props: BlockProps) {
   const { data } = useSWR<{ blockData: MapBlockConfig }>(
-    `/api/blocks/${props.blockId}`
+    `/blocks/${props.blockId}`,
+    internalApiFetcher
   );
 
   const { blockData } = data || {};

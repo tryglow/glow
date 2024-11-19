@@ -30,7 +30,7 @@ export function EditBlockToolbar({ blockId, blockType }: Props) {
 
   const pageId = cache.get(`pageId`);
 
-  const { mutate } = useSWR(`/api/blocks/${blockId}`);
+  const { mutate } = useSWR(`/blocks/${blockId}`, internalApiFetcher);
   const { data: layout, mutate: mutateLayout } = useSWR<PageConfig>(
     `/pages/${pageId}/layout`,
     internalApiFetcher

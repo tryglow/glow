@@ -80,7 +80,7 @@ export default async function PageLayout(props: {
   }
 
   blocks.forEach((block: any) => {
-    initialData[`/api/blocks/${block.id}`] = {
+    initialData[`/blocks/${block.id}`] = {
       blockData: block.data,
     };
   });

@@ -4,6 +4,7 @@ import { BlockProps } from '../ui';
 import { submitSignupToWaitlistCom } from './action';
 import { CoreBlock } from '@/components/CoreBlock';
 import { toast } from '@/components/ui/use-toast';
+import { internalApiFetcher } from '@/lib/fetch';
 import { WaitlistEmailBlockConfig } from '@tryglow/blocks';
 import { FunctionComponent, useState } from 'react';
 import { useFormStatus } from 'react-dom';
@@ -11,7 +12,8 @@ import useSWR from 'swr';
 
 export const WaitlistEmail: FunctionComponent<BlockProps> = (props) => {
   const { data } = useSWR<{ blockData: WaitlistEmailBlockConfig }>(
-    `/api/blocks/${props.blockId}`
+    `/blocks/${props.blockId}`,
+    internalApiFetcher
   );
 
   const { blockData } = data || {};

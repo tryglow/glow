@@ -2,13 +2,15 @@
 
 import { BlockProps } from '../ui';
 import { CoreBlock } from '@/components/CoreBlock';
+import { internalApiFetcher } from '@/lib/fetch';
 import { LinkBarBlockConfig } from '@tryglow/blocks';
 import Link from 'next/link';
 import useSWR from 'swr';
 
 export function LinkBar(props: BlockProps) {
   const { data } = useSWR<{ blockData: LinkBarBlockConfig }>(
-    `/api/blocks/${props.blockId}`
+    `/blocks/${props.blockId}`,
+    internalApiFetcher
   );
 
   const { blockData } = data || {};

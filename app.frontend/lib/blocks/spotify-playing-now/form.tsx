@@ -1,12 +1,10 @@
+import { EditFormProps } from '../types';
+import { Button } from '@/components/ui/button';
+import { toast } from '@/components/ui/use-toast';
+import { captureException } from '@sentry/nextjs';
 import Link from 'next/link';
 import { useState } from 'react';
 import { useSWRConfig } from 'swr';
-
-import { Button } from '@/components/ui/button';
-import { toast } from '@/components/ui/use-toast';
-
-import { captureException } from '@sentry/nextjs';
-import { EditFormProps } from '../types';
 
 const SpotifyLogo = () => {
   return (
@@ -44,7 +42,7 @@ export function EditForm({ integration, blockId }: EditFormProps<{}>) {
           title: 'Integration disconnected',
         });
 
-        mutate(`/api/blocks/${blockId}`);
+        mutate(`/blocks/${blockId}`);
       }
     } catch (error) {
       captureException(error);

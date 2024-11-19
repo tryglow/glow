@@ -7,11 +7,15 @@ export async function getBlockById(blockId: string) {
     where: {
       id: blockId,
     },
-    include: {
+    select: {
+      id: true,
+      type: true,
+      data: true,
+      config: true,
       page: {
         select: {
-          publishedAt: true,
           teamId: true,
+          publishedAt: true,
         },
       },
       integration: {

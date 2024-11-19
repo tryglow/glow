@@ -4,10 +4,8 @@ export const getBlockSchema = {
       type: 'object',
       properties: {
         blockData: {
-          id: { type: 'string' },
-          name: { type: 'string' },
-          createdAt: { type: 'string' },
-          updatedAt: { type: 'string' },
+          type: 'object',
+          additionalProperties: true,
         },
         integration: {
           id: { type: 'string' },

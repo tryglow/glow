@@ -2,6 +2,7 @@ import { EditFormProps } from '../types';
 import { FormField } from '@/components/FormField';
 import { Button } from '@/components/ui/button';
 import { toast } from '@/components/ui/use-toast';
+import { internalApiFetcher } from '@/lib/fetch';
 import { captureException } from '@sentry/nextjs';
 import {
   InstagramLatestPostBlockConfig,
@@ -103,7 +104,7 @@ export function EditForm({
           title: 'Integration disconnected',
         });
 
-        mutate(`/api/blocks/${blockId}`);
+        mutate(`/blocks/${blockId}`);
       }
     } catch (error) {
       captureException(error);

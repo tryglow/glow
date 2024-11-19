@@ -2,6 +2,7 @@
 
 import { BlockProps } from '../ui';
 import { CoreBlock } from '@/components/CoreBlock';
+import { internalApiFetcher } from '@/lib/fetch';
 import { ContentBlockConfig } from '@tryglow/blocks';
 import { FunctionComponent } from 'react';
 import useSWR from 'swr';
@@ -12,7 +13,7 @@ export const Content: FunctionComponent<BlockProps> = ({
 }) => {
   const { data } = useSWR<{
     blockData: ContentBlockConfig;
-  }>(`/api/blocks/${blockId}`);
+  }>(`/blocks/${blockId}`, internalApiFetcher);
 
   const { blockData } = data || {};
 

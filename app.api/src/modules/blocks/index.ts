@@ -63,7 +63,10 @@ async function getBlockHandler(
     }
   }
 
-  return response.status(200).send(block);
+  return response.status(200).send({
+    integration: block?.integration,
+    blockData: block?.data,
+  });
 }
 
 async function postCreateBlockHandler(

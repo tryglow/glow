@@ -1,5 +1,6 @@
 import { toast } from '@/components/ui/use-toast';
 import { editForms } from '@/lib/blocks/edit';
+import { internalApiFetcher } from '@/lib/fetch';
 import { captureException } from '@sentry/nextjs';
 import { Blocks } from '@tryglow/blocks';
 import useSWR from 'swr';
@@ -11,7 +12,10 @@ interface Props {
 }
 
 export function EditForm({ onClose, blockId, blockType }: Props) {
-  const { data: blockData, mutate } = useSWR(`/api/blocks/${blockId}`);
+  const { data: blockData, mutate } = useSWR<{
+    blockData: any;
+    integration: any;
+  }>(`/blocks/${blockId}`, internalApiFetcher);
 
   const onSave = async (values: any) => {
     try {
@@ -44,11 +48,11 @@ export function EditForm({ onClose, blockId, blockType }: Props) {
   return (
     <div className="max-h-[calc(100vh_-_90px)] overflow-y-auto">
       <CurrentEditForm
-        initialValues={blockData.blockData}
+        initialValues={blockData?.blockData}
         onSave={onSave}
         onClose={onClose}
         blockId={blockId}
-        integration={blockData.integration}
+        integration={blockData?.integration}
       />
     </div>
   );
