@@ -7,7 +7,7 @@ import {
   getPageIdBySlugOrDomain,
   getPageLayout,
   getPageTheme,
-} from '@/app/lib/actions/page';
+} from '@/app/lib/actions/page-actions';
 import { auth } from '@/app/lib/auth';
 import {
   PremiumOnboardingDialog,
