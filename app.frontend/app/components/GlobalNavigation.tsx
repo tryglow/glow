@@ -6,7 +6,7 @@ import { useEditModeContext } from '@/app/contexts/Edit';
 import { PageSwitcher } from '@/components/PageSwitcher';
 import { TeamSwitcher } from '@/components/TeamSwitcher';
 import { UserWidget } from '@/components/UserWidget';
-import { fetcher, internalApiFetcher } from '@/lib/fetch';
+import { internalApiFetcher } from '@/lib/fetch';
 import {
   ComputerDesktopIcon,
   DevicePhoneMobileIcon,

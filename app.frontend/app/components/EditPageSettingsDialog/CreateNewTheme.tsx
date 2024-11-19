@@ -5,7 +5,7 @@ import { Button } from '@/app/components/ui/button';
 import { Input } from '@/app/components/ui/input';
 import { Label } from '@/app/components/ui/label';
 import { toast } from '@/app/components/ui/use-toast';
-import { fetcher, internalApiFetcher } from '@/lib/fetch';
+import { internalApiFetcher } from '@/lib/fetch';
 import { HSLColor, hslToHex, themeFields } from '@/lib/theme';
 import { Theme } from '@tryglow/prisma';
 import { useEffect, useRef, useState } from 'react';

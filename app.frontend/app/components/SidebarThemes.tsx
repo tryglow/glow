@@ -9,7 +9,7 @@ import {
   SidebarSeparator,
 } from '@/app/components/ui/sidebar';
 import { toast } from '@/app/components/ui/use-toast';
-import { fetcher, internalApiFetcher } from '@/lib/fetch';
+import { internalApiFetcher } from '@/lib/fetch';
 import { themeColorToCssValue } from '@/lib/theme';
 import { Theme } from '@tryglow/prisma';
 import { Plus } from 'lucide-react';

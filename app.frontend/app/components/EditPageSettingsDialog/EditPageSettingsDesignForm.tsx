@@ -1,25 +1,23 @@
 'use client';
 
-import { Form, Formik, FormikHelpers } from 'formik';
-import { withZodSchema } from 'formik-validator-zod';
-import { Loader2 } from 'lucide-react';
-import { useParams, useRouter } from 'next/navigation';
-
-import { Button } from '@/components/ui/button';
-import { DialogFooter } from '@/components/ui/dialog';
-import { useToast } from '@/components/ui/use-toast';
-
-import { CreateEditThemeForm } from '@/app/components/EditPageSettingsDialog/CreateNewTheme';
-import { fetcher } from '@/lib/fetch';
-import { PlusIcon } from '@heroicons/react/20/solid';
-import { captureException } from '@sentry/nextjs';
-import { Theme } from '@tryglow/prisma';
-import { useState } from 'react';
-import useSWR from 'swr';
 import { FormField } from '../FormField';
 import { FormFileUpload } from '../FormFileUpload';
 import { updateDesignPageSettings } from './actions';
 import { designPageSettingsSchema } from './shared';
+import { CreateEditThemeForm } from '@/app/components/EditPageSettingsDialog/CreateNewTheme';
+import { Button } from '@/components/ui/button';
+import { DialogFooter } from '@/components/ui/dialog';
+import { useToast } from '@/components/ui/use-toast';
+import { fetcher, internalApiFetcher } from '@/lib/fetch';
+import { PlusIcon } from '@heroicons/react/20/solid';
+import { captureException } from '@sentry/nextjs';
+import { Theme } from '@tryglow/prisma';
+import { Form, Formik, FormikHelpers } from 'formik';
+import { withZodSchema } from 'formik-validator-zod';
+import { Loader2 } from 'lucide-react';
+import { useParams, useRouter } from 'next/navigation';
+import { useState } from 'react';
+import useSWR from 'swr';
 
 export type FormValues = {
   themeId: string;
@@ -38,7 +36,10 @@ export function EditPageSettingsDesign({ initialValues, pageId }: Props) {
   const [showCreateNewTheme, setShowCreateNewTheme] = useState(false);
   const [showEditTheme, setShowEditTheme] = useState(false);
 
-  const { data: currentTeamThemes } = useSWR<Theme[]>('/api/themes', fetcher);
+  const { data: currentTeamThemes } = useSWR<Theme[]>(
+    '/themes/me/team',
+    internalApiFetcher
+  );
 
   const onSubmit = async (
     values: FormValues,
