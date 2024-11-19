@@ -7,6 +7,8 @@
   "dependencies": {
     "@auth/core": "^0.34.1",
     "@auth/express": "^0.8.4",
+    "@aws-sdk/client-dynamodb": "^3.693.0",
+    "@aws-sdk/lib-dynamodb": "^3.693.0",
     "@dotenv-run/esbuild": "^1.4.0",
     "@dotenvx/dotenvx": "^1.24.0",
     "@fastify/basic-auth": "^6.0.1",
@@ -16,8 +18,8 @@
     "@sentry/cli": "2.28.0",
     "@sentry/node": "^8.10.0",
     "@sentry/types": "^8.7.0",
-    "@tryglow/prisma": "*",
     "@tryglow/blocks": "*",
+    "@tryglow/prisma": "*",
     "cross-env": "^7.0.3",
     "dotenv": "^16.4.5",
     "esbuild": "^0.21.3",

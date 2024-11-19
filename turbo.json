@@ -74,7 +74,11 @@
         "SENTRY_DSN",
         "AUTH_SECRET",
         "NODE_ENV",
-        "AUTH_TRUST_HOST"
+        "AUTH_TRUST_HOST",
+        "AWS_ACCESS_KEY_ID",
+        "AWS_SECRET_ACCESS_KEY",
+        "AWS_REGION",
+        "REACTIONS_TABLE_NAME"
       ],
       "inputs": ["$TURBO_DEFAULT$", ".env"]
     },
@@ -89,7 +93,11 @@
         "DIRECT_URL",
         "AUTH_SECRET",
         "NODE_ENV",
-        "AUTH_TRUST_HOST"
+        "AUTH_TRUST_HOST",
+        "AWS_ACCESS_KEY_ID",
+        "AWS_SECRET_ACCESS_KEY",
+        "AWS_REGION",
+        "REACTIONS_TABLE_NAME"
       ],
       "inputs": ["$TURBO_DEFAULT$", ".env"]
     },

@@ -1,8 +1,9 @@
 'use client';
 
-import { reactToResource } from '@/app/api/reactions/utils';
 import { CoreBlock } from '@/app/components/CoreBlock';
+import { InternalApi } from '@/app/lib/api';
 import { BlockProps } from '@/lib/blocks/ui';
+import { internalApiFetcher } from '@/lib/fetch';
 import { motion } from 'framer-motion';
 import { FunctionComponent, useEffect, useState } from 'react';
 import useSWR from 'swr';
@@ -42,7 +43,7 @@ export const Reactions: FunctionComponent<BlockProps> = (props) => {
     total: {
       [reactionType: string]: number;
     };
-  }>(`/api/reactions?pageId=${pageId}`);
+  }>(`/reactions?pageId=${pageId}`, internalApiFetcher);
 
   const handleClick = () => {
     if (isEditable) {
@@ -62,7 +63,16 @@ export const Reactions: FunctionComponent<BlockProps> = (props) => {
     // Set new debounce timer
     const newTimer = setTimeout(async () => {
       try {
-        await mutate(reactToResource(pageId, increment + 1));
+        const response = await InternalApi.post('/reactions', {
+          pageId,
+          increment: increment + 1,
+        });
+
+        if (response.error) {
+          throw new Error(response.error);
+        }
+
+        mutate(response.data);
 
         setIncrement(0);
       } catch (error) {

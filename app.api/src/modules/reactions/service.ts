@@ -6,8 +6,8 @@ import {
   DynamoDBDocumentClient,
   UpdateCommand,
 } from '@aws-sdk/lib-dynamodb';
-import { captureException } from '@sentry/nextjs';
-import { headers as nextHeaders } from 'next/headers';
+import { captureException } from '@sentry/node';
+import { FastifyRequest } from 'fastify';
 
 const client = new DynamoDBClient({
   region: process.env.AWS_REGION,
@@ -26,22 +26,26 @@ const MAX_ALLOWED_REACTIONS_PER_IP = 16;
 // We only support one reaction type for now
 const REACTION_TYPE = 'love';
 
-export const getIpAddress = async () => {
+export const getIpAddress = async (request: FastifyRequest) => {
   let ipAddress;
 
   const defaultIpAddress = '127.0.0.1';
 
-  const headers = await nextHeaders();
+  const headers = request.headers;
 
   if (process.env.NODE_ENV === 'development') {
     ipAddress = defaultIpAddress;
   } else {
-    const xForwardedFor = headers.get('x-forwarded-for');
-    const xRealIp = headers.get('x-real-ip');
+    if (!headers) {
+      return defaultIpAddress;
+    }
+
+    const xForwardedFor = headers['x-forwarded-for'];
+    const xRealIp = headers['x-real-ip'];
     ipAddress = xForwardedFor || xRealIp;
   }
 
-  return ipAddress || defaultIpAddress;
+  return (ipAddress || defaultIpAddress) as string;
 };
 
 export async function getReactionsForPageId({
@@ -97,6 +101,7 @@ export async function getReactionsForPageId({
 
     return result;
   } catch (error) {
+    console.error('Error getting reactions', error);
     captureException(error);
     return {
       total: {},
@@ -108,12 +113,12 @@ export async function getReactionsForPageId({
 export async function incrementReaction({
   pageId,
   increment,
+  ipAddress,
 }: {
   pageId: string;
   increment: number;
+  ipAddress: string;
 }) {
-  const ipAddress = await getIpAddress();
-
   // Helper function to initialize and increment a reaction map
   async function updateReactionMap({
     sk,
@@ -185,10 +190,14 @@ export async function incrementReaction({
   });
 }
 
-export async function reactToResource(pageId: string, increment: number) {
+export async function reactToResource(
+  pageId: string,
+  increment: number,
+  ipAddress: string
+) {
   const currentReactionsForPage = await getReactionsForPageId({
     pageId,
-    ipAddress: await getIpAddress(),
+    ipAddress,
   });
 
   if (
@@ -206,7 +215,7 @@ export async function reactToResource(pageId: string, increment: number) {
     };
   }
 
-  await incrementReaction({ pageId, increment });
+  await incrementReaction({ pageId, increment, ipAddress });
 
   // We could probably also refetch the latest data here, but this saves
   // an extra call to the database
