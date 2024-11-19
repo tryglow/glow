@@ -3,14 +3,14 @@ import {
   SidebarGroup,
   SidebarGroupContent,
 } from '@/app/components/ui/sidebar';
-import { fetcher } from '@/lib/fetch';
+import { internalApiFetcher } from '@/lib/fetch';
 import { Integration } from '@tryglow/prisma';
 import useSWR from 'swr';
 
 export function SidebarIntegrations() {
   const { data: currentTeamIntegrations, isLoading } = useSWR<
     Partial<Integration>[]
-  >('/api/user/integrations', fetcher);
+  >('/integrations/me', internalApiFetcher);
 
   return (
     <>

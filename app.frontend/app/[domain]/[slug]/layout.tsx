@@ -1,9 +1,9 @@
 import { RenderPageTheme } from '@/app/[domain]/[slug]/render-page-theme';
 import { getPageSettings } from '@/app/api/pages/[pageSlug]/settings/actions';
-import { getTeamIntegrations } from '@/app/api/user/integrations/actions';
 import { GlowProviders } from '@/app/components/GlowProviders';
 import { UserOnboardingDialog } from '@/app/components/UserOnboardingDialog';
 import { getEnabledBlocks } from '@/app/lib/actions/blocks';
+import { getTeamIntegrations } from '@/app/lib/actions/integrations';
 import {
   getPageBlocks,
   getPageIdBySlugOrDomain,
@@ -16,7 +16,6 @@ import {
   TeamOnboardingDialog,
 } from '@/components/PremiumOnboardingDialog';
 import { Button } from '@/components/ui/button';
-import { Integration } from '@prisma/client';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import Script from 'next/script';
@@ -74,7 +73,7 @@ export default async function PageLayout(props: {
   };
 
   if (currentUserIsOwner) {
-    initialData['/api/user/integrations'] = integrations;
+    initialData['/integrations/me'] = integrations;
     initialData[`/blocks/enabled-blocks`] = enabledBlocks;
     initialData[`/api/pages/${params.slug}/settings`] = pageSettings;
   }

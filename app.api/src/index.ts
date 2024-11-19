@@ -6,6 +6,7 @@ import { coreRoutes } from './modules/core';
 import pagesRoutes from './modules/pages';
 import tiktokServiceRoutes from './modules/services/tiktok';
 import { authenticateDecorator } from '@/decorators/authenticate';
+import integrationsRoutes from '@/modules/integrations';
 import teamsRoutes from '@/modules/teams';
 import themesRoutes from '@/modules/themes';
 import { ExpressAuth } from '@auth/express';
@@ -36,6 +37,7 @@ fastify.register(pagesRoutes, { prefix: '/pages' });
 fastify.register(tiktokServiceRoutes, { prefix: '/services/tiktok' });
 fastify.register(themesRoutes, { prefix: '/themes' });
 fastify.register(teamsRoutes, { prefix: '/teams' });
+fastify.register(integrationsRoutes, { prefix: '/integrations' });
 
 fastify.use('/auth', ExpressAuth(authConfig));
 
