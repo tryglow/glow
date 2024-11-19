@@ -16,7 +16,6 @@ import {
   TeamOnboardingDialog,
 } from '@/components/PremiumOnboardingDialog';
 import { Button } from '@/components/ui/button';
-import { pages } from 'next/dist/build/templates/app-page';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import Script from 'next/script';
