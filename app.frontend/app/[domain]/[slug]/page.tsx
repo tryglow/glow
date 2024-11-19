@@ -46,10 +46,14 @@ export async function generateMetadata(
   const corePage = await getPageIdBySlugOrDomain(params.slug, params.domain);
 
   if (!corePage) {
-    return notFound();
+    return {};
   }
 
   const page = await getPageData(corePage.id);
+
+  if (!page || !page.publishedAt) {
+    return {};
+  }
 
   const parentMeta = await parent;
 
