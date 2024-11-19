@@ -59,7 +59,8 @@
         "TWITTER_CHALLENGE",
         "PRODUCTHUNT_API_TOKEN",
         "LOOPS_API_KEY",
-        "NEXT_PUBLIC_API_URL"
+        "NEXT_PUBLIC_API_URL",
+        "NEXT_PUBLIC_POSTHOG_KEY"
       ],
       "inputs": ["$TURBO_DEFAULT$", ".env"]
     },

@@ -1,11 +1,10 @@
+import './globals.css';
+import './react-grid-layout.scss';
+import { PostHogProvider } from '@/app/posthog-provider';
+import { Toaster } from '@/components/ui/toaster';
 import { Analytics } from '@vercel/analytics/react';
 import { Metadata } from 'next';
 import localFont from 'next/font/local';
-
-import { Toaster } from '@/components/ui/toaster';
-
-import './globals.css';
-import './react-grid-layout.scss';
 
 const saans = localFont({
   src: './saans-font.woff2',
@@ -45,10 +44,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={saans.className}>
-      <body className="bg-stone-50 min-h-screen">
-        {children}
-        <Toaster />
-      </body>
+      <PostHogProvider>
+        <body className="bg-stone-50 min-h-screen">
+          {children}
+          <Toaster />
+        </body>
+      </PostHogProvider>
       <Analytics />
     </html>
   );
