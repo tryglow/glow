@@ -1,14 +1,6 @@
 'use client';
 
-import { CaretSortIcon, CheckIcon } from '@radix-ui/react-icons';
-import { Team } from '@tryglow/prisma';
-import { useRouter } from 'next/navigation';
-import { useState } from 'react';
-
 import { switchTeam } from '@/app/lib/actions/team';
-
-import { cn } from '@/lib/utils';
-
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import {
@@ -24,7 +16,13 @@ import {
   PopoverTrigger,
 } from '@/components/ui/popover';
 import { toast } from '@/components/ui/use-toast';
+import { cn } from '@/lib/utils';
+import { CaretSortIcon, CheckIcon } from '@radix-ui/react-icons';
+import { Team } from '@tryglow/prisma';
 import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
+import { useSWRConfig } from 'swr';
 
 interface Props {
   usersTeams?: Partial<Team>[] | null;
@@ -34,6 +32,8 @@ export function TeamSwitcher({ usersTeams }: Props) {
   const [open, setOpen] = useState(false);
 
   const router = useRouter();
+
+  const { mutate } = useSWRConfig();
 
   const { data: session, update: updateSession } = useSession();
   const currentTeam = usersTeams?.find(
@@ -62,6 +62,8 @@ export function TeamSwitcher({ usersTeams }: Props) {
 
       router.refresh();
       updateSession();
+
+      mutate('/pages/me');
     }
   };
 

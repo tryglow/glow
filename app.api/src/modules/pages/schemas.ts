@@ -90,3 +90,20 @@ export const getPageBlocksSchema = {
     },
   },
 };
+
+export const getCurrentUserTeamPagesSchema = {
+  response: {
+    200: {
+      type: 'array',
+      properties: {
+        id: {
+          type: 'string',
+        },
+        slug: {
+          type: 'string',
+        },
+      },
+      additionalProperties: false,
+    },
+  },
+};

@@ -74,3 +74,18 @@ export async function getPageBlocks(pageId: string) {
 
   return page;
 }
+
+export async function getPagesForTeamId(teamId: string) {
+  const pages = await prisma.page.findMany({
+    where: {
+      teamId,
+      deletedAt: null,
+    },
+    select: {
+      id: true,
+      slug: true,
+    },
+  });
+
+  return pages;
+}

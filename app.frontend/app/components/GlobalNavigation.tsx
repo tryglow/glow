@@ -1,34 +1,32 @@
 'use client';
 
+import { Button } from '@/app/components/ui/button';
+import { useSidebar } from '@/app/components/ui/sidebar';
+import { useEditModeContext } from '@/app/contexts/Edit';
+import { PageSwitcher } from '@/components/PageSwitcher';
+import { TeamSwitcher } from '@/components/TeamSwitcher';
+import { UserWidget } from '@/components/UserWidget';
+import { fetcher, internalApiFetcher } from '@/lib/fetch';
 import {
   ComputerDesktopIcon,
   DevicePhoneMobileIcon,
 } from '@heroicons/react/24/outline';
 import { Page, Team } from '@tryglow/prisma';
-import Link from 'next/link';
-
-import { useEditModeContext } from '@/app/contexts/Edit';
-
-import { Button } from '@/app/components/ui/button';
-import { useSidebar } from '@/app/components/ui/sidebar';
-import { PageSwitcher } from '@/components/PageSwitcher';
-import { TeamSwitcher } from '@/components/TeamSwitcher';
-import { UserWidget } from '@/components/UserWidget';
-import { fetcher } from '@/lib/fetch';
 import { PlusCircleIcon } from 'lucide-react';
+import Link from 'next/link';
 import useSWR from 'swr';
 
 export function GlobalNavigation({ isEditMode }: { isEditMode: boolean }) {
   const { setOpen, toggleSidebar } = useSidebar();
 
   const { data: usersTeams } = useSWR<Partial<Team>[]>(
-    '/api/user/teams',
-    fetcher
+    '/teams/me',
+    internalApiFetcher
   );
 
   const { data: teamPages } = useSWR<Partial<Page>[]>(
-    '/api/user/current-team-pages',
-    fetcher
+    '/pages/me',
+    internalApiFetcher
   );
 
   return (

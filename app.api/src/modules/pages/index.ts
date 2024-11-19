@@ -2,6 +2,7 @@
 
 import { getSession } from '../../lib/auth';
 import {
+  getCurrentUserTeamPagesSchema,
   getPageBlocksSchema,
   getPageLayoutSchema,
   getPageThemeSchema,
@@ -10,12 +11,19 @@ import {
   getPageBlocks,
   getPageIdBySlugOrDomain,
   getPageLayoutById,
+  getPagesForTeamId,
   getPageThemeById,
 } from './service';
 import { FastifyInstance, FastifyReply } from 'fastify';
 import { FastifyRequest } from 'fastify';
 
 export default async function pagesRoutes(fastify: FastifyInstance, opts: any) {
+  fastify.get(
+    '/me',
+    { schema: getCurrentUserTeamPagesSchema },
+    getCurrentUserTeamPagesHandler
+  );
+
   fastify.get(
     '/:pageId/layout',
     { schema: getPageLayoutSchema },
@@ -131,4 +139,15 @@ async function getPageBlocksHandler(
     blocks: page.blocks,
     currentUserIsOwner,
   });
+}
+
+async function getCurrentUserTeamPagesHandler(
+  request: FastifyRequest,
+  response: FastifyReply
+) {
+  const session = await request.server.authenticate(request, response);
+
+  const pages = await getPagesForTeamId(session.currentTeamId);
+
+  return response.status(200).send(pages);
 }
