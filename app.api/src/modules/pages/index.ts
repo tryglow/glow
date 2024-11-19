@@ -18,6 +18,7 @@ import {
   getPageThemeById,
   updatePageLayout,
 } from './service';
+import { posthog } from '@/lib/posthog';
 import { FastifyInstance, FastifyReply } from 'fastify';
 import { FastifyRequest } from 'fastify';
 
@@ -219,6 +220,14 @@ async function updatePageLayoutHandler(
   const { newLayout } = request.body;
 
   const updatedPage = await updatePageLayout(pageId, newLayout);
+
+  posthog.capture({
+    distinctId: session.user.id,
+    event: 'page-layout-updated',
+    properties: {
+      pageId,
+    },
+  });
 
   return response.status(200).send(updatedPage);
 }

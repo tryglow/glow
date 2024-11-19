@@ -14,6 +14,7 @@ import {
   getEnabledBlocks,
   updateBlockData,
 } from './service';
+import { posthog } from '@/lib/posthog';
 import prisma from '@/lib/prisma';
 import { FastifyInstance, FastifyReply } from 'fastify';
 import { FastifyRequest } from 'fastify';
@@ -151,6 +152,17 @@ async function postCreateBlockHandler(
 
   const newBlock = await createBlock(block, pageSlug);
 
+  posthog.capture({
+    distinctId: session.user.id,
+    event: 'block-created',
+    properties: {
+      teamId: session.currentTeamId,
+      pageId: newBlock.pageId,
+      blockId: newBlock.id,
+      blockType: newBlock.type,
+    },
+  });
+
   return response.status(200).send({
     data: {
       block: newBlock,
@@ -230,6 +242,17 @@ async function deleteBlockHandler(
 
   try {
     await deleteBlockById(blockId, session.user.id);
+
+    posthog.capture({
+      distinctId: session.user.id,
+      event: 'block-deleted',
+      properties: {
+        teamId: session.currentTeamId,
+        pageId: block.pageId,
+        blockId: block.id,
+        blockType: block.type,
+      },
+    });
 
     return response.status(200).send({
       message: 'Block deleted',

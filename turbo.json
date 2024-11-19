@@ -78,7 +78,8 @@
         "AWS_ACCESS_KEY_ID",
         "AWS_SECRET_ACCESS_KEY",
         "AWS_REGION",
-        "REACTIONS_TABLE_NAME"
+        "REACTIONS_TABLE_NAME",
+        "POSTHOG_API_KEY"
       ],
       "inputs": ["$TURBO_DEFAULT$", ".env"]
     },
@@ -97,7 +98,8 @@
         "AWS_ACCESS_KEY_ID",
         "AWS_SECRET_ACCESS_KEY",
         "AWS_REGION",
-        "REACTIONS_TABLE_NAME"
+        "REACTIONS_TABLE_NAME",
+        "POSTHOG_API_KEY"
       ],
       "inputs": ["$TURBO_DEFAULT$", ".env"]
     },
