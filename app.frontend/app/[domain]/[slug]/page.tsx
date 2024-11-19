@@ -11,7 +11,6 @@ import { Integration } from '@tryglow/prisma';
 import type { Metadata, ResolvingMetadata } from 'next';
 import { headers } from 'next/headers';
 import { notFound, redirect } from 'next/navigation';
-import { useSWRConfig } from 'swr';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
@@ -86,14 +85,6 @@ export default async function Page(props: { params: Promise<Params> }) {
   const session = await auth();
 
   const isLoggedIn = !!session?.user;
-
-  const useSlug =
-    decodeURIComponent(params.domain) === process.env.NEXT_PUBLIC_ROOT_DOMAIN;
-
-  const commonParams = {
-    slug: useSlug ? params.slug : undefined,
-    domain: useSlug ? undefined : params.domain,
-  };
 
   const pageId = await getPageIdBySlugOrDomain(params.slug, params.domain);
 
