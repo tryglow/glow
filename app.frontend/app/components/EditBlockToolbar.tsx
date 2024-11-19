@@ -3,6 +3,7 @@
 import { PageConfig } from '@/app/[domain]/[slug]/grid';
 import { useSidebar } from '@/app/components/ui/sidebar';
 import { useEditModeContext } from '@/app/contexts/Edit';
+import { InternalApi } from '@/app/lib/api';
 import { useToast } from '@/components/ui/use-toast';
 import { PencilSquareIcon, TrashIcon } from '@heroicons/react/24/outline';
 import { captureException } from '@sentry/nextjs';
@@ -39,23 +40,13 @@ export function EditBlockToolbar({ blockId, blockType }: Props) {
     }
 
     try {
-      const req = await fetch('/api/page/blocks/delete', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          blockId,
-        }),
-      });
+      const response = await InternalApi.delete(`/blocks/${blockId}`);
 
-      const res = await req.json();
-
-      if (res.error) {
+      if (response.error) {
         toast({
           variant: 'error',
           title: 'Something went wrong',
-          description: res.error.message,
+          description: response.error.message,
         });
         return;
       }

@@ -1,8 +1,16 @@
 'use strict';
 
-import { getBlockSchema, getEnabledBlockSchema } from './schemas';
-import { createBlock, getBlockById, getEnabledBlocks } from './service';
-import { getSession } from '@/lib/auth';
+import {
+  deleteBlockSchema,
+  getBlockSchema,
+  getEnabledBlockSchema,
+} from './schemas';
+import {
+  createBlock,
+  deleteBlockById,
+  getBlockById,
+  getEnabledBlocks,
+} from './service';
 import prisma from '@/lib/prisma';
 import { FastifyInstance, FastifyReply } from 'fastify';
 import { FastifyRequest } from 'fastify';
@@ -13,6 +21,11 @@ export default async function blocksRoutes(
 ) {
   fastify.post('/add', postCreateBlockHandler);
   fastify.get('/:blockId', { schema: getBlockSchema }, getBlockHandler);
+  fastify.delete(
+    '/:blockId',
+    { schema: deleteBlockSchema },
+    deleteBlockHandler
+  );
   fastify.get(
     '/enabled-blocks',
     { schema: getEnabledBlockSchema },
@@ -155,4 +168,62 @@ async function getEnabledBlocksHandler(
   const enabledBlocks = await getEnabledBlocks(dbUser);
 
   return response.status(200).send(enabledBlocks);
+}
+
+async function deleteBlockHandler(
+  request: FastifyRequest<{ Params: { blockId: string } }>,
+  response: FastifyReply
+) {
+  const session = await request.server.authenticate(request, response);
+
+  const { blockId } = request.params;
+
+  const block = await prisma.block.findUnique({
+    where: {
+      id: blockId,
+      page: {
+        team: {
+          id: session.currentTeamId,
+          members: {
+            some: {
+              userId: session.user.id,
+            },
+          },
+        },
+      },
+    },
+    include: {
+      page: true,
+    },
+  });
+
+  if (!block) {
+    return response.status(400).send({
+      error: {
+        message: 'Block not found',
+      },
+    });
+  }
+
+  if (block.type === 'header') {
+    return response.status(400).send({
+      error: {
+        message: 'You cannot delete the header block',
+      },
+    });
+  }
+
+  try {
+    await deleteBlockById(blockId, session.user.id);
+
+    return response.status(200).send({
+      message: 'Block deleted',
+    });
+  } catch (error) {
+    return response.status(400).send({
+      error: {
+        message: 'Sorry, there was an error deleting this block',
+      },
+    });
+  }
 }

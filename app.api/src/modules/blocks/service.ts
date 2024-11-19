@@ -1,6 +1,6 @@
 import prisma from '@/lib/prisma';
 import { blocks, Blocks } from '@tryglow/blocks';
-import { User } from '@tryglow/prisma';
+import { Prisma, User } from '@tryglow/prisma';
 
 export async function getBlockById(blockId: string) {
   const block = await prisma.block.findUnique({
@@ -70,4 +70,65 @@ export async function getEnabledBlocks(user: User) {
   const filteredBlocks = enabledBlocks.filter((block) => block !== 'header');
 
   return filteredBlocks;
+}
+
+export async function checkUserHasAccessToBlock(
+  blockId: string,
+  userId: string
+) {
+  const block = await prisma.block.count({
+    where: {
+      id: blockId,
+      page: {
+        team: {
+          members: {
+            some: {
+              userId,
+            },
+          },
+        },
+      },
+    },
+  });
+
+  if (block > 0) {
+    return true;
+  }
+
+  return false;
+}
+
+export async function deleteBlockById(id: string, userId: string) {
+  const userHasAccess = await checkUserHasAccessToBlock(id, userId);
+
+  if (!userHasAccess) {
+    return new Error('User does not have access to this block');
+  }
+
+  const deletedBlock = await prisma.block.delete({
+    where: {
+      id,
+    },
+    select: {
+      page: {
+        select: {
+          id: true,
+          config: true,
+        },
+      },
+    },
+  });
+
+  if (deletedBlock.page.config && Array.isArray(deletedBlock.page.config)) {
+    await prisma.page.update({
+      where: {
+        id: deletedBlock.page.id,
+      },
+      data: {
+        config: deletedBlock.page?.config?.filter(
+          (blck) => (blck as Prisma.JsonObject)?.i !== id
+        ),
+      },
+    });
+  }
 }

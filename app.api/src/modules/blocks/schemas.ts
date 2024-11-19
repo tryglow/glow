@@ -35,3 +35,21 @@ export const getEnabledBlockSchema = {
     },
   },
 };
+
+export const deleteBlockSchema = {
+  response: {
+    200: {
+      type: 'object',
+      properties: {
+        message: { type: 'string' },
+      },
+      additionalProperties: false,
+    },
+    400: {
+      type: 'object',
+      properties: {
+        message: { type: 'string' },
+      },
+    },
+  },
+};
