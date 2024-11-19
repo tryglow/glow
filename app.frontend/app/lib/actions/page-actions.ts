@@ -15,6 +15,9 @@ export async function getPageIdBySlugOrDomain(slug: string, domain: string) {
       teamId: true,
       publishedAt: true,
     },
+    cacheStrategy: {
+      swr: 60,
+    },
   });
 
   return page;
