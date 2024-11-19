@@ -3,11 +3,13 @@ export const getPageLayoutSchema = {
     200: {
       type: 'object',
       properties: {
-        config: {
-          type: 'object',
+        xxs: {
+          type: 'array',
+          additionalProperties: true,
         },
-        mobileConfig: {
-          type: 'object',
+        sm: {
+          type: 'array',
+          additionalProperties: true,
         },
       },
       additionalProperties: false,
@@ -58,6 +60,12 @@ export const getPageThemeSchema = {
       properties: {
         theme: themeFieldsSchema,
         backgroundImage: {
+          type: 'string',
+        },
+        teamId: {
+          type: 'string',
+        },
+        publishedAt: {
           type: 'string',
         },
       },

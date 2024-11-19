@@ -32,3 +32,21 @@ export async function getPageThemeById(pageId: string) {
 
   return page;
 }
+
+export async function getPageIdBySlugOrDomain(slug: string, domain: string) {
+  if (!slug && !domain) {
+    return null;
+  }
+
+  const page = await prisma.page.findFirst({
+    where: {
+      slug,
+      customDomain: domain ? decodeURIComponent(domain) : undefined,
+    },
+    select: {
+      id: true,
+    },
+  });
+
+  return page?.id;
+}

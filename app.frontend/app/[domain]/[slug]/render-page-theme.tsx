@@ -1,13 +1,14 @@
 'use client';
-import { fetcher } from '@/lib/fetch';
+
+import { internalApiFetcher } from '@/lib/fetch';
 import { defaultThemeSeeds, themeColorToCssValue } from '@/lib/theme';
 import { Theme } from '@tryglow/prisma';
 import useSWR from 'swr';
 
-export function RenderPageTheme({ pageSlug }: { pageSlug: string }) {
+export function RenderPageTheme({ pageId }: { pageId: string }) {
   const { data: pageTheme } = useSWR<{ theme: Partial<Theme> }>(
-    `/api/pages/${pageSlug}/theme`,
-    fetcher
+    `/pages/${pageId}/theme`,
+    internalApiFetcher
   );
 
   let theme = pageTheme?.theme || defaultThemeSeeds.Default;

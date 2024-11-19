@@ -5,6 +5,7 @@ import { useEditModeContext } from '@/app/contexts/Edit';
 import { CoreBlock } from '@/components/CoreBlock';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useToast } from '@/components/ui/use-toast';
+import { internalApiFetcher } from '@/lib/fetch';
 import { enableDragDropTouch } from '@/lib/polyfills/drag-drop-touch.esm.min.js';
 import { cn } from '@/lib/utils';
 import { captureException } from '@sentry/nextjs';
@@ -23,7 +24,7 @@ import {
   ResponsiveProps,
   WidthProvider,
 } from 'react-grid-layout';
-import useSWR from 'swr';
+import useSWR, { useSWRConfig } from 'swr';
 import { v4 as uuidv4 } from 'uuid';
 
 interface Props {
@@ -39,8 +40,13 @@ export function EditWrapper({ children, layoutProps }: Props) {
   const params = useParams();
   const { toast } = useToast();
 
+  const { cache } = useSWRConfig();
+
+  const pageId = cache.get(`pageId`);
+
   const { data: layout, mutate: mutateLayout } = useSWR<PageConfig>(
-    `/api/pages/${params.slug}/layout`
+    `/pages/${pageId}/layout`,
+    internalApiFetcher
   );
 
   const [isPending, startTransition] = useTransition();

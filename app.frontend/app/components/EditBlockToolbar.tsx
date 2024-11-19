@@ -5,11 +5,12 @@ import { useSidebar } from '@/app/components/ui/sidebar';
 import { useEditModeContext } from '@/app/contexts/Edit';
 import { InternalApi } from '@/app/lib/api';
 import { useToast } from '@/components/ui/use-toast';
+import { internalApiFetcher } from '@/lib/fetch';
 import { PencilSquareIcon, TrashIcon } from '@heroicons/react/24/outline';
 import { captureException } from '@sentry/nextjs';
 import { Blocks } from '@tryglow/blocks';
 import { useParams, useRouter } from 'next/navigation';
-import useSWR from 'swr';
+import useSWR, { useSWRConfig } from 'swr';
 
 interface Props {
   blockId: string;
@@ -25,9 +26,14 @@ export function EditBlockToolbar({ blockId, blockType }: Props) {
 
   const { setCurrentEditingBlock } = useEditModeContext();
 
+  const { cache } = useSWRConfig();
+
+  const pageId = cache.get(`pageId`);
+
   const { mutate } = useSWR(`/api/blocks/${blockId}`);
   const { data: layout, mutate: mutateLayout } = useSWR<PageConfig>(
-    `/api/pages/${slug}/layout`
+    `/pages/${pageId}/layout`,
+    internalApiFetcher
   );
 
   const handleDeleteBlock = async (blockId: string, blockType: Blocks) => {

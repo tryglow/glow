@@ -1,10 +1,13 @@
 import { RenderPageTheme } from '@/app/[domain]/[slug]/render-page-theme';
-import { getPageLayout } from '@/app/api/pages/[pageSlug]/layout/actions';
 import { getPageSettings } from '@/app/api/pages/[pageSlug]/settings/actions';
-import { getPageTheme } from '@/app/api/pages/[pageSlug]/theme/actions';
 import { getTeamIntegrations } from '@/app/api/user/integrations/actions';
 import { GlowProviders } from '@/app/components/GlowProviders';
 import { UserOnboardingDialog } from '@/app/components/UserOnboardingDialog';
+import {
+  getPageIdBySlugOrDomain,
+  getPageLayout,
+  getPageTheme,
+} from '@/app/lib/actions/page';
 import { auth } from '@/app/lib/auth';
 import {
   PremiumOnboardingDialog,
@@ -81,18 +84,20 @@ export default async function PageLayout(props: {
     domain: isCustomDomain ? params.domain : undefined,
   };
 
+  const pageId = await getPageIdBySlugOrDomain(params.slug, params.domain);
+
   const [
     { data: page, isEditMode },
     integrations,
-    layout,
+    pageLayout,
     pageTheme,
     pageSettings,
     enabledBlocks,
   ] = await Promise.all([
     getPageData(commonParams),
     getTeamIntegrations(),
-    getPageLayout(commonParams),
-    getPageTheme(commonParams),
+    getPageLayout(pageId),
+    getPageTheme(pageId),
     getPageSettings(commonParams),
     getEnabledBlocks(),
   ]);
@@ -100,14 +105,14 @@ export default async function PageLayout(props: {
   const currentUserIsOwner = pageTheme?.teamId === session?.currentTeamId;
 
   const initialData: Record<string, any> = {
-    [`/api/pages/${params.slug}/layout`]: layout,
-    [`/api/pages/${params.slug}/theme`]: pageTheme,
+    // [`/api/pages/${params.slug}/layout`]: layout,
+    [`/pages/${pageId}/layout`]: pageLayout,
+    [`/pages/${pageId}/theme`]: pageTheme,
   };
 
   if (isEditMode) {
     initialData['/api/user/integrations'] = integrations;
-    initialData[`${process.env.NEXT_PUBLIC_API_URL}/blocks/enabled-blocks`] =
-      enabledBlocks;
+    initialData[`/blocks/enabled-blocks`] = enabledBlocks;
     initialData[`/api/pages/${params.slug}/settings`] = pageSettings;
   }
 
@@ -121,6 +126,7 @@ export default async function PageLayout(props: {
     <GlowProviders
       session={session}
       currentUserIsOwner={currentUserIsOwner}
+      pageId={pageId}
       value={{
         fallback: initialData,
         revalidateOnFocus: isEditMode,
@@ -160,7 +166,7 @@ export default async function PageLayout(props: {
         </>
       )}
 
-      <RenderPageTheme pageSlug={params.slug} />
+      <RenderPageTheme pageId={pageId} />
 
       {session?.user && (
         <>

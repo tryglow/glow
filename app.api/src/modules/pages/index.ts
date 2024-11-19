@@ -2,7 +2,11 @@
 
 import { getSession } from '../../lib/auth';
 import { getPageLayoutSchema, getPageThemeSchema } from './schemas';
-import { getPageLayoutById, getPageThemeById } from './service';
+import {
+  getPageIdBySlugOrDomain,
+  getPageLayoutById,
+  getPageThemeById,
+} from './service';
 import { FastifyInstance, FastifyReply } from 'fastify';
 import { FastifyRequest } from 'fastify';
 
@@ -18,6 +22,8 @@ export default async function pagesRoutes(fastify: FastifyInstance, opts: any) {
     { schema: getPageThemeSchema },
     getPageThemeHandler
   );
+
+  fastify.post('/get-page-id', getPageIdHandler);
 }
 
 async function getPageLayoutHandler(
@@ -36,7 +42,10 @@ async function getPageLayoutHandler(
     }
   }
 
-  return response.status(200).send(page);
+  return response.status(200).send({
+    xxs: page?.mobileConfig,
+    sm: page?.config,
+  });
 }
 
 async function getPageThemeHandler(
@@ -56,4 +65,23 @@ async function getPageThemeHandler(
   }
 
   return response.status(200).send(page);
+}
+
+async function getPageIdHandler(
+  request: FastifyRequest<{ Body: { slug: string; domain: string } }>,
+  response: FastifyReply
+) {
+  const { slug, domain } = request.body;
+
+  if (!slug && !domain) {
+    return response.status(400).send({
+      error: {
+        message: 'Slug or domain is required',
+      },
+    });
+  }
+
+  const pageId = await getPageIdBySlugOrDomain(slug, domain);
+
+  return response.status(200).send({ pageId });
 }

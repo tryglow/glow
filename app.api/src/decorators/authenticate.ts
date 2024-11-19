@@ -62,5 +62,5 @@ export async function authenticateDecorator(
     throw fastify.httpErrors.unauthorized();
   }
 
-  return fastify.httpErrors.unauthorized();
+  throw fastify.httpErrors.unauthorized();
 }

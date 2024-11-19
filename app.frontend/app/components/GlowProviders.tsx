@@ -1,22 +1,22 @@
 'use client';
 
-import { StepType, TourProvider, useTour } from '@reactour/tour';
-import { Session } from 'next-auth';
-import { SessionProvider } from 'next-auth/react';
-import { ReactNode } from 'react';
-import { SWRConfig, SWRConfiguration } from 'swr';
-
 import { Button } from '@/app/components/ui/button';
 import { SidebarProvider } from '@/app/components/ui/sidebar';
 import { hideGlowTour } from '@/app/lib/auth-actions';
 import { fetcher } from '@/lib/fetch';
+import { StepType, TourProvider, useTour } from '@reactour/tour';
 import { captureException } from '@sentry/nextjs';
+import { Session } from 'next-auth';
+import { SessionProvider } from 'next-auth/react';
+import { ReactNode } from 'react';
+import { SWRConfig, SWRConfiguration } from 'swr';
 
 interface Props {
   children: ReactNode;
   value: SWRConfiguration;
   session: Session | null;
   currentUserIsOwner: boolean;
+  pageId: string;
 }
 
 const BlockContent = ({
@@ -153,9 +153,12 @@ export const GlowProviders = ({
   value,
   currentUserIsOwner,
   session,
+  pageId,
 }: Props) => {
+  const cache = new Map();
+  cache.set('pageId', pageId);
   return (
-    <SWRConfig value={{ ...value, fetcher }}>
+    <SWRConfig value={{ ...value, fetcher, provider: () => cache }}>
       <SessionProvider session={session}>
         <WithTourProvider session={session}>
           <SidebarProvider

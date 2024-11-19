@@ -5,7 +5,7 @@ import { Button } from '@/app/components/ui/button';
 import { Input } from '@/app/components/ui/input';
 import { Label } from '@/app/components/ui/label';
 import { toast } from '@/app/components/ui/use-toast';
-import { fetcher } from '@/lib/fetch';
+import { fetcher, internalApiFetcher } from '@/lib/fetch';
 import { HSLColor, hslToHex, themeFields } from '@/lib/theme';
 import { Theme } from '@tryglow/prisma';
 import { useEffect, useRef, useState } from 'react';
@@ -37,7 +37,10 @@ export function CreateEditThemeForm({
 }) {
   const [themeName, setThemeName] = useState('');
 
-  const { data: themes } = useSWR<Theme[]>('/api/themes', fetcher);
+  const { data: themes } = useSWR<Theme[]>(
+    '/themes/me/team',
+    internalApiFetcher
+  );
 
   const currentTheme = themes?.find((theme) => theme.id === editThemeId);
 
@@ -138,7 +141,7 @@ export function CreateEditThemeForm({
           : 'Your theme has been updated',
     });
 
-    mutate('/api/themes');
+    mutate('/themes/me/team');
   };
   return (
     <div className="grid grid-cols-2 gap-4">

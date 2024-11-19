@@ -9,19 +9,25 @@ import {
   SidebarSeparator,
 } from '@/app/components/ui/sidebar';
 import { toast } from '@/app/components/ui/use-toast';
-import { fetcher } from '@/lib/fetch';
+import { fetcher, internalApiFetcher } from '@/lib/fetch';
 import { themeColorToCssValue } from '@/lib/theme';
 import { Theme } from '@tryglow/prisma';
 import { Plus } from 'lucide-react';
 import { useParams } from 'next/navigation';
 import { useState } from 'react';
-import useSWR, { mutate } from 'swr';
+import useSWR, { useSWRConfig } from 'swr';
 
 export function SidebarThemes() {
   const [previewTheme, setPreviewTheme] = useState<string | null>(null);
-  const { data: currentTeamThemes } = useSWR<Theme[]>('/api/themes', fetcher);
+  const { data: currentTeamThemes } = useSWR<Theme[]>(
+    '/themes/me/team',
+    internalApiFetcher
+  );
 
   const params = useParams();
+
+  const { cache, mutate } = useSWRConfig();
+  const pageId = cache.get('pageId');
 
   const [editThemeId, setEditThemeId] = useState<string | null>(null);
   const [showCreateNewTheme, setShowCreateNewTheme] = useState(false);
@@ -48,7 +54,7 @@ export function SidebarThemes() {
         description: 'We updated the theme for this page',
       });
 
-      mutate(`/api/pages/${params.slug}/theme`);
+      mutate(`/pages/${pageId}/theme`);
     }
   };
 
