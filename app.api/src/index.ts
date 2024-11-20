@@ -6,7 +6,7 @@ import { coreRoutes } from './modules/core';
 import pagesRoutes from './modules/pages';
 import tiktokServiceRoutes from './modules/services/tiktok';
 import { authenticateDecorator } from '@/decorators/authenticate';
-// import assetsRoutes from '@/modules/assets';
+import assetsRoutes from '@/modules/assets';
 import billingRoutes from '@/modules/billing';
 import integrationsRoutes from '@/modules/integrations';
 import reactionsRoutes from '@/modules/reactions';
@@ -25,7 +25,12 @@ export const fastify: FastifyInstance = Fastify();
 
 await fastify.register(fastifyExpress);
 await fastify.register(fastifySensible);
-await fastify.register(fastifyMultipart);
+await fastify.register(fastifyMultipart, {
+  limits: {
+    files: 1,
+    fileSize: 10 * 1024 * 1024, // 10MB
+  },
+});
 
 await fastify.register(cors, {
   origin: true, // Allow all origins
@@ -44,7 +49,7 @@ fastify.register(themesRoutes, { prefix: '/themes' });
 fastify.register(teamsRoutes, { prefix: '/teams' });
 fastify.register(integrationsRoutes, { prefix: '/integrations' });
 fastify.register(reactionsRoutes, { prefix: '/reactions' });
-// fastify.register(assetsRoutes, { prefix: '/assets' });
+fastify.register(assetsRoutes, { prefix: '/assets' });
 fastify.register(billingRoutes, { prefix: '/billing' });
 
 fastify.use('/auth', ExpressAuth(authConfig));

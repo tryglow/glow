@@ -16,7 +16,7 @@ export async function getPageIdBySlugOrDomain(slug: string, domain: string) {
       publishedAt: true,
     },
     cacheStrategy: {
-      swr: 60,
+      swr: 60, // 1 minute
     },
   });
 

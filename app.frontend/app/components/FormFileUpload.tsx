@@ -1,12 +1,11 @@
 'use client';
 
-import { PhotoIcon } from '@heroicons/react/24/solid';
-import { ChangeEvent, useEffect, useState } from 'react';
-
+import { InternalApi } from '@/app/lib/api';
+import { Button } from '@/components/ui/button';
 import { AssetContexts } from '@/lib/asset';
 import { cn } from '@/lib/utils';
-
-import { Button } from '@/components/ui/button';
+import { PhotoIcon } from '@heroicons/react/24/solid';
+import { ChangeEvent, useEffect, useState } from 'react';
 
 interface Props {
   onUploaded: (url: string) => void;
@@ -56,14 +55,20 @@ export function FormFileUpload({
 
     const body = new FormData();
 
-    body.append('file', firstFile, firstFile.name);
+    // This order is important for the API to correctly parse the multipart form
+    // data - text fields must be appended before file uploads
     body.append('referenceId', referenceId);
     body.append('assetContext', assetContext);
+    body.append('file', firstFile, firstFile.name);
 
-    const response = await fetch('/api/page/asset/upload', {
-      method: 'POST',
-      body,
-    });
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/assets/upload`,
+      {
+        method: 'POST',
+        credentials: 'include',
+        body,
+      }
+    );
 
     const responseData = await response.json();
 

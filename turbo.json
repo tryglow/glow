@@ -83,7 +83,8 @@
         "POSTHOG_API_KEY",
         "STRIPE_API_SECRET_KEY",
         "STRIPE_WEBHOOK_SECRET",
-        "LOOPS_API_KEY"
+        "LOOPS_API_KEY",
+        "APP_ENV"
       ],
       "inputs": ["$TURBO_DEFAULT$", ".env"]
     },
@@ -106,7 +107,8 @@
         "POSTHOG_API_KEY",
         "STRIPE_API_SECRET_KEY",
         "STRIPE_WEBHOOK_SECRET",
-        "LOOPS_API_KEY"
+        "LOOPS_API_KEY",
+        "APP_ENV"
       ],
       "inputs": ["$TURBO_DEFAULT$", ".env"]
     },
