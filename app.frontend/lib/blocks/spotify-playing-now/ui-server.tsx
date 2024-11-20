@@ -1,11 +1,9 @@
 /* eslint-disable @next/next/no-img-element */
-import Link from 'next/link';
-import { FunctionComponent } from 'react';
-
-import { cn } from '@/lib/utils';
-
 import styles from './styles.module.css';
 import { fetchData } from './utils';
+import { cn } from '@/lib/utils';
+import Link from 'next/link';
+import { FunctionComponent } from 'react';
 
 interface Props {
   blockId: string;
@@ -37,7 +35,7 @@ export const SpotifyPlayingNowServerUI: FunctionComponent<Props> = async ({
   if (res?.noIntegration) {
     return (
       <div className="flex items-center justify-center h-full">
-        <span className="text-sm text-sys-label-secondary text-center">
+        <span className="text-sm text-white/70 text-center">
           Edit this block to connect your Spotify account.
         </span>
       </div>
