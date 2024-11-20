@@ -222,7 +222,7 @@ export function DraggableBlockButton({ type }: Props) {
       <button
         id="hello"
         type="button"
-        className="hidden md:flex w-full bg-white border border-stone-200 rounded-md  items-center justify-start text-left px-3 py-3 shadow-none hover:shadow-md transition-shadow cursor-move"
+        className="hidden md:flex w-full bg-white border border-stone-200 rounded-md items-center justify-start text-left px-3 py-3 shadow-none hover:shadow-md hover:-translate-y-[2px] transition-shadow transition-transform cursor-move"
         draggable={true}
         unselectable="on"
         onDragStart={(e) => {
