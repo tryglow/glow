@@ -7,17 +7,16 @@ import { PrismaAdapter } from '@auth/prisma-adapter';
 import { track } from '@vercel/analytics/server';
 import NextAuth from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
-import GitHubProvider from 'next-auth/providers/github';
 import GoogleProvider from 'next-auth/providers/google';
 import TwitterProvider from 'next-auth/providers/twitter';
 import { cookies } from 'next/headers';
 import 'server-only';
 
 const temporaryTestUserForAppReview = {
-  id: process.env.TMP_APP_REVIEW_USER_ID as string,
-  email: process.env.TMP_APP_REVIEW_USER_EMAIL,
+  id: process.env.AUTH_APP_REVIEW_USER_ID as string,
+  email: process.env.AUTH_APP_REVIEW_USER_EMAIL,
   name: 'Test User',
-  password: process.env.TMP_APP_REVIEW_USER_PASSWORD,
+  password: process.env.AUTH_APP_REVIEW_USER_PASSWORD,
 };
 
 const cookieName =
@@ -47,20 +46,16 @@ export const { auth, signIn, signOut, handlers, unstable_update } = NextAuth({
   },
   providers: [
     GoogleProvider({
-      clientId: process.env.GOOGLE_CLIENT_ID as string,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
+      clientId: process.env.AUTH_GOOGLE_CLIENT_ID as string,
+      clientSecret: process.env.AUTH_GOOGLE_CLIENT_SECRET as string,
     }),
     TwitterProvider({
-      clientId: process.env.TWITTER_CLIENT_ID as string,
-      clientSecret: process.env.TWITTER_CLIENT_SECRET as string,
-    }),
-    GitHubProvider({
-      clientId: process.env.GITHUB_CLIENT_ID as string,
-      clientSecret: process.env.GITHUB_CLIENT_SECRET as string,
+      clientId: process.env.AUTH_TWITTER_CLIENT_ID as string,
+      clientSecret: process.env.AUTH_TWITTER_CLIENT_SECRET as string,
     }),
     TikTokProvider({
-      clientId: process.env.TIKTOK_CLIENT_KEY as string,
-      clientSecret: process.env.TIKTOK_CLIENT_SECRET as string,
+      clientId: process.env.AUTH_TIKTOK_CLIENT_KEY as string,
+      clientSecret: process.env.AUTH_TIKTOK_CLIENT_SECRET as string,
       authorization: {
         params: {
           scope: [
