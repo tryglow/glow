@@ -10,7 +10,7 @@ export default async function billingRoutes(
   fastify: FastifyInstance,
   opts: any
 ) {
-  fastify.post('/callback', postStripeCallbackHandler);
+  fastify.post('/stripe/callback', postStripeCallbackHandler);
 }
 
 const stripe = new Stripe(process.env.STRIPE_API_SECRET_KEY as string);
