@@ -1,7 +1,6 @@
 import { createLoopsClient } from '@/lib/loops';
 import { transactionalEmailIds } from '@/modules/notifications/constants';
 import { captureException } from '@sentry/node';
-import 'server-only';
 
 export async function sendSubscriptionCreatedEmail(
   email: string,
