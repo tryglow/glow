@@ -6,11 +6,23 @@ import { captureException, captureMessage } from '@sentry/nextjs';
 import { SpotifyIntegrationConfig } from '@tryglow/blocks';
 import safeAwait from 'safe-await';
 
+/**
+ * Refreshes the Spotify access token using the provided refresh token.
+ * @param refreshToken The refresh token for the Spotify API.
+ * @returns A promise resolving to the new access token and refresh token.
+ */
 async function refreshToken({ refreshToken }: { refreshToken: string }) {
   return fetch(`https://accounts.spotify.com/api/token`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
+      Authorization:
+        'Basic ' +
+        new Buffer(
+          process.env.SPOTIFY_CLIENT_ID +
+            ':' +
+            process.env.SPOTIFY_CLIENT_SECRET
+        ).toString('base64'),
     },
     body: new URLSearchParams({
       grant_type: 'refresh_token',
@@ -20,127 +32,145 @@ async function refreshToken({ refreshToken }: { refreshToken: string }) {
   });
 }
 
+/**
+ * Fetches the currently playing track for the user.
+ * @param accessToken The Spotify access token.
+ * @returns A promise resolving to the currently playing track or null.
+ */
 async function fetchPlayingNow(accessToken: string) {
-  const req = await fetch(
-    'https://api.spotify.com/v1/me/player/currently-playing',
-    {
-      method: 'GET',
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-      next: {
-        revalidate: 45,
-      },
-    }
-  );
-
-  return req;
-}
-
-function fetchRecentlyPlayed(accessToken: string) {
-  return fetch('https://api.spotify.com/v1/me/player/recently-played?limit=1', {
+  return fetch('https://api.spotify.com/v1/me/player/currently-playing', {
+    method: 'GET',
     headers: {
       Authorization: `Bearer ${accessToken}`,
     },
-    next: {
-      revalidate: 60,
-    },
+    next: { revalidate: 45 },
   });
 }
 
+/**
+ * Fetches the most recently played track for the user.
+ * @param accessToken The Spotify access token.
+ * @returns A promise resolving to the recently played track or null.
+ */
+function fetchRecentlyPlayed(accessToken: string) {
+  return fetch('https://api.spotify.com/v1/me/player/recently-played?limit=1', {
+    method: 'GET',
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+    next: { revalidate: 60 },
+  });
+}
+
+/**
+ * Fetches Spotify data (currently playing or recently played track).
+ * @param config Spotify integration configuration.
+ * @param isRetry Indicates whether this is a retry attempt.
+ * @param integrationId The ID of the Spotify integration.
+ * @returns A promise resolving to track data or null.
+ */
 const fetchSpotifyData = async (
   config: SpotifyIntegrationConfig,
-  isRetry: boolean,
+  isRetry: boolean = false,
   integrationId: string
 ) => {
-  const [fetchPlayingNowError, fetchPlayingNowRequest] = await safeAwait(
-    fetchPlayingNow(config.accessToken)
-  );
+  const updateAccessToken =
+    async (): Promise<SpotifyIntegrationConfig | null> => {
+      try {
+        const refreshTokenResponse = await refreshToken({
+          refreshToken: config.refreshToken,
+        });
 
-  if (fetchPlayingNowError) {
-    captureException(fetchPlayingNowError);
-  }
+        const refreshTokenData = await refreshTokenResponse.json();
 
-  // Handle expired access token
-  if (fetchPlayingNowRequest?.status === 401 && !isRetry) {
-    const refreshTokenRequest = await refreshToken({
-      refreshToken: config.refreshToken,
-    });
+        if (refreshTokenData?.access_token) {
+          const newConfig: SpotifyIntegrationConfig = {
+            accessToken: refreshTokenData.access_token,
+            refreshToken: refreshTokenData.refresh_token ?? config.refreshToken,
+          };
 
-    const refreshTokenData = await refreshTokenRequest.json();
+          const [updateError] = await safeAwait(
+            prisma.integration.update({
+              where: { id: integrationId },
+              data: { encryptedConfig: await encrypt(newConfig) },
+            })
+          );
 
-    if (refreshTokenData?.access_token) {
-      const newConfig = {
-        accessToken: refreshTokenData.access_token,
-        refreshToken: refreshTokenData.refresh_token ?? config.refreshToken,
-      };
+          if (updateError) captureException(updateError);
 
-      const [updateIntegrationError] = await safeAwait(
-        prisma.integration.update({
-          where: { id: integrationId },
-          data: {
-            config: {},
-            encryptedConfig: await encrypt(newConfig),
-          },
-        })
-      );
-
-      if (updateIntegrationError) {
-        captureException(updateIntegrationError);
+          return newConfig;
+        }
+      } catch (error) {
+        captureException(error);
       }
+      return null;
+    };
 
-      return fetchSpotifyData(newConfig, true, integrationId);
+  const fetchData = async (
+    fetchFunction: (token: string) => Promise<Response>,
+    token: string
+  ) => {
+    const [error, response] = await safeAwait(fetchFunction(token));
+
+    if (error) captureException(error);
+    if (response?.ok) return await response.json();
+    return null;
+  };
+
+  const processTrackData = (data: any, isPlayingNow: boolean) => {
+    if (data?.item || data?.items?.length) {
+      const track = isPlayingNow ? data.item : data.items[0]?.track;
+      return {
+        artistName: track?.artists?.[0]?.name,
+        name: track?.name,
+        imageUrl: track?.album?.images?.[2]?.url,
+        hyperlink: track?.external_urls?.spotify,
+        isPlayingNow,
+      };
+    }
+    return null;
+  };
+
+  // Try fetching currently playing track
+
+  let playingNowData = await fetchData(fetchPlayingNow, config.accessToken);
+
+  // Handle token refresh if necessary
+  if ((!playingNowData || playingNowData?.error?.status === 401) && !isRetry) {
+    const newConfig = await updateAccessToken();
+
+    if (newConfig) {
+      playingNowData = await fetchData(fetchPlayingNow, newConfig.accessToken);
+      if (playingNowData) config = newConfig; // Update config for further requests
     }
   }
 
-  // Return currently playing track if available
-  if (fetchPlayingNowRequest && fetchPlayingNowRequest?.status === 200) {
-    const data = await fetchPlayingNowRequest.json();
+  // If a currently playing track is found, return it
+  const playingNowTrack = processTrackData(playingNowData, true);
+  if (playingNowTrack) return playingNowTrack;
 
-    return {
-      artistName: data?.item?.artists[0]?.name,
-      name: data?.item?.name,
-      imageUrl: data?.item?.album?.images[2]?.url,
-      hyperlink: data?.item?.album?.external_urls?.spotify,
-      isPlayingNow: true,
-    };
-  }
+  // Fallback to recently played track
 
-  // Prevent infinite loop on retry
-  if (isRetry) {
-    return null;
-  }
-
-  // Fall back to recently played track
-  const recentlyPlayedReq = await fetchRecentlyPlayed(config.accessToken);
-  const recentlyPlayedData = await recentlyPlayedReq.json();
-
-  if (recentlyPlayedData) {
-    return {
-      artistName: recentlyPlayedData?.items[0]?.track?.artists[0]?.name,
-      name: recentlyPlayedData?.items[0]?.track?.name,
-      imageUrl: recentlyPlayedData?.items[0]?.track?.album?.images[2]?.url,
-      hyperlink: recentlyPlayedData?.items[0]?.track?.external_urls?.spotify,
-      isPlayingNow: false,
-    };
-  }
-
-  return null;
+  const recentlyPlayedData = await fetchData(
+    fetchRecentlyPlayed,
+    config.accessToken
+  );
+  return processTrackData(recentlyPlayedData, false);
 };
 
+/**
+ * Fetches Spotify data for the specified block.
+ * @param blockId The ID of the block.
+ * @returns A promise resolving to the Spotify track data or error state.
+ */
 export const fetchData = async (blockId: string) => {
   try {
     const block = await prisma.block.findUnique({
       where: { id: blockId },
       select: {
         integration: {
-          where: {
-            type: 'spotify',
-          },
-          select: {
-            id: true,
-            encryptedConfig: true,
-          },
+          where: { type: 'spotify' },
+          select: { id: true, encryptedConfig: true },
         },
       },
     });
@@ -148,11 +178,7 @@ export const fetchData = async (blockId: string) => {
     const integration = block?.integration;
 
     if (!integration || !integration.encryptedConfig) {
-      console.info('No integration found for current page');
-      return {
-        noIntegration: true,
-        data: null,
-      };
+      return { noIntegration: true, data: null };
     }
 
     const [decryptedConfigError, decryptedConfig] = await safeAwait(
@@ -161,20 +187,14 @@ export const fetchData = async (blockId: string) => {
 
     if (decryptedConfigError) {
       captureException(decryptedConfigError);
-
-      return {
-        data: null,
-      };
+      return { data: null };
     }
 
     if (!decryptedConfig.accessToken) {
       captureMessage(
-        `Spotify accessToken or refreshToken doesn't exist: Integration ID: ${integration.id}`
+        `Spotify token missing: Integration ID: ${integration.id}`
       );
-
-      return {
-        data: null,
-      };
+      return { data: null };
     }
 
     const spotifyData = await fetchSpotifyData(
@@ -182,15 +202,9 @@ export const fetchData = async (blockId: string) => {
       false,
       integration.id
     );
-
-    return {
-      data: spotifyData,
-    };
+    return { data: spotifyData };
   } catch (error) {
     captureException(error);
-
-    return {
-      data: null,
-    };
+    return { data: null };
   }
 };
