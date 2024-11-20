@@ -12,7 +12,8 @@ import {
 import { Form, Formik, FormikHelpers } from 'formik';
 import { Loader2 } from 'lucide-react';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
 import { useSWRConfig } from 'swr';
 
 const InstagramLogo = () => {
@@ -86,6 +87,7 @@ export function EditForm({
   const [showConfirmDisconnect, setShowConfirmDisconnect] = useState(false);
 
   const { mutate } = useSWRConfig();
+  const router = useRouter();
 
   const handleDisconnect = async () => {
     if (!integration) {
@@ -122,6 +124,11 @@ export function EditForm({
     setSubmitting(true);
     onSave(values);
   };
+
+  useEffect(() => {
+    // Refresh the page to fetch the new data
+    router.refresh();
+  }, [integration, router]);
 
   if (!integration) {
     return (

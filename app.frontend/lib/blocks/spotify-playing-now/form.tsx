@@ -3,8 +3,10 @@ import { InternalApi } from '@/app/lib/api';
 import { Button } from '@/components/ui/button';
 import { toast } from '@/components/ui/use-toast';
 import { captureException } from '@sentry/nextjs';
+import { Router } from 'lucide-react';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
 import { useSWRConfig } from 'swr';
 
 const SpotifyLogo = () => {
@@ -24,6 +26,8 @@ export function EditForm({ integration, blockId }: EditFormProps<{}>) {
   const [showConfirmDisconnect, setShowConfirmDisconnect] = useState(false);
 
   const { mutate } = useSWRConfig();
+
+  const router = useRouter();
 
   const handleDisconnect = async () => {
     if (!integration) {
@@ -52,6 +56,11 @@ export function EditForm({ integration, blockId }: EditFormProps<{}>) {
       });
     }
   };
+
+  useEffect(() => {
+    // Refresh the page to fetch the new data
+    router.refresh();
+  }, [integration, router]);
 
   if (!integration) {
     return (

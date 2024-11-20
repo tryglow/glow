@@ -5,7 +5,8 @@ import { EditFormProps } from '@/lib/blocks/types';
 import { captureException } from '@sentry/nextjs';
 import { TikTokFollowerCountBlockConfig } from '@tryglow/blocks';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
 import { useSWRConfig } from 'swr';
 
 const ThreadsLogo = () => {
@@ -23,6 +24,7 @@ export function EditForm({
   const [showConfirmDisconnect, setShowConfirmDisconnect] = useState(false);
 
   const { mutate } = useSWRConfig();
+  const router = useRouter();
 
   const handleDisconnect = async () => {
     if (!integration) {
@@ -51,6 +53,11 @@ export function EditForm({
       });
     }
   };
+
+  useEffect(() => {
+    // Refresh the page to fetch the new data
+    router.refresh();
+  }, [integration, router]);
 
   if (!integration) {
     return (

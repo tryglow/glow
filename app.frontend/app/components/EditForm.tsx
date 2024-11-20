@@ -4,6 +4,7 @@ import { editForms } from '@/lib/blocks/edit';
 import { internalApiFetcher } from '@/lib/fetch';
 import { captureException } from '@sentry/nextjs';
 import { Blocks } from '@tryglow/blocks';
+import { useRouter } from 'next/navigation';
 import useSWR from 'swr';
 
 interface Props {
@@ -18,6 +19,8 @@ export function EditForm({ onClose, blockId, blockType }: Props) {
     integration: any;
   }>(`/blocks/${blockId}`, internalApiFetcher);
 
+  const router = useRouter();
+
   const onSave = async (values: any) => {
     try {
       const response = await InternalApi.post(
@@ -31,10 +34,14 @@ export function EditForm({ onClose, blockId, blockType }: Props) {
         mutate(values, {
           optimisticData: values,
         });
+
         toast({
           title: 'Saved!',
           description: 'Your changes have been saved.',
         });
+
+        // Refresh the page to fetch the new data
+        router.refresh();
       }
     } catch (error) {
       captureException(error);
