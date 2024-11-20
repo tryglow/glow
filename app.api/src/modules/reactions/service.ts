@@ -26,26 +26,24 @@ const MAX_ALLOWED_REACTIONS_PER_IP = 16;
 // We only support one reaction type for now
 const REACTION_TYPE = 'love';
 
-export const getIpAddress = async (request: FastifyRequest) => {
-  let ipAddress;
-
+export const getIpAddress = (request: FastifyRequest): string => {
   const defaultIpAddress = '127.0.0.1';
 
-  const headers = request.headers;
-
   if (process.env.NODE_ENV === 'development') {
-    ipAddress = defaultIpAddress;
-  } else {
-    if (!headers) {
-      return defaultIpAddress;
-    }
-
-    const xForwardedFor = headers['x-forwarded-for'];
-    const xRealIp = headers['x-real-ip'];
-    ipAddress = xForwardedFor || xRealIp;
+    return defaultIpAddress;
   }
 
-  return (ipAddress || defaultIpAddress) as string;
+  const ip = request.ip;
+
+  const xForwardedFor = request.headers['x-forwarded-for'];
+  const xRealIp = request.headers['x-real-ip'];
+
+  return (
+    (xForwardedFor as string)?.split(',')[0]?.trim() ||
+    (xRealIp as string) ||
+    ip ||
+    defaultIpAddress
+  );
 };
 
 export async function getReactionsForPageId({
