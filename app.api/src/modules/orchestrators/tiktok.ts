@@ -1,9 +1,7 @@
-import { uploadAsset } from '@/app/api/page/asset/upload/actions';
-import { auth } from '@/app/lib/auth';
 import { encrypt } from '@/lib/encrypt';
 import prisma from '@/lib/prisma';
-import { captureException, captureMessage } from '@sentry/nextjs';
-import { track } from '@vercel/analytics/server';
+import { uploadAsset } from '@/modules/assets/service';
+import { captureException, captureMessage } from '@sentry/node';
 import safeAwait from 'safe-await';
 
 // Example output: "x7hj2k9"
@@ -278,6 +276,7 @@ const createTiktokIntegration = async ({
   }
 };
 
+// TODO - Handle refreshing the token if it's expired
 const fetchTikTokProfile = async ({ accessToken }: { accessToken: string }) => {
   const options = {
     fields: 'avatar_url,display_name,follower_count,username',
@@ -324,9 +323,6 @@ const checkHasPublishedVideo = async ({
       Authorization: `Bearer ${accessToken}`,
     },
     method: 'POST',
-    next: {
-      revalidate: 60,
-    },
     body: JSON.stringify({
       max_count: 1,
     }),
@@ -474,12 +470,10 @@ const setPageConfig = async ({
   });
 };
 
-const getTikTokAccessToken = async () => {
-  const session = await auth();
-
+const getTikTokAccessToken = async ({ userId }: { userId: string }) => {
   const tiktokAccount = await prisma.account.findFirst({
     where: {
-      userId: session?.user.id,
+      userId,
       provider: 'tiktok',
     },
   });
@@ -529,25 +523,15 @@ const uploadAvatar = async ({
   return uploadResult.data.url;
 };
 
-export async function orchestrateTikTok(orchestrationId: string) {
-  const session = await auth();
-
-  if (!session?.user) {
-    return {
-      error: 'Not authenticated',
-    };
-  }
-
-  if (!session.currentTeamId || session.currentTeamId === '') {
-    captureException(
-      new Error('User tried to create a TikTok page without a team')
-    );
-
-    return {
-      error: 'No team found',
-    };
-  }
-
+export async function orchestrateTikTok({
+  orchestrationId,
+  teamId,
+  userId,
+}: {
+  orchestrationId: string;
+  teamId: string;
+  userId: string;
+}) {
   const orchestration = await prisma.orchestration.findUnique({
     where: {
       id: orchestrationId,
@@ -568,9 +552,9 @@ export async function orchestrateTikTok(orchestrationId: string) {
   }
 
   // Tmp delay to allow token to be refreshed
-  await new Promise((resolve) => setTimeout(resolve, 1200));
+  await new Promise((resolve) => setTimeout(resolve, 1400));
 
-  const tiktokTokens = await getTikTokAccessToken();
+  const tiktokTokens = await getTikTokAccessToken({ userId });
 
   if (!tiktokTokens?.accessToken) {
     return {
@@ -599,8 +583,8 @@ export async function orchestrateTikTok(orchestrationId: string) {
   });
 
   const page = await createPage({
-    teamId: session.currentTeamId,
-    userId: session.user.id,
+    teamId,
+    userId,
     tiktokUsername: tiktokData?.profile?.username,
   });
 
@@ -617,8 +601,8 @@ export async function orchestrateTikTok(orchestrationId: string) {
   });
 
   const tiktokIntegration = await createTiktokIntegration({
-    teamId: session.currentTeamId,
-    userId: session.user.id,
+    teamId,
+    userId,
     accessToken: tiktokTokens.accessToken,
     refreshToken: tiktokTokens.refreshToken,
   });
@@ -690,11 +674,6 @@ export async function orchestrateTikTok(orchestrationId: string) {
     contentBlockId: contentBlock.id,
     stackBlockId: stackBlock.id,
     tiktokLatestVideoBlockId: tiktokLatestVideoBlock?.id,
-  });
-
-  await track('tiktokPageOrchestrated', {
-    userId: session.user.id,
-    pageId: page.id,
   });
 
   await prisma.orchestration.update({

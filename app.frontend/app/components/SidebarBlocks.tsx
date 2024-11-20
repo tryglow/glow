@@ -19,8 +19,6 @@ export function SidebarBlocks() {
     internalApiFetcher
   );
 
-  console.log('Enabled Blocks', enabledBlocks);
-
   const [filteredBlocks, setFilteredBlocks] = useState(enabledBlocks);
 
   useEffect(() => {

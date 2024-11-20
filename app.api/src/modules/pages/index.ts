@@ -1,6 +1,8 @@
 'use strict';
 
 import {
+  createPageSchema,
+  deletePageSchema,
   getCurrentUserTeamPagesSchema,
   getPageBlocksSchema,
   getPageLayoutSchema,
@@ -10,6 +12,8 @@ import {
 } from './schemas';
 import {
   checkUserHasAccessToPage,
+  createNewPage,
+  deletePage,
   getPageBlocks,
   getPageIdBySlugOrDomain,
   getPageLayoutById,
@@ -19,6 +23,7 @@ import {
   updatePageLayout,
 } from './service';
 import { posthog } from '@/lib/posthog';
+import prisma from '@/lib/prisma';
 import { FastifyInstance, FastifyReply } from 'fastify';
 import { FastifyRequest } from 'fastify';
 
@@ -28,6 +33,10 @@ export default async function pagesRoutes(fastify: FastifyInstance, opts: any) {
     { schema: getCurrentUserTeamPagesSchema },
     getCurrentUserTeamPagesHandler
   );
+
+  fastify.post('/', { schema: createPageSchema }, createPageHandler);
+
+  fastify.delete('/:pageId', { schema: deletePageSchema }, deletePageHandler);
 
   fastify.get(
     '/:pageId/layout',
@@ -230,4 +239,104 @@ async function updatePageLayoutHandler(
   });
 
   return response.status(200).send(updatedPage);
+}
+
+async function createPageHandler(
+  request: FastifyRequest<{ Body: { slug: string; themeId: string } }>,
+  response: FastifyReply
+) {
+  const session = await request.server.authenticate(request, response);
+
+  const { slug, themeId } = request.body;
+
+  if (!slug) {
+    return response.status(400).send({
+      error: {
+        message: 'Missing required fields',
+      },
+    });
+  }
+
+  const teamPages = await prisma.page.findMany({
+    where: {
+      deletedAt: null,
+      team: {
+        id: session.currentTeamId,
+        members: {
+          some: {
+            userId: session.user.id,
+          },
+        },
+      },
+    },
+    include: {
+      user: {
+        select: {
+          isAdmin: true,
+        },
+      },
+    },
+  });
+
+  const user = await prisma.user.findUnique({
+    where: {
+      id: session.user.id,
+    },
+  });
+
+  const maxNumberOfPages =
+    user?.hasPremiumAccess || user?.hasTeamAccess ? 1000 : 2;
+
+  if (teamPages.length >= maxNumberOfPages) {
+    if (!user?.isAdmin) {
+      return response.status(400).send({
+        error: {
+          message: 'You have reached the maximum number of pages',
+          label: 'Please upgrade your plan to create more pages',
+        },
+      });
+    }
+  }
+
+  try {
+    const res = await createNewPage({
+      slug,
+      themeId,
+      userId: session.user.id,
+      teamId: session.currentTeamId,
+    });
+
+    if ('error' in res) {
+      return response.status(400).send({
+        error: res.error,
+      });
+    }
+
+    return response.status(200).send({
+      slug: res.slug,
+    });
+  } catch (error) {
+    return response.status(400).send(error);
+  }
+}
+
+async function deletePageHandler(
+  request: FastifyRequest<{ Params: { pageId: string } }>,
+  response: FastifyReply
+) {
+  const session = await request.server.authenticate(request, response);
+
+  const { pageId } = request.params;
+
+  const userHasAccess = await checkUserHasAccessToPage(pageId, session.user.id);
+
+  if (!userHasAccess) {
+    return response.status(403).send({});
+  }
+
+  await deletePage(pageId);
+
+  return response.status(200).send({
+    success: true,
+  });
 }

@@ -1,8 +1,24 @@
+import { BrandLogo, TiktokLogo } from './assets';
 import { Button } from '@/app/components/ui/button';
-import { orchestrateTikTok } from '@/lib/orchestrators/tiktok';
+import { apiServerFetch } from '@/app/lib/api-server';
 import { captureMessage } from '@sentry/nextjs';
 import Link from 'next/link';
-import { BrandLogo, TiktokLogo } from './assets';
+
+async function fetchTiktokOrchestrator(orchestrationId: string) {
+  const response = await apiServerFetch(`/orchestrators/tiktok/create`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      orchestrationId,
+    }),
+  });
+
+  const data = await response.json();
+
+  return data;
+}
 
 export async function Card({
   isLoading,
@@ -11,9 +27,9 @@ export async function Card({
   isLoading?: boolean;
   orchestrationId: string;
 }) {
-  const orchestrator = !isLoading
-    ? await orchestrateTikTok(orchestrationId)
-    : null;
+  const orchestrator = isLoading
+    ? null
+    : await fetchTiktokOrchestrator(orchestrationId);
 
   if (orchestrator?.error) {
     captureMessage(
@@ -59,7 +75,7 @@ export async function Card({
         ) : (
           <>
             <Button asChild size="xl">
-              <Link href={`/${orchestrator?.data?.pageSlug}`}>Continue</Link>
+              <Link href={`/${orchestrator?.pageSlug}`}>Continue</Link>
             </Button>
           </>
         )}

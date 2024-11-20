@@ -1,13 +1,15 @@
 'use client';
 
-import { Form, Formik, FormikHelpers } from 'formik';
-import { withZodSchema } from 'formik-validator-zod';
-import { Loader2 } from 'lucide-react';
-import { useParams, useRouter } from 'next/navigation';
-import { useState } from 'react';
-
-import { deletePage } from '@/app/api/page/actions';
-
+import { FormField } from '../FormField';
+import { updateGeneralPageSettings } from './actions';
+import { generalPageSettingsSchema } from './shared';
+import VerificationRequestDialog from '@/app/components/VerificationRequestDialog';
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from '@/app/components/ui/collapsible';
+import { InternalApi } from '@/app/lib/api';
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
@@ -20,18 +22,13 @@ import {
 import { Label } from '@/components/ui/label';
 import { Switch } from '@/components/ui/switch';
 import { useToast } from '@/components/ui/use-toast';
-
-import VerificationRequestDialog from '@/app/components/VerificationRequestDialog';
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from '@/app/components/ui/collapsible';
 import { ChevronDownIcon } from '@radix-ui/react-icons';
 import { captureException } from '@sentry/nextjs';
-import { FormField } from '../FormField';
-import { updateGeneralPageSettings } from './actions';
-import { generalPageSettingsSchema } from './shared';
+import { Form, Formik, FormikHelpers } from 'formik';
+import { withZodSchema } from 'formik-validator-zod';
+import { Loader2 } from 'lucide-react';
+import { useParams, useRouter } from 'next/navigation';
+import { useState } from 'react';
 
 export type FormValues = {
   pageSlug: string;
@@ -101,7 +98,7 @@ export function EditPageSettingsGeneral({ initialValues, pageId }: Props) {
 
   const handleDeletePage = async () => {
     try {
-      const res = await deletePage(params.slug as string);
+      const res = await InternalApi.delete(`/pages/${pageId}`);
 
       if (res?.error) {
         toast({

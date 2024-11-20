@@ -52,7 +52,7 @@ async function postUploadAssetHandler(
   }
 
   // Create a MultipartFile object from the file data
-  const file: MultipartFile = {
+  const multipartFile: MultipartFile = {
     type: 'file',
     fieldname: data.fieldname,
     filename: data.filename,
@@ -71,7 +71,7 @@ async function postUploadAssetHandler(
 
   const uploadResult = await uploadAsset({
     context,
-    file,
+    multipartFile,
     referenceId,
   });
 

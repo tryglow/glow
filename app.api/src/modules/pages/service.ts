@@ -1,4 +1,9 @@
 import prisma from '../../lib/prisma';
+import { isReservedSlug } from '@/lib/slugs';
+import { isForbiddenSlug } from '@/lib/slugs';
+import { regexSlug } from '@/lib/slugs';
+import { headerBlockDefaults } from '@tryglow/blocks';
+import { randomUUID } from 'crypto';
 
 export async function getPageLayoutById(pageId: string) {
   const page = await prisma.page.findUnique({
@@ -154,4 +159,124 @@ export async function checkUserHasAccessToPage(pageId: string, userId: string) {
   }
 
   return false;
+}
+
+export async function createNewPage({
+  slug,
+  themeId,
+  userId,
+  teamId,
+}: {
+  slug: string;
+  themeId: string;
+  userId: string;
+  teamId: string;
+}) {
+  const existingPage = await prisma.page.findUnique({
+    where: {
+      deletedAt: null,
+      slug,
+    },
+  });
+
+  if (!slug.match(regexSlug)) {
+    return {
+      error: {
+        message: 'Slug is invalid',
+        field: 'pageSlug',
+      },
+    };
+  }
+
+  if (isForbiddenSlug(slug)) {
+    return {
+      error: {
+        message: 'Slug is forbidden',
+        field: 'pageSlug',
+      },
+    };
+  }
+
+  if (isReservedSlug(slug)) {
+    return {
+      error: {
+        message: 'Slug is reserved - reach out on twitter to request this',
+        field: 'pageSlug',
+      },
+    };
+  }
+
+  if (existingPage) {
+    return {
+      error: {
+        message: 'Page with this slug already exists',
+        field: 'pageSlug',
+      },
+    };
+  }
+
+  const headerSectionId = randomUUID();
+
+  const newPage = await prisma.page.create({
+    data: {
+      // Temporary until we drop userId from the page model
+      userId,
+      teamId,
+      slug,
+      publishedAt: new Date(),
+      themeId,
+      metaTitle: `@${slug}`,
+      config: [
+        {
+          h: 5,
+          i: headerSectionId,
+          w: 12,
+          x: 0,
+          y: 0,
+          moved: false,
+          static: true,
+        },
+      ],
+      mobileConfig: [
+        {
+          h: 5,
+          i: headerSectionId,
+          w: 12,
+          x: 0,
+          y: 0,
+          moved: false,
+          static: true,
+        },
+      ],
+      blocks: {
+        create: {
+          id: headerSectionId,
+          type: 'header',
+          config: {},
+          data: {
+            ...headerBlockDefaults,
+            title: `@${slug}`,
+          },
+        },
+      },
+    },
+    select: {
+      slug: true,
+    },
+  });
+
+  return newPage;
+}
+
+export async function deletePage(pageId: string) {
+  await prisma.page.update({
+    where: {
+      id: pageId,
+    },
+    data: {
+      deletedAt: new Date(),
+    },
+  });
+
+  return true;
 }

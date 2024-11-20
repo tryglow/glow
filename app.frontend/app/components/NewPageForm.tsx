@@ -1,24 +1,20 @@
 'use client';
 
-import { Form, Formik, FormikHelpers } from 'formik';
-import { Loader2 } from 'lucide-react';
-import { useRouter } from 'next/navigation';
-import * as Yup from 'yup';
-
-import { createPage } from '@/app/api/page/actions';
-
-import { regexSlug } from '@/lib/slugs';
-import { defaultThemeSeeds } from '@/lib/theme';
-
+import { FormField } from './FormField';
+import { PageThemePreview } from '@/app/components/PageThemePreview';
+import { InternalApi } from '@/app/lib/api';
 import { Button } from '@/components/ui/button';
 import { DialogFooter } from '@/components/ui/dialog';
 import { Label } from '@/components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { useToast } from '@/components/ui/use-toast';
-
-import { PageThemePreview } from '@/app/components/PageThemePreview';
+import { regexSlug } from '@/lib/slugs';
+import { defaultThemeSeeds } from '@/lib/theme';
 import { captureException } from '@sentry/nextjs';
-import { FormField } from './FormField';
+import { Form, Formik, FormikHelpers } from 'formik';
+import { Loader2 } from 'lucide-react';
+import { useRouter } from 'next/navigation';
+import * as Yup from 'yup';
 
 const FormSchema = Yup.object().shape({
   pageSlug: Yup.string()
@@ -51,7 +47,7 @@ export function CreatePageForm({ onCancel }: Props) {
     setSubmitting(true);
 
     try {
-      const { error, data } = await createPage({
+      const { error, slug } = await InternalApi.post('/pages', {
         slug: values.pageSlug,
         themeId: values.themeId,
       });
@@ -69,8 +65,8 @@ export function CreatePageForm({ onCancel }: Props) {
         return;
       }
 
-      if (data) {
-        router.push(`/${data.page.slug}`);
+      if (slug) {
+        router.push(`/${slug}`);
         if (onCancel) {
           onCancel();
         }

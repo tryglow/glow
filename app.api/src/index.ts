@@ -9,6 +9,7 @@ import { authenticateDecorator } from '@/decorators/authenticate';
 import assetsRoutes from '@/modules/assets';
 import billingRoutes from '@/modules/billing';
 import integrationsRoutes from '@/modules/integrations';
+import orchestratorsRoutes from '@/modules/orchestrators';
 import reactionsRoutes from '@/modules/reactions';
 import teamsRoutes from '@/modules/teams';
 import themesRoutes from '@/modules/themes';
@@ -51,6 +52,7 @@ fastify.register(integrationsRoutes, { prefix: '/integrations' });
 fastify.register(reactionsRoutes, { prefix: '/reactions' });
 fastify.register(assetsRoutes, { prefix: '/assets' });
 fastify.register(billingRoutes, { prefix: '/billing' });
+fastify.register(orchestratorsRoutes, { prefix: '/orchestrators' });
 
 fastify.use('/auth', ExpressAuth(authConfig));
 

@@ -84,7 +84,8 @@
         "STRIPE_API_SECRET_KEY",
         "STRIPE_WEBHOOK_SECRET",
         "LOOPS_API_KEY",
-        "APP_ENV"
+        "APP_ENV",
+        "ENCRYPTION_KEY"
       ],
       "inputs": ["$TURBO_DEFAULT$", ".env"]
     },
@@ -108,7 +109,8 @@
         "STRIPE_API_SECRET_KEY",
         "STRIPE_WEBHOOK_SECRET",
         "LOOPS_API_KEY",
-        "APP_ENV"
+        "APP_ENV",
+        "ENCRYPTION_KEY"
       ],
       "inputs": ["$TURBO_DEFAULT$", ".env"]
     },

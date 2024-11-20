@@ -154,3 +154,46 @@ export const updatePageLayoutSchema = {
     },
   },
 };
+
+export const createPageSchema = {
+  response: {
+    200: {
+      type: 'object',
+      properties: {
+        id: {
+          type: 'string',
+        },
+        slug: {
+          type: 'string',
+        },
+      },
+    },
+    400: {
+      type: 'object',
+      properties: {
+        error: {
+          type: 'object',
+          properties: {
+            message: {
+              type: 'string',
+            },
+          },
+        },
+      },
+      additionalProperties: false,
+    },
+  },
+};
+
+export const deletePageSchema = {
+  response: {
+    200: {
+      type: 'object',
+      properties: {
+        success: {
+          type: 'boolean',
+        },
+      },
+    },
+  },
+};

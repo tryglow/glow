@@ -48,10 +48,12 @@ const uploadStream = (fileName: string, contentType: string) => {
 export async function uploadAsset({
   context,
   file,
+  multipartFile,
   referenceId,
 }: {
   context: AssetContexts;
-  file: MultipartFile;
+  file?: File;
+  multipartFile?: MultipartFile;
   referenceId: string;
 }) {
   const assetConfig = assetContexts[context];
@@ -76,28 +78,53 @@ export async function uploadAsset({
     .resize(assetConfig.resize.width, assetConfig.resize.height)
     .png({ quality: assetConfig.quality });
 
-  // Pipe file through sharp to S3
-  file.file.pipe(sharpWebp).pipe(webpStream);
-  file.file.pipe(sharpPng).pipe(pngStream);
+  try {
+    // Handle File or MultipartFile input
+    if (file) {
+      const buffer = await file.arrayBuffer();
+      const fileBuffer = Buffer.from(buffer);
 
-  // Wait for uploads to finish
-  const [webpUpload, pngUpload] = await Promise.all([webpDone, pngDone]);
+      // Process and pipe the buffer through sharp to S3
+      sharpWebp.end(fileBuffer);
+      sharpPng.end(fileBuffer);
+    } else if (multipartFile) {
+      const buffer = await multipartFile.toBuffer();
 
-  // Check if uploads are successful
-  if (isComplete(webpUpload) && isComplete(pngUpload)) {
-    const fileLocation =
-      process.env.APP_ENV === 'development'
-        ? `https://cdn.dev.glow.as/${webpUpload.Key}`
-        : `https://cdn.glow.as/${webpUpload.Key}`;
+      // Process and pipe the buffer through sharp to S3
+      sharpWebp.end(buffer);
+      sharpPng.end(buffer);
+    } else {
+      throw new Error('No file provided');
+    }
+
+    // Connect sharp output to S3 upload streams
+    sharpWebp.pipe(webpStream);
+    sharpPng.pipe(pngStream);
+
+    // Wait for uploads to finish
+    const [webpUpload, pngUpload] = await Promise.all([webpDone, pngDone]);
+
+    // Check if uploads are successful
+    if (isComplete(webpUpload) && isComplete(pngUpload)) {
+      const fileLocation =
+        process.env.APP_ENV === 'development'
+          ? `https://cdn.dev.glow.as/${webpUpload.Key}`
+          : `https://cdn.glow.as/${webpUpload.Key}`;
+
+      return {
+        data: {
+          url: fileLocation,
+        },
+      };
+    }
 
     return {
-      data: {
-        url: fileLocation,
-      },
+      error: 'Failed to upload asset',
+    };
+  } catch (error) {
+    console.error('Error uploading asset:', error);
+    return {
+      error: 'Failed to upload asset',
     };
   }
-
-  return {
-    error: 'Failed to upload asset',
-  };
 }
