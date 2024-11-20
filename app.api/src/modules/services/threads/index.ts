@@ -1,7 +1,6 @@
-import { requestToken } from './utils';
+import { requestLongLivedToken, requestToken } from './utils';
 import { decrypt, encrypt, isEncrypted } from '@/lib/encrypt';
 import prisma from '@/lib/prisma';
-import { requestLongLivedToken } from '@/modules/services/instagram/utils';
 import { captureException } from '@sentry/node';
 import { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify';
 
