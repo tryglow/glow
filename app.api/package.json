@@ -28,8 +28,10 @@
     "esbuild": "^0.21.3",
     "fastify": "^5.1.0",
     "fastify-cli": "^7.0.1",
+    "loops": "^3.4.0",
     "posthog-node": "^4.2.2",
     "safe-await": "^2.0.0",
+    "stripe": "^17.3.1",
     "tsx": "^4.16.0",
     "zod": "^3.2"
   },

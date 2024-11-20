@@ -80,7 +80,10 @@
         "AWS_SECRET_ACCESS_KEY",
         "AWS_REGION",
         "REACTIONS_TABLE_NAME",
-        "POSTHOG_API_KEY"
+        "POSTHOG_API_KEY",
+        "STRIPE_API_SECRET_KEY",
+        "STRIPE_WEBHOOK_SECRET",
+        "LOOPS_API_KEY"
       ],
       "inputs": ["$TURBO_DEFAULT$", ".env"]
     },
@@ -100,7 +103,10 @@
         "AWS_SECRET_ACCESS_KEY",
         "AWS_REGION",
         "REACTIONS_TABLE_NAME",
-        "POSTHOG_API_KEY"
+        "POSTHOG_API_KEY",
+        "STRIPE_API_SECRET_KEY",
+        "STRIPE_WEBHOOK_SECRET",
+        "LOOPS_API_KEY"
       ],
       "inputs": ["$TURBO_DEFAULT$", ".env"]
     },
