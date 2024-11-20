@@ -1,10 +1,26 @@
 'use server';
 
-import { refreshLongLivedToken } from '@/app/api/services/tiktok/callback/utils';
 import { decrypt, encrypt } from '@/lib/encrypt';
 import prisma from '@/lib/prisma';
 import { captureException } from '@sentry/nextjs';
 import { TikTokIntegrationConfig } from '@tryglow/blocks';
+
+async function refreshLongLivedToken({
+  refreshToken,
+}: {
+  refreshToken: string;
+}) {
+  return fetch(`https://open.tiktokapis.com/v2/oauth/token/`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    body: new URLSearchParams({
+      grant_type: 'refresh_token',
+      refresh_token: refreshToken,
+    }),
+  });
+}
 
 function fetchTiktokProfile(accessToken: string) {
   const options = {

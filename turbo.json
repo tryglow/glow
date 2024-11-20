@@ -85,7 +85,20 @@
         "STRIPE_WEBHOOK_SECRET",
         "LOOPS_API_KEY",
         "APP_ENV",
-        "ENCRYPTION_KEY"
+        "ENCRYPTION_KEY",
+        "APP_FRONTEND_URL",
+        "INSTAGRAM_CALLBACK_URL",
+        "INSTAGRAM_CLIENT_ID",
+        "INSTAGRAM_CLIENT_SECRET",
+        "SPOTIFY_CLIENT_ID",
+        "SPOTIFY_CLIENT_SECRET",
+        "SPOTIFY_REDIRECT_URL",
+        "THREADS_CALLBACK_URL",
+        "THREADS_CLIENT_ID",
+        "THREADS_CLIENT_SECRET",
+        "TIKTOK_CALLBACK_URL",
+        "TIKTOK_CLIENT_KEY",
+        "TIKTOK_CLIENT_SECRET"
       ],
       "inputs": ["$TURBO_DEFAULT$", ".env"]
     },
@@ -110,7 +123,20 @@
         "STRIPE_WEBHOOK_SECRET",
         "LOOPS_API_KEY",
         "APP_ENV",
-        "ENCRYPTION_KEY"
+        "ENCRYPTION_KEY",
+        "APP_FRONTEND_URL",
+        "INSTAGRAM_CALLBACK_URL",
+        "INSTAGRAM_CLIENT_ID",
+        "INSTAGRAM_CLIENT_SECRET",
+        "SPOTIFY_CLIENT_ID",
+        "SPOTIFY_CLIENT_SECRET",
+        "SPOTIFY_REDIRECT_URL",
+        "THREADS_CALLBACK_URL",
+        "THREADS_CLIENT_ID",
+        "THREADS_CLIENT_SECRET",
+        "TIKTOK_CALLBACK_URL",
+        "TIKTOK_CLIENT_KEY",
+        "TIKTOK_CLIENT_SECRET"
       ],
       "inputs": ["$TURBO_DEFAULT$", ".env"]
     },

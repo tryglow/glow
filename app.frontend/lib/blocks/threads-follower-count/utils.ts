@@ -1,10 +1,22 @@
 'use server';
 
-import { refreshLongLivedToken } from '@/app/api/services/threads/callback/utils';
 import { decrypt, encrypt } from '@/lib/encrypt';
 import prisma from '@/lib/prisma';
 import { captureException } from '@sentry/nextjs';
 import { ThreadsIntegrationConfig } from '@tryglow/blocks';
+
+async function refreshLongLivedToken({ accessToken }: { accessToken: string }) {
+  const options = {
+    grant_type: 'th_refresh_token',
+    access_token: accessToken,
+  };
+
+  const qs = new URLSearchParams(options).toString();
+
+  return fetch(`https://graph.threads.net/refresh_access_token?${qs}`, {
+    method: 'GET',
+  });
+}
 
 function fetchThreadsFollowerCount(accessToken: string, threadsUserId: string) {
   const options = {

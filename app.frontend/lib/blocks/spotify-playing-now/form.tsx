@@ -1,4 +1,5 @@
 import { EditFormProps } from '../types';
+import { InternalApi } from '@/app/lib/api';
 import { Button } from '@/components/ui/button';
 import { toast } from '@/components/ui/use-toast';
 import { captureException } from '@sentry/nextjs';
@@ -30,22 +31,25 @@ export function EditForm({ integration, blockId }: EditFormProps<{}>) {
     }
 
     try {
-      const response = await fetch('/api/services/disconnect', {
-        method: 'POST',
-        body: JSON.stringify({
-          integrationId: integration.id,
-        }),
+      const response = await InternalApi.post('/integrations/disconnect', {
+        integrationId: integration.id,
       });
 
-      if (response.ok) {
-        toast({
-          title: 'Integration disconnected',
-        });
-
-        mutate(`/blocks/${blockId}`);
+      if (response.error) {
+        throw new Error(response.error);
       }
+
+      toast({
+        title: 'Integration disconnected',
+      });
+
+      mutate(`/blocks/${blockId}`);
     } catch (error) {
       captureException(error);
+      toast({
+        title: 'Error disconnecting integration',
+        description: 'Please try again later.',
+      });
     }
   };
 
@@ -65,7 +69,7 @@ export function EditForm({ integration, blockId }: EditFormProps<{}>) {
 
         <Button asChild className="mt-4">
           <Link
-            href={`/api/services/spotify?blockId=${blockId}`}
+            href={`${process.env.NEXT_PUBLIC_API_URL}/services/spotify?blockId=${blockId}`}
             prefetch={false}
             target="_blank"
           >

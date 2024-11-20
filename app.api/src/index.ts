@@ -11,6 +11,9 @@ import billingRoutes from '@/modules/billing';
 import integrationsRoutes from '@/modules/integrations';
 import orchestratorsRoutes from '@/modules/orchestrators';
 import reactionsRoutes from '@/modules/reactions';
+import instagramServiceRoutes from '@/modules/services/instagram';
+import spotifyServiceRoutes from '@/modules/services/spotify';
+import threadsServiceRoutes from '@/modules/services/threads';
 import teamsRoutes from '@/modules/teams';
 import themesRoutes from '@/modules/themes';
 import { ExpressAuth } from '@auth/express';
@@ -45,7 +48,6 @@ await fastify.register(cors, {
 fastify.register(coreRoutes);
 fastify.register(blocksRoutes, { prefix: '/blocks' });
 fastify.register(pagesRoutes, { prefix: '/pages' });
-fastify.register(tiktokServiceRoutes, { prefix: '/services/tiktok' });
 fastify.register(themesRoutes, { prefix: '/themes' });
 fastify.register(teamsRoutes, { prefix: '/teams' });
 fastify.register(integrationsRoutes, { prefix: '/integrations' });
@@ -53,6 +55,13 @@ fastify.register(reactionsRoutes, { prefix: '/reactions' });
 fastify.register(assetsRoutes, { prefix: '/assets' });
 fastify.register(billingRoutes, { prefix: '/billing' });
 fastify.register(orchestratorsRoutes, { prefix: '/orchestrators' });
+
+fastify.register(tiktokServiceRoutes, { prefix: '/services/tiktok' });
+fastify.register(instagramServiceRoutes, { prefix: '/services/instagram' });
+fastify.register(threadsServiceRoutes, { prefix: '/services/threads' });
+fastify.register(spotifyServiceRoutes, {
+  prefix: '/services/spotify',
+});
 
 fastify.use('/auth', ExpressAuth(authConfig));
 

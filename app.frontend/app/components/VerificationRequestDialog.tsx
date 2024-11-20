@@ -1,10 +1,7 @@
 'use client';
 
-import { Button } from '@/app/components/ui/button';
-import { z } from 'zod';
-
-import { createVerificationRequest } from '@/app/api/verification-requests/actions';
 import { FormField } from '@/app/components/FormField';
+import { Button } from '@/app/components/ui/button';
 import {
   Dialog,
   DialogContent,
@@ -14,8 +11,10 @@ import {
   DialogTitle,
 } from '@/app/components/ui/dialog';
 import { toast } from '@/app/components/ui/use-toast';
+import { createVerificationRequest } from '@/app/lib/actions/verification';
 import { Form, Formik } from 'formik';
 import { withZodSchema } from 'formik-validator-zod';
+import { z } from 'zod';
 
 export default function VerificationRequestDialog({
   open,

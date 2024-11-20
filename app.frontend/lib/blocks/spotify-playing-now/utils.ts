@@ -1,11 +1,24 @@
 'server-only';
 
-import { requestToken } from '@/app/api/services/spotify/callback/utils';
 import { decrypt, encrypt } from '@/lib/encrypt';
 import prisma from '@/lib/prisma';
 import { captureException, captureMessage } from '@sentry/nextjs';
 import { SpotifyIntegrationConfig } from '@tryglow/blocks';
 import safeAwait from 'safe-await';
+
+async function refreshToken({ refreshToken }: { refreshToken: string }) {
+  return fetch(`https://accounts.spotify.com/api/token`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    body: new URLSearchParams({
+      grant_type: 'refresh_token',
+      refresh_token: refreshToken,
+      client_id: process.env.SPOTIFY_CLIENT_ID as string,
+    }),
+  });
+}
 
 async function fetchPlayingNow(accessToken: string) {
   const req = await fetch(
@@ -50,8 +63,7 @@ const fetchSpotifyData = async (
 
   // Handle expired access token
   if (fetchPlayingNowRequest?.status === 401 && !isRetry) {
-    const refreshTokenRequest = await requestToken({
-      isRefreshToken: true,
+    const refreshTokenRequest = await refreshToken({
       refreshToken: config.refreshToken,
     });
 

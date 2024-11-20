@@ -1,4 +1,3 @@
-import { setPageTheme } from '@/app/api/themes/actions';
 import { CreateEditThemeForm } from '@/app/components/EditPageSettingsDialog/CreateNewTheme';
 import { PageThemePreview } from '@/app/components/PageThemePreview';
 import { Button } from '@/app/components/ui/button';
@@ -9,6 +8,7 @@ import {
   SidebarSeparator,
 } from '@/app/components/ui/sidebar';
 import { toast } from '@/app/components/ui/use-toast';
+import { setPageTheme } from '@/app/lib/actions/themes';
 import { internalApiFetcher } from '@/lib/fetch';
 import { themeColorToCssValue } from '@/lib/theme';
 import { Theme } from '@tryglow/prisma';

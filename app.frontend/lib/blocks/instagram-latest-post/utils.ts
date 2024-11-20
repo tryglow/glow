@@ -1,10 +1,22 @@
 'use server';
 
-import { refreshLongLivedToken } from '@/app/api/services/instagram/callback/utils';
 import { decrypt, encrypt } from '@/lib/encrypt';
 import prisma from '@/lib/prisma';
 import { captureException } from '@sentry/nextjs';
 import { InstagramIntegrationConfig } from '@tryglow/blocks';
+
+async function refreshLongLivedToken({ accessToken }: { accessToken: string }) {
+  const options = {
+    grant_type: 'ig_refresh_token',
+    access_token: accessToken,
+  };
+
+  const qs = new URLSearchParams(options).toString();
+
+  return fetch(`https://graph.instagram.com/refresh_access_token?${qs}`, {
+    method: 'GET',
+  });
+}
 
 function fetchLatestInstagramPost(
   accessToken: string,

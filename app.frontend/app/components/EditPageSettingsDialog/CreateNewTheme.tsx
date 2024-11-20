@@ -1,10 +1,10 @@
 'use client';
 
-import { createTheme, updateTheme } from '@/app/api/themes/actions';
 import { Button } from '@/app/components/ui/button';
 import { Input } from '@/app/components/ui/input';
 import { Label } from '@/app/components/ui/label';
 import { toast } from '@/app/components/ui/use-toast';
+import { createTheme, updateTheme } from '@/app/lib/actions/themes';
 import { internalApiFetcher } from '@/lib/fetch';
 import { HSLColor, hslToHex, themeFields } from '@/lib/theme';
 import { Theme } from '@tryglow/prisma';

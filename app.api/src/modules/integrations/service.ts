@@ -15,3 +15,29 @@ export async function getIntegrationsForTeamId(teamId: string) {
 
   return integrations;
 }
+
+export async function disconnectIntegration(integrationId: string) {
+  await prisma.integration.update({
+    where: {
+      id: integrationId,
+    },
+    data: {
+      deletedAt: new Date(),
+      config: {},
+      encryptedConfig: null,
+    },
+  });
+
+  await prisma.block.updateMany({
+    where: {
+      integrationId,
+    },
+    data: {
+      integrationId: null,
+    },
+  });
+
+  return {
+    sucess: true,
+  };
+}

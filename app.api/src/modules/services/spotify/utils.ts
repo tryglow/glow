@@ -26,7 +26,7 @@ export async function requestToken({
   } else {
     data.append('grant_type', 'authorization_code');
     data.append('code', Array.isArray(code) ? code[0] : code);
-    data.append('redirect_uri', process.env.SPOTIFY_REDIRECT_URI ?? '');
+    data.append('redirect_uri', process.env.SPOTIFY_REDIRECT_URL ?? '');
   }
 
   return fetch(url, {

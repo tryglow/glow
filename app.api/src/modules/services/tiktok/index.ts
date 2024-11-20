@@ -148,7 +148,9 @@ async function getTiktokCallbackHandler(
       }
     }
 
-    return response.redirect(`/i/integration-callback/tiktok`);
+    return response.redirect(
+      `${process.env.APP_FRONTEND_URL}/i/integration-callback/tiktok`
+    );
   } catch (error) {
     captureException(error);
     return response.status(500).send({

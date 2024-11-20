@@ -22,3 +22,35 @@ export const getCurrentUserTeamIntegrationsSchema = {
     },
   },
 };
+
+export const disconnectIntegrationSchema = {
+  body: {
+    type: 'object',
+    properties: {
+      integrationId: { type: 'string' },
+    },
+  },
+  response: {
+    200: {
+      type: 'object',
+      properties: {
+        success: { type: 'boolean' },
+      },
+      additionalProperties: false,
+    },
+    400: {
+      type: 'object',
+      properties: {
+        error: { type: 'string' },
+      },
+      additionalProperties: false,
+    },
+    500: {
+      type: 'object',
+      properties: {
+        error: { type: 'string' },
+      },
+      additionalProperties: false,
+    },
+  },
+};

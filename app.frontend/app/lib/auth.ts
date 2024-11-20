@@ -1,4 +1,3 @@
-import { scopes as tiktokScopes } from '@/app/api/services/tiktok/callback/utils';
 import prisma from '@/lib/prisma';
 import { createContact } from '@/notifications/create-contact';
 import { sendVerificationRequest } from '@/notifications/send-verification-request';
@@ -64,7 +63,12 @@ export const { auth, signIn, signOut, handlers, unstable_update } = NextAuth({
       clientSecret: process.env.TIKTOK_CLIENT_SECRET as string,
       authorization: {
         params: {
-          scope: tiktokScopes.join(','),
+          scope: [
+            'user.info.basic',
+            'user.info.profile',
+            'user.info.stats',
+            'video.list',
+          ].join(','),
         },
       },
       profile(profile) {
