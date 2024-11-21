@@ -132,28 +132,38 @@ export function EditForm({
 
   if (!integration) {
     return (
-      <div className="bg-stone-100 rounded-md flex flex-col items-center text-center px-4 py-8">
-        <div className="bg-stone-200 rounded-md w-14 h-14 flex items-center justify-center">
-          <InstagramLogo />
-        </div>
-        <span className="font-medium text-lg text-stone-800 mt-3">
-          Connect your Instagram Account
-        </span>
-        <span className="font-normal text-stone-600 mt-1">
-          To get started, you&apos;ll need to connect your Instagram account to
-          your page.
-        </span>
+      <>
+        <div className="bg-stone-100 rounded-md flex flex-col items-center text-center px-4 py-8">
+          <div className="bg-stone-200 rounded-md w-14 h-14 flex items-center justify-center">
+            <InstagramLogo />
+          </div>
+          <span className="font-medium text-lg text-stone-800 mt-3">
+            Connect your Instagram Account
+          </span>
+          <span className="font-normal text-stone-600 mt-1">
+            To get started, you&apos;ll need to connect your Instagram account
+            to your page.
+          </span>
 
-        <Button asChild className="mt-4">
-          <Link
-            href={`${process.env.NEXT_PUBLIC_API_URL}/services/instagram?blockId=${blockId}`}
-            prefetch={false}
-            target="_blank"
-          >
-            Connect Instagram
-          </Link>
-        </Button>
-      </div>
+          <Button asChild className="mt-4">
+            <Link
+              href={`${process.env.NEXT_PUBLIC_API_URL}/services/instagram/v2?blockId=${blockId}`}
+              prefetch={false}
+              target="_blank"
+            >
+              Connect Instagram
+            </Link>
+          </Button>
+        </div>
+
+        <div className="bg-stone-100 rounded-md flex flex-col items-center text-center px-4 py-8 mt-4">
+          <span className="text-sm text-stone-600 text-pretty">
+            Please note that due to a recent change in Instagram&apos;s API, you
+            can only connect your Instagram account if it is a Business or
+            Creator account.
+          </span>
+        </div>
+      </>
     );
   }
 
@@ -191,6 +201,7 @@ export function EditForm({
           </div>
         )}
       </div>
+
       <Formik
         initialValues={{
           numberOfPosts: initialValues?.numberOfPosts ?? 1,

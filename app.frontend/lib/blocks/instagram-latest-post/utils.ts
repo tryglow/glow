@@ -23,18 +23,19 @@ function fetchLatestInstagramPost(
   instagramUserId: string,
   numberOfPosts: number
 ) {
-  const options = {
+  const url = new URL(
+    `https://graph.instagram.com/v21.0/${instagramUserId}/media`
+  );
+
+  const qs = new URLSearchParams({
     limit: numberOfPosts.toString(),
     fields: 'id,media_url,permalink,username,timestamp,caption,media_type',
     access_token: accessToken,
-  };
+  });
 
-  const qs = new URLSearchParams(options).toString();
+  url.search = qs.toString();
 
-  return fetch(`https://graph.instagram.com/${instagramUserId}/media?${qs}`, {
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-    },
+  return fetch(url.toString(), {
     next: {
       revalidate: 60,
     },
