@@ -69,6 +69,7 @@ export const blocks: Record<
   'instagram-latest-post': {
     defaults: instagramLatestPostBlockDefaults,
     schema: InstagramLatestPostSchema,
+    isBeta: true,
   },
   map: {
     defaults: mapBlockDefaults,

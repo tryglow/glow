@@ -7,6 +7,8 @@ export interface InstagramLatestPostBlockConfig {
 export interface InstagramIntegrationConfig {
   accessToken: string;
   instagramUserId: string;
+  accountType?: 'BUSINESS' | 'CREATOR';
+  username?: string;
 }
 
 export const instagramLatestPostBlockDefaults: InstagramLatestPostBlockConfig =
