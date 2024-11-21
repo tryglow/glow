@@ -12,6 +12,7 @@ import { getPageLayout } from '@/app/api/pages/[pageSlug]/layout/actions';
 import Grid, { PageConfig } from './grid';
 import { nullable } from 'zod';
 import { NotNull } from 'yup';
+import GridAngleProvider from '@/app/contexts/GridAngle';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
@@ -141,21 +142,23 @@ export default async function Page(props: { params: Promise<Params> }) {
   const mergedIds = [...pageLayout.sm, ...pageLayout.xxs].map((item) => item.i);
 
   return (
-    <Grid
-      isPotentiallyMobile={isMobile}
-      layout={pageLayout}
-      editMode={isEditMode}
-      isLoggedIn={isLoggedIn}
-    >
-      {page.blocks
-        .filter((block) => mergedIds.includes(block.id))
-        .map((block) => {
-          return (
-            <section key={block.id}>
-              {renderBlock(block, page.id, isEditMode)}
-            </section>
-          );
-        })}
-    </Grid>
+    <GridAngleProvider>
+      <Grid
+        isPotentiallyMobile={isMobile}
+        layout={pageLayout}
+        editMode={isEditMode}
+        isLoggedIn={isLoggedIn}
+      >
+        {page.blocks
+          .filter((block) => mergedIds.includes(block.id))
+          .map((block) => {
+            return (
+              <section key={block.id}>
+                {renderBlock(block, page.id, isEditMode)}
+              </section>
+            );
+          })}
+      </Grid>
+    </GridAngleProvider>
   );
 }
