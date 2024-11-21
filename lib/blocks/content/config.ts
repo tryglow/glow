@@ -34,12 +34,19 @@ export type TextStylingType = {
   lineHeight: string;
 };
 
+export type blockStyleType = {
+  transform: string
+}
+
 export type TextStyles = {
+  blockId: string;
   title: TextStylingType;
-  content: TextStylingType
+  content: TextStylingType;
+  block: blockStyleType
 }
 
 export const textStyling: TextStyles = {
+  blockId: '',
   title: {
     fontFamily: '',
     fontSize: '24px',
@@ -55,6 +62,9 @@ export const textStyling: TextStyles = {
     color: 'rgb(0, 0, 0)',
     letterSpacing: '2px',
     lineHeight: '20px',
+  },
+  block: {
+    transform: 'rotate(0deg)'
   }
 };
 
@@ -76,3 +86,10 @@ export const allFonts = async () => {
     console.error('Error fetching Google Fonts:', error);
   }
 }
+
+export const loadFont = (fontFamily: any) => {
+  const link = document.createElement('link');
+  link.href = `https://fonts.googleapis.com/css2?family=${fontFamily?.replace(/ /g, '+')}&display=swap`;
+  link.rel = 'stylesheet';
+  document.head.appendChild(link);
+};
