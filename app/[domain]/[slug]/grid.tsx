@@ -1,14 +1,16 @@
 'use client';
 
-import { ReactNode, useMemo } from 'react';
+import React, { ReactNode, useContext, useEffect, useMemo, useState } from 'react';
 import { Layout, Responsive, ResponsiveProps } from 'react-grid-layout';
 
-import { EditModeContextProvider } from '@/app/contexts/Edit';
+import { EditModeContextProvider, useEditModeContext } from '@/app/contexts/Edit';
 
 import { EditLayout } from '@/app/components/EditLayout';
 import { GlobalNavigation } from '@/components/GlobalNavigation';
 import { WidthProvideRGL } from '@/components/WidthProvider';
 import dynamic from 'next/dynamic';
+import { createContext } from 'vm';
+import { useGridAngleContext } from '@/app/contexts/GridAngle';
 
 export interface PageConfig {
   sm: Layout[];
@@ -60,6 +62,21 @@ export default function Grid({
     isDroppable: editMode ? true : false,
   };
 
+  // const { angle } = useGridAngleContext();
+
+  // const rotatedLayout = useMemo(() => {
+  //   console.log('useMemo => ', angle, layout);
+    
+  //   if (angle === 90 || angle === 270) {
+  //     // Swap rows and columns
+  //     return {
+  //       sm: layout.sm.map((item) => ({ ...item, w: item.h, h: item.w })),
+  //       xxs: layout.xxs.map((item) => ({ ...item, w: item.h, h: item.w })),
+  //     };
+  //   }
+  //   return layout; // Default 
+  // }, [angle, layout]);
+
   const ResponsiveReactGridLayout = useMemo(
     () => WidthProvideRGL(Responsive, isPotentiallyMobile),
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -90,6 +107,7 @@ export default function Grid({
           xs: layout.sm,
           xxs: layout.xxs,
         }}
+  
         {...defaultLayoutProps}
       >
         {children}

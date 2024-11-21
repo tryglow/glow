@@ -27,6 +27,7 @@ import { CoreBlock } from '@/components/CoreBlock';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useToast } from '@/components/ui/use-toast';
 import { captureException } from '@sentry/nextjs';
+import { useGridAngleContext } from '../contexts/GridAngle';
 
 interface Props {
   children: ReactNode[];
@@ -44,6 +45,8 @@ export function EditWrapper({ children, layoutProps }: Props) {
   const { data: layout, mutate: mutateLayout } = useSWR<PageConfig>(
     `/api/pages/${params.slug}/layout`
   );
+  console.log('layout => ', layout);
+  
 
   const [isPending, startTransition] = useTransition();
 
@@ -55,6 +58,37 @@ export function EditWrapper({ children, layoutProps }: Props) {
   const [optimisticItems, setOptimisticItems] =
     useOptimistic<ReactNode[]>(children);
 
+    // const { angle, contentStyles } = useGridAngleContext();
+
+    // const rotatedLayout = useMemo(() => {
+    //   console.log('angle called...');
+      
+    //   const block = layout?.sm.find(obj => obj.i === contentStyles?.blockId);
+
+    //   if (block && (angle === 90 || angle === 270)) {
+    //     return {
+    //       sm: layout?.sm.map((item) => ({
+    //         ...item,
+    //         // w: item.h,
+    //         h: item.w,
+    //         // Adjust x and y coordinates for rotation
+    //         // x: item.y,
+    //         // y: item.x,
+    //       })),
+    //       xxs: layout?.xxs.map((item) => ({
+    //         ...item,
+    //         // w: item.h,
+    //         h: item.w,
+    //         // Adjust x and y coordinates for rotation
+    //         // x: item.y,
+    //         // y: item.x,
+    //       })),
+    //     };
+    //   }
+    
+    //   return layout; // Default 
+    // }, [angle]);
+
   useEffect(() => {
     if (!optimisticItems) return;
 
@@ -63,6 +97,9 @@ export function EditWrapper({ children, layoutProps }: Props) {
         return layout?.sm?.some((layoutItem) => layoutItem.i === item.key);
       }
     );
+
+    console.log('filteredItems => ', filteredItems);
+    
 
     startTransition(() => {
       setOptimisticItems(filteredItems);

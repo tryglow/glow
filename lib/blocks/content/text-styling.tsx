@@ -1,17 +1,18 @@
 import React, { useEffect, useState } from 'react'
 import { Slider } from '@/app/components/ui/slider'
 import { SketchPicker } from 'react-color'
-import { textStyling, TextStyles, FontColorType, fontSizes, allFonts } from './config'
+import { textStyling, TextStyles, FontColorType, fontSizes, allFonts, loadFont } from './config'
 import { useEditModeContext } from '@/app/contexts/Edit'
 
 
 type Prop = {
   name: string
+  blockId: string
 }
 
-export const TextStyling = ({ name }: Prop) => {
-  const { contentStyles, setContentStyles } = useEditModeContext()
-
+export const TextStyling = ({ name, blockId }: Prop) => {
+  const { contentStyles, setContentStyles } = useEditModeContext();
+  setContentStyles((prev: any) => ({...prev, blockId}))
   // destructuring rgba from state
   const selectedElement = name === 'title' ? contentStyles?.title : contentStyles?.content
 
@@ -89,14 +90,8 @@ export const TextStyling = ({ name }: Prop) => {
   }
 
    // Function to dynamically load Google Fonts
-   const loadFont = (fontFamily: any) => {
-    const link = document.createElement('link');
-    link.href = `https://fonts.googleapis.com/css2?family=${fontFamily.replace(/ /g, '+')}&display=swap`;
-    link.rel = 'stylesheet';
-    document.head.appendChild(link);
-  };
   
- 
+
   return (
     <div className='bg-gray-100 rounded-md py-3 px-2'>
       {/* <h1 className='text-lg font-medium mt-3'>{name}</h1> */}
@@ -108,7 +103,7 @@ export const TextStyling = ({ name }: Prop) => {
           ))}
         </select>
         {/* Font Size */}
-        <select className='rounded-md col-span-5 border border-gray-200 focus:border-black shadow-none focus:outline-none focus:ring-0' value={selectedElement?.fontSize.replace("px", "")} onChange={handleFontSizeChange}>
+        <select className='rounded-md col-span-5 border border-gray-200 focus:border-black shadow-none focus:outline-none focus:ring-0' value={selectedElement?.fontSize?.replace("px", "")} onChange={handleFontSizeChange}>
           {fontSizes?.map((val: number) => (
             <option key={val} value={val}>{val}</option>
           ))}
@@ -128,7 +123,7 @@ export const TextStyling = ({ name }: Prop) => {
           </div>
           {isOpenColorPicker && <SketchPicker
             onChange={handleFontColorChange}
-            color={selectedElement.color}
+            color={selectedElement?.color}
             className='absolute top-full right-0 z-50 tranform translate-y-2'
           />}
 
@@ -141,12 +136,12 @@ export const TextStyling = ({ name }: Prop) => {
         {/* Letter Spacing */}
         <div className='col-span-6'>
           <p className='mb-2'>Letter Spacing</p>
-          <Slider defaultValue={[selectedElement?.letterSpacing.replace("px", "")]} max={50} step={1} onChange={handleLetterSpacingChange} />
+          <Slider defaultValue={[selectedElement?.letterSpacing?.replace("px", "")]} max={50} step={1} onChange={handleLetterSpacingChange} />
         </div>
         {/* Line Spacing */}
         <div className='col-span-6'>
           <p className='mb-2'>Line Spacing</p>
-          <Slider defaultValue={[selectedElement?.lineHeight.replace("px", "")]} max={150} step={1} onChange={handleLineSpacingChange} />
+          <Slider defaultValue={[selectedElement?.lineHeight?.replace("px", "")]} max={150} step={1} onChange={handleLineSpacingChange} />
         </div>
       </div>
     </div>

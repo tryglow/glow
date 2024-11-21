@@ -1,5 +1,6 @@
 'use client';
 
+import { PageConfig } from '@/app/[domain]/[slug]/grid';
 import { TextStyles, textStyling, TextStylingType } from '@/lib/blocks/content/config';
 import { Blocks } from '@/lib/blocks/types';
 import {
@@ -28,6 +29,8 @@ type EditModeContextValue = {
   ) => void;
   contentStyles: any
   setContentStyles: any
+  currentLayoutAngle: any
+  setCurrentLayoutAngle: any
 };
 
 const EditModeContext = createContext<EditModeContextValue | undefined>(
@@ -58,6 +61,8 @@ export const EditModeContextProvider: React.FC<{ children: ReactNode }> = ({
     type: Blocks;
   } | null>(null);
   const [contentStyles, setContentStyles] = useState<TextStyles>(textStyling)
+  const [currentLayoutAngle, setCurrentLayoutAngle] = useState<PageConfig>();
+
 
   const contextValue: EditModeContextValue = {
     draggingItem,
@@ -69,7 +74,9 @@ export const EditModeContextProvider: React.FC<{ children: ReactNode }> = ({
     currentEditingBlock,
     setCurrentEditingBlock,
     contentStyles,
-    setContentStyles
+    setContentStyles,
+    currentLayoutAngle,
+    setCurrentLayoutAngle
   };
 
   useEffect(() => {
