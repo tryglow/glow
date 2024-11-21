@@ -103,7 +103,7 @@ const GoogleMapsAutoCompleteInput = () => {
   const [predictions, setPredictions] = useState<
     google.maps.places.QueryAutocompletePrediction[]
   >([]);
-  const geocoder = useRef<google.maps.Geocoder>(undefined);
+  const geocoder = useRef<google.maps.Geocoder | null>(null);
 
   useEffect(() => {
     if (!window.google) {

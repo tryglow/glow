@@ -22,11 +22,11 @@ const temporaryTestUserForAppReview = {
 
 export const { auth, signIn, signOut, handlers, unstable_update } = NextAuth({
   secret: process.env.NEXTAUTH_SECRET,
+  trustHost: true,
   adapter: PrismaAdapter(prisma),
   session: { strategy: 'jwt', maxAge: 24 * 60 * 60 },
   pages: {
     signIn: '/i/auth/signup',
-    verifyRequest: '/i/auth/verify',
   },
   providers: [
     GoogleProvider({
