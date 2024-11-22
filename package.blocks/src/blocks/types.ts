@@ -7,6 +7,7 @@ export type Blocks =
   | 'spotify-playing-now'
   | 'spotify-embed'
   | 'instagram-latest-post'
+  | 'instagram-follower-count'
   | 'map'
   | 'link-box'
   | 'link-bar'

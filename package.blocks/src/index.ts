@@ -14,6 +14,7 @@ export * from './blocks/tiktok-latest-post/config';
 export * from './blocks/waitlist-email/config';
 export * from './blocks/youtube/config';
 export * from './blocks/instagram-latest-post/config';
+export * from './blocks/instagram-follower-count/config';
 export * from './blocks/stack/config';
 
 export { blocks } from './blocks/config';

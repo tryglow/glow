@@ -102,6 +102,15 @@ export const config: Record<
       h: 4,
     },
   },
+  'instagram-follower-count': {
+    title: 'Instagram Follower Count',
+    label: 'The number of followers on your Instagram account',
+    icon: blockInstagramLatestPostIcon,
+    drag: {
+      w: 6,
+      h: 6,
+    },
+  },
   map: {
     title: 'Map',
     label: 'A map with a pin',

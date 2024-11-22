@@ -9,6 +9,7 @@ import SpotifyPlayingNow from './spotify-playing-now/ui-client';
 import { WaitlistEmail } from './waitlist-email/ui';
 import { Content } from '@/lib/blocks/content/ui';
 import { Header } from '@/lib/blocks/header/ui-client';
+import { InstagramFollowerCount } from '@/lib/blocks/instagram-follower-count/ui-client';
 import { Reactions } from '@/lib/blocks/reaction/ui';
 import { Stack } from '@/lib/blocks/stack/ui';
 import { ThreadsFollowerCount } from '@/lib/blocks/threads-follower-count/ui-client';
@@ -59,6 +60,8 @@ export function renderBlock(block: any, pageId: string, isEditMode: boolean) {
           {...sharedProps}
         />
       );
+    case 'instagram-follower-count':
+      return <InstagramFollowerCount {...sharedProps} />;
     case 'github-commits-this-month':
       return (
         <GitHubCommitsThisMonth

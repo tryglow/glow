@@ -2,6 +2,7 @@ import { EditForm as ContentEditForm } from './content/form';
 import { EditForm as GithubCommitsThisMonthForm } from './github-commits-this-month/form';
 import { EditForm as HeaderForm } from './header/form';
 import { EditForm as ImageForm } from './image/form';
+import { EditForm as InstagramFollowerCountForm } from './instagram-follower-count/form';
 import { EditForm as InstagramLatestPostForm } from './instagram-latest-post/form';
 import { EditForm as LinkBarForm } from './link-bar/form';
 import { EditForm as LinkBoxForm } from './link-box/form';
@@ -27,6 +28,7 @@ export const editForms: Record<Blocks, JSXElementConstructor<any>> = {
   'github-commits-this-month': GithubCommitsThisMonthForm,
   'spotify-playing-now': SpotifyPlayingNowForm,
   'instagram-latest-post': InstagramLatestPostForm,
+  'instagram-follower-count': InstagramFollowerCountForm,
   map: MapForm,
   'link-bar': LinkBarForm,
   'spotify-embed': SpotifyEmbedForm,

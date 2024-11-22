@@ -5,6 +5,7 @@ import {
 } from './github-commits-this-month/config';
 import { HeaderSchema, headerBlockDefaults } from './header/config';
 import { ImageSchema, imageBlockDefaults } from './image/config';
+import { instagramFollowerCountBlockDefaults } from './instagram-follower-count/config';
 import {
   InstagramLatestPostSchema,
   instagramLatestPostBlockDefaults,
