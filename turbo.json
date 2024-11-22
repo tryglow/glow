@@ -10,6 +10,7 @@
       "cache": false
     },
     "build:frontend": {
+      "dependsOn": ["^prisma:generate"],
       "env": [
         "DATABASE_URL",
         "DIRECT_URL",
