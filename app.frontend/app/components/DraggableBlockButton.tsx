@@ -11,6 +11,7 @@ import blockReactionsIcon from '@/app/assets/ui/type-reactions.svg';
 import blockSpotifyPlayingNowIcon from '@/app/assets/ui/type-spotify-playing-now.svg';
 import blockStackIcon from '@/app/assets/ui/type-stack.svg';
 import blockThreadsFollowerCountIcon from '@/app/assets/ui/type-threads-follower-count.svg';
+import blockTiktokIcon from '@/app/assets/ui/type-tiktok.svg';
 import blockWaitlistEmailIcon from '@/app/assets/ui/type-waitlist-email.svg';
 import blockYoutubeIcon from '@/app/assets/ui/type-youtube.svg';
 import { useSidebar } from '@/app/components/ui/sidebar';
@@ -168,7 +169,7 @@ export const config: Record<
   'tiktok-follower-count': {
     title: 'TikTok Follower Count',
     label: 'The number of followers on your TikTok account',
-    icon: blockThreadsFollowerCountIcon,
+    icon: blockTiktokIcon,
     drag: {
       w: 6,
       h: 6,
@@ -177,7 +178,7 @@ export const config: Record<
   'tiktok-latest-post': {
     title: 'TikTok Latest Post',
     label: 'The latest post from your connected TikTok account',
-    icon: blockThreadsFollowerCountIcon,
+    icon: blockTiktokIcon,
     drag: {
       w: 6,
       h: 6,
