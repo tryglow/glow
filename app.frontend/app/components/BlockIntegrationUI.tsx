@@ -123,6 +123,8 @@ export function BlockIntegrationUI({
           description: response.error,
           variant: 'error',
         });
+
+        return;
       }
 
       mutate(`/blocks/${blockId}`);
