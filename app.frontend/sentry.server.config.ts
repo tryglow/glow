@@ -8,6 +8,4 @@ if (SENTRY_DSN) {
 
     tracesSampleRate: 1.0,
   });
-} else {
-  console.warn(' ○ Running Glow without Sentry');
 }

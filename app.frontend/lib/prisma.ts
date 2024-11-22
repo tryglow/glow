@@ -5,7 +5,6 @@ import 'server-only';
 
 const prismaClientSingleton = () => {
   if (!process.env.PRISMA_OPTIMIZE_API_KEY) {
-    console.warn('Prisma Optimize is not enabled');
     return new PrismaClient().$extends(withAccelerate());
   }
 

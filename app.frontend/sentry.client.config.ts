@@ -12,6 +12,4 @@ if (SENTRY_DSN) {
     replaysSessionSampleRate: 0.1,
     replaysOnErrorSampleRate: 1.0,
   });
-} else {
-  console.warn(' ○ Running Glow without Sentry');
 }

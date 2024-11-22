@@ -23,6 +23,7 @@
   },
   "scripts": {
     "lint": "turbo lint",
+    "dev": "turbo dev",
     "dev:migrate": "dotenvx run -f .env.local -- prisma migrate dev --schema ./package.prisma/prisma/schema.prisma",
     "dev:seed": "dotenvx run -f .env.local --ts-node ./package.prisma/prisma/seed.ts"
   },
