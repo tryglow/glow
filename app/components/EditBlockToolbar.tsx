@@ -12,20 +12,22 @@ import { useSidebar } from '@/app/components/ui/sidebar';
 import { useEditModeContext } from '@/app/contexts/Edit';
 import { useToast } from '@/components/ui/use-toast';
 import { captureException } from '@sentry/nextjs';
+import { TextStyles } from '@/lib/blocks/content/config';
 
 interface Props {
   blockId: string;
   blockType: Blocks;
+  blockStyles: TextStyles
 }
 
-export function EditBlockToolbar({ blockId, blockType }: Props) {
+export function EditBlockToolbar({ blockId, blockType, blockStyles }: Props) {
   const { toast } = useToast();
   const router = useRouter();
   const params = useParams();
   const slug = params.slug;
   const { setOpen, setOpenMobile, setSidebarView } = useSidebar();
 
-  const { setCurrentEditingBlock } = useEditModeContext();
+  const { setCurrentEditingBlock, setContentStyles } = useEditModeContext();
 
   const { mutate } = useSWR(`/api/blocks/${blockId}`);
   const { data: layout, mutate: mutateLayout } = useSWR<PageConfig>(
@@ -103,12 +105,14 @@ export function EditBlockToolbar({ blockId, blockType }: Props) {
             setOpenMobile(true);
             setSidebarView('blockForm');
             setCurrentEditingBlock({ id: blockId, type: blockType });
+            setContentStyles(blockStyles)
           }}
           onClick={() => {
             setOpen(true);
             setOpenMobile(true);
             setSidebarView('blockForm');
             setCurrentEditingBlock({ id: blockId, type: blockType });
+            setContentStyles(blockStyles)
           }}
         >
           <PencilSquareIcon width={16} height={16} className="text-slate-700" />
@@ -116,7 +120,7 @@ export function EditBlockToolbar({ blockId, blockType }: Props) {
         <button
           type="button"
           className="relative -ml-px inline-flex items-center rounded-r-full bg-white px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-stone-100 focus:z-10"
-          disabled={blockType === 'header'}
+          // disabled={blockType === 'header'}
           onClick={() => handleDeleteBlock(blockId, blockType)}
           onTouchStart={() => handleDeleteBlock(blockId, blockType)}
         >

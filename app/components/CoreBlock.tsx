@@ -6,6 +6,7 @@ import { BlockProps } from '@/lib/blocks/ui';
 import { cn } from '@/lib/utils';
 
 import { EditBlockToolbar } from './EditBlockToolbar';
+import { TextStyles, textStyling } from '@/lib/blocks/content/config';
 
 interface Props extends BlockProps {
   className?: string;
@@ -13,6 +14,7 @@ interface Props extends BlockProps {
   isFrameless?: boolean;
   component?: string | JSXElementConstructor<any>;
   linkProps?: AnchorHTMLAttributes<HTMLAnchorElement>;
+  blockStyles?: TextStyles
 }
 
 export function CoreBlock({
@@ -24,6 +26,7 @@ export function CoreBlock({
   isFrameless,
   component: Component = 'div',
   linkProps,
+  blockStyles=textStyling
 }: Props) {
   return (
     <Component
@@ -37,7 +40,7 @@ export function CoreBlock({
     >
       {children}
       {isEditable && blockType !== 'default' && (
-        <EditBlockToolbar blockId={blockId} blockType={blockType} />
+        <EditBlockToolbar blockId={blockId} blockType={blockType} blockStyles={blockStyles} />
       )}
     </Component>
   );
