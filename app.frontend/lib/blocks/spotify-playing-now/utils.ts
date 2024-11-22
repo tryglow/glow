@@ -112,9 +112,36 @@ const fetchSpotifyData = async (
   ) => {
     const [error, response] = await safeAwait(fetchFunction(token));
 
-    if (error) captureException(error);
-    if (response?.ok) return await response.json();
-    return null;
+    if (error) {
+      captureException(error);
+      return {
+        data: null,
+        statusCode: 401,
+      };
+    }
+
+    // Spotify returns 204 if the user is not playing anything, which is a
+    // successful response, so we need to handle it accordingly.
+    if (response?.status === 204) {
+      return {
+        data: null,
+        statusCode: 204,
+      };
+    }
+
+    if (response?.ok) {
+      const data = await response.json();
+
+      return {
+        data,
+        statusCode: response.status,
+      };
+    }
+
+    return {
+      data: null,
+      statusCode: response?.status || 401,
+    };
   };
 
   const processTrackData = (data: any, isPlayingNow: boolean) => {
@@ -133,20 +160,27 @@ const fetchSpotifyData = async (
 
   // Try fetching currently playing track
 
-  let playingNowData = await fetchData(fetchPlayingNow, config.accessToken);
+  let playingNowResponse = await fetchData(fetchPlayingNow, config.accessToken);
 
   // Handle token refresh if necessary
-  if ((!playingNowData || playingNowData?.error?.status === 401) && !isRetry) {
+  if (
+    (!playingNowResponse.data || playingNowResponse?.statusCode === 401) &&
+    !isRetry
+  ) {
     const newConfig = await updateAccessToken();
 
     if (newConfig) {
-      playingNowData = await fetchData(fetchPlayingNow, newConfig.accessToken);
-      if (playingNowData) config = newConfig; // Update config for further requests
+      playingNowResponse = await fetchData(
+        fetchPlayingNow,
+        newConfig.accessToken
+      );
+      if (playingNowResponse.data) config = newConfig; // Update config for further requests
     }
   }
 
   // If a currently playing track is found, return it
-  const playingNowTrack = processTrackData(playingNowData, true);
+  const playingNowTrack = processTrackData(playingNowResponse.data, true);
+
   if (playingNowTrack) return playingNowTrack;
 
   // Fallback to recently played track
@@ -155,7 +189,8 @@ const fetchSpotifyData = async (
     fetchRecentlyPlayed,
     config.accessToken
   );
-  return processTrackData(recentlyPlayedData, false);
+
+  return processTrackData(recentlyPlayedData.data, false);
 };
 
 /**
