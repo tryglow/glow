@@ -2,6 +2,7 @@ import prisma from '../../lib/prisma';
 import { isReservedSlug } from '@/lib/slugs';
 import { isForbiddenSlug } from '@/lib/slugs';
 import { regexSlug } from '@/lib/slugs';
+import { captureException } from '@sentry/node';
 import { headerBlockDefaults } from '@tryglow/blocks';
 import { randomUUID } from 'crypto';
 
@@ -269,6 +270,20 @@ export async function createNewPage({
 }
 
 export async function deletePage(pageId: string) {
+  const page = await prisma.page.findUnique({
+    where: {
+      id: pageId,
+      deletedAt: null,
+    },
+    include: {
+      blocks: true,
+    },
+  });
+
+  if (!page) {
+    return false;
+  }
+
   await prisma.page.update({
     where: {
       id: pageId,
@@ -277,6 +292,19 @@ export async function deletePage(pageId: string) {
       deletedAt: new Date(),
     },
   });
+
+  try {
+    for (const block of page.blocks) {
+      await prisma.block.delete({
+        where: {
+          id: block.id,
+        },
+      });
+    }
+  } catch (error) {
+    captureException(error);
+    return false;
+  }
 
   return true;
 }
