@@ -57,21 +57,21 @@ export async function POST(req: Request) {
     });
   }
 
-  const user = await prisma.user.findUnique({
-    where: {
-      id: session.user.id,
-    },
-  });
+  // const user = await prisma.user.findUnique({
+  //   where: {
+  //     id: session.user.id,
+  //   },
+  // });
 
-  const maxNumberOfBlocks =
-    user?.hasPremiumAccess || user?.hasTeamAccess ? 1000 : 5;
-  if (page.blocks.length >= maxNumberOfBlocks) {
-    return Response.json({
-      error: {
-        message: 'You have reached the maximum number of blocks per page',
-      },
-    });
-  }
+  // const maxNumberOfBlocks =
+  //   user?.hasPremiumAccess || user?.hasTeamAccess ? 1000 : 5;
+  // if (page.blocks.length >= maxNumberOfBlocks) {
+  //   return Response.json({
+  //     error: {
+  //       message: 'You have reached the maximum number of blocks per page',
+  //     },
+  //   });
+  // }
 
   const defaultData = blocksConfig[block.type as Blocks].defaults;
 

@@ -19,7 +19,7 @@ export function EditForm({
 }: EditFormProps<ContentBlockConfig>) {
 
   const { contentStyles, setContentStyles } = useEditModeContext()
-  const { setAngle } = useGridAngleContext()
+  // const { setAngle } = useGridAngleContext()
 
   const onSubmit: any = async (
     values: ContentBlockConfig,

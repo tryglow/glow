@@ -16,7 +16,7 @@ interface Props {
 export function EditForm({ onClose, blockId, blockType }: Props) {
   const { data, mutate } = useSWR(`/api/blocks/${blockId}`);
   const { data: initialValues } = data
-  const { contentStyles } = useEditModeContext();
+  const { contentStyles, setContentStyles } = useEditModeContext();
 
   const onSave = async (values: any) => {
     try {
@@ -37,6 +37,7 @@ export function EditForm({ onClose, blockId, blockType }: Props) {
           title: 'Saved!',
           description: 'Your changes have been saved.',
         });
+        // setContentStyles({})
       }
     } catch (error) {
       captureException(error);

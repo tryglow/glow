@@ -1,42 +1,54 @@
 'use client';
 
-import { FunctionComponent, useEffect } from 'react';
+import { FunctionComponent, useEffect, useState } from 'react';
 import useSWR from 'swr';
 
 import { CoreBlock } from '@/components/CoreBlock';
 
 import { BlockProps } from '../ui';
-import { ContentBlockConfig, loadFont } from './config';
+import { ContentBlockConfig, loadFont, TextStyles, textStyling } from './config';
 import { useEditModeContext } from '@/app/contexts/Edit';
 
 export const Content: FunctionComponent<BlockProps> = (props) => {
   const { data } = useSWR<any>(`/api/blocks/${props.blockId}`);
-  const {data: content, contentStyles: styles} = data
+  let {data: content, contentStyles: contentStyling} = data
   
   const { contentStyles, setContentStyles } = useEditModeContext();
+  const [blockStyles, setBlockStyles] = useState<TextStyles>(textStyling)
+
+  const styles = {
+    blockId: props.blockId,
+    ...contentStyling
+  }
 
   console.log('contentStyles => ', contentStyles);
   
   useEffect(() => {
-    setContentStyles(styles)
+    setBlockStyles(styles)
     loadFont(styles?.title?.fontFamily)
     loadFont(styles?.content?.fontFamily)
-  }, [styles])
+  }, [contentStyling])
+
+  useEffect(() => {
+    console.log('======', contentStyles);
+    setBlockStyles(contentStyles)
+  }, [contentStyles])
+  
 
   return (
-    <CoreBlock {...props} isFrameless>
+    <CoreBlock {...props} blockStyles={styles} isFrameless>
       <div className="py-4 h-full overflow-hidden" 
-      // style={contentStyles?.blockId === props.blockId ? contentStyles?.block : {}}
+      // style={blockStyles?.blockId === props.blockId ? blockStyles?.block : {}}
       >
         <h2 
           // className="text-2xl font-medium text-sys-label-primary"
-          style={contentStyles?.blockId === props.blockId ? contentStyles?.title : {}}  
+          style={blockStyles?.blockId === props.blockId ? blockStyles?.title : styles?.title}  
         >
           {content?.title}
         </h2>
         <p 
           // className="text-lg text-sys-label-secondary"
-          style={contentStyles?.blockId === props.blockId ? contentStyles?.content : {}}
+          style={blockStyles?.blockId === props.blockId ? blockStyles?.content : styles?.content}
         >{content?.content}</p>
       </div>
     </CoreBlock>

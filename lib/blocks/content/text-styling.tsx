@@ -3,6 +3,7 @@ import { Slider } from '@/app/components/ui/slider'
 import { SketchPicker } from 'react-color'
 import { textStyling, TextStyles, FontColorType, fontSizes, allFonts, loadFont } from './config'
 import { useEditModeContext } from '@/app/contexts/Edit'
+import { useGoogleFontsContext } from '@/app/contexts/GoogleFonts/indes'
 
 
 type Prop = {
@@ -12,11 +13,13 @@ type Prop = {
 
 export const TextStyling = ({ name, blockId }: Prop) => {
   const { contentStyles, setContentStyles } = useEditModeContext();
-  setContentStyles((prev: any) => ({...prev, blockId}))
+  console.log('blockId ======  ', blockId);
+  
+
   // destructuring rgba from state
   const selectedElement = name === 'title' ? contentStyles?.title : contentStyles?.content
 
-  const [fonts, setFonts] = useState([])
+  const { googleFonts } = useGoogleFontsContext()
   
   const [isOpenColorPicker, setIsOpenColorPicker] = useState(false);
 
@@ -81,15 +84,13 @@ export const TextStyling = ({ name, blockId }: Prop) => {
     
   }
 
-  useEffect(() => {
-    getFonts()
-  }, [])
-
-  const getFonts = async () => {
-    await allFonts().then(resp => setFonts(resp?.items))
-  }
-
    // Function to dynamically load Google Fonts
+  //  const loadFont = (fontFamily: any) => {
+  //   const link = document.createElement('link');
+  //   link.href = `https://fonts.googleapis.com/css2?family=${fontFamily?.replace(/ /g, '+')}&display=swap`;
+  //   link.rel = 'stylesheet';
+  //   document.head.appendChild(link);
+  // };
   
 
   return (
@@ -98,7 +99,7 @@ export const TextStyling = ({ name, blockId }: Prop) => {
       <div className='grid grid-cols-6 gap-3'>
         
         <select className='rounded-md col-span-6 border border-gray-200 focus:border-black shadow-none focus:outline-none focus:ring-0' value={selectedElement?.fontFamily} onChange={handleFontFamilyChange}>
-          {fonts?.map((val: any) => (
+          {googleFonts?.map((val: any) => (
             <option key={val.family} value={val.family}>{val.family}</option>
           ))}
         </select>
@@ -136,12 +137,12 @@ export const TextStyling = ({ name, blockId }: Prop) => {
         {/* Letter Spacing */}
         <div className='col-span-6'>
           <p className='mb-2'>Letter Spacing</p>
-          <Slider defaultValue={[selectedElement?.letterSpacing?.replace("px", "")]} max={50} step={1} onChange={handleLetterSpacingChange} />
+          <Slider defaultValue={[selectedElement?.letterSpacing?.replace("px", "") || 0]} max={50} step={1} onChange={handleLetterSpacingChange} />
         </div>
         {/* Line Spacing */}
         <div className='col-span-6'>
           <p className='mb-2'>Line Spacing</p>
-          <Slider defaultValue={[selectedElement?.lineHeight?.replace("px", "")]} max={150} step={1} onChange={handleLineSpacingChange} />
+          <Slider defaultValue={[selectedElement?.lineHeight?.replace("px", "") || 0]} max={150} step={1} onChange={handleLineSpacingChange} />
         </div>
       </div>
     </div>
