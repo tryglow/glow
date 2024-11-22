@@ -141,7 +141,7 @@ export function BlockIntegrationUI({
   }, [integration, router]);
 
   const existingIntegrations = currentTeamIntegrations?.filter(
-    (integration) => integration.type === 'instagram'
+    (integration) => integration.type === integrationType
   );
 
   if (!integration) {
