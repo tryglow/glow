@@ -1,4 +1,8 @@
-import { requestLongLivedToken, requestToken } from './utils';
+import {
+  getThreadsUserInfo,
+  requestLongLivedToken,
+  requestToken,
+} from './utils';
 import { decrypt, encrypt, isEncrypted } from '@/lib/encrypt';
 import prisma from '@/lib/prisma';
 import { captureException } from '@sentry/node';
@@ -78,6 +82,12 @@ async function getThreadsCallbackHandler(
 
     const longLivedToken = await longLivedTokenResponse.json();
 
+    const userInfo = await getThreadsUserInfo({
+      accessToken: longLivedToken.access_token,
+    });
+
+    const userInfoData = await userInfo.json();
+
     const encryptedConfig = await encrypt({
       accessToken: longLivedToken.access_token,
       threadsUserId: data.user_id,
@@ -99,6 +109,7 @@ async function getThreadsCallbackHandler(
         type: 'threads',
         config: {},
         encryptedConfig,
+        displayName: userInfoData.username || 'Threads',
       },
     });
 

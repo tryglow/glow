@@ -36,3 +36,9 @@ export async function requestToken({
     cache: 'no-cache',
   });
 }
+
+export async function getSpotifyUserInfo(accessToken: string) {
+  return fetch('https://api.spotify.com/v1/me', {
+    headers: { Authorization: `Bearer ${accessToken}` },
+  });
+}

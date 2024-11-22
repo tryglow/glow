@@ -12,6 +12,9 @@ export const getCurrentUserTeamIntegrationsSchema = {
         type: {
           type: 'string',
         },
+        displayName: {
+          type: 'string',
+        },
       },
       additionalProperties: false,
     },
@@ -51,6 +54,54 @@ export const disconnectIntegrationSchema = {
         error: { type: 'string' },
       },
       additionalProperties: false,
+    },
+  },
+};
+
+export const connectBlockSchema = {
+  body: {
+    type: 'object',
+    properties: {
+      integrationId: { type: 'string' },
+      blockId: { type: 'string' },
+    },
+  },
+  response: {
+    200: {
+      type: 'object',
+      properties: {
+        success: { type: 'boolean' },
+      },
+    },
+    400: {
+      type: 'object',
+      properties: {
+        error: { type: 'string' },
+      },
+    },
+  },
+};
+
+export const disconnectBlockSchema = {
+  body: {
+    type: 'object',
+    properties: {
+      blockId: { type: 'string' },
+      integrationId: { type: 'string' },
+    },
+  },
+  response: {
+    200: {
+      type: 'object',
+      properties: {
+        success: { type: 'boolean' },
+      },
+    },
+    400: {
+      type: 'object',
+      properties: {
+        error: { type: 'string' },
+      },
     },
   },
 };

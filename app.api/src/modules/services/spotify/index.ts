@@ -1,4 +1,4 @@
-import { requestToken } from './utils';
+import { getSpotifyUserInfo, requestToken } from './utils';
 import { decrypt, encrypt } from '@/lib/encrypt';
 import prisma from '@/lib/prisma';
 import { captureException } from '@sentry/node';
@@ -80,6 +80,9 @@ async function getSpotifyCallbackHandler(
       refreshToken: json.refresh_token,
     });
 
+    const userInfo = await getSpotifyUserInfo(json.access_token);
+    const userInfoData = await userInfo.json();
+
     const integration = await prisma.integration.create({
       data: {
         // TODO To be cleaned up once userId is dropped from the integration table
@@ -89,6 +92,7 @@ async function getSpotifyCallbackHandler(
         encryptedConfig,
         // TODO Remove this once we drop the old config field.
         config: {},
+        displayName: userInfoData.display_name || 'Spotify',
       },
     });
 
@@ -110,6 +114,7 @@ async function getSpotifyCallbackHandler(
       `${process.env.APP_FRONTEND_URL}/i/integration-callback/spotify`
     );
   } catch (error) {
+    console.log('Error', error);
     captureException(error);
 
     return response.status(500).send({

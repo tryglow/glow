@@ -72,3 +72,22 @@ export async function refreshLongLivedToken({
     method: 'GET',
   });
 }
+
+export async function getThreadsUserInfo({
+  accessToken,
+}: {
+  accessToken: string;
+}) {
+  const url = new URL('https://graph.threads.net/me');
+
+  const qs = new URLSearchParams({
+    access_token: accessToken,
+    fields: 'username',
+  });
+
+  url.search = qs.toString();
+
+  return fetch(url.toString(), {
+    method: 'GET',
+  });
+}

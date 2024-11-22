@@ -57,3 +57,23 @@ export async function refreshLongLivedToken({
     }),
   });
 }
+
+export async function getTiktokUserInfo({
+  accessToken,
+}: {
+  accessToken: string;
+}) {
+  const url = new URL('https://open.tiktokapis.com/v2/user/info/');
+
+  const qs = new URLSearchParams({
+    fields: 'username',
+  });
+
+  url.search = qs.toString();
+
+  return fetch(url.toString(), {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
+}

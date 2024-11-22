@@ -128,6 +128,7 @@ async function getInstagramCallbackHandler(
         type: 'instagram',
         config: {},
         encryptedConfig,
+        displayName: `@${userInfoData.username}`,
       },
     });
 

@@ -37,6 +37,7 @@ export const blocks: Record<
     schema: Yup.Schema | null;
     defaults: any;
     isBeta?: boolean;
+    integrationType?: string;
   }
 > = {
   'link-box': {
@@ -66,14 +67,17 @@ export const blocks: Record<
   'spotify-playing-now': {
     defaults: spotifyIntegrationDefaults,
     schema: null,
+    integrationType: 'spotify',
   },
   'instagram-latest-post': {
     defaults: instagramLatestPostBlockDefaults,
     schema: InstagramLatestPostSchema,
+    integrationType: 'instagram',
   },
   'instagram-follower-count': {
     defaults: instagramFollowerCountBlockDefaults,
     schema: null,
+    integrationType: 'instagram',
   },
   map: {
     defaults: mapBlockDefaults,
@@ -98,14 +102,17 @@ export const blocks: Record<
   'threads-follower-count': {
     defaults: threadsFollowerCountBlockDefaults,
     schema: null,
+    integrationType: 'threads',
   },
   'tiktok-follower-count': {
     defaults: tiktokFollowerCountBlockDefaults,
     schema: null,
+    integrationType: 'tiktok',
   },
   'tiktok-latest-post': {
     defaults: tiktokLatestPostBlockDefaults,
     schema: null,
+    integrationType: 'tiktok',
   },
   reactions: {
     defaults: reactionBlockDefaults,

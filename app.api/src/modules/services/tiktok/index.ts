@@ -1,4 +1,4 @@
-import { requestToken, tiktokScopes } from './service';
+import { getTiktokUserInfo, requestToken, tiktokScopes } from './service';
 import { getSession } from '@/lib/auth';
 import { decrypt, encrypt, isEncrypted } from '@/lib/encrypt';
 import prisma from '@/lib/prisma';
@@ -125,6 +125,12 @@ async function getTiktokCallbackHandler(
       });
     }
 
+    const userInfo = await getTiktokUserInfo({
+      accessToken: data.access_token,
+    });
+
+    const userInfoData = await userInfo.json();
+
     const integration = await prisma.integration.create({
       data: {
         // To be cleaned up once userId is dropped from the integration table
@@ -133,6 +139,7 @@ async function getTiktokCallbackHandler(
         type: 'tiktok',
         config: {},
         encryptedConfig,
+        displayName: userInfoData?.data?.user?.username || 'TikTok',
       },
     });
 

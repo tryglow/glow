@@ -247,11 +247,13 @@ const createTiktokIntegration = async ({
   teamId,
   accessToken,
   refreshToken,
+  displayName,
 }: {
   userId: string;
   teamId: string;
   accessToken: string;
   refreshToken: string;
+  displayName: string;
 }) => {
   const encryptedConfig = await encrypt({
     accessToken,
@@ -266,6 +268,7 @@ const createTiktokIntegration = async ({
         type: 'tiktok',
         encryptedConfig,
         config: {},
+        displayName,
       },
     });
 
@@ -605,6 +608,7 @@ export async function orchestrateTikTok({
     userId,
     accessToken: tiktokTokens.accessToken,
     refreshToken: tiktokTokens.refreshToken,
+    displayName: `@${tiktokData?.profile?.username}`,
   });
 
   if (!tiktokIntegration) {

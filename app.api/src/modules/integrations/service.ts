@@ -10,6 +10,7 @@ export async function getIntegrationsForTeamId(teamId: string) {
       id: true,
       createdAt: true,
       type: true,
+      displayName: true,
     },
   });
 
