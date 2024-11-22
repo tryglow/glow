@@ -70,7 +70,6 @@ export const blocks: Record<
   'instagram-latest-post': {
     defaults: instagramLatestPostBlockDefaults,
     schema: InstagramLatestPostSchema,
-    isBeta: true,
   },
   map: {
     defaults: mapBlockDefaults,
@@ -99,16 +98,13 @@ export const blocks: Record<
   'tiktok-follower-count': {
     defaults: tiktokFollowerCountBlockDefaults,
     schema: null,
-    isBeta: true,
   },
   'tiktok-latest-post': {
     defaults: tiktokLatestPostBlockDefaults,
     schema: null,
-    isBeta: true,
   },
   reactions: {
     defaults: reactionBlockDefaults,
     schema: null,
-    isBeta: true,
   },
 };
