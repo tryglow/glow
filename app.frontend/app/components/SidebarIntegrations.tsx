@@ -2,19 +2,72 @@ import {
   integrationUIConfig,
   SupportedIntegrations,
 } from '@/app/components/BlockIntegrationUI';
+import { Button } from '@/app/components/ui/button';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from '@/app/components/ui/dialog';
 import {
   SidebarContentHeader,
   SidebarGroup,
   SidebarGroupContent,
 } from '@/app/components/ui/sidebar';
+import { toast } from '@/app/components/ui/use-toast';
+import { InternalApi } from '@/app/lib/api';
 import { internalApiFetcher } from '@/lib/fetch';
+import { captureException } from '@sentry/nextjs';
 import { Integration } from '@tryglow/prisma';
-import useSWR from 'swr';
+import { useState } from 'react';
+import useSWR, { useSWRConfig } from 'swr';
 
 export function SidebarIntegrations() {
+  const [showConfirmDisconnect, setShowConfirmDisconnect] = useState(false);
+  const [integrationToDisconnect, setIntegrationToDisconnect] = useState<
+    string | null
+  >(null);
+
+  const { mutate } = useSWRConfig();
+
   const { data: currentTeamIntegrations, isLoading } = useSWR<
-    Partial<Integration>[]
+    Partial<
+      Integration & { blocks: { page: { id: string; slug: string } }[] }
+    >[]
   >('/integrations/me', internalApiFetcher);
+
+  const handleDisconnect = async () => {
+    try {
+      const response = await InternalApi.post('/integrations/disconnect', {
+        integrationId: integrationToDisconnect,
+      });
+
+      if (response.error) {
+        throw new Error(response.error);
+      }
+
+      toast({
+        title: 'Integration disconnected',
+      });
+
+      setShowConfirmDisconnect(false);
+
+      mutate('/integrations/me');
+    } catch (error) {
+      captureException(error);
+      toast({
+        title: 'Error disconnecting integration',
+        description: 'Please try again later.',
+        variant: 'error',
+      });
+    }
+  };
+
+  const currentlySelectedIntegration = currentTeamIntegrations?.find(
+    (integration) => integration.id === integrationToDisconnect
+  );
 
   return (
     <>
@@ -37,17 +90,34 @@ export function SidebarIntegrations() {
                   ];
                 return (
                   <div
-                    className="w-full px-2 py-1 flex items-center"
+                    className="w-full px-2 pt-2 flex items-center"
                     key={integration.id}
                   >
-                    {integrationConfig.icon}
-                    <span className="text-sm font-medium ml-2">
-                      {integrationConfig.name}{' '}
-                    </span>
-                    <span className="text-muted-foreground text-xs">
-                      {integration.displayName &&
-                        `- ${integration.displayName}`}
-                    </span>
+                    <div className="flex items-center gap-2">
+                      {integrationConfig.icon}
+                      <div className="flex flex-col">
+                        <span className="text-sm font-medium">
+                          {integrationConfig.name}
+                        </span>
+                        <span className="text-muted-foreground text-xs">
+                          {integration.displayName}
+                        </span>
+                      </div>
+                    </div>
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      onClick={() => {
+                        if (!integration.id) {
+                          return;
+                        }
+                        setIntegrationToDisconnect(integration.id);
+                        setShowConfirmDisconnect(true);
+                      }}
+                      className="ml-auto"
+                    >
+                      Disconnect
+                    </Button>
                   </div>
                 );
               })}
@@ -55,12 +125,58 @@ export function SidebarIntegrations() {
           ) : (
             <div className="w-full aspect-square bg-stone-200 rounded-lg flex items-center justify-center">
               <span className="text-muted-foreground text-sm">
-                No integrations found
+                When you connect an integration using a block, it will appear
+                here.
               </span>
             </div>
           )}
         </SidebarGroupContent>
       </SidebarGroup>
+
+      <Dialog
+        open={showConfirmDisconnect}
+        onOpenChange={setShowConfirmDisconnect}
+      >
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>
+              Confirm to disconnect {currentlySelectedIntegration?.type}
+            </DialogTitle>
+            <DialogDescription>
+              Are you sure you want to disconnect this integration?
+            </DialogDescription>
+
+            {currentlySelectedIntegration?.blocks?.length ? (
+              <DialogDescription className="text-pretty">
+                This integration is connected to{' '}
+                {currentlySelectedIntegration?.blocks?.length}{' '}
+                {currentlySelectedIntegration?.blocks?.length === 1
+                  ? 'block'
+                  : 'blocks'}{' '}
+                on the following pages:
+                <ul className="list-disc list-inside pl-4 my-3">
+                  {currentlySelectedIntegration?.blocks?.map((block) => (
+                    <li key={block.page.id}>/{block.page.slug}</li>
+                  ))}
+                </ul>
+                Disconnecting will stop those pages from syncing data from{' '}
+                {currentlySelectedIntegration?.type}.
+              </DialogDescription>
+            ) : null}
+          </DialogHeader>
+          <DialogFooter>
+            <Button
+              variant="secondary"
+              onClick={() => setShowConfirmDisconnect(false)}
+            >
+              Cancel
+            </Button>
+            <Button variant="destructive" onClick={handleDisconnect}>
+              Disconnect
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </>
   );
 }

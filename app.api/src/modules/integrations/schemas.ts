@@ -15,6 +15,20 @@ export const getCurrentUserTeamIntegrationsSchema = {
         displayName: {
           type: 'string',
         },
+        blocks: {
+          type: 'array',
+          items: {
+            type: 'object',
+            properties: {
+              pageId: {
+                type: 'string',
+              },
+              slug: {
+                type: 'string',
+              },
+            },
+          },
+        },
       },
       additionalProperties: false,
     },

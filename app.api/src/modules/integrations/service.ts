@@ -11,6 +11,16 @@ export async function getIntegrationsForTeamId(teamId: string) {
       createdAt: true,
       type: true,
       displayName: true,
+      blocks: {
+        select: {
+          page: {
+            select: {
+              id: true,
+              slug: true,
+            },
+          },
+        },
+      },
     },
   });
 
