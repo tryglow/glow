@@ -49,7 +49,9 @@
         "SPOTIFY_CLIENT_SECRET",
         "STRIPE_API_SECRET_KEY",
         "TINYBIRD_DASHBOARD_TOKEN",
-        "LOOPS_API_KEY"
+        "LOOPS_API_KEY",
+
+        "VERCEL_UNDICI"
       ],
       "inputs": ["$TURBO_DEFAULT$", ".env"]
     },
