@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "prisma:generate": "prisma generate",
-    "prisma:migrate": "prisma migrate"
+    "prisma:migrate": "prisma migrate deploy"
   },
   "dependencies": {
     "prisma": "^5.22.0",
