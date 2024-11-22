@@ -40,7 +40,7 @@
     "typescript": "^5"
   },
   "scripts": {
-    "dev:api": "dotenvx run -- tsx watch src .env",
+    "dev": "dotenvx run -f ../.env.local -- tsx watch src",
     "start:api": "node dist/index.js",
     "build:api": "node build.js && npm run sentry:sourcemaps",
     "sentry:sourcemaps": "sentry-cli sourcemaps inject --org hyperdusk --project glow-api ./dist && sentry-cli sourcemaps upload ./dist --org hyperdusk --project glow-api"

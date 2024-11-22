@@ -4,8 +4,8 @@
     "lint": {
       "dependsOn": ["^lint"]
     },
-    "dev:frontend": {
-      "dependsOn": ["^db:generate"],
+    "dev": {
+      "dependsOn": ["^prisma:generate"],
       "inputs": ["$TURBO_DEFAULT$", ".env"],
       "cache": false
     },
@@ -55,10 +55,7 @@
       ],
       "inputs": ["$TURBO_DEFAULT$", ".env"]
     },
-    "dev:api": {
-      "inputs": ["$TURBO_DEFAULT$", ".env"],
-      "cache": false
-    },
+
     "build:api": {
       "env": [
         "PORT",
@@ -137,22 +134,13 @@
       ],
       "inputs": ["$TURBO_DEFAULT$", ".env"]
     },
-    "db:generate": {
+    "prisma:generate": {
       "cache": false,
-      "inputs": ["$TURBO_DEFAULT$", ".env"],
       "env": ["DATABASE_URL", "DIRECT_URL"]
     },
-    "db:migrate": {
+    "prisma:migrate": {
       "cache": false,
-      "inputs": ["$TURBO_DEFAULT$", ".env"],
       "env": ["DATABASE_URL", "DIRECT_URL"]
-    },
-    "dev:db:migrate": {
-      "cache": false
-    },
-    "db:push": {
-      "cache": false,
-      "inputs": ["$TURBO_DEFAULT$", ".env"]
     }
   }
 }

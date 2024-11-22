@@ -22,13 +22,9 @@
     "turbo": "^2.0.6"
   },
   "scripts": {
-    "prisma:generate": "prisma generate",
-    "prisma:migrate": "prisma migrate dev --preview-feature",
-    "prod:deploy:prisma": "prisma generate && prisma migrate deploy",
-    "prod:build:api": "turbo run build:api --filter=@tryglow/api",
-    "start:api": "turbo run start:api --filter=@tryglow/api",
-    "dev": "turbo watch dev:frontend dev:api",
-    "lint": "turbo lint"
+    "lint": "turbo lint",
+    "dev:migrate": "dotenvx run -f .env.local -- prisma migrate dev --schema ./package.prisma/prisma/schema.prisma",
+    "dev:seed": "dotenvx run -f .env.local --ts-node ./package.prisma/prisma/seed.ts"
   },
   "packageManager": "npm@10.2.0"
 }

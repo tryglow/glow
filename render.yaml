@@ -86,7 +86,7 @@ services:
         sync: false
     region: frankfurt
     buildCommand:
-      npm install && turbo run db:migrate db:generate && turbo run build:api
+      npm install && turbo run prisma:migrate prisma:generate --filter=@tryglow/prisma && turbo run build:api
       --filter=@tryglow/api
     startCommand: npm run start:api
     domains:

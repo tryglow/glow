@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev:frontend": "dotenvx run -- next dev",
+    "dev": "dotenvx run -f ../.env.local -- next dev",
     "build:frontend": "next build",
     "start:frontend": "next start",
     "lint": "next lint",
