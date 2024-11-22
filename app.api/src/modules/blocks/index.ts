@@ -48,17 +48,7 @@ async function getBlockHandler(
 ) {
   const { blockId } = request.params;
 
-  const session = await request.server.authenticate(request, response, {
-    throwError: true,
-  });
-
-  if (!session?.user) {
-    return response.status(401).send({
-      error: {
-        message: 'Unauthorized',
-      },
-    });
-  }
+  const session = await request.server.authenticate(request, response);
 
   const block = await getBlockById(blockId);
 
