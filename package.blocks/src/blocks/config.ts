@@ -71,6 +71,10 @@ export const blocks: Record<
     defaults: instagramLatestPostBlockDefaults,
     schema: InstagramLatestPostSchema,
   },
+  'instagram-follower-count': {
+    defaults: instagramFollowerCountBlockDefaults,
+    schema: null,
+  },
   map: {
     defaults: mapBlockDefaults,
     schema: MapSchema,
