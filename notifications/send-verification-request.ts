@@ -12,16 +12,16 @@ export async function sendVerificationRequest({
   url: string;
 }) {
   const loops = createLoopsClient();
-
-  try {
-    await loops.sendTransactionalEmail({
-      transactionalId: transactionalEmailIds.loginVerificationRequest,
-      email: identifier,
-      dataVariables: {
-        url,
-      },
-    });
-  } catch (error) {
-    captureException(error);
-  }
+  console.log(url);
+  // try {
+  //   await loops.sendTransactionalEmail({
+  //     transactionalId: transactionalEmailIds.loginVerificationRequest,
+  //     email: identifier,
+  //     dataVariables: {
+  //       url,
+  //     },
+  //   });
+  // } catch (error) {
+  //   captureException(error);
+  // }
 }

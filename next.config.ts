@@ -42,11 +42,12 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  reactStrictMode: true, // Enabling reactStrictMode
 };
 
 export default withSentryConfig(withMDX(nextConfig), {
-  org: 'hyperdusk',
-  project: 'glow',
+  org: 'zaviaogocm',
+  project: 'javascript-react',
   silent: false,
   hideSourceMaps: true,
 });
