@@ -73,7 +73,7 @@ export function FormFileUpload({
     const responseData = await response.json();
 
     if (!response.ok) {
-      alert(responseData.message);
+      console.error(responseData.message);
       return;
     }
 
