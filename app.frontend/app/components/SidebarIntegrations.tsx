@@ -88,13 +88,18 @@ export function SidebarIntegrations() {
                   integrationUIConfig[
                     integration.type as SupportedIntegrations
                   ];
+
+                const IntegrationIcon = integrationConfig.icon;
+
                 return (
                   <div
                     className="w-full px-2 pt-2 flex items-center"
                     key={integration.id}
                   >
                     <div className="flex items-center gap-2">
-                      {integrationConfig.icon}
+                      <div className="bg-stone-200 rounded-md w-8 h-8 flex items-center justify-center">
+                        <IntegrationIcon width={18} height={18} />
+                      </div>
                       <div className="flex flex-col">
                         <span className="text-sm font-medium">
                           {integrationConfig.name}

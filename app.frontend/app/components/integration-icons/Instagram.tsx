@@ -1,11 +1,6 @@
-export const InstagramLogo = () => {
+export const InstagramLogo = (props: React.SVGProps<SVGSVGElement>) => {
   return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 132.004 132"
-      width={32}
-      height={32}
-    >
+    <svg viewBox="0 0 132.004 132" width={32} height={32} {...props}>
       <defs>
         <radialGradient
           xlinkHref="#a"

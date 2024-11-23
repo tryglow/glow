@@ -17,7 +17,7 @@ import { captureException } from '@sentry/nextjs';
 import { Integration } from '@tryglow/prisma';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { JSX, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import useSWR, { useSWRConfig } from 'swr';
 
 export type SupportedIntegrations =
@@ -28,26 +28,26 @@ export type SupportedIntegrations =
 
 export const integrationUIConfig: Record<
   SupportedIntegrations,
-  { name: string; icon: JSX.Element; connectUrl: string }
+  { name: string; icon: React.ElementType; connectUrl: string }
 > = {
   instagram: {
     name: 'Instagram',
-    icon: <InstagramLogo />,
+    icon: InstagramLogo,
     connectUrl: `${process.env.NEXT_PUBLIC_API_URL}/services/instagram/v2`,
   },
   spotify: {
     name: 'Spotify',
-    icon: <SpotifyLogo />,
+    icon: SpotifyLogo,
     connectUrl: `${process.env.NEXT_PUBLIC_API_URL}/services/spotify`,
   },
   threads: {
     name: 'Threads',
-    icon: <ThreadsLogo />,
+    icon: ThreadsLogo,
     connectUrl: `${process.env.NEXT_PUBLIC_API_URL}/services/threads`,
   },
   tiktok: {
     name: 'TikTok',
-    icon: <TikTokLogo />,
+    icon: TikTokLogo,
     connectUrl: `${process.env.NEXT_PUBLIC_API_URL}/services/tiktok`,
   },
 };
@@ -146,12 +146,14 @@ export function BlockIntegrationUI({
     (integration) => integration.type === integrationType
   );
 
+  const IntegrationIcon = integrationUIConfig[integrationType].icon;
+
   if (!integration) {
     return (
       <>
         <div className="bg-stone-100 rounded-md flex flex-col items-center text-center px-4 py-8">
           <div className="bg-stone-200 rounded-md w-14 h-14 flex items-center justify-center">
-            {integrationUIConfig[integrationType].icon}
+            <IntegrationIcon width={24} height={24} />
           </div>
           <span className="font-medium text-lg text-stone-800 mt-3">
             Connect your {integrationUIConfig[integrationType].name} Account
@@ -211,7 +213,7 @@ export function BlockIntegrationUI({
     <>
       <div className="bg-stone-100 rounded-md flex flex-col items-center text-center px-4 py-8">
         <div className="bg-stone-200 rounded-md w-14 h-14 flex items-center justify-center">
-          {integrationUIConfig[integrationType].icon}
+          <IntegrationIcon width={24} height={24} />
         </div>
         <span className="font-medium text-lg text-stone-800 mt-3">
           Connected

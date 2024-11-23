@@ -1,6 +1,6 @@
-export const SpotifyLogo = () => {
+export const SpotifyLogo = (props: React.SVGProps<SVGSVGElement>) => {
   return (
-    <svg width={32} height={32} viewBox="0 0 496 512">
+    <svg width={32} height={32} viewBox="0 0 496 512" {...props}>
       <path
         fill="#1ed760"
         d="M248 8C111.1 8 0 119.1 0 256s111.1 248 248 248 248-111.1 248-248S384.9 8 248 8Z"
