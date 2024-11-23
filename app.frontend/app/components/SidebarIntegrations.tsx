@@ -152,21 +152,28 @@ export function SidebarIntegrations() {
             </DialogDescription>
 
             {currentlySelectedIntegration?.blocks?.length ? (
-              <DialogDescription className="text-pretty">
-                This integration is connected to{' '}
-                {currentlySelectedIntegration?.blocks?.length}{' '}
-                {currentlySelectedIntegration?.blocks?.length === 1
-                  ? 'block'
-                  : 'blocks'}{' '}
-                on the following pages:
-                <ul className="list-disc list-inside pl-4 my-3">
+              <>
+                <DialogDescription className="text-pretty">
+                  This integration is connected to{' '}
+                  {currentlySelectedIntegration?.blocks?.length}{' '}
+                  {currentlySelectedIntegration?.blocks?.length === 1
+                    ? 'block'
+                    : 'blocks'}{' '}
+                  on the following pages:
+                </DialogDescription>
+                <DialogDescription
+                  className="text-pretty list-disc list-inside pl-4 my-3"
+                  is="ul"
+                >
                   {currentlySelectedIntegration?.blocks?.map((block) => (
                     <li key={block.page.id}>/{block.page.slug}</li>
                   ))}
-                </ul>
-                Disconnecting will stop those pages from syncing data from{' '}
-                {currentlySelectedIntegration?.type}.
-              </DialogDescription>
+                </DialogDescription>
+                <DialogDescription className="text-pretty">
+                  Disconnecting will stop those pages from syncing data from{' '}
+                  {currentlySelectedIntegration?.type}.
+                </DialogDescription>
+              </>
             ) : null}
           </DialogHeader>
           <DialogFooter>
