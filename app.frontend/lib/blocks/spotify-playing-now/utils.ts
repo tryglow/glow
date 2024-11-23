@@ -174,7 +174,11 @@ const fetchSpotifyData = async (
         fetchPlayingNow,
         newConfig.accessToken
       );
-      if (playingNowResponse.data) config = newConfig; // Update config for further requests
+
+      // 200 and 204 are successful responses from Spotify
+      if ([200, 204].includes(playingNowResponse.statusCode)) {
+        config = newConfig; // Update config for further requests
+      }
     }
   }
 
