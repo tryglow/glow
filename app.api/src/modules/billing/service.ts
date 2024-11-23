@@ -35,8 +35,10 @@ export async function setupSubscription(sessionId: string) {
     throw new Error('User not found');
   }
 
-  const currentEnvPrices =
-    prices[process.env.NODE_ENV as 'development' | 'production'];
+  const currentEnv =
+    process.env.APP_ENV === 'production' ? 'production' : 'development';
+
+  const currentEnvPrices = prices[currentEnv];
 
   const hasTeamAccess = currentEnvPrices.team === planItem.price.id;
   const hasPremiumAccess = currentEnvPrices.premium === planItem.price.id;

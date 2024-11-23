@@ -10,26 +10,26 @@ export default async function billingRoutes(
   fastify: FastifyInstance,
   opts: any
 ) {
-  fastify.post('/stripe/callback', postStripeCallbackHandler);
+  fastify.post(
+    '/stripe/callback',
+    { config: { rawBody: true } },
+    postStripeCallbackHandler
+  );
 }
 
 const stripe = new Stripe(process.env.STRIPE_API_SECRET_KEY as string);
 
 async function postStripeCallbackHandler(
-  request: FastifyRequest,
+  request: FastifyRequest<{ Body: { rawBody: string }; RawBody: string }>,
   response: FastifyReply
 ) {
-  const body = (await request.body) as string;
-
-  const headers = request.headers;
-
-  const signature = headers['stripe-signature'] as string;
+  const signature = request.headers['stripe-signature'] as string;
 
   let event: Stripe.Event;
 
   try {
     event = stripe.webhooks.constructEvent(
-      body,
+      request.rawBody as string,
       signature,
       process.env.STRIPE_WEBHOOK_SECRET!
     );
@@ -38,13 +38,18 @@ async function postStripeCallbackHandler(
     return response.status(400).send({ error: 'Invalid signature' });
   }
 
-  switch (event.type) {
-    case 'checkout.session.completed':
-      await setupSubscription(event.data.object.id);
-      break;
-    case 'customer.subscription.deleted':
-      await cancelSubscription(event.data.object.id);
-      break;
+  try {
+    switch (event.type) {
+      case 'checkout.session.completed':
+        await setupSubscription(event.data.object.id);
+        break;
+      case 'customer.subscription.deleted':
+        await cancelSubscription(event.data.object.id);
+        break;
+    }
+  } catch (error) {
+    captureException(error);
+    return response.status(400).send({ error: 'Failed to process webhook' });
   }
 
   return response.status(200).send({ received: true });

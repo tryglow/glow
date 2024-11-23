@@ -24,11 +24,20 @@ import fastifySensible from '@fastify/sensible';
 import * as Sentry from '@sentry/node';
 import 'dotenv/config';
 import Fastify, { FastifyInstance } from 'fastify';
+import fastifyRawBody from 'fastify-raw-body';
 
 export const fastify: FastifyInstance = Fastify();
 
 await fastify.register(fastifyExpress);
 await fastify.register(fastifySensible);
+
+await fastify.register(fastifyRawBody, {
+  field: 'rawBody',
+  global: false, // Only enable for specific routes
+  encoding: 'utf8', // Set the encoding for the raw body
+  runFirst: true,
+});
+
 await fastify.register(fastifyMultipart, {
   limits: {
     files: 1,

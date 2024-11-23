@@ -16,6 +16,7 @@ declare module '@auth/express' {
 declare module 'fastify' {
   interface FastifyRequest {
     startTime?: number;
+    rawBody?: string;
   }
   interface FastifyInstance {
     authenticate: (
