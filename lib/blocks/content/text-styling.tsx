@@ -130,7 +130,7 @@ export const TextStyling = ({ name, blockId }: Prop) => {
         {/* Font Weight */}
         <div className='col-span-6'>
           <p className='mb-2'>Font Weight</p>
-          <Slider defaultValue={[selectedElement?.fontWeight] || 0} max={800} min={100} step={100} onChange={handleFontWeightChange} />
+          <Slider defaultValue={[selectedElement?.fontWeight || 0]} max={800} min={100} step={100} onChange={handleFontWeightChange} />
         </div>
         {/* Letter Spacing */}
         <div className='col-span-6'>
