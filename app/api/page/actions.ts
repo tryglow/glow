@@ -74,7 +74,9 @@ export async function createPage({
   slug: string;
   themeId: string;
 }) {
+  console.log('slug => ', slug);
   const session = await auth();
+  
 
   if (!session) {
     return {
@@ -136,46 +138,46 @@ export async function createPage({
     };
   }
 
-  const teamPages = await prisma.page.findMany({
-    where: {
-      deletedAt: null,
-      team: {
-        id: session.currentTeamId,
-        members: {
-          some: {
-            userId: session.user.id,
-          },
-        },
-      },
-    },
-    include: {
-      user: {
-        select: {
-          isAdmin: true,
-        },
-      },
-    },
-  });
+  // const teamPages = await prisma.page.findMany({
+  //   where: {
+  //     deletedAt: null,
+  //     team: {
+  //       id: session.currentTeamId,
+  //       members: {
+  //         some: {
+  //           userId: session.user.id,
+  //         },
+  //       },
+  //     },
+  //   },
+  //   include: {
+  //     user: {
+  //       select: {
+  //         isAdmin: true,
+  //       },
+  //     },
+  //   },
+  // });
 
-  const user = await prisma.user.findUnique({
-    where: {
-      id: session.user.id,
-    },
-  });
+  // const user = await prisma.user.findUnique({
+  //   where: {
+  //     id: session.user.id,
+  //   },
+  // });
 
-  const maxNumberOfPages =
-    user?.hasPremiumAccess || user?.hasTeamAccess ? 1000 : 2;
+  // const maxNumberOfPages =
+  //   user?.hasPremiumAccess || user?.hasTeamAccess ? 1000 : 2;
 
-  if (teamPages.length >= maxNumberOfPages) {
-    if (!user?.isAdmin) {
-      return {
-        error: {
-          message: 'You have reached the maximum number of pages',
-          label: 'Please upgrade your plan to create more pages',
-        },
-      };
-    }
-  }
+  // if (teamPages.length >= maxNumberOfPages) {
+  //   if (!user?.isAdmin) {
+  //     return {
+  //       error: {
+  //         message: 'You have reached the maximum number of pages',
+  //         label: 'Please upgrade your plan to create more pages',
+  //       },
+  //     };
+  //   }
+  // }
 
   const newPage = await createNewPage({ slug, themeId });
 

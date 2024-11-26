@@ -1,3 +1,5 @@
+'use client';
+
 import Image from 'next/image';
 import { FunctionComponent, Suspense } from 'react';
 
@@ -6,21 +8,27 @@ import { CoreBlock } from '@/components/CoreBlock';
 import { BlockProps } from '../ui';
 import { HeaderBlockConfig } from './config';
 import { HeaderServerUI } from './ui-server';
+import useSWR from 'swr';
 
 export const Header: FunctionComponent<BlockProps & HeaderBlockConfig> = ({
-  title,
-  description,
-  avatar,
-  showVerifiedBadge,
-  verifiedPageTitle,
   ...otherProps
 }) => {
+  const { data } = useSWR<any>(`/api/blocks/${otherProps.blockId}`);
+  const { 
+    title,
+    description,
+    avatar,
+    showVerifiedBadge,
+    verifiedPageTitle, } = data?.data || {}
+  
+  const url = avatar?.src?.split('/')[1] === 'uploads' ? `/assets${avatar?.src}` : avatar?.src 
+
   return (
     <CoreBlock {...otherProps} isFrameless>
       <header className="py-4">
         {avatar?.src && (
           <Image
-            src={avatar.src}
+            src={url}
             alt=""
             width={80}
             height={80}
