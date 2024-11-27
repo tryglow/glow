@@ -103,7 +103,7 @@ export function GlobalNavigation({ isEditMode }: { isEditMode: boolean }) {
                 onClick={() => setShowPremiumDialog(true)}
                 className="hidden md:flex text-white font-bold text-sm bg-gradient-to-b from-orange-400 to-orange-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 rounded-full px-4 py-1 text-center h-8 items-center"
               >
-                Upgrade to Pro
+                Upgrade to Premium
               </button>
               <UserWidget usersTeams={usersTeams} />
             </div>
