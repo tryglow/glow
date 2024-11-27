@@ -2,6 +2,7 @@ import prisma from '../../lib/prisma';
 import { isReservedSlug } from '@/lib/slugs';
 import { isForbiddenSlug } from '@/lib/slugs';
 import { regexSlug } from '@/lib/slugs';
+import { makeId } from '@/modules/pages/utils';
 import { captureException } from '@sentry/node';
 import { headerBlockDefaults } from '@tryglow/blocks';
 import { randomUUID } from 'crypto';
@@ -290,6 +291,7 @@ export async function deletePage(pageId: string) {
     },
     data: {
       deletedAt: new Date(),
+      slug: `DELETED-${makeId(4)}-${page.slug}`,
     },
   });
 
