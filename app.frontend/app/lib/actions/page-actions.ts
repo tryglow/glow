@@ -7,6 +7,7 @@ export async function getPageIdBySlugOrDomain(slug: string, domain: string) {
 
   const page = await prisma.page.findFirst({
     where: {
+      deletedAt: null,
       slug: customDomain ? undefined : slug,
       customDomain: customDomain ? decodeURIComponent(domain) : undefined,
     },
