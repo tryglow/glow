@@ -142,7 +142,7 @@ export function EditPageSettingsGeneral({ initialValues, pageId }: Props) {
               <div>
                 <FormField
                   withPrefix="glow.as/"
-                  label="Slug"
+                  label="Handle"
                   name="pageSlug"
                   placeholder="your-page"
                   id="pageSlug"
@@ -220,8 +220,8 @@ export function EditPageSettingsGeneral({ initialValues, pageId }: Props) {
                 </CollapsibleTrigger>
                 <CollapsibleContent className="px-3 py-2 bg-stone-100 rounded-lg">
                   <span className="text-sm mt-1 block">
-                    Deleting your page is irreversible and your page username
-                    will be available to use by other users.
+                    Deleting your page is irreversible and your page handle will
+                    be available to use by other users.
                   </span>
 
                   <Button

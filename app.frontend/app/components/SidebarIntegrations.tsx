@@ -128,8 +128,8 @@ export function SidebarIntegrations() {
               })}
             </div>
           ) : (
-            <div className="w-full aspect-square bg-stone-200 rounded-lg flex items-center justify-center">
-              <span className="text-muted-foreground text-sm">
+            <div className="w-full aspect-square bg-stone-200 rounded-lg flex items-center justify-center px-4">
+              <span className="text-muted-foreground text-sm text-center">
                 When you connect an integration using a block, it will appear
                 here.
               </span>

@@ -104,7 +104,7 @@ export function CreatePageForm({ onCancel }: Props) {
               <div>
                 <FormField
                   withPrefix="glow.as/"
-                  label="Slug"
+                  label="Handle"
                   name="pageSlug"
                   placeholder="your-page"
                   id="pageSlug"
