@@ -49,6 +49,8 @@ export function CreatePageForm({ onCancel }: Props) {
     { setSubmitting, setFieldError }: FormikHelpers<FormValues>
   ) => {
     setSubmitting(true);
+    console.log('values => ', values);
+    
 
     try {
       const { error, data } = await createPage({
@@ -155,7 +157,7 @@ export function CreatePageForm({ onCancel }: Props) {
 
             <DialogFooter>
               {onCancel && (
-                <Button variant="secondary" onClick={onCancel}>
+                <Button type='button' variant="secondary" onClick={onCancel}>
                   ← Cancel
                 </Button>
               )}

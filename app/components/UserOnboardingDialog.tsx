@@ -11,10 +11,13 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog';
 import { useIsMobile } from '@/hooks/use-mobile';
+import { fetcher } from '@/lib/fetch';
+import { Team } from '@prisma/client';
 import { useTour } from '@reactour/tour';
 import { captureException } from '@sentry/nextjs';
 import { useSession } from 'next-auth/react';
 import { useState } from 'react';
+import useSWR from 'swr';
 
 export function UserOnboardingDialog() {
   const [dialogOpen, setDialogOpen] = useState(true);
@@ -22,7 +25,22 @@ export function UserOnboardingDialog() {
   const { setIsOpen } = useTour();
   const isMobile = useIsMobile();
 
-  if (!session?.features.showGlowTour || isMobile) return null;
+  const { data: usersTeams } = useSWR<Partial<Team>[]>(
+    '/api/user/teams',
+    fetcher
+  );
+  
+  const isNewUser = () => {
+    const accCreated = new Date(usersTeams?.[0]?.createdAt || '')
+    const currentDate = new Date()
+
+    const milliseconds = Math.abs(currentDate.getTime() - accCreated.getTime());
+    const totalDays = (milliseconds / (1000 * 60 * 60 * 24)).toFixed(2);
+    
+    return Number(totalDays) < 0.05 ;
+  }
+
+  if (!session?.features.showGlowTour || isMobile || !isNewUser()) return null;
 
   const handleClose = async () => {
     try {
