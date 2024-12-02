@@ -19,16 +19,14 @@ export const Header: FunctionComponent<BlockProps & HeaderBlockConfig> = ({
     description,
     avatar,
     showVerifiedBadge,
-    verifiedPageTitle, } = data?.data || {}
-  
-  const url = avatar?.src?.split('/')[1] === 'uploads' ? `/assets${avatar?.src}` : avatar?.src 
+    verifiedPageTitle, } = data?.data || {} 
 
   return (
     <CoreBlock {...otherProps} isFrameless>
       <header className="py-4">
         {avatar?.src && (
           <Image
-            src={url}
+            src={avatar?.src}
             alt=""
             width={80}
             height={80}

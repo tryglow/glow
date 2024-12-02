@@ -137,7 +137,7 @@ export async function POST(req: Request) {
       fs.writeFile(pngPath, pngImage),
     ]);
 
-    const pngUrl = `/uploads/${fileId}.png`;
+    const pngUrl = `/assets/uploads/${fileId}.png`;
 
     try{
       return new Response(
