@@ -131,7 +131,7 @@ async function postCreateBlockHandler(
   });
 
   const maxNumberOfBlocks =
-    user?.hasPremiumAccess || user?.hasTeamAccess ? 1000 : 5;
+    user?.hasPremiumAccess || user?.hasTeamAccess ? 100 : 6;
   if (page.blocks.length >= maxNumberOfBlocks) {
     return response.status(400).send({
       error: {
