@@ -81,8 +81,6 @@ export function FormFileUpload({
     onUploaded('');
   };
 
-  const url = uploadedFileUrl?.split('/')[1] === 'uploads' ? `/assets${uploadedFileUrl}` : uploadedFileUrl 
-
   return (
     <>
       <span className="block text-sm font-medium leading-6 text-gray-900">
@@ -91,7 +89,7 @@ export function FormFileUpload({
       {uploadedFileUrl && (
         <div className="flex items-center gap-2">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={url || ''} className="w-16 h-16 rounded-md" alt="header logo" />
+          <img src={uploadedFileUrl} className="w-16 h-16 rounded-md" alt="header logo" />
 
           <Button
             type="button"

@@ -13,15 +13,13 @@ export async function GET(request: Request) {
   const session = await auth();
 
   if (!session) {
-    NextResponse.json({ error: 'Unauthorized' });
-    return;
+    return NextResponse.json({ error: 'Unauthorized' });
   }
 
   const code = searchParams.get('code');
 
   if (!code) {
-    NextResponse.json({ error: 'Error getting token' });
-    return;
+    return NextResponse.json({ error: 'Error getting token' });
   }
 
   try {
@@ -79,6 +77,6 @@ export async function GET(request: Request) {
   } catch (error) {
     captureException(error);
 
-    NextResponse.json({ error: 'Error getting token' });
+    return NextResponse.json({ error: 'Error getting token' });
   }
 }
