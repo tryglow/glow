@@ -75,11 +75,13 @@ export default async function PageLayout(props: {
     initialData[`/pages/${page.id}/settings`] = pageSettings;
   }
 
-  blocks.forEach((block: any) => {
-    initialData[`/blocks/${block.id}`] = {
-      blockData: block.data,
-    };
-  });
+  if (blocks && blocks.length > 0) {
+    blocks.forEach((block: any) => {
+      initialData[`/blocks/${block.id}`] = {
+        blockData: block.data,
+      };
+    });
+  }
 
   return (
     <GlowProviders
