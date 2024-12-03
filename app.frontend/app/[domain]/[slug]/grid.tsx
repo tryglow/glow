@@ -56,18 +56,21 @@ function reportPerformanceMetrics() {
 
   // Send metrics to analytics
   if (process.env.NEXT_PUBLIC_TINYBIRD_TRACKER_TOKEN) {
-    fetch('https://api.us-west-2.aws.tinybird.co/v0/events', {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${process.env.NEXT_PUBLIC_TINYBIRD_TRACKER_TOKEN}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        name: 'page_performance',
-        timestamp: new Date().toISOString(),
-        data: metrics,
-      }),
-    }).catch(console.error);
+    fetch(
+      'https://api.us-west-2.aws.tinybird.co/v0/events?name=page_performance',
+      {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${process.env.NEXT_PUBLIC_TINYBIRD_TRACKER_TOKEN}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: 'page_performance',
+          timestamp: new Date().toISOString(),
+          data: metrics,
+        }),
+      }
+    ).catch(console.error);
   }
 }
 
