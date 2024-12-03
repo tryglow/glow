@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "prisma:generate": "prisma generate",
+    "prisma:generate:no-engine": "prisma generate --no-engine",
     "prisma:migrate": "prisma migrate deploy"
   },
   "dependencies": {
