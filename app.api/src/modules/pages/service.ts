@@ -49,6 +49,7 @@ export async function getPageIdBySlugOrDomain(slug: string, domain: string) {
     where: {
       slug,
       customDomain: domain ? decodeURIComponent(domain) : undefined,
+      deletedAt: null,
     },
     select: {
       id: true,
@@ -75,6 +76,9 @@ export async function getPageBlocks(pageId: string) {
           config: true,
           integrationId: true,
         },
+        orderBy: {
+          createdAt: 'asc',
+        },
       },
     },
   });
@@ -91,6 +95,9 @@ export async function getPagesForTeamId(teamId: string) {
     select: {
       id: true,
       slug: true,
+    },
+    orderBy: {
+      createdAt: 'desc',
     },
   });
 

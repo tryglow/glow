@@ -29,13 +29,15 @@ export default async function PageLayout(props: {
     domain: string;
   }>;
 }) {
+  const startTime = performance.now();
   const params = await props.params;
-
   const { children } = props;
-
   const session = await auth();
 
+  // Combine initial page fetch with settings to reduce queries
+  const pageStartTime = performance.now();
   const page = await getPageIdBySlugOrDomain(params.slug, params.domain);
+  const pageTime = performance.now() - pageStartTime;
 
   if (!page) {
     return notFound();
@@ -45,24 +47,26 @@ export default async function PageLayout(props: {
     return notFound();
   }
 
-  let integrations: any;
-  let enabledBlocks: any;
-  let pageSettings: any;
+  // Batch fetch data for logged in users
+  const userDataStartTime = performance.now();
+  const [integrations, enabledBlocks, pageSettings] = session?.user
+    ? await Promise.all([
+        getTeamIntegrations(),
+        getEnabledBlocks(),
+        getPageSettings(page.id),
+      ])
+    : [null, null, null];
+  const userDataTime = performance.now() - userDataStartTime;
 
-  if (session?.user) {
-    [integrations, enabledBlocks, pageSettings] = await Promise.all([
-      getTeamIntegrations(),
-      getEnabledBlocks(),
-      getPageSettings(page.id),
-    ]);
-  }
-
+  // Batch fetch core page data
+  const coreDataStartTime = performance.now();
   const [{ blocks, currentUserIsOwner }, pageLayout, pageTheme] =
     await Promise.all([
       getPageBlocks(page.id),
       getPageLayout(page.id),
       getPageTheme(page.id),
     ]);
+  const coreDataTime = performance.now() - coreDataStartTime;
 
   const initialData: Record<string, any> = {
     [`/pages/${page.id}/layout`]: pageLayout,
@@ -82,6 +86,14 @@ export default async function PageLayout(props: {
       };
     });
   }
+
+  // Add performance headers
+  const totalTime = performance.now() - startTime;
+  const responseHeaders = new Headers();
+  responseHeaders.append('Server-Timing', `page;dur=${pageTime}`);
+  responseHeaders.append('Server-Timing', `user-data;dur=${userDataTime}`);
+  responseHeaders.append('Server-Timing', `core-data;dur=${coreDataTime}`);
+  responseHeaders.append('Server-Timing', `total;dur=${totalTime}`);
 
   return (
     <GlowProviders

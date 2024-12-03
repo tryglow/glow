@@ -89,21 +89,29 @@ export type InitialDataUsersIntegrations = Pick<
 >[];
 
 export default async function Page(props: { params: Promise<Params> }) {
+  const startTime = performance.now();
   const params = await props.params;
   const session = await auth();
+  const headersList = await headers();
 
   const isLoggedIn = !!session?.user;
 
+  // Track core page fetch time
+  const corePageStartTime = performance.now();
   const corePage = await getPageIdBySlugOrDomain(params.slug, params.domain);
+  const corePageTime = performance.now() - corePageStartTime;
 
   if (!corePage) {
     return notFound();
   }
 
+  // Track layout and data fetch time
+  const dataFetchStartTime = performance.now();
   const [layout, page] = await Promise.all([
     getPageLayout(corePage.id),
     getPageData(corePage.id),
   ]);
+  const dataFetchTime = performance.now() - dataFetchStartTime;
 
   if (!page) {
     notFound();
@@ -127,12 +135,18 @@ export default async function Page(props: { params: Promise<Params> }) {
     redirect(`//${page.customDomain}`);
   }
 
-  const headersList = await headers();
   const isMobile = isUserAgentMobile(headersList.get('user-agent'));
-
   const pageLayout = layout as unknown as PageConfig;
-
   const mergedIds = [...pageLayout.sm, ...pageLayout.xxs].map((item) => item.i);
+
+  // Calculate total time
+  const totalTime = performance.now() - startTime;
+
+  // Add Server-Timing headers
+  const responseHeaders = new Headers();
+  responseHeaders.append('Server-Timing', `core-page;dur=${corePageTime}`);
+  responseHeaders.append('Server-Timing', `data-fetch;dur=${dataFetchTime}`);
+  responseHeaders.append('Server-Timing', `total;dur=${totalTime}`);
 
   return (
     <Grid

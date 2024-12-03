@@ -1,14 +1,75 @@
 'use client';
 
-import { ReactNode, useMemo } from 'react';
-import { Layout, Responsive, ResponsiveProps } from 'react-grid-layout';
-
-import { EditModeContextProvider } from '@/app/contexts/Edit';
-
 import { EditLayout } from '@/app/components/EditLayout';
+import { EditModeContextProvider } from '@/app/contexts/Edit';
 import { GlobalNavigation } from '@/components/GlobalNavigation';
 import { WidthProvideRGL } from '@/components/WidthProvider';
 import dynamic from 'next/dynamic';
+import { ReactNode, useMemo, useEffect } from 'react';
+import { Layout, Responsive, ResponsiveProps } from 'react-grid-layout';
+
+// Performance monitoring function
+function reportPerformanceMetrics() {
+  if (typeof window === 'undefined') return;
+
+  // Get navigation timing
+  const navigation = performance.getEntriesByType(
+    'navigation'
+  )[0] as PerformanceNavigationTiming;
+
+  // Get resource timing for key resources
+  const resources = performance.getEntriesByType('resource');
+  const jsResources = resources.filter((r) => r.name.endsWith('.js'));
+  const cssResources = resources.filter((r) => r.name.endsWith('.css'));
+  const imageResources = resources.filter(
+    (r) =>
+      r.name.endsWith('.png') ||
+      r.name.endsWith('.jpg') ||
+      r.name.endsWith('.webp')
+  );
+
+  // Calculate metrics
+  const metrics = {
+    // Navigation timing
+    timeToFirstByte: navigation.responseStart - navigation.requestStart,
+    domContentLoaded:
+      navigation.domContentLoadedEventEnd - navigation.requestStart,
+    fullPageLoad: navigation.loadEventEnd - navigation.requestStart,
+
+    // Resource timing
+    totalJSSize: jsResources.reduce(
+      (acc, r) => acc + (r as PerformanceResourceTiming).encodedBodySize,
+      0
+    ),
+    totalCSSSize: cssResources.reduce(
+      (acc, r) => acc + (r as PerformanceResourceTiming).encodedBodySize,
+      0
+    ),
+    totalImageSize: imageResources.reduce(
+      (acc, r) => acc + (r as PerformanceResourceTiming).encodedBodySize,
+      0
+    ),
+
+    // Server timing (from response headers)
+    serverTiming: navigation.serverTiming || [],
+  };
+
+  // Send metrics to analytics
+  if (process.env.NEXT_PUBLIC_TINYBIRD_TRACKER_TOKEN) {
+    fetch('https://api.us-west-2.aws.tinybird.co/v0/events', {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${process.env.NEXT_PUBLIC_TINYBIRD_TRACKER_TOKEN}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        name: 'page_performance',
+        timestamp: new Date().toISOString(),
+        data: metrics,
+      }),
+    }).catch(console.error);
+  }
+}
 
 export interface PageConfig {
   sm: Layout[];
@@ -23,9 +84,7 @@ interface Props {
   isLoggedIn: boolean;
 }
 
-// Dynamically import EditWrapper so it doesn't get imported on the server
-// which will make the logged-out app a bit lighter, as well as remove the
-// need to import the polyfills in the EditWrapper
+// Dynamically import EditWrapper
 const DynamicEditWrapper = dynamic(
   () =>
     import('@/app/components/EditWrapper').then((mod) => ({
@@ -37,10 +96,20 @@ const DynamicEditWrapper = dynamic(
 export default function Grid({
   layout,
   children,
-  editMode,
+  editMode = false,
+  isPotentiallyMobile,
   isLoggedIn,
-  isPotentiallyMobile = false,
 }: Props) {
+  useEffect(() => {
+    // Report performance metrics after the page has loaded
+    if (document.readyState === 'complete') {
+      reportPerformanceMetrics();
+    } else {
+      window.addEventListener('load', reportPerformanceMetrics);
+      return () => window.removeEventListener('load', reportPerformanceMetrics);
+    }
+  }, []);
+
   const defaultLayoutProps: ResponsiveProps = {
     useCSSTransforms: true,
     width: 624,
