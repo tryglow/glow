@@ -24,6 +24,7 @@
     "@mdx-js/loader": "^3.1.0",
     "@mdx-js/react": "^3.1.0",
     "@next/mdx": "^15.0.2",
+    "@number-flow/react": "^0.4.2",
     "@prisma/client": "^5.22.0",
     "@prisma/extension-accelerate": "^1.2.1",
     "@prisma/extension-optimize": "^1.0.1",

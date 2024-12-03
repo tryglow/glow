@@ -4,6 +4,7 @@ import { CoreBlock } from '@/app/components/CoreBlock';
 import { InternalApi } from '@/app/lib/api';
 import { BlockProps } from '@/lib/blocks/ui';
 import { internalApiFetcher } from '@/lib/fetch';
+import NumberFlow from '@number-flow/react';
 import { motion } from 'framer-motion';
 import { FunctionComponent, useEffect, useState } from 'react';
 import useSWR from 'swr';
@@ -11,15 +12,17 @@ import useSWR from 'swr';
 const Icon = () => {
   return (
     <svg
-      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="none"
+      className="fill-sys-label-primary"
       width={40}
       height={40}
-      viewBox="0 0 437 373"
-      fill="none"
     >
       <path
-        className="fill-sys-label-primary"
-        d="M322.894 0C249.576 0 218.5 52.514 218.5 52.514S187.424 0 114.106 0C51.954 0 0 52.514 0 114.845 0 258.155 218.5 373 218.5 373S437 258.155 437 114.845C437 52.515 385.046 0 322.894 0Z"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z"
       />
     </svg>
   );
@@ -97,19 +100,18 @@ export const Reactions: FunctionComponent<BlockProps> = (props) => {
     <CoreBlock className="relative !p-0 overflow-hidden" {...props}>
       <button
         onClick={!isEditable ? handleClick : undefined}
-        className="flex items-center gap-2 py-4 px-4 group relative w-full h-full bg-sys-background-primary"
+        className="flex items-center justify-between gap-2 py-4 px-4 group relative w-full h-full bg-sys-background-primary"
       >
         <div className="flex flex-col text-left gap-1 z-10">
           <span className="uppercase font-bold text-xs tracking-wider text-sys-label-primary">
             Love
           </span>
-          <span className="text-4xl font-medium text-sys-label-primary">
-            {new Intl.NumberFormat('en-US').format(
-              (data?.total.love ?? 0) + increment
-            )}
-          </span>
+          <NumberFlow
+            value={(data?.total.love ?? 0) + increment}
+            className="text-4xl font-medium text-sys-label-primary"
+          />
         </div>
-        <div className="flex-1 flex justify-center z-10">
+        <div className="mr-8 flex justify-center z-10">
           <Icon />
         </div>
         <div className="absolute bottom-0 left-0 right-0 h-full">
