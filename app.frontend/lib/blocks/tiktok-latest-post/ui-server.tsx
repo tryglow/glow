@@ -1,6 +1,5 @@
-import { FunctionComponent } from 'react';
-
 import { fetchData } from './utils';
+import { FunctionComponent } from 'react';
 
 export const TikTokLogo = ({ fill = '#fff' }) => {
   return (
@@ -21,7 +20,7 @@ export const TikTokLatestPostServerUI: FunctionComponent<{
 }> = async ({ blockId }) => {
   const data = await fetchData(blockId);
 
-  if (!data) {
+  if (!data || !data.videos || data.videos.length === 0) {
     return (
       <div className="flex items-center justify-center h-full">
         <span className="text-sm text-sys-label-secondary text-center">
