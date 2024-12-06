@@ -2,6 +2,7 @@ const FORBIDDEN_SLUGS_REGEXPS = [
   // Meteor app routes
   'page-not-found',
   'docs',
+  'explore',
   'terms-of-use',
   'about',
   'pricing',

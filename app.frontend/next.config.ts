@@ -26,6 +26,11 @@ const nextConfig: NextConfig = {
       destination: '/i/pricing',
       permanent: true,
     },
+    {
+      source: '/explore',
+      destination: '/i/explore',
+      permanent: true,
+    },
   ],
   pageExtensions: ['js', 'jsx', 'mdx', 'ts', 'tsx'],
   logging: {

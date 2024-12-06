@@ -1,14 +1,13 @@
 'use client';
 
-import { Dialog } from '@headlessui/react';
-import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
-import Link from 'next/link';
-import { ReactNode, useState } from 'react';
-
 import { MarketingContainer } from '@/app/components/MarketingContainer';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
+import { Dialog } from '@headlessui/react';
+import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
+import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { ReactNode, useState } from 'react';
 
 interface Props {
   children: ReactNode;
@@ -44,6 +43,9 @@ export default function MarketingNavigation({ children }: Props) {
             <div className="flex flex-1 items-center justify-end gap-x-3">
               <Button asChild variant="ghost" className="hidden sm:flex">
                 <Link href="/i/pricing">Pricing</Link>
+              </Button>
+              <Button asChild variant="ghost" className="hidden sm:flex">
+                <Link href="/i/explore">Explore</Link>
               </Button>
               <Button asChild variant="ghost" className="hidden sm:flex">
                 <Link href="/i/blog">Blog</Link>
@@ -106,11 +108,11 @@ export default function MarketingNavigation({ children }: Props) {
                     Pricing
                   </Link>
                   <Link
-                    href="/i/learn"
+                    href="/i/explore"
                     onClick={() => setMobileMenuOpen(false)}
                     className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
                   >
-                    Learn
+                    Explore
                   </Link>
                   <Link
                     href="/i/blog"
@@ -118,6 +120,13 @@ export default function MarketingNavigation({ children }: Props) {
                     className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
                   >
                     Blog
+                  </Link>
+                  <Link
+                    href="/i/learn"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                  >
+                    Learn
                   </Link>
                   <Link
                     href="https://x.com/tryglow"
