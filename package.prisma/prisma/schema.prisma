@@ -116,6 +116,7 @@ model Page {
   verifiedAt           DateTime?
   verificationRequests VerificationRequest[]
   orchestrations       Orchestration[]
+  isFeatured           Boolean               @default(false)
 }
 
 model Block {
