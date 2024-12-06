@@ -1,8 +1,13 @@
 import createMDX from '@next/mdx';
 import { withSentryConfig } from '@sentry/nextjs';
 import type { NextConfig } from 'next';
+import remarkGfm from 'remark-gfm';
 
-const withMDX = createMDX();
+const withMDX = createMDX({
+  options: {
+    remarkPlugins: [remarkGfm],
+  },
+});
 
 const nextConfig: NextConfig = {
   rewrites: async () => [
