@@ -88,6 +88,7 @@ export async function GET(
       },
       headerTitle: headerBlockData?.title ?? `@${pageSlug}`,
       headerDescription: headerBlockData?.description,
+      verifiedPageTitle: headerBlockData?.verifiedPageTitle,
       avatarSrc,
     },
   });
