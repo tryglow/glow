@@ -35,6 +35,12 @@ const baseSitemap = [
     changeFrequency: 'monthly',
     priority: 0.4,
   },
+  {
+    url: `${baseUrl}/i/explore`,
+    lastModified: new Date(),
+    changeFrequency: 'weekly',
+    priority: 0.4,
+  },
 ];
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const blogSitemap = await generateBlogSitemap(baseUrl);
