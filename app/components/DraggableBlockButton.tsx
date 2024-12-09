@@ -189,13 +189,13 @@ export function DraggableBlockButton({ type }: Props) {
         alt=""
       />
       <div className="w-9 h-9 bg-stone-100 rounded-md flex justify-center items-center mr-3 flex-shrink-0">
-        <Image src={blockConfig.icon} className="w-9 h-9" alt="" />
+        <Image src={blockConfig?.icon} className="w-9 h-9" alt="" />
       </div>
       <div className="flex flex-col">
         <span className="font-semibold text-stone-900 text-sm">
-          {blockConfig.title}
+          {blockConfig?.title}
         </span>
-        <span className="text-xs text-slate-600">{blockConfig.label}</span>
+        <span className="text-xs text-slate-600">{blockConfig?.label}</span>
       </div>
     </>
   );
@@ -214,8 +214,8 @@ export function DraggableBlockButton({ type }: Props) {
 
           setDraggingItem({
             i: 'tmp-block',
-            w: blockConfig.drag.w,
-            h: blockConfig.drag.h,
+            w: blockConfig?.drag.w,
+            h: blockConfig?.drag.h,
             type,
           });
         }}
@@ -228,8 +228,8 @@ export function DraggableBlockButton({ type }: Props) {
         onClick={() => {
           setNextToAddBlock({
             i: 'tmp-block',
-            w: blockConfig.drag.w,
-            h: blockConfig.drag.h,
+            w: blockConfig?.drag.w,
+            h: blockConfig?.drag.h,
             type,
           });
 
