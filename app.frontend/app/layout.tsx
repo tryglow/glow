@@ -6,6 +6,7 @@ import { Toaster } from '@/components/ui/toaster';
 import { Analytics } from '@vercel/analytics/react';
 import { Metadata } from 'next';
 import localFont from 'next/font/local';
+import Script from 'next/script';
 
 const saans = localFont({
   src: './saans-font.woff2',
@@ -46,6 +47,15 @@ export default async function RootLayout({
   const session = await auth();
   return (
     <html lang="en" className={saans.className}>
+      <head>
+        {process.env.NODE_ENV === 'production' && (
+          <Script
+            src="https://analytics.ahrefs.com/analytics.js"
+            data-key="eGiWH0Sy3k+uZwgupTFABw"
+            defer={true}
+          />
+        )}
+      </head>
       <PostHogProvider>
         <body className="bg-stone-50 min-h-screen">
           {children}
