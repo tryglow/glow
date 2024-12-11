@@ -20,6 +20,9 @@ const temporaryTestUserForAppReview = {
   password: process.env.TMP_APP_REVIEW_USER_PASSWORD,
 };
 
+
+
+
 export const { auth, signIn, signOut, handlers, unstable_update } = NextAuth({
   secret: process.env.NEXTAUTH_SECRET,
   trustHost: true,
@@ -77,6 +80,13 @@ export const { auth, signIn, signOut, handlers, unstable_update } = NextAuth({
         return null;
       },
     }),
+    {
+      id: 'magic-link',
+      name: 'Magic Link',
+      type: 'email',
+      maxAge: 60 * 10, // 10 minutes
+      sendVerificationRequest,
+    },
   ],
 
   callbacks: {
