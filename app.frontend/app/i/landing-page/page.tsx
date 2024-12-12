@@ -1,17 +1,6 @@
-import { ArrowRightIcon, ArrowUpRightIcon } from '@heroicons/react/20/solid';
-import clsx from 'clsx';
-import Image from 'next/image';
-import Link from 'next/link';
-import { redirect } from 'next/navigation';
-
-import { LoginWidget } from '@/components/LoginWidget';
-
-import { auth } from '@/app/lib/auth';
-import prisma from '@/lib/prisma';
-import { cn } from '@/lib/utils';
-
-import { Button } from '@/components/ui/button';
-
+import { FrequentlyAskedQuestions } from './faq';
+import { ShowLoginAlert } from './show-login-alert';
+import styles from './styles.module.scss';
 import { MarketingContainer } from '@/app/components/MarketingContainer';
 import {
   GithubCommitsThisMonthMockup,
@@ -21,10 +10,17 @@ import {
   SpotifyPlayingNowMockup,
   StackMockup,
 } from '@/app/i/landing-page/ui-mockups';
+import { auth } from '@/app/lib/auth';
+import { LoginWidget } from '@/components/LoginWidget';
+import { Button } from '@/components/ui/button';
+import prisma from '@/lib/prisma';
 import { defaultThemeSeeds, themeColorToCssValue } from '@/lib/theme';
-import { FrequentlyAskedQuestions } from './faq';
-import { ShowLoginAlert } from './show-login-alert';
-import styles from './styles.module.scss';
+import { cn } from '@/lib/utils';
+import { ArrowRightIcon, ArrowUpRightIcon } from '@heroicons/react/20/solid';
+import clsx from 'clsx';
+import Image from 'next/image';
+import Link from 'next/link';
+import { redirect } from 'next/navigation';
 
 const featuredProfiles: {
   name: string;
@@ -471,9 +467,15 @@ export default async function LandingPage(props: {
 
       <section className="my-20">
         <MarketingContainer>
-          <h2 className="text-3xl md:text-4xl font-black tracking-tight mb-8">
+          <h2 className="text-3xl md:text-4xl font-black tracking-tight mb-2">
             Explore
           </h2>
+          <Link
+            href="/i/explore"
+            className="inline-block text-base text-slate-600 mb-8"
+          >
+            View all →
+          </Link>
 
           <div className="w-screen overflow-x-auto no-scrollbar ml-[calc(((100vw_-_100%)_/_2)_*_-1)] pl-[calc((100vw_-_100%)_/_2)] -mt-8">
             <div className="w-auto flex gap-4 py-8">
