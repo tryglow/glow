@@ -19,7 +19,7 @@
     "typescript": "5.6.3"
   },
   "dependencies": {
-    "turbo": "^2.3.1"
+    "turbo": "^2.3.3"
   },
   "scripts": {
     "lint": "turbo lint",
