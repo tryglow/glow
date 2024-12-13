@@ -18,7 +18,7 @@ async function refreshToken({ refreshToken }: { refreshToken: string }) {
       'Content-Type': 'application/x-www-form-urlencoded',
       Authorization:
         'Basic ' +
-        new Buffer(
+        Buffer.from(
           process.env.SPOTIFY_CLIENT_ID +
             ':' +
             process.env.SPOTIFY_CLIENT_SECRET
