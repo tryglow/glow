@@ -47,11 +47,19 @@ export async function deletePage(slug: string) {
   }
 
   try {
+
+     // Fetch the page by its slug
+    const pageId = await prisma.page.findUnique({
+      where: { slug },
+      select: { id: true }, // Only fetch the `id` field
+    });
+
     await prisma.page.update({
       where: {
         slug,
       },
       data: {
+        slug: `${slug}-del-${pageId?.id}`,
         deletedAt: new Date(),
       },
     });
@@ -101,6 +109,9 @@ export async function createPage({
       slug,
     },
   });
+
+  console.log('existingPage => ', existingPage);
+  
 
   if (!slug.match(regexSlug)) {
     return {

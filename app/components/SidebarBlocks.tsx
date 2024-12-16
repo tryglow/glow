@@ -14,7 +14,7 @@ import useSWR from 'swr';
 export function SidebarBlocks() {
   const [search, setSearch] = useState('');
 
-  const { data: enabledBlocks } = useSWR<Blocks[]>(
+  let { data: enabledBlocks } = useSWR<Blocks[]>(
     '/api/blocks/enabled-blocks',
     fetcher
   );
@@ -22,6 +22,9 @@ export function SidebarBlocks() {
   const [filteredBlocks, setFilteredBlocks] = useState(enabledBlocks);
 
   useEffect(() => {
+
+    enabledBlocks = enabledBlocks?.filter(block => block !== 'header')
+
     if (search === '') {
       setFilteredBlocks(enabledBlocks);
     }

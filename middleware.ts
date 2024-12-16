@@ -50,7 +50,8 @@ export default async function middleware(req: NextRequest) {
     if (
       path.startsWith('/i/') ||
       path.startsWith('/api/') ||
-      path.startsWith('/new')
+      path.startsWith('/new') ||
+      path.startsWith('/app-sso')
     ) {
       return NextResponse.rewrite(new URL(path, req.url));
     }
