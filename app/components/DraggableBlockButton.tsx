@@ -17,6 +17,8 @@ import blockStackIcon from '@/app/assets/ui/type-stack.svg';
 import blockThreadsFollowerCountIcon from '@/app/assets/ui/type-threads-follower-count.svg';
 import blockWaitlistEmailIcon from '@/app/assets/ui/type-waitlist-email.svg';
 import blockYoutubeIcon from '@/app/assets/ui/type-youtube.svg';
+import blockTiktokIcon from '@/app/assets/ui/type-tiktok.svg';
+import blockReactionsIcon from '@/app/assets/ui/type-reactions.svg';
 import Image from 'next/image';
 
 export const config: Record<
@@ -103,6 +105,15 @@ export const config: Record<
       h: 4,
     },
   },
+  'instagram-follower-count': {
+    title: 'Instagram Follower Count',
+    label: 'The number of followers on your Instagram account',
+    icon: blockInstagramLatestPostIcon,
+    drag: {
+      w: 6,
+      h: 6,
+    },
+  },
   map: {
     title: 'Map',
     label: 'A map with a pin',
@@ -166,6 +177,33 @@ export const config: Record<
       h: 6,
     },
   },
+  'tiktok-follower-count': {
+    title: 'TikTok Follower Count',
+    label: 'The number of followers on your TikTok account',
+    icon: blockTiktokIcon,
+    drag: {
+      w: 6,
+      h: 6,
+    },
+  },
+  'tiktok-latest-post': {
+    title: 'TikTok Latest Post',
+    label: 'The latest post from your connected TikTok account',
+    icon: blockTiktokIcon,
+    drag: {
+      w: 6,
+      h: 6,
+    },
+  },
+  reactions: {
+    title: 'Reactions',
+    label: 'A button to react to your page',
+    icon: blockReactionsIcon,
+    drag: {
+      w: 4,
+      h: 4,
+    },
+  }
 };
 
 interface Props {

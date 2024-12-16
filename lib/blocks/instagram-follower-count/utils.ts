@@ -1,30 +1,34 @@
 'use server';
 
-import { refreshLongLivedToken } from '@/app/api/services/instagram/callback/utils';
-
-import prisma from '@/lib/prisma';
-
 import { decrypt, encrypt } from '@/lib/encrypt';
+import prisma from '@/lib/prisma';
 import { captureException } from '@sentry/nextjs';
 import { InstagramIntegrationConfig } from './config';
 
-function fetchLatestInstagramPost(
-  accessToken: string,
-  instagramUserId: string,
-  numberOfPosts: number
-) {
+async function refreshLongLivedToken({ accessToken }: { accessToken: string }) {
   const options = {
-    limit: numberOfPosts.toString(),
-    fields: 'id,media_url,permalink,username,timestamp,caption,media_type',
+    grant_type: 'ig_refresh_token',
     access_token: accessToken,
   };
 
   const qs = new URLSearchParams(options).toString();
 
-  return fetch(`https://graph.instagram.com/${instagramUserId}/media?${qs}`, {
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-    },
+  return fetch(`https://graph.instagram.com/refresh_access_token?${qs}`, {
+    method: 'GET',
+  });
+}
+
+function fetchInstagramProfile(accessToken: string, instagramUserId: string) {
+  const url = new URL(`https://graph.instagram.com/v21.0/${instagramUserId}`);
+
+  const qs = new URLSearchParams({
+    fields: 'id,followers_count,profile_picture_url,username,name',
+    access_token: accessToken,
+  });
+
+  url.search = qs.toString();
+
+  return fetch(url.toString(), {
     next: {
       revalidate: 60,
     },
@@ -34,16 +38,12 @@ function fetchLatestInstagramPost(
 const fetchInstagramData = async (
   config: InstagramIntegrationConfig,
   isRetry: boolean,
-  integrationId: string,
-  numberOfPosts: number
+  integrationId: string
 ) => {
-  const req = await fetchLatestInstagramPost(
+  const req = await fetchInstagramProfile(
     config.accessToken,
-    config.instagramUserId,
-    numberOfPosts
+    config.instagramUserId
   );
-  console.log('INST posts req.status => ', req.status);
-  
 
   // The access token might have expired. Try to refresh it.
   if (req.status === 401 && !isRetry) {
@@ -74,8 +74,7 @@ const fetchInstagramData = async (
           instagramUserId: config.instagramUserId,
         },
         true,
-        integrationId,
-        numberOfPosts
+        integrationId
       );
     }
   }
@@ -83,16 +82,14 @@ const fetchInstagramData = async (
   if (req.status === 200) {
     const data = await req.json();
 
-    const mappedData = data.data.map((post: any) => ({
-      imageUrl: post.media_url,
-      link: post.permalink,
-      username: post.username,
-      timestamp: post.timestamp,
-      caption: post.caption,
-      mediaType: post.media_type === 'VIDEO' ? 'video' : 'image',
-    }));
-
-    return mappedData;
+    return {
+      followerCount: data.followers_count,
+      profile: {
+        username: data.username,
+        profilePictureUrl: data.profile_picture_url,
+        name: data.name,
+      },
+    };
   }
 
   // Is this is a retry, bail out to prevent an infinite loop.
@@ -101,13 +98,7 @@ const fetchInstagramData = async (
   }
 };
 
-export const fetchData = async ({
-  pageId,
-  numberOfPosts = 1,
-}: {
-  pageId: string;
-  numberOfPosts: number;
-}) => {
+export const fetchData = async ({ pageId }: { pageId: string }) => {
   try {
     const instagramIntegration = await prisma.integration.findFirst({
       where: {
@@ -129,7 +120,7 @@ export const fetchData = async ({
         },
       },
     });
-    console.log('instagramIntegration posts => ', instagramIntegration)
+
     if (!instagramIntegration || !instagramIntegration.encryptedConfig) {
       return null;
     }
@@ -158,8 +149,7 @@ export const fetchData = async ({
     const instagramData = await fetchInstagramData(
       decryptedConfig,
       false,
-      instagramIntegration.id,
-      numberOfPosts
+      instagramIntegration.id
     );
 
     return instagramData;

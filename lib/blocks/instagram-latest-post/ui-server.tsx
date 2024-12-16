@@ -28,7 +28,8 @@ export const InstagramLatestPostServerUI: FunctionComponent<{
   numberOfPosts: number;
 }> = async ({ pageId, numberOfPosts }) => {
   const data = await fetchData({ pageId, numberOfPosts });
-
+  console.log('instagram data posts => ', data);
+  
   if (!data) {
     return (
       <div className="flex items-center justify-center h-full">

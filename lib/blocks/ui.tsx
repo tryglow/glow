@@ -15,6 +15,10 @@ import SpotifyPlayingNow from './spotify-playing-now/ui-client';
 import { Blocks } from './types';
 import { WaitlistEmail } from './waitlist-email/ui';
 import { AccordionUI } from './accordion/ui';
+import TikTokFollowerCount from './tiktok-follower-count/ui-client';
+import TikTokLatestPost from './tiktok-latest-post/ui-client';
+import { Reactions } from './reaction/ui';
+import InstagramFollowerCount from './instagram-follower-count/ui-client';
 
 export interface BlockConfig {
   x: number;
@@ -58,6 +62,12 @@ export function renderBlock(block: any, pageId: string, isEditMode: boolean) {
           {...sharedProps}
         />
       );
+    case 'instagram-follower-count':
+      return (
+        <InstagramFollowerCount
+          {...sharedProps}
+        />
+      );
     case 'github-commits-this-month':
       return (
         <GitHubCommitsThisMonth
@@ -88,5 +98,11 @@ export function renderBlock(block: any, pageId: string, isEditMode: boolean) {
       return <ThreadsFollowerCount {...sharedProps} />;
     case 'accordion':
       return <AccordionUI {...sharedProps} />;
+    case 'tiktok-follower-count':
+      return <TikTokFollowerCount {...sharedProps} />;
+    case 'tiktok-latest-post':
+      return <TikTokLatestPost {...sharedProps} />;
+    case 'reactions':
+      return <Reactions {...sharedProps} />;
   }
 }

@@ -7,13 +7,17 @@ export type Blocks =
   | 'spotify-playing-now'
   | 'spotify-embed'
   | 'instagram-latest-post'
+  | 'instagram-follower-count'
   | 'map'
   | 'link-box'
   | 'link-bar'
   | 'waitlist-email'
   | 'youtube'
   | 'threads-follower-count'
-  | 'accordion';
+  | 'accordion'
+  | 'tiktok-follower-count'
+  | 'tiktok-latest-post'
+  | 'reactions';
 
 export interface EditFormProps<T> {
   initialValues: T;
