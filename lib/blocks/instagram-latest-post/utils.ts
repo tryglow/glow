@@ -8,20 +8,20 @@ import { decrypt, encrypt } from '@/lib/encrypt';
 import { captureException } from '@sentry/nextjs';
 import { InstagramIntegrationConfig } from './config';
 
-function fetchLatestInstagramPost(
+function fetchLatestInstagramPostsID(
   accessToken: string,
-  instagramUserId: string,
+  instagramUserId: any,
   numberOfPosts: number
 ) {
-  const options = {
-    limit: numberOfPosts.toString(),
-    fields: 'id,media_url,permalink,username,timestamp,caption,media_type',
-    access_token: accessToken,
-  };
+  // const options = {
+  //   limit: numberOfPosts.toString(),
+  //   fields: 'id,media_url,permalink,username,timestamp,caption,media_type',
+  //   access_token: accessToken, 
+  // };
 
-  const qs = new URLSearchParams(options).toString();
+  // const qs = new URLSearchParams(options).toString();
 
-  return fetch(`https://graph.instagram.com/${instagramUserId}/media?${qs}`, {
+  return fetch(`https://graph.instagram.com/v21.0/${instagramUserId}/media?access_token=${accessToken}`, {
     headers: {
       Authorization: `Bearer ${accessToken}`,
     },
@@ -31,17 +31,58 @@ function fetchLatestInstagramPost(
   });
 }
 
+async function fetchLatestInstagramPostsData(
+  data: any, 
+  numberOfPosts: number,
+  accessToken: string,
+) {
+  const fields = 'id,media_url,permalink,username,timestamp,caption,media_type'
+
+  try {
+    // Use Promise.all to fetch data concurrently
+    const postsData = await Promise.all(
+      data.slice(0, numberOfPosts).map(async (post: {id: string}) => {
+        const response = await fetch(`https://graph.instagram.com/v21.0/${post?.id}?fields=${fields}&access_token=${accessToken}`, {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+          next: {
+            revalidate: 60,
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error(`Failed to fetch data for ID ${post?.id}: ${response.statusText}`);
+        }
+
+        return response.json(); // Resolve the response as JSON
+      })
+    );
+
+    return postsData;
+  } catch (error) {
+    console.error('Error fetching Instagram posts:', error);
+    return [];
+  }
+}
+
 const fetchInstagramData = async (
   config: InstagramIntegrationConfig,
   isRetry: boolean,
   integrationId: string,
   numberOfPosts: number
 ) => {
-  const req = await fetchLatestInstagramPost(
+
+  console.log('config => ', config);
+  
+  const req = await fetchLatestInstagramPostsID(
     config.accessToken,
     config.instagramUserId,
     numberOfPosts
   );
+
+  console.log('req.status => ', req.status);
+  
 
   // The access token might have expired. Try to refresh it.
   if (req.status === 401 && !isRetry) {
@@ -81,7 +122,11 @@ const fetchInstagramData = async (
   if (req.status === 200) {
     const data = await req.json();
 
-    const mappedData = data.data.map((post: any) => ({
+    const resp = await fetchLatestInstagramPostsData(data.data, numberOfPosts, config.accessToken)
+
+    console.log('Post response... => ', resp);
+
+    const mappedData = resp.map((post: any) => ({
       imageUrl: post.media_url,
       link: post.permalink,
       username: post.username,
@@ -90,7 +135,15 @@ const fetchInstagramData = async (
       mediaType: post.media_type === 'VIDEO' ? 'video' : 'image',
     }));
 
+    console.log('mappedData => ', mappedData);
+    
+
     return mappedData;
+  }
+
+  if (req.status !== 200) {
+    captureException(new Error(`Failed to fetch Instagram posts: ${req.statusText}`));
+    return null;
   }
 
   // Is this is a retry, bail out to prevent an infinite loop.
@@ -110,6 +163,7 @@ export const fetchData = async ({
     const instagramIntegration = await prisma.integration.findFirst({
       where: {
         type: 'instagram',
+        deletedAt: null,
         team: {
           pages: {
             some: {

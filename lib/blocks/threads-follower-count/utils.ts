@@ -116,6 +116,7 @@ export const fetchData = async ({ pageId }: { pageId: string }) => {
     const threadsIntegration = await prisma.integration.findFirst({
       where: {
         type: 'threads',
+        deletedAt: null,
         team: {
           pages: {
             some: {
