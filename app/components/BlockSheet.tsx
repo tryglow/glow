@@ -37,6 +37,7 @@ const blocks: Blocks[] = [
   'link-bar',
   'stack',
   'instagram-latest-post',
+  'instagram-follower-count',
   'image',
   'map',
   'github-commits-this-month',

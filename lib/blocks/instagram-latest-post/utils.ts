@@ -80,6 +80,8 @@ const fetchInstagramData = async (
     config.instagramUserId,
     numberOfPosts
   );
+  console.log('INST posts req.status => ', req.status);
+  
 
   console.log('req.status => ', req.status);
   
@@ -180,7 +182,7 @@ export const fetchData = async ({
         },
       },
     });
-
+    console.log('instagramIntegration posts => ', instagramIntegration)
     if (!instagramIntegration || !instagramIntegration.encryptedConfig) {
       return null;
     }

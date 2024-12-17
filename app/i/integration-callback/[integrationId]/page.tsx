@@ -6,6 +6,7 @@ const integrations: Record<string, string> = {
   spotify: 'Spotify',
   instagram: 'Instagram',
   threads: 'Threads',
+  tiktok: 'TikTok'
 };
 
 export default function IntegrationSuccessPage() {

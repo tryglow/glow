@@ -26,11 +26,15 @@ import { defaults as spotifyPlayingNowDefaults } from './spotify-playing-now/con
 import { StackSchema, defaults as stackDefaults } from './stack/config';
 import { defaults as threadsFollowerCountDefaults } from './threads-follower-count/config';
 import { defaults as AccordionBlockDefaults, AccordionSchema } from './accordion/config';
+import { tiktokFollowerCountBlockDefaults } from './tiktok-follower-count/config';
+import { tiktokLatestPostBlockDefaults } from './tiktok-latest-post/config';
+import { reactionBlockDefaults, reactionBlockSchema } from './reaction/config';
 import { Blocks } from './types';
 import {
   WaitlistEmailBlockSchema,
   defaults as waitlistEmailDefaults,
 } from './waitlist-email/config';
+import { instagramFollowerCountBlockDefaults } from './instagram-follower-count/config';
 
 export const blocksConfig: Record<
   Blocks,
@@ -38,6 +42,7 @@ export const blocksConfig: Record<
     schema: Yup.Schema | null;
     defaults: any;
     isBeta?: boolean;
+    integrationType?: string;
   }
 > = {
   'link-box': {
@@ -72,6 +77,10 @@ export const blocksConfig: Record<
     defaults: instagramLatestPostDefaults,
     schema: InstagramLatestPostSchema,
   },
+  'instagram-follower-count': {
+    defaults: instagramFollowerCountBlockDefaults,
+    schema: null
+  },
   map: {
     defaults: mapDefaults,
     schema: MapSchema,
@@ -101,5 +110,17 @@ export const blocksConfig: Record<
     defaults: AccordionBlockDefaults,
     schema: AccordionSchema,
     // isBeta: true,
+  },
+  'tiktok-follower-count': {
+    defaults: tiktokFollowerCountBlockDefaults,
+    schema: null,
+  },
+  'tiktok-latest-post': {
+    defaults: tiktokLatestPostBlockDefaults,
+    schema: null,
+  },
+  reactions: {
+    defaults: reactionBlockDefaults,
+    schema: reactionBlockSchema,
   },
 };

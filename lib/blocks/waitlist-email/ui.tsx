@@ -13,11 +13,11 @@ import { submitSignupToWaitlistCom } from './action';
 import { WaitlistEmailBlockConfig } from './config';
 
 export const WaitlistEmail: FunctionComponent<BlockProps> = (props) => {
-  const { data: waitListData } = useSWR<WaitlistEmailBlockConfig>(
+  const { data: emailListData } = useSWR<WaitlistEmailBlockConfig>(
     `/api/blocks/${props.blockId}`
   );
-
-  const { data }: any = waitListData
+  const { data }: any = emailListData
+  
 
   const [formSubmitted, setFormSubmitted] = useState(false);
 
