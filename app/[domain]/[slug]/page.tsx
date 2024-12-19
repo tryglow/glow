@@ -14,6 +14,7 @@ import { nullable } from 'zod';
 import { NotNull } from 'yup';
 import { GoogleFontsContextProvider } from '@/app/contexts/GoogleFonts/indes';
 import GridAngleProvider from '@/app/contexts/GridAngle';
+import { EditModeContextProvider } from '@/app/contexts/Edit';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
@@ -143,25 +144,27 @@ export default async function Page(props: { params: Promise<Params> }) {
   const mergedIds = [...pageLayout.sm, ...pageLayout.xxs].map((item) => item.i);
 
   return (
-    <GoogleFontsContextProvider>
-      <GridAngleProvider>
-        <Grid
-          isPotentiallyMobile={isMobile}
-          layout={pageLayout}
-          editMode={isEditMode}
-          isLoggedIn={isLoggedIn}
-        >
-          {page.blocks
-            .filter((block) => mergedIds.includes(block.id))
-            .map((block) => {
-              return (
-                <section key={block.id}>
-                  {renderBlock(block, page.id, isEditMode)}
-                </section>
-              );
-            })}
-        </Grid>
-      </GridAngleProvider>
-    </GoogleFontsContextProvider>
+    <EditModeContextProvider>
+      <GoogleFontsContextProvider>
+        <GridAngleProvider>
+          <Grid
+            isPotentiallyMobile={isMobile}
+            layout={pageLayout}
+            editMode={isEditMode}
+            isLoggedIn={isLoggedIn}
+          >
+            {page.blocks
+              .filter((block) => mergedIds.includes(block.id))
+              .map((block) => {
+                return (
+                  <section key={block.id}>
+                    {renderBlock(block, page.id, isEditMode)}
+                  </section>
+                );
+              })}
+          </Grid>
+        </GridAngleProvider>
+      </GoogleFontsContextProvider>
+    </EditModeContextProvider>
   );
 }

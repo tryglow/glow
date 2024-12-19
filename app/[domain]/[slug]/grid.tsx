@@ -3,7 +3,7 @@
 import React, { ReactNode, useContext, useEffect, useMemo, useState } from 'react';
 import { Layout, Responsive, ResponsiveProps } from 'react-grid-layout';
 
-import { EditModeContextProvider, useEditModeContext } from '@/app/contexts/Edit';
+import { EditModeContextProvider } from '@/app/contexts/Edit';
 
 import { EditLayout } from '@/app/components/EditLayout';
 import { GlobalNavigation } from '@/components/GlobalNavigation';
@@ -85,14 +85,14 @@ export default function Grid({
 
   if (editMode) {
     return (
-      <EditModeContextProvider>
+      <>
         <GlobalNavigation isEditMode />
         <EditLayout>
           <DynamicEditWrapper layoutProps={defaultLayoutProps}>
             {children}
           </DynamicEditWrapper>
         </EditLayout>
-      </EditModeContextProvider>
+      </>
     );
   }
 

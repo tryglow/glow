@@ -76,7 +76,8 @@ import { promises as fs } from 'fs';
 // };
 
 // For locally upload
-const uploadDir = path.join(process.cwd(), 'public', 'assets', 'uploads');
+// Directory for file uploads (outside the public folder)
+const uploadDir = path.join(process.cwd(), 'uploads');
 
 // Ensure the upload directory exists
 const ensureUploadDirExists = async () => {
@@ -87,75 +88,76 @@ const ensureUploadDirExists = async () => {
   }
 };
 
-
 export async function POST(req: Request) {
   const session = await auth();
 
   if (!session) {
-    return Response.json({
-      error: {
-        message: 'Unauthorized',
-      },
-    });
+    return new Response(
+      JSON.stringify({
+        error: { message: 'Unauthorized' },
+      }),
+      { status: 401 }
+    );
   }
 
-  // For locally upload
   await ensureUploadDirExists();
-
 
   const formData = await req.formData();
   const files = formData.getAll('file') as File[];
   const referenceId = formData.get('referenceId') as string;
-  const context = formData.get('assetContext') as string;
 
   const firstFileOnly = files[0];
-
   if (!firstFileOnly || !referenceId) {
-    // RETURN AN ERROR
-    return Response.json({
-      error: {
-        message: 'Missing required fields',
-      },
-    });
+    return new Response(
+      JSON.stringify({
+        error: { message: 'Missing required fields' },
+      }),
+      { status: 400 }
+    );
   }
 
-  // For locally upload
   const buffer = await firstFileOnly.arrayBuffer();
-    const sharpBuffer = Buffer.from(buffer);
+  const sharpBuffer = Buffer.from(buffer);
 
-    // Resize and convert the image to different formats
-    const [webpImage, pngImage] = await Promise.all([
-      sharp(sharpBuffer).resize(1200, 800).toFormat('webp').toBuffer(),
-      sharp(sharpBuffer).resize(1200, 800).toFormat('png').toBuffer(),
-    ]);
+  // Resize and convert the image
+  const pngImage = await sharp(sharpBuffer)
+    .resize(1200, 800) // Optional: Resize the image to a fixed size
+    .toFormat('png') // Convert to PNG format
+    .toBuffer();
+  // const [webpImage, pngImage] = await Promise.all([
+  //   sharp(sharpBuffer).resize(1200, 800).toFormat('webp').toBuffer(),
+  //   sharp(sharpBuffer).resize(1200, 800).toFormat('png').toBuffer(),
+  // ]);
 
-    const fileId = randomUUID();
-    const pngPath = path.join(uploadDir, `${fileId}.png`);
+  const fileId = randomUUID();
+  // const webpPath = path.join(uploadDir, `${fileId}.webp`);
+  const pngPath = path.join(uploadDir, `${fileId}.png`);
 
-    // Save the images to the upload directory
-    await Promise.all([
-      fs.writeFile(pngPath, pngImage),
-    ]);
+  // Save the images
+  await fs.writeFile(pngPath, pngImage);
+  // await Promise.all([fs.writeFile(webpPath, webpImage), fs.writeFile(pngPath, pngImage)]);
 
-    const pngUrl = `/assets/uploads/${fileId}.png`;
-
-    try{
-      return new Response(
-        JSON.stringify({
-          message: 'success',
-          url: pngUrl,
-        }),
-        { status: 200 }
-      );
-    } catch (error: any) {
-      console.error('Error during file upload:', error);
-      return new Response(
-        JSON.stringify({
-          error: { message: 'Internal server error', details: error?.message },
-        }),
-        { status: 500 }
-      );
-    }
+  try {
+    return new Response(
+      JSON.stringify({
+        message: 'success',
+        url: `/api/page/asset/serve?file=${fileId}.png`,
+        // urls: {
+        //   webp: `/api/page/asset/serve?file=${fileId}.webp`,
+        //   png: `/api/page/asset/serve?file=${fileId}.png`,
+        // },
+      }),
+      { status: 200 }
+    );
+  } catch (error: any) {
+    console.error('Error during file upload:', error);
+    return new Response(
+      JSON.stringify({
+        error: { message: 'Internal server error', details: error?.message },
+      }),
+      { status: 500 }
+    );
+  }
 
   // if (!isObjKey(context, assetContexts)) {
   //   return Response.json({
