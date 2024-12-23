@@ -60,7 +60,7 @@ export const EditModeContextProvider: React.FC<{ children: ReactNode }> = ({
     id: string;
     type: Blocks;
   } | null>(null);
-  const [contentStyles, setContentStyles] = useState<TextStyles>(textStyling)
+  const [contentStyles, setContentStyles] = useState<any>({})
   const [currentLayoutAngle, setCurrentLayoutAngle] = useState<PageConfig>();
 
 
