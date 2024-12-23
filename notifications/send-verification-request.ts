@@ -1,6 +1,7 @@
 import 'server-only';
 
 import { captureException } from '@sentry/nextjs';
+import { verificationCache } from '@/lib/verification-cache';
 
 import { createLoopsClient, transactionalEmailIds } from '@/lib/loops';
 
@@ -12,16 +13,6 @@ export async function sendVerificationRequest({
   url: string;
 }) {
   const loops = createLoopsClient();
-  console.log(url);
-  // try {
-  //   await loops.sendTransactionalEmail({
-  //     transactionalId: transactionalEmailIds.loginVerificationRequest,
-  //     email: identifier,
-  //     dataVariables: {
-  //       url,
-  //     },
-  //   });
-  // } catch (error) {
-  //   captureException(error);
-  // }
+  verificationCache.set(identifier, url);
+  console.log('Verification URL:', url);
 }
