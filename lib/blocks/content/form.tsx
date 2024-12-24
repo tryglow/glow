@@ -63,11 +63,13 @@ export function EditForm({
             />
             <TextStyling blockId={blockId} name={'title'} />
             <FormField
+              fieldType="textarea"
               label="Content"
               name="content"
               id="content"
               placeholder="Some content"
               error={errors.content}
+              className='mt-4'
             />
             <TextStyling blockId={blockId} name={'content'} />
 

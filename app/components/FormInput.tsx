@@ -39,6 +39,7 @@ export function FormInput({
       className={cn(
         'block rounded-md border-0 px-3 py-1.5 ring-1 ring-inset focus:ring-2 focus:ring-inset sm:text-sm sm:leading-6',
         type !== 'checkbox' && 'w-full',
+        fieldType === "textarea" && 'h-32',
         disabled && 'bg-gray-100',
         hasError
           ? 'text-red-900 ring-red-300 placeholder:text-red-300 focus:ring-red-500'
