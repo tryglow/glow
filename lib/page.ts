@@ -45,7 +45,8 @@ export async function createNewPage(input: NewPageInput) {
           x: 0,
           y: 0,
           moved: false,
-          static: true,
+          static: false,
+          isResizable: false
         },
       ],
       mobileConfig: [
@@ -56,7 +57,8 @@ export async function createNewPage(input: NewPageInput) {
           x: 0,
           y: 0,
           moved: false,
-          static: true,
+          static: false,
+          isResizable: false
         },
       ],
       blocks: {
@@ -68,7 +70,7 @@ export async function createNewPage(input: NewPageInput) {
             ...headerDefaults,
             title: `@${input.slug}`,
           },
-          contentStyles: textStyling
+          contentStyles: {}
         },
       },
     },
