@@ -98,6 +98,26 @@
   display: none !important;
 }
 
+.youtube-info::after {
+  content: '';
+  display: none;
+  position: absolute;
+  top: 0%;
+  left: 0%;
+  transform: translate(51px, -7px) rotate(45deg);
+  height: 12px;
+  width: 12px;
+  border-top: 1px solid #e5e7eb;
+  border-left: 1px solid #e5e7eb;
+  background-color: white;
+  z-index: 60;
+}
+
+.info-icon:hover .youtube-info,
+.info-icon:hover .youtube-info::after {
+  display: block;
+}
+
 /* This is needed as there is a bug in Safari which is causing our font weights to render weirdly. */
 @layer utilities {
   .font-thin,

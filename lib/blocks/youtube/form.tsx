@@ -6,7 +6,7 @@ import { FormField } from '@/components/FormField';
 import { Button } from '@/components/ui/button';
 
 import { EditFormProps } from '../types';
-import { YouTubeBlockConfig, YouTubeBlockSchema } from './config';
+import { YouTubeBlockConfig, YouTubeBlockSchema } from './config';import { Icon } from "@iconify/react";
 
 export function EditForm({
   initialValues,
@@ -31,9 +31,24 @@ export function EditForm({
       enableReinitialize={true}
     >
       {({ isSubmitting, errors }) => (
-        <Form className="w-full flex flex-col gap-2">
+        <Form className="w-full flex flex-col gap-2 h-96">
+          <div className='flex items-center gap-1.5'>
+            <label className='text-black' htmlFor="videoId">Video ID</label>
+            <div className='relative info-icon'>
+              <Icon icon="heroicons:question-mark-circle-20-solid" width="20" height="20" />
+
+              <div className='youtube-info hidden absolute top-full left-0 transform -translate-x-12 translate-y-2 w-[255px] bg-white border rounded-lg shadow-md z-50'>
+                <p className='text-sm font-bold p-3 border-b'>How to find Youtube Video ID</p>
+                <div className='p-3 text-black'>
+                  <p className='text-[10px] leading-[.8rem]'>The YouTube Video ID is the portion at the end of the URL after “=” . </p>
+                  <img src="/assets/landing-page/video-info.png" alt="" className='py-2' />
+                  <p className='text-center text-[10px] leading-[.8rem]'>Example: This Youtube Video ID is “eVli-tstM5E”</p>
+                </div>
+              </div>
+            </div>
+          </div>
           <FormField
-            label="Video ID"
+            label=""
             name="videoId"
             id="videoId"
             error={errors.videoId}
