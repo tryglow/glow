@@ -68,13 +68,13 @@ console.log('reaction blockId => ', blockId);
   
 
   const handleClick = () => {
-    // if (isEditable) {
-    //   toast({
-    //     variant: 'error',
-    //     title: 'You cannot react in edit mode',
-    //   });
-    //   return;
-    // }
+    if (isEditable) {
+      toast({
+        variant: 'error',
+        title: 'You cannot react in edit mode',
+      });
+      return;
+    }
 
     if (Number(reactionData?.reactions) >= 16) {
       toast({
