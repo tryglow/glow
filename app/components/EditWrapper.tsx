@@ -50,10 +50,11 @@ export function EditWrapper({ children, layoutProps }: Props) {
 
   const [isPending, startTransition] = useTransition();
 
-  const ResponsiveReactGridLayout = useMemo(
-    () => WidthProvider(Responsive),
-    []
-  );
+ const ResponsiveReactGridLayout = useMemo(
+  () =>
+    WidthProvider(Responsive) as React.ComponentType<ResponsiveProps & any>,
+  []
+);
 
   const [optimisticItems, setOptimisticItems] =
     useOptimistic<ReactNode[]>(children);
