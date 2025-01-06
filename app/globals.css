@@ -118,6 +118,22 @@
   display: block;
 }
 
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: silver;
+  border-radius: 5px;
+}
+
 /* This is needed as there is a bug in Safari which is causing our font weights to render weirdly. */
 @layer utilities {
   .font-thin,

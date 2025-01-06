@@ -781,7 +781,7 @@ const SidebarContentHeader = ({
   id?: string;
 }) => {
   return (
-    <div className="md:sticky top-0 z-10 bg-white border-b py-3 px-4" id={id}>
+    <div className="md:sticky top-0 z-10 flex items-center justify-between gap-3 bg-white border-b py-3 px-4" id={id}>
       <h4 className="text-lg font-bold tracking-tight text-foreground">
         {title}
       </h4>

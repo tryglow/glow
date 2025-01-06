@@ -1,6 +1,7 @@
 'use server';
 
 import { captureException } from '@sentry/nextjs';
+import { WaitlistFormConfig } from './config';
 
 export const submitSignupToWaitlistCom = async (formData: FormData) => {
   const email = formData.get('email') as string;
@@ -36,4 +37,21 @@ export const submitSignupToWaitlistCom = async (formData: FormData) => {
       errors: 'There was an error submitting your email. Please try again.',
     };
   }
+};
+
+
+export const submitFeedback = async (formData: WaitlistFormConfig) => {
+  console.log('submitFeedback called !');
+  
+  const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/feedback/add`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(formData),
+  });
+
+  const data = await response.json();
+  console.log('response => ', data);
+  return data
 };

@@ -208,3 +208,13 @@ model VerificationRequest {
   rejectedAt         DateTime?
   requestedPageTitle String
 }
+
+model Feedback {
+  id        String   @id @default(uuid())
+  pageId    String
+  email     String
+  text      String
+  option    Json
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

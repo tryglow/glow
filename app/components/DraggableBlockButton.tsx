@@ -147,7 +147,7 @@ export const config: Record<
     icon: blockWaitlistEmailIcon,
     drag: {
       w: 12,
-      h: 5,
+      h: 8,
     },
   },
   youtube: {
