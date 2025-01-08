@@ -27,6 +27,8 @@ import { SidebarBlocks } from './SidebarBlocks';
 import { SidebarIntegrations } from './SidebarIntegrations';
 import { SidebarPageSettings } from './SidebarPageSettings';
 import { SidebarThemes } from './SidebarThemes';
+import { useParams } from 'next/navigation';
+import useSWR from 'swr';
 
 const pageMenuItems: {
   label: string;
@@ -79,6 +81,14 @@ type SidebarView =
 export function EditSidebar({
   ...props
 }: React.ComponentProps<typeof Sidebar>) {
+
+  const params = useParams();
+  const { slug } = params;
+
+  const { data: pageData } = useSWR(
+    `/api/page/get-data?slug=${slug}`
+  );
+  
   const { setOpen, isMobile, sidebarView, setSidebarView } = useSidebar();
 
   const { currentEditingBlock } = useEditModeContext();
@@ -161,7 +171,7 @@ export function EditSidebar({
             {sidebarView === 'themes' && <SidebarThemes />}
             {sidebarView === 'integrations' && <SidebarIntegrations />}
             {sidebarView === 'analytics' && <SidebarAnalytics />}
-            {sidebarView === 'forms' && <SidebarForms />}
+            {sidebarView === 'forms' && <SidebarForms pageId={pageData?.block?.id} />}
           </SidebarContent>
         </Sidebar>
       </Sidebar>

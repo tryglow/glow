@@ -31,8 +31,6 @@ const getPageData = async ({
 
   const user = session?.user;
 
-  console.log('domain => ', domain, slug);
-  
 
   const page = await prisma.page.findUnique({
     where: {
