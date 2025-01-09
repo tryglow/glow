@@ -7,7 +7,7 @@ interface Props {
 }
 
 type Author = {
-  id: 'alex';
+  id: 'alex' | 'jack';
   name: string;
   position: string;
   avatar: string;
@@ -26,6 +26,16 @@ export const authors: Author[] = [
     link: 'https://x.com/alexjpate',
     glowUsername: 'alex',
     glowLink: 'https://alex.now',
+  },
+  {
+    id: 'jack',
+    name: 'Jack',
+    position: 'Co-founder',
+    avatar:
+      'https://cdn.glow.as/666b7445-c171-4ad7-a21d-eb1954b7bd40/0885d7ec-9af4-4430-94f4-ad1a033c2704',
+    link: 'https://x.com/tryglow',
+    glowUsername: 'jack',
+    glowLink: 'https://glow.as/jack',
   },
 ];
 
