@@ -30,7 +30,7 @@ export const Header: FunctionComponent<BlockProps & HeaderBlockConfig> = ({
             alt=""
             width={80}
             height={80}
-            className="mb-6 rounded-lg"
+            className="mb-6 rounded-full object-cover object-top"
           />
         )}
         <h1 className="font-bold text-4xl mb-1 text-sys-label-primary flex items-center gap-2">

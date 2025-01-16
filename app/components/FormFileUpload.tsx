@@ -89,7 +89,7 @@ export function FormFileUpload({
       {uploadedFileUrl && (
         <div className="flex items-center gap-2">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={uploadedFileUrl} className="w-16 h-16 rounded-md" alt="header logo" />
+          <img src={uploadedFileUrl} className="w-16 h-16 rounded-full object-cover object-top" alt="header logo" />
 
           <Button
             type="button"

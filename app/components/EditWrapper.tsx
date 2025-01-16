@@ -194,7 +194,7 @@ export function EditWrapper({ children, layoutProps }: Props) {
     currentLayouts: Layouts
   ) => {
     // If the new layout is empty or there's no existing layout, exit early
-    if (newLayout.length === 0 || !layout) {
+    if (newLayout.length < 2 || !layout) {
       return;
     }
 
