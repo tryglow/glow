@@ -39,6 +39,7 @@ export function EditForm({
             initialValue={initialValues?.src}
             referenceId={blockId}
             assetContext="blockAsset"
+            blockType="image-block"
           />
           <div className="flex flex-shrink-0 justify-between py-4 border-t border-stone-200">
             <Button variant="secondary" onClick={onClose}>
