@@ -112,6 +112,8 @@ export default function Grid({
       >
         {children}
       </ResponsiveReactGridLayout>
+      {/* Footer */}
+      <a href='https://zaviago.com' target='blank' className='block mt-14 mb-12 text-center text-sys-label-primary leading-5 tracking-wider'>Built with Ello by Zaviago</a>
     </>
   );
 }

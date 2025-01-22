@@ -127,7 +127,7 @@ export default async function PageLayout(props: {
         revalidateIfStale: isEditMode,
       }}
     >
-      {!session?.user && (
+      {/* {!session?.user && (
         <Button
           variant="default"
           asChild
@@ -135,7 +135,7 @@ export default async function PageLayout(props: {
         >
           <Link href="https://glow.as">Built with Glow</Link>
         </Button>
-      )}
+      )} */}
 
       {pageTheme?.publishedAt && !currentUserIsOwner ? (
         <main className="bg-sys-bg-base min-h-screen">

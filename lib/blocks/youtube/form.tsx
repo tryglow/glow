@@ -37,12 +37,12 @@ export function EditForm({
             <div className='relative info-icon'>
               <Icon icon="heroicons:question-mark-circle-20-solid" width="20" height="20" />
 
-              <div className='youtube-info hidden absolute top-full left-0 transform -translate-x-12 translate-y-2 w-[255px] bg-white border rounded-lg shadow-md z-50'>
-                <p className='text-sm font-bold p-3 border-b'>How to find Youtube Video ID</p>
+              <div className='youtube-info hidden absolute top-full left-0 transform -translate-x-[3.6rem] translate-y-2 w-[324px] bg-white border rounded-lg shadow-md z-50'>
+                <p className='text-xl font-bold p-3 border-b'>How to find Youtube Video ID</p>
                 <div className='p-3 text-black'>
-                  <p className='text-[10px] leading-[.8rem]'>The YouTube Video ID is the portion at the end of the URL after “=” . </p>
+                  <p className='text-sm'>The YouTube Video ID is the portion at the end of the URL after “=” . </p>
                   <img src="/assets/landing-page/video-info.png" alt="" className='py-2' />
-                  <p className='text-center text-[10px] leading-[.8rem]'>Example: This Youtube Video ID is “eVli-tstM5E”</p>
+                  <p className='text-center text-sm'>Example: This Youtube Video ID is <span className='font-bold'>“eVli-tstM5E”</span></p>
                 </div>
               </div>
             </div>

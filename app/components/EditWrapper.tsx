@@ -194,7 +194,7 @@ export function EditWrapper({ children, layoutProps }: Props) {
     currentLayouts: Layouts
   ) => {
     // If the new layout is empty or there's no existing layout, exit early
-    if (newLayout.length === 0 || !layout) {
+    if (newLayout.length < 2 || !layout) {
       return;
     }
 
@@ -325,6 +325,9 @@ export function EditWrapper({ children, layoutProps }: Props) {
         >
           {optimisticItems}
         </ResponsiveReactGridLayout>
+
+        {/* Footer */}
+        <a href='https://zaviago.com' target='blank' className='block mt-14 mb-16 text-center text-sys-label-primary leading-5 tracking-wider'>Built with Ello by Zaviago</a>
       </div>
     </>
   );

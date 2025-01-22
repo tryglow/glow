@@ -16,6 +16,7 @@ interface Props {
   isCondensed?: boolean;
   assetContext: AssetContexts;
   htmlFor: string;
+  blockType?: string;
 }
 
 export function FormFileUpload({
@@ -26,6 +27,7 @@ export function FormFileUpload({
   assetContext,
   isCondensed = false,
   htmlFor,
+  blockType
 }: Props) {
   const [uploadedFileUrl, setUploadedFileUrl] = useState<string | null>(null);
 
@@ -87,9 +89,9 @@ export function FormFileUpload({
         {label}
       </span>
       {uploadedFileUrl && (
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 mt-2">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={uploadedFileUrl} className="w-16 h-16 rounded-md" alt="header logo" />
+          <img src={uploadedFileUrl} className={`w-16 h-16 ${blockType === "image-block" ? 'rounded-md' : 'rounded-full'} object-cover object-top`} alt="header logo" />
 
           <Button
             type="button"

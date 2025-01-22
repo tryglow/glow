@@ -89,21 +89,22 @@ console.log('reaction blockId => ', blockId);
     }
 
     // Set new debounce timer
-    setLoading(true)
-    console.log('reactionData count => ', reactionData);
+    // setLoading(true)
+    const updatedReactions = Number(reactionData?.reactions) + 1;
+
+    const values = {
+      ...reactionData,
+      reactions: updatedReactions
+    }
+    
+    setReactionData(values)
+    setContentStyles(values)
     
     const newTimer = setTimeout( () => {
       // setIncrement((prev) => prev + 1);
-      const values = {
-        reactions: reactionData?.reactions + 1,
-        ...reactionData
-      }
-      console.log('submitting new values => ', values);
       
       handlReactions(values, blockId, contentStyles);
-      setReactionData((prev: any) => ({...prev, reactions: Number(prev.reactions) + 1}))
-      setContentStyles((prev: any) => ({...prev, reactions: Number(prev.reactions) + 1}))
-      setLoading(false)
+      // setLoading(false)
     }, 1600);
 
     setDebounceTimer(newTimer);

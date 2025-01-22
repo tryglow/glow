@@ -121,7 +121,7 @@ export async function POST(req: Request) {
 
   // Resize and convert the image
   const pngImage = await sharp(sharpBuffer)
-    .resize(1200, 800) // Optional: Resize the image to a fixed size
+    .resize(800, 800) // Optional: Resize the image to a fixed size
     .toFormat('png') // Convert to PNG format
     .toBuffer();
   // const [webpImage, pngImage] = await Promise.all([
