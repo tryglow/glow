@@ -12,6 +12,8 @@ export type Blocks =
   | 'link-box'
   | 'link-bar'
   | 'waitlist-email'
+  | 'text-form'
+  | 'selection-form'
   | 'youtube'
   | 'threads-follower-count'
   | 'accordion'

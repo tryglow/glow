@@ -1,9 +1,10 @@
 import * as Yup from 'yup';
 
-export interface WaitlistEmailBlockConfig {
+export interface TextFormBlockConfig {
   title: string;
   label: string;
   buttonLabel: string;
+  isAnonymous: boolean;
   items: ItemType[]
   // waitlistId: string;
 }
@@ -14,18 +15,20 @@ export interface ItemType {
   color: string
 }
 
-export const defaults: WaitlistEmailBlockConfig = {
-  title: 'Get the latest updates',
-  label: 'Fresh content straigt to your inbox, just for you ✨',
-  buttonLabel: 'Subscribe',
+export const defaults: TextFormBlockConfig = {
+  title: "New year's wishes!",
+  label: 'Good Good Good',
+  buttonLabel: 'Sent',
+  isAnonymous: true,
   items: []
   // waitlistId: '',
 };
 
-export const WaitlistEmailBlockSchema = Yup.object().shape({
+export const TextFormBlockSchema = Yup.object().shape({
   title: Yup.string().required('Please provide a title'),
   label: Yup.string().required('Please provide a label'),
   buttonLabel: Yup.string().required('Please provide a button label'),
+  isAnonymous: Yup.boolean(),
   items: Yup.array()
   .of(
     Yup.object({
@@ -38,15 +41,15 @@ export const WaitlistEmailBlockSchema = Yup.object().shape({
 
 
 // For ui component
-export interface WaitlistFormConfig {
+export interface TextFormConfig {
   pageId: string
-  email: string
-  text?: string
+  email?: string
+  text: string
   blockType: string
   option?: ItemType
 }
 
-export const defaultFormValues: WaitlistFormConfig = {
+export const defaultFormValues: TextFormConfig = {
   pageId: '',
   email: '',
   text: '',
@@ -54,9 +57,16 @@ export const defaultFormValues: WaitlistFormConfig = {
   option: {text: '', color: ''}
 }
 
-export const WaitlistFormSchema = Yup.object({
+export const TextFormSchema = Yup.object({
   pageId: Yup.string(),
-  email: Yup.string().email('Invalid email format').required('Email is required'),
-  text: Yup.string(),
+  isAnonymous: Yup.boolean(),
+  email: Yup.string()
+    .email('Please enter a valid email')
+    .when('isAnonymous', ([isAnonymous], schema) => {
+      if (!isAnonymous) 
+        return Yup.string().required('Email is required');
+      return schema;
+    }),
+  text: Yup.string().required('Please enter some text'),
   option: Yup.object(),
 });

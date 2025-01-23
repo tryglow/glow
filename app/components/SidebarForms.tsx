@@ -19,17 +19,73 @@ type Props = {
   pageId: string
 }
 
+type FormType = { data: Formdata[] }
+
+interface Formdata {
+    id: string;
+    pageId: string;
+    email: string;
+    text: string;
+    blockType: string;
+    option: {
+        text: string;
+        color: string;
+    },
+    createdAt: string;
+    updatedAt: string;
+} 
+
+const EmailsData = ({ data }: FormType) => {
+  return (
+    <div className='border border-gray-400 rounded shadow-md p-4 mx-2'>
+      <h1 className='font-semibold mb-2'>Email Waitlist</h1>
+      {data?.map((form: Formdata) => <div className='ml-3' key={form?.id}>{form?.email}</div>)}
+    </div>
+  )
+}
+const TextsData = ({ data }: FormType) => {
+  return(
+    <div className='border border-gray-400 rounded shadow-md p-4 mx-2'>
+      <h1 className='font-semibold mb-2'>Text Submissions</h1>
+      {data?.map((form: Formdata) => <div className='ml-3' key={form?.id}>{form?.text}</div>)}
+  </div>
+  )
+}
+const OptionsData = ({ data }: FormType) => {
+  return (
+    <div className='border border-gray-400 rounded shadow-md p-4 mx-2'>
+      <h1 className='font-semibold mb-2'>Choices</h1>
+      {data?.map((form: Formdata) => <div className='ml-3' key={form?.id}>{form?.option?.text}</div>)}   
+    </div>
+  )
+}
+
+
 export function SidebarForms({ pageId }: Props) {
-  const { data: emailListData, isLoading, mutate } = useSWR<WaitlistFormConfig[]>(
-    `/api/feedback/get-data?pageId=${pageId}`
+  const { data: emailFormData, isLoading, mutate } = useSWR<Formdata[]>(
+    `/api/feedback/get-data?pageId=${pageId}&type=waitlist-email`
+  );
+  const { data: textFormData, isLoading: loadingTexts, mutate: mutateTexts } = useSWR<Formdata[]>(
+    `/api/feedback/get-data?pageId=${pageId}&type=text-form`
+  );
+  const { data: optionFormData, isLoading: loadingOptions, mutate: mutateOptions } = useSWR<Formdata[]>(
+    `/api/feedback/get-data?pageId=${pageId}&type=selection-form`
   );
 
-  const emailList: WaitlistFormConfig[] = useMemo(() => emailListData || [], [emailListData])
+  const emailList = useMemo(() => emailFormData || [], [emailFormData])
+  const textsList = useMemo(() => textFormData || [], [textFormData])
+  const optionsList = useMemo(() => optionFormData || [], [optionFormData])
+
+  const reloadForm = () => {
+    mutate()
+    mutateTexts() 
+    mutateOptions()
+  }
   
   return (
     <>
       <SidebarContentHeader title="Forms">
-        <Icon icon="solar:refresh-bold-duotone" width="20" height="20" className={`${isLoading && 'animate-spin'} cursor-pointer`} onClick={() => mutate()} />
+        <Icon icon="solar:refresh-bold-duotone" width="20" height="20" className={`${isLoading && 'animate-spin'} cursor-pointer`} onClick={reloadForm} />
       </SidebarContentHeader>
       {isLoading && <div className='flex justify-center item-center my-2 gap-2'>
         <span className='animate-bounce text-xl font-bold'>.</span>
@@ -37,34 +93,12 @@ export function SidebarForms({ pageId }: Props) {
         <span className='animate-bounce delay-200 text-xl font-bold'>.</span>
       </div> }
       
-      {emailList.length > 0 ? <Accordion type="single" collapsible className="w-full">
-      {emailList.map((data: any, index ) =>  
-        <div key={data?.pageId + index}>
-          <AccordionItem key={data?.pageId + index} value={data?.id}>
-            <AccordionTrigger className="font-medium px-3">
-              {data?.email}
-            </AccordionTrigger>
-            <AccordionContent className="bg-white font-bold text-black/60 p-3 text-sm">
-
-            {!data?.text && !data?.option?.text ? <span className=' text-gray-300'>Empty Message</span> : 
-              <>
-                {data?.text ?
-                <div>Message: <span className='font-medium text-sm'>{data?.text}</span></div>
-                : <span className='text-gray-300'>Message not available.</span>}
-                
-                {data?.option?.text ? <div>
-                  Option: <span style={{color: data?.option?.color }} className='font-medium text-sm'> {data?.option?.text}</span>
-                </div> : <span className='text-gray-300'>Option not available.</span> }
-
-              </>
-              }
-
-            </AccordionContent>
-          </AccordionItem>
-          
+      {emailList || textsList || optionsList ? 
+        <div className='flex flex-col gap-3 mt-3'>
+          <EmailsData data={emailList} />
+          <TextsData data={textsList} />
+          <OptionsData data={optionsList} />
         </div> 
-        )}
-        </Accordion>
         :
         <SidebarGroup>
           <SidebarGroupContent>

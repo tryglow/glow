@@ -15,6 +15,8 @@ import { EditForm as StackForm } from './stack/form';
 import { EditForm as ThreadsFollowerCountForm } from './threads-follower-count/form';
 import { Blocks } from './types';
 import { EditForm as WaitlistEmailForm } from './waitlist-email/form';
+import { EditForm as TextMessageForm } from './text-form/form';
+import { EditForm as SelectionForm } from './selection-form/form';
 import { EditForm as YouTubeForm } from './youtube/form';
 import { EditForm as AccordionForm } from './accordion/form';
 import { EditForm as TikTokFollowerCountForm } from './tiktok-follower-count/form';
@@ -35,6 +37,8 @@ export const editForms: Record<Blocks, JSXElementConstructor<any>> = {
   'link-bar': LinkBarForm,
   'spotify-embed': SpotifyEmbedForm,
   'waitlist-email': WaitlistEmailForm,
+  'text-form': TextMessageForm,
+  'selection-form': SelectionForm,
   youtube: YouTubeForm,
   'threads-follower-count': ThreadsFollowerCountForm,
   'accordion': AccordionForm,

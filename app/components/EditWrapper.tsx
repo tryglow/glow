@@ -176,7 +176,7 @@ export function EditWrapper({ children, layoutProps }: Props) {
       if (res.error) {
         toast({
           variant: 'error',
-          title: 'Something went wrong',
+          title: res.error.title || 'Something went wrong',
           description: res.error.message,
         });
         return;
