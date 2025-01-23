@@ -29,14 +29,14 @@ export const TextMessageForm: FunctionComponent<BlockProps> = (props) => {
   const [formSubmitted, setFormSubmitted] = useState(false);
 
   const onSubmit = async (formData: TextFormConfig) => {
-    // if (props.isEditable) {
-    //   toast({
-    //     title: 'Form will not be submitted in edit mode',
-    //     variant: 'error',
-    //   });
+    if (props.isEditable) {
+      toast({
+        title: 'Form will not be submitted in edit mode',
+        variant: 'error',
+      });
 
-    //   return;
-    // }
+      return;
+    }
     
     if (!data) {
       toast({
