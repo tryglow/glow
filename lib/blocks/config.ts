@@ -34,6 +34,14 @@ import {
   WaitlistEmailBlockSchema,
   defaults as waitlistEmailDefaults,
 } from './waitlist-email/config';
+import {
+  TextFormBlockSchema,
+  defaults as textFormDefaults,
+} from './text-form/config';
+import {
+  SelectionFormBlockSchema,
+  defaults as selectionFormDefaults,
+} from './selection-form/config';
 import { instagramFollowerCountBlockDefaults } from './instagram-follower-count/config';
 
 export const blocksConfig: Record<
@@ -96,6 +104,14 @@ export const blocksConfig: Record<
   'waitlist-email': {
     defaults: waitlistEmailDefaults,
     schema: WaitlistEmailBlockSchema,
+  },
+  'text-form': {
+    defaults: textFormDefaults,
+    schema: TextFormBlockSchema,
+  },
+  'selection-form': {
+    defaults: selectionFormDefaults,
+    schema: SelectionFormBlockSchema,
   },
   youtube: {
     defaults: youtubeDefaults,

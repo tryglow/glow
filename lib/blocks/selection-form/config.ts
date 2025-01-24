@@ -1,6 +1,6 @@
 import * as Yup from 'yup';
 
-export interface WaitlistEmailBlockConfig {
+export interface SelectionFormBlockConfig {
   title: string;
   label: string;
   buttonLabel: string;
@@ -14,15 +14,17 @@ export interface ItemType {
   color: string
 }
 
-export const defaults: WaitlistEmailBlockConfig = {
-  title: 'Get the latest updates',
-  label: 'Fresh content straigt to your inbox, just for you ✨',
-  buttonLabel: 'Subscribe',
-  items: []
+export const defaults: SelectionFormBlockConfig = {
+  title: "What's the best snack of all time?",
+  label: 'Nom Nom Nom',
+  buttonLabel: 'Sent',
+  items: [{
+    text: 'Good', color: '#F4393C'
+  }]
   // waitlistId: '',
 };
 
-export const WaitlistEmailBlockSchema = Yup.object().shape({
+export const SelectionFormBlockSchema = Yup.object().shape({
   title: Yup.string().required('Please provide a title'),
   label: Yup.string().required('Please provide a label'),
   buttonLabel: Yup.string().required('Please provide a button label'),
@@ -38,15 +40,15 @@ export const WaitlistEmailBlockSchema = Yup.object().shape({
 
 
 // For ui component
-export interface WaitlistFormConfig {
+export interface SelectionFormConfig {
   pageId: string
-  email: string
+  email?: string
   text?: string
   blockType: string
-  option?: ItemType
+  option: ItemType
 }
 
-export const defaultFormValues: WaitlistFormConfig = {
+export const defaultFormValues: SelectionFormConfig = {
   pageId: '',
   email: '',
   text: '',
@@ -54,9 +56,12 @@ export const defaultFormValues: WaitlistFormConfig = {
   option: {text: '', color: ''}
 }
 
-export const WaitlistFormSchema = Yup.object({
+export const SelectionFormSchema = Yup.object({
   pageId: Yup.string(),
-  email: Yup.string().email('Invalid email format').required('Email is required'),
+  email: Yup.string(),
   text: Yup.string(),
-  option: Yup.object(),
+  option: Yup.object({
+    text: Yup.string().required('Please select an option'),
+    color: Yup.string().required('Option color is required'),
+  }).required('Please select an option'),
 });

@@ -142,12 +142,30 @@ export const config: Record<
     },
   },
   'waitlist-email': {
-    title: 'GetWaitlist Email',
-    label: 'A form to collect emails for your getwaitlist.com project',
+    title: 'Email Form',
+    label: 'A form to collect emails.',
     icon: blockWaitlistEmailIcon,
     drag: {
       w: 12,
-      h: 8,
+      h: 6,
+    },
+  },
+  'text-form': {
+    title: 'Text Form',
+    label: 'A form to collect messages.',
+    icon: blockWaitlistEmailIcon,
+    drag: {
+      w: 12,
+      h: 7,
+    },
+  },
+  'selection-form': {
+    title: 'Selection Form',
+    label: 'A form to collect the selected options.',
+    icon: blockWaitlistEmailIcon,
+    drag: {
+      w: 12,
+      h: 6,
     },
   },
   youtube: {

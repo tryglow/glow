@@ -6,7 +6,7 @@ import { FormField } from '@/components/FormField';
 import { Button } from '@/components/ui/button';
 
 import { EditFormProps } from '../types';
-import { ItemType, WaitlistEmailBlockConfig, WaitlistEmailBlockSchema } from './config';
+import { ItemType, SelectionFormBlockConfig, SelectionFormBlockSchema } from './config';
 import dragIcon from '@/app/assets/ui/drag.svg';
 import Image from 'next/image';
 import { useState } from 'react';
@@ -61,11 +61,11 @@ export function EditForm({
   onSave,
   onClose,
   blockId,
-}: EditFormProps<WaitlistEmailBlockConfig>) {
+}: EditFormProps<SelectionFormBlockConfig>) {
 
   const onSubmit = async (
-    values: WaitlistEmailBlockConfig,
-    { setSubmitting }: FormikHelpers<WaitlistEmailBlockConfig>
+    values: SelectionFormBlockConfig,
+    { setSubmitting }: FormikHelpers<SelectionFormBlockConfig>
   ) => {
     console.log('values => ', values);
     
@@ -79,10 +79,10 @@ export function EditForm({
         title: initialValues?.title ?? '',
         label: initialValues?.label ?? '',
         buttonLabel: initialValues?.buttonLabel ?? '',
-        items: initialValues?.items ?? [{text: '', color: colors[0]}]
+        items: initialValues?.items ?? [{text: 'Good', color: colors[0]}]
         // waitlistId: initialValues?.waitlistId ?? '',
       }}
-      validationSchema={WaitlistEmailBlockSchema}
+      validationSchema={SelectionFormBlockSchema}
       onSubmit={onSubmit}
       enableReinitialize={false}
     >
@@ -107,6 +107,61 @@ export function EditForm({
             error={errors.buttonLabel}
           />
 
+          {/* Dynamic Items */}
+          <FieldArray name="items">
+            {({ push, remove }) => (
+              <div>
+                <label className="block text-sm font-medium text-gray-700">Options</label>
+                {values.items.map((item, index) => (
+                  <div key={index}>
+                    <div className="flex items-center gap-2 mt-2">
+                      <Image src={dragIcon} width={7} height={12} alt="" />
+                      {/* Color Selector */}
+                      <CustomColorDropdown
+                        value={item.color}
+                        onChange={(color: string) => setFieldValue(`items.${index}.color`, color)}
+                      />
+
+                      {/* Text Field */}
+                      <Field
+                        type="text"
+                        name={`items.${index}.text`}
+                        placeholder="Enter option text"
+                        className="block h-9 flex-1 px-2 py-1 border-none outline-none ring-1 ring-inset ring-input focus:ring-gray-500 rounded text-sm"
+                      />
+
+                      {/* Delete Button */}
+                      {index > 0 && <button
+                        type="button"
+                        onClick={() => remove(index)}
+                        className="text-red-600 hover:text-red-800"
+                      >
+                        <Icon icon="fluent:delete-20-regular" width={20} height={20} />
+                      </button>}
+                    </div>
+                    {/* Per-Item Errors */}
+                    <div className="text-red-500 text-xs mt-2 ml-24">
+                      {errors.items &&
+                        errors.items[index] &&
+                        typeof errors.items[index] === 'object' &&
+                        Object.values(errors.items[index] as Record<string, string>).map(
+                          (error, errorIndex) => <div key={errorIndex}>{error}</div>
+                        )}
+                    </div>
+                  </div>
+                ))}
+
+                {/* Add Item Button */}
+                <button
+                  type="button"
+                  onClick={() => push({ text: '', color: colors[0] })}
+                  className="mt-3 py-1 px-4 bg-white text-[#1d6e35] border font-semibold shadow rounded text-sm"
+                >
+                  {values?.items?.length > 0 ? 'Add another option' : 'Add option'}
+                </button>
+              </div>
+            )}
+          </FieldArray>
 
           {/* Custom options */}
           {/* <div>

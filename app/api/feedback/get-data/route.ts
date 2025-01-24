@@ -6,6 +6,7 @@ export async function GET(req: Request) {
     // Extract `pageId` from the query parameters
     const { searchParams } = new URL(req.url);
     const pageId = searchParams.get('pageId');
+    const type = searchParams.get('type') || '';
 
     if (!pageId) {
       return Response.json({ error: 'pageId is required' }, { status: 400 });
@@ -13,7 +14,7 @@ export async function GET(req: Request) {
 
     // Fetch feedback data for the given pageId
     const feedback = await prisma.feedback.findMany({
-      where: { pageId },
+      where: { pageId, blockType: type },
     });
 
     return Response.json(feedback);

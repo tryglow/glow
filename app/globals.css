@@ -118,6 +118,39 @@
   display: block;
 }
 
+[type='checkbox'] {
+  appearance: none;
+  border: 1px solid black;
+  border-radius: 2px;
+}
+
+[type='checkbox']:checked,
+[type='checkbox']:checked:hover {
+  border-color: transparent;
+  background-color: black;
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+[type='checkbox']:focus {
+  box-shadow: none;
+  background-color: white;
+  outline: none;
+}
+
+[type='checkbox']:checked:focus {
+  box-shadow: none;
+  background-color: black;
+  outline: none;
+}
+
+/* [type='checkbox']:focus {
+  border-color: none;
+  background-color: black;
+  outline: none;
+} */
+
 /* width */
 ::-webkit-scrollbar {
   width: 10px;

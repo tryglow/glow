@@ -19,6 +19,8 @@ import TikTokFollowerCount from './tiktok-follower-count/ui-client';
 import TikTokLatestPost from './tiktok-latest-post/ui-client';
 import { Reactions } from './reaction/ui';
 import InstagramFollowerCount from './instagram-follower-count/ui-client';
+import { TextMessageForm } from './text-form/ui';
+import { SelectionBlockForm } from './selection-form/ui';
 
 export interface BlockConfig {
   x: number;
@@ -92,6 +94,10 @@ export function renderBlock(block: any, pageId: string, isEditMode: boolean) {
       );
     case 'waitlist-email':
       return <WaitlistEmail {...sharedProps} />;
+    case 'text-form':
+      return <TextMessageForm {...sharedProps} />;
+    case 'selection-form':
+      return <SelectionBlockForm {...sharedProps} />;
     case 'youtube':
       return <YouTube {...sharedProps} />;
     case 'threads-follower-count':

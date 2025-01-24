@@ -214,6 +214,7 @@ model Feedback {
   pageId    String
   email     String
   text      String
+  blockType String
   option    Json
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

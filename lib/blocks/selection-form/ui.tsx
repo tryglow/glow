@@ -12,13 +12,13 @@ import { Form, Formik, FormikHelpers } from 'formik';
 
 import { BlockProps } from '../ui';
 import { submitFeedback } from './action';
-import { ItemType, WaitlistEmailBlockConfig, WaitlistFormConfig, WaitlistFormSchema } from './config';
+import { ItemType, SelectionFormBlockConfig, SelectionFormConfig, SelectionFormBlockSchema, SelectionFormSchema } from './config';
 import { Icon } from "@iconify/react";
 
 
-export const WaitlistEmail: FunctionComponent<BlockProps> = (props) => {
+export const SelectionBlockForm: FunctionComponent<BlockProps> = (props) => {
   const [isOpen, setisOpen] = useState(false);
-  const { data: emailListData } = useSWR<WaitlistFormConfig>(
+  const { data: emailListData } = useSWR<SelectionFormConfig>(
     `/api/blocks/${props.blockId}`
   );
   const { data }: any = emailListData
@@ -28,7 +28,7 @@ export const WaitlistEmail: FunctionComponent<BlockProps> = (props) => {
 
   const [formSubmitted, setFormSubmitted] = useState(false);
 
-  const onSubmit = async (formData: WaitlistFormConfig) => {
+  const onSubmit = async (formData: SelectionFormConfig) => {
     if (props.isEditable) {
       toast({
         title: 'Form will not be submitted in edit mode',
@@ -74,27 +74,34 @@ export const WaitlistEmail: FunctionComponent<BlockProps> = (props) => {
           blockType: props?.blockType || '',
           option: {text: '', color: ''}
         }}
-        validationSchema={WaitlistFormSchema}
+        validationSchema={SelectionFormSchema}
         onSubmit={onSubmit}
         enableReinitialize={true}
       >
         {({ isSubmitting, values, setFieldValue, handleChange, errors }) => (
           <Form className="mt-auto flex flex-col w-full gap-2">
-            <div className='grid grid-cols-3 gap-2'>
-              <div className={`${data?.items?.length > 0 ? 'col-span-2' : 'col-span-3'}`}>
-                <input
-                type="email"
-                name="email"
-                id="email"
-                autoComplete="email"
-                onChange={handleChange}
-                className="min-w-0 w-full flex-1 appearance-none rounded-md border-0 bg-sys-bg-primary px-3 py-1.5 text-base text-sys-label-primary shadow-sm ring-1 ring-inset ring-sys-bg-secondary/50 placeholder:text-gray-400 sm:w-64 sm:text-sm sm:leading-6 xl:w-full"
-                placeholder="youremail@example.com"
-                />
-                {errors?.email && <p className='text-sm text-sys-label-primary'>{errors?.email}</p>}
-              </div>
+            <div className='relative bg-sys-bg-primary px-2 py-1.5 primary rounded-md h-9 ring-1 ring-inset ring-sys-bg-secondary/50 flex items-center justify-between cursor-pointer' onClick={() => setisOpen(prev => !prev)}>
+              <p style={{backgroundColor: values?.option?.color || 'transparent'}} className={`${values?.option?.text ? 'text-black px-4' : 'text-sys-label-primary'} text-xs py-1 rounded w-max font-medium`}>{values?.option?.text || 'Select option'}</p>
+
+              <Icon icon="dashicons:arrow-down" width="20" height="20" style={{ transform: isOpen ? 'rotate(180deg) translateX(-2px)' : 'rotate(0deg)'}} className='text-sys-label-primary' />
+
+              {/* Select Dropdown */}
+              {isOpen && <div className='waitlist-dropdown absolute bg-sys-bg-primary ring-1 ring-inset ring-sys-bg-secondary/50 rounded-md transform translate-y-2 p-3 top-full left-0 w-full flex flex-col gap-2 z-10 max-h-16 overflow-y-scroll'>
+                {data?.items?.map((item: ItemType) => 
+                <p 
+                  key={item?.color}
+                  style={{backgroundColor: item?.color}}
+                  className='text-xs py-1 px-3 rounded w-max font-medium cursor-pointer text-black'
+                  onClick={() => (
+                    setFieldValue('option', item)
+                    // setisOpen(false)
+                  )} 
+                >{item?.text}</p> )}
+              </div> }
             </div>
-            
+
+            {errors?.option && <p className='text-sm text-sys-label-primary'>{errors?.option?.text}</p>}
+
             <div className="flex-shrink-0 mt-2">
               <SubmitButton
                 buttonLabel={data?.buttonLabel}

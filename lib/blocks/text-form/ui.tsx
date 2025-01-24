@@ -12,23 +12,23 @@ import { Form, Formik, FormikHelpers } from 'formik';
 
 import { BlockProps } from '../ui';
 import { submitFeedback } from './action';
-import { ItemType, WaitlistEmailBlockConfig, WaitlistFormConfig, WaitlistFormSchema } from './config';
+import { ItemType, TextFormBlockConfig, TextFormBlockSchema, TextFormConfig, TextFormSchema } from './config';
 import { Icon } from "@iconify/react";
 
 
-export const WaitlistEmail: FunctionComponent<BlockProps> = (props) => {
+export const TextMessageForm: FunctionComponent<BlockProps> = (props) => {
   const [isOpen, setisOpen] = useState(false);
-  const { data: emailListData } = useSWR<WaitlistFormConfig>(
+  const { data: emailListData } = useSWR<TextFormConfig>(
     `/api/blocks/${props.blockId}`
   );
   const { data }: any = emailListData
   
-  console.log('Waitlist data => ', data);
+  console.log('text-form props => ', props);
   
 
   const [formSubmitted, setFormSubmitted] = useState(false);
 
-  const onSubmit = async (formData: WaitlistFormConfig) => {
+  const onSubmit = async (formData: TextFormConfig) => {
     if (props.isEditable) {
       toast({
         title: 'Form will not be submitted in edit mode',
@@ -72,29 +72,38 @@ export const WaitlistEmail: FunctionComponent<BlockProps> = (props) => {
           email: '',
           text: '',
           blockType: props?.blockType || '',
-          option: {text: '', color: ''}
+          option: {text: '', color: ''},
+          isAnonymous: data?.isAnonymous
         }}
-        validationSchema={WaitlistFormSchema}
+        validationSchema={TextFormSchema}
         onSubmit={onSubmit}
         enableReinitialize={true}
       >
         {({ isSubmitting, values, setFieldValue, handleChange, errors }) => (
           <Form className="mt-auto flex flex-col w-full gap-2">
-            <div className='grid grid-cols-3 gap-2'>
-              <div className={`${data?.items?.length > 0 ? 'col-span-2' : 'col-span-3'}`}>
-                <input
-                type="email"
-                name="email"
-                id="email"
-                autoComplete="email"
-                onChange={handleChange}
-                className="min-w-0 w-full flex-1 appearance-none rounded-md border-0 bg-sys-bg-primary px-3 py-1.5 text-base text-sys-label-primary shadow-sm ring-1 ring-inset ring-sys-bg-secondary/50 placeholder:text-gray-400 sm:w-64 sm:text-sm sm:leading-6 xl:w-full"
-                placeholder="youremail@example.com"
-                />
-                {errors?.email && <p className='text-sm text-sys-label-primary'>{errors?.email}</p>}
-              </div>
-            </div>
             
+            <textarea
+              name='text'
+              onChange={handleChange} 
+              placeholder='Enter text here...'
+              className='min-w-0 w-full flex-1 appearance-none rounded-md border-0 bg-sys-bg-primary px-3 py-1.5 text-base text-sys-label-primary shadow-sm ring-1 ring-inset ring-sys-bg-secondary/50 placeholder:text-gray-400 sm:w-64 sm:text-sm sm:leading-6 xl:w-full' 
+              />
+              {errors?.text && <p className='text-sm text-sys-label-primary'>{errors?.text}</p>}
+              {!values?.isAnonymous &&
+                <>
+                  <p className='text-sm'>Contact email</p>
+                  <input
+                  type="email"
+                  name="email"
+                  id="email"
+                  autoComplete="email"
+                  onChange={handleChange}
+                  className="min-w-0 w-full appearance-none rounded-md border-0 bg-sys-bg-primary px-3 py-1.5 text-base text-sys-label-primary shadow-sm ring-1 ring-inset ring-sys-bg-secondary/50 placeholder:text-gray-400 sm:w-64 sm:text-sm sm:leading-6 xl:w-full"
+                  placeholder="youremail@example.com"
+                  />
+                  {errors?.email && <p className='text-sm text-sys-label-primary'>{errors?.email}</p>}
+                </>
+              }
             <div className="flex-shrink-0 mt-2">
               <SubmitButton
                 buttonLabel={data?.buttonLabel}

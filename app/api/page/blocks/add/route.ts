@@ -16,8 +16,10 @@ export async function POST(req: Request) {
   }
 
   const bodyData = await req.json();
+  const blockTypes = ['selection-form', 'text-form', 'waitlist-email'];
 
   const { block, pageSlug } = bodyData;
+  const { type } = block
 
   if (!block || !pageSlug) {
     return Response.json({
@@ -55,6 +57,27 @@ export async function POST(req: Request) {
         message: 'Page not found',
       },
     });
+  }
+
+  if (type === 'selection-form' || type === 'text-form' || type === 'waitlist-email' ) {
+      // Fetch blocks of the specified type for the given pageId
+    const existingBlock = await prisma.block.findFirst({
+      where: {
+        pageId: page.id,
+        type, // Block type to check
+      },
+    });
+    console.log('form existingBlock => ', existingBlock);
+    
+
+    if (existingBlock) {
+      return Response.json({
+        error: {
+          title: 'Block Already Exists',
+          message: 'A form block of this type already exists.',
+        },
+      });
+    }
   }
 
   // const user = await prisma.user.findUnique({
