@@ -13,13 +13,6 @@ export async function POST(
   const params = await props.params;
   const session = await auth();
 
-  if (!session) {
-    return Response.json({
-      message: 'error',
-      data: null,
-    });
-  }
-
   const bodyData = await req.json();
   const blockId = params.blockId;
 
@@ -38,16 +31,23 @@ export async function POST(
       id: blockId,
       page: {
         team: {
-          id: session.currentTeamId,
+          id: session?.currentTeamId,
           members: {
             some: {
-              userId: session.user.id,
+              userId: session?.user.id,
             },
           },
         },
       },
     },
   });
+
+  if (!session && block?.type !== 'reactions') {
+    return Response.json({
+      message: 'error',
+      data: null,
+    });
+  }
 
   if (!block) {
     return Response.json({

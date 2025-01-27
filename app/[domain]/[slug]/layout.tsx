@@ -113,7 +113,7 @@ export default async function PageLayout(props: {
   }
 
   page?.blocks.forEach((block) => {
-    initialData[`/api/blocks/${block.id}`] = block.data;
+    initialData[`/api/blocks/${block.id}`] = block;
   });
 
   return (

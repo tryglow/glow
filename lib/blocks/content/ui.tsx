@@ -20,8 +20,6 @@ export const Content: FunctionComponent<BlockProps> = (props) => {
     blockId: props.blockId,
     ...contentStyling
   }
-
-  console.log('contentStyles => ', contentStyles);
   
   useEffect(() => {
     setBlockStyles(styles)
@@ -30,7 +28,6 @@ export const Content: FunctionComponent<BlockProps> = (props) => {
   }, [contentStyling])
 
   useEffect(() => {
-    console.log('======', contentStyles);
     setBlockStyles(contentStyles)
   }, [contentStyles])
   

@@ -86,7 +86,7 @@ export const TextMessageForm: FunctionComponent<BlockProps> = (props) => {
               name='text'
               onChange={handleChange} 
               placeholder='Enter text here...'
-              className='min-w-0 w-full flex-1 appearance-none rounded-md border-0 bg-sys-bg-primary px-3 py-1.5 text-base text-sys-label-primary shadow-sm ring-1 ring-inset ring-sys-bg-secondary/50 placeholder:text-gray-400 sm:w-64 sm:text-sm sm:leading-6 xl:w-full' 
+              className='min-w-0 w-full appearance-none rounded-md border-0 bg-sys-bg-primary px-3 py-1.5 text-base text-sys-label-primary shadow-sm ring-1 ring-inset ring-sys-bg-secondary/50 placeholder:text-gray-400 sm:text-sm sm:leading-6' 
               />
               {errors?.text && <p className='text-sm text-sys-label-primary'>{errors?.text}</p>}
               {!values?.isAnonymous &&
