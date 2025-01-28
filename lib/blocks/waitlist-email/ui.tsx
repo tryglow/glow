@@ -80,20 +80,16 @@ export const WaitlistEmail: FunctionComponent<BlockProps> = (props) => {
       >
         {({ isSubmitting, values, setFieldValue, handleChange, errors }) => (
           <Form className="mt-auto flex flex-col w-full gap-2">
-            <div className='grid grid-cols-3 gap-2'>
-              <div className={`${data?.items?.length > 0 ? 'col-span-2' : 'col-span-3'}`}>
-                <input
-                type="email"
-                name="email"
-                id="email"
-                autoComplete="email"
-                onChange={handleChange}
-                className="min-w-0 w-full flex-1 appearance-none rounded-md border-0 bg-sys-bg-primary px-3 py-1.5 text-base text-sys-label-primary shadow-sm ring-1 ring-inset ring-sys-bg-secondary/50 placeholder:text-gray-400 sm:w-64 sm:text-sm sm:leading-6 xl:w-full"
-                placeholder="youremail@example.com"
-                />
-                {errors?.email && <p className='text-sm text-sys-label-primary'>{errors?.email}</p>}
-              </div>
-            </div>
+            <input
+            type="email"
+            name="email"
+            id="email"
+            autoComplete="email"
+            onChange={handleChange}
+            className="min-w-0 appearance-none rounded-md border-0 bg-sys-bg-primary px-3 py-1.5 text-base text-sys-label-primary shadow-sm ring-1 ring-inset ring-sys-bg-secondary/50 placeholder:text-gray-400 sm:text-sm sm:leading-6 w-full"
+            placeholder="youremail@example.com"
+            />
+            {errors?.email && <p className='text-sm text-sys-label-primary'>{errors?.email}</p>}
             
             <div className="flex-shrink-0 mt-2">
               <SubmitButton
