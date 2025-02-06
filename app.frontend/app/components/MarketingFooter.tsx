@@ -131,7 +131,9 @@ export default function MarketingFooter() {
                   The ultimate open source link-in-bio platform that lets
                   creators create.
                 </p>
-                <p className="text-sm leading-5 text-gray-400">© 2024 Glow</p>
+                <p className="text-sm leading-5 text-gray-400">
+                  © {new Date().getFullYear()} Glow
+                </p>
                 <div className="flex items-center space-x-3">
                   {socialLinks.map((link) => (
                     <Link
