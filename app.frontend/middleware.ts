@@ -22,7 +22,6 @@ export const config = {
 export default async function middleware(req: NextRequest) {
   const url = req.nextUrl;
   const searchParams = url.searchParams.toString();
-  const path = `${url.pathname}${searchParams ? `?${searchParams}` : ''}`;
 
   // Get hostname and normalize for dev environment
   const hostname = req.headers
@@ -31,12 +30,12 @@ export default async function middleware(req: NextRequest) {
 
   // Handle app subdomain
   if (hostname === `app.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}`) {
-    return handleAppSubdomain(req, path);
+    return handleAppSubdomain(req, url.pathname);
   }
 
   // Handle root domain
   if (hostname === process.env.NEXT_PUBLIC_ROOT_DOMAIN) {
-    return handleRootDomain(req, path);
+    return handleRootDomain(req, url.pathname);
   }
 
   // Handle unknown domains
@@ -48,17 +47,21 @@ async function handleAppSubdomain(req: NextRequest, path: string) {
 
   // Handle authentication redirects
   if (!session && path !== '/login') {
-    return NextResponse.redirect(new URL('/login', req.url));
+    const loginUrl = new URL('/login', req.url);
+    loginUrl.search = req.nextUrl.searchParams.toString();
+    return NextResponse.redirect(loginUrl);
   }
 
   if (session && path === '/login') {
-    return NextResponse.redirect(new URL('/', req.url));
+    const homeUrl = new URL('/', req.url);
+    homeUrl.search = req.nextUrl.searchParams.toString();
+    return NextResponse.redirect(homeUrl);
   }
 
   // Rewrite to app directory
-  return NextResponse.rewrite(
-    new URL(`/app${path === '/' ? '' : path}`, req.url)
-  );
+  const rewriteUrl = new URL(`/app${path === '/' ? '' : path}`, req.url);
+  rewriteUrl.search = req.nextUrl.searchParams.toString();
+  return NextResponse.rewrite(rewriteUrl);
 }
 
 function handleRootDomain(req: NextRequest, path: string) {
@@ -69,13 +72,17 @@ function handleRootDomain(req: NextRequest, path: string) {
     return NextResponse.rewrite(newUrl);
   }
 
+  console.log('PATH', path);
+
   // Handle special paths
   if (path.startsWith('/new')) {
-    return NextResponse.rewrite(new URL(path, req.url));
+    const newUrl = new URL(path, req.url);
+    newUrl.search = req.nextUrl.searchParams.toString();
+    return NextResponse.rewrite(newUrl);
   }
 
   // Rewrite all other paths
-  return NextResponse.rewrite(
-    new URL(`/${req.headers.get('host')}${path}`, req.url)
-  );
+  const rewriteUrl = new URL(`/${req.headers.get('host')}${path}`, req.url);
+  rewriteUrl.search = req.nextUrl.searchParams.toString();
+  return NextResponse.rewrite(rewriteUrl);
 }
