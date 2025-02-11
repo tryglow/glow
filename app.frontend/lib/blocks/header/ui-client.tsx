@@ -1,6 +1,7 @@
 import { BlockProps } from '../ui';
 import { HeaderServerUI } from './ui-server';
 import { CoreBlock } from '@/components/CoreBlock';
+import { cn } from '@/lib/utils';
 import { HeaderBlockConfig } from '@tryglow/blocks';
 import Image from 'next/image';
 import { FunctionComponent, Suspense } from 'react';
@@ -11,11 +12,18 @@ export const Header: FunctionComponent<BlockProps & HeaderBlockConfig> = ({
   avatar,
   showVerifiedBadge,
   verifiedPageTitle,
+  alignment = 'center',
   ...otherProps
 }) => {
   return (
     <CoreBlock {...otherProps} isFrameless>
-      <header className="py-4">
+      <header
+        className={cn(
+          'py-4 flex flex-col',
+          alignment === 'center' && 'items-center',
+          alignment === 'right' && 'items-end'
+        )}
+      >
         {avatar?.src && (
           <Image
             src={avatar.src}

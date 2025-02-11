@@ -1,6 +1,8 @@
 import { EditFormProps } from '../types';
 import { Checkbox } from '@/app/components/ui/checkbox';
 import { Label } from '@/app/components/ui/label';
+import { RadioGroupItem } from '@/app/components/ui/radio-group';
+import { RadioGroup } from '@/app/components/ui/radio-group';
 import { FormField } from '@/components/FormField';
 import { FormFileUpload } from '@/components/FormFileUpload';
 import { Button } from '@/components/ui/button';
@@ -42,6 +44,7 @@ export function EditForm({
         avatar: {
           src: initialValues?.avatar?.src ?? '',
         },
+        alignment: initialValues?.alignment ?? 'left',
         showVerifiedBadge: initialValues?.showVerifiedBadge ?? false,
         verifiedPageTitle: initialValues?.verifiedPageTitle ?? '',
       }}
@@ -88,6 +91,21 @@ export function EditForm({
               </div>
             </div>
           )}
+
+          <Label htmlFor="alignment">Alignment</Label>
+          <RadioGroup
+            defaultValue={values.alignment}
+            onValueChange={(value) => setFieldValue('alignment', value)}
+          >
+            {['left', 'center', 'right'].map((alignment) => (
+              <div className="flex items-center space-x-2" key={alignment}>
+                <RadioGroupItem value={alignment} id={alignment} />
+                <Label htmlFor={alignment}>
+                  {alignment.charAt(0).toUpperCase() + alignment.slice(1)}
+                </Label>
+              </div>
+            ))}
+          </RadioGroup>
 
           <FormField
             label="Subtitle"
