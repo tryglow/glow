@@ -12,7 +12,7 @@ export const Header: FunctionComponent<BlockProps & HeaderBlockConfig> = ({
   avatar,
   showVerifiedBadge,
   verifiedPageTitle,
-  alignment = 'center',
+  alignment = 'left',
   ...otherProps
 }) => {
   return (
