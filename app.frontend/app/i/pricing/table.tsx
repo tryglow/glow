@@ -1,32 +1,16 @@
 'use client';
 
-import { PlusIcon } from '@heroicons/react/16/solid';
-
 import { MarketingContainer } from '@/app/components/MarketingContainer';
 import { LoginWidget } from '@/components/LoginWidget';
-
-import { getCheckoutLink } from '@/lib/stripe';
-
 import { Button } from '@/components/ui/button';
+import { getCheckoutLink } from '@/lib/stripe';
+import { PlusIcon } from '@heroicons/react/16/solid';
 
 const tiers = [
   {
-    name: 'Free',
-    id: 'free',
-    description: 'Everything you need to get started.',
-    priceMonthly: '$0',
-    href: '#',
-    highlights: [
-      { description: 'Create 2 pages' },
-      { description: 'Up to 5 blocks per page' },
-      { description: 'Real-time blocks' },
-      { description: 'Custom themes' },
-    ],
-  },
-  {
     name: 'Premium',
     id: 'premium',
-    description: 'For those who want to go all in.',
+    description: 'The best way to get started.',
     priceMonthly: '$4',
     href: '#',
     highlights: [
@@ -65,7 +49,7 @@ export function PricingTable({ isLoggedIn }: { isLoggedIn: boolean }) {
     <div className="relative pt-16 sm:pt-16 pb-16">
       <div className="absolute inset-x-0 bottom-0 top-48 bg-gradient-to-b from-white to-stone-100" />
       <MarketingContainer className="relative z-10">
-        <div className="grid grid-cols-1 gap-10 lg:grid-cols-3">
+        <div className="grid grid-cols-1 gap-10 lg:grid-cols-2">
           {tiers.map((tier) => (
             <div
               key={tier.name}
@@ -100,7 +84,7 @@ export function PricingTable({ isLoggedIn }: { isLoggedIn: boolean }) {
                         }
                       >
                         {tier.name === 'Premium'
-                          ? 'Get Premium'
+                          ? 'Try free for 14 days'
                           : tier.name === 'Team'
                             ? 'Get Team'
                             : 'Get Started'}
@@ -110,11 +94,7 @@ export function PricingTable({ isLoggedIn }: { isLoggedIn: boolean }) {
                         isSignup
                         trigger={
                           <Button size="lg" className="w-full">
-                            {tier.name === 'Premium'
-                              ? 'Get Premium'
-                              : tier.name === 'Team'
-                                ? 'Get Team'
-                                : 'Get Started'}
+                            {tier.name === 'Team' ? 'Get Team' : 'Get Started'}
                           </Button>
                         }
                       />
@@ -122,11 +102,7 @@ export function PricingTable({ isLoggedIn }: { isLoggedIn: boolean }) {
                   </div>
                   <div className="mt-8">
                     <h3 className="text-sm/6 font-medium text-gray-950">
-                      {tier.name === 'Free'
-                        ? 'Includes:'
-                        : tier.name === 'Team'
-                          ? 'Everything in Premium plus:'
-                          : 'Everything in Free plus:'}
+                      {tier.name === 'Team' && 'Everything in Premium plus:'}
                     </h3>
                     <ul className="mt-3 space-y-3">
                       {tier.highlights.map((highlight) => (
