@@ -96,6 +96,7 @@ export function EditForm({
           <RadioGroup
             defaultValue={values.alignment}
             onValueChange={(value) => setFieldValue('alignment', value)}
+            className="mb-4"
           >
             {['left', 'center', 'right'].map((alignment) => (
               <div className="flex items-center space-x-2" key={alignment}>
