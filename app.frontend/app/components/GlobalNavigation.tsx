@@ -22,7 +22,7 @@ import {
 import { Page, Team } from '@tryglow/prisma';
 import { PlusCircleIcon } from 'lucide-react';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import useSWR from 'swr';
 
 export function GlobalNavigation({ isEditMode }: { isEditMode: boolean }) {
@@ -36,6 +36,12 @@ export function GlobalNavigation({ isEditMode }: { isEditMode: boolean }) {
     internalApiFetcher
   );
 
+  const { data: userPlan } = useSWR<{
+    plan: string;
+    status: 'legacyFree' | 'active' | 'inactive' | 'trial';
+    daysRemainingOnTrial: number | null;
+  }>('/users/me/plan', internalApiFetcher);
+
   const { data: teamPages } = useSWR<Partial<Page>[]>(
     '/pages/me',
     internalApiFetcher
@@ -48,8 +54,15 @@ export function GlobalNavigation({ isEditMode }: { isEditMode: boolean }) {
     if (link) {
       window.open(link);
     }
+
     setGetPlanLoading(false);
   };
+
+  useEffect(() => {
+    if (userPlan?.status === 'inactive') {
+      setShowPremiumDialog(true);
+    }
+  }, [userPlan]);
 
   return (
     <>
@@ -98,13 +111,19 @@ export function GlobalNavigation({ isEditMode }: { isEditMode: boolean }) {
             </div>
 
             <div className="flex items-center justify-end gap-4">
-              <button
-                type="button"
-                onClick={() => setShowPremiumDialog(true)}
-                className="hidden md:flex text-white font-bold text-sm bg-gradient-to-b from-orange-400 to-orange-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 rounded-full px-4 py-1 text-center h-8 items-center"
-              >
-                Upgrade to Premium
-              </button>
+              {userPlan?.status === 'trial' ? (
+                <button
+                  type="button"
+                  onClick={() => setShowPremiumDialog(true)}
+                  className="hidden md:flex text-white font-bold text-sm bg-gradient-to-b from-orange-400 to-orange-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 rounded-full px-4 py-1 text-center h-8 items-center"
+                >
+                  {userPlan?.daysRemainingOnTrial} days left
+                </button>
+              ) : userPlan?.status === 'inactive' ? (
+                <span className="hidden md:flex text-white font-bold text-sm bg-gradient-to-b from-red-400 to-red-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 rounded-full px-4 py-1 text-center h-8 items-center">
+                  Plan Expired
+                </span>
+              ) : null}
               <UserWidget usersTeams={usersTeams} />
             </div>
           </div>
@@ -114,11 +133,18 @@ export function GlobalNavigation({ isEditMode }: { isEditMode: boolean }) {
       <Dialog
         open={showPremiumDialog}
         onOpenChange={() => {
+          if (userPlan?.status === 'inactive') {
+            return;
+          }
+
           setShowPremiumDialog(false);
           setGetPlanLoading(false);
         }}
       >
-        <DialogContent className="p-0 !border-0">
+        <DialogContent
+          hideCloseButton={userPlan?.status === 'inactive'}
+          className="p-0 !border-0"
+        >
           <DialogHeader className="pt-14 pb-4 bg-gradient-to-b from-orange-300 to-white text-center">
             <svg
               viewBox="0 0 321 321"

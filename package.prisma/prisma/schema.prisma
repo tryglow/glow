@@ -63,6 +63,7 @@ model User {
   plan                 String                @default("free")
   stripeCustomerId     String?
   stripeSubscriptionId String?
+  stripeTrialEnd       DateTime?
   hasPremiumAccess     Boolean               @default(false)
   hasTeamAccess        Boolean               @default(false)
   hasBetaAccess        Boolean               @default(false)

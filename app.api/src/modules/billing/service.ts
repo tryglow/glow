@@ -52,8 +52,10 @@ export async function setupSubscription(sessionId: string) {
       id: dbUser.id,
     },
     data: {
+      plan: hasTeamAccess ? 'team' : 'premium',
       hasPremiumAccess,
       hasTeamAccess,
+      stripeTrialEnd: null,
     },
   });
 

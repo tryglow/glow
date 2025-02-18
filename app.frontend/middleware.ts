@@ -21,7 +21,6 @@ export const config = {
 
 export default async function middleware(req: NextRequest) {
   const url = req.nextUrl;
-  const searchParams = url.searchParams.toString();
 
   // Get hostname and normalize for dev environment
   const hostname = req.headers
@@ -71,8 +70,6 @@ function handleRootDomain(req: NextRequest, path: string) {
     newUrl.search = req.nextUrl.searchParams.toString();
     return NextResponse.rewrite(newUrl);
   }
-
-  console.log('PATH', path);
 
   // Handle special paths
   if (path.startsWith('/new')) {

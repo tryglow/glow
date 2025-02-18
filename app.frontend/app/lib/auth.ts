@@ -1,4 +1,5 @@
 import prisma from '@/lib/prisma';
+import { createTrialSubscription } from '@/lib/stripe';
 import { createContact } from '@/notifications/create-contact';
 import { sendVerificationRequest } from '@/notifications/send-verification-request';
 import { sendWelcomeEmail } from '@/notifications/welcome-email';
@@ -159,10 +160,11 @@ export const { auth, signIn, signOut, handlers, unstable_update } = NextAuth({
           },
         });
 
-        // Send welcome email
+        // Send welcome email and create trial subscription
         if (user.email && user.email !== '') {
           await createContact(user.email);
           await sendWelcomeEmail(user.email);
+          await createTrialSubscription(user.id);
         }
       }
 

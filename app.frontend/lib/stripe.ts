@@ -1,24 +1,18 @@
 'use server';
 
-import stripe from 'stripe';
-
 import { auth } from '@/app/lib/auth';
 import prisma from '@/lib/prisma';
 import { prices } from '@/lib/stripe-prices';
+import { newUserTrialStarted } from '@/notifications/new-user-trial-started';
 import { captureMessage } from '@sentry/nextjs';
+import stripe from 'stripe';
 
 const Stripe = new stripe(process.env.STRIPE_API_SECRET_KEY as string);
 
-export async function getOrCreateStripeCustomer() {
-  const session = await auth();
-
-  if (!session || !session.user.id) {
-    throw Error('User not found');
-  }
-
+export async function createStripeCustomer(userId: string) {
   const user = await prisma.user.findUnique({
     where: {
-      id: session.user.id,
+      id: userId,
     },
   });
 
@@ -59,6 +53,16 @@ export async function getOrCreateStripeCustomer() {
   });
 
   return customer.id;
+}
+
+export async function getOrCreateStripeCustomer() {
+  const session = await auth();
+
+  if (!session || !session.user.id) {
+    throw Error('User not found');
+  }
+
+  return await createStripeCustomer(session.user.id);
 }
 
 export const getBillingPortalLink = async () => {
@@ -130,3 +134,52 @@ export const getCheckoutLink = async ({
 
   return stripeSession.url;
 };
+
+export async function createTrialSubscription(userId: string) {
+  const stripeCustomerId = await createStripeCustomer(userId);
+
+  const price =
+    prices[process.env.NODE_ENV as 'development' | 'production']['premium'];
+
+  if (!price) {
+    throw Error('Price ID not found');
+  }
+
+  const subscription = await Stripe.subscriptions.create({
+    customer: stripeCustomerId,
+    items: [{ price }],
+    trial_period_days: 14,
+    metadata: {
+      dbUserId: userId,
+    },
+  });
+
+  const dateNow = new Date();
+  const fourteenDaysFromNow = new Date(
+    dateNow.getTime() + 14 * 24 * 60 * 60 * 1000
+  );
+
+  await prisma.user.update({
+    where: {
+      id: userId,
+    },
+    data: {
+      hasPremiumAccess: true,
+      stripeSubscriptionId: subscription.id,
+      plan: 'premium',
+      stripeTrialEnd: fourteenDaysFromNow,
+    },
+  });
+
+  const user = await prisma.user.findUnique({
+    where: {
+      id: userId,
+    },
+  });
+
+  if (user?.email) {
+    await newUserTrialStarted(user.email);
+  }
+
+  return subscription;
+}

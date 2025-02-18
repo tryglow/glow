@@ -43,3 +43,36 @@ export async function sendSubscriptionCancelledEmail(email: string) {
     captureException(error);
   }
 }
+
+export async function sendTrialReminderEmail(email: string) {
+  const loops = createLoopsClient();
+
+  if (!loops) {
+    return;
+  }
+
+  try {
+    await loops.sendEvent({
+      eventName: 'userFreeTrialExpiringSoon',
+      email,
+    });
+  } catch (error) {
+    captureException(error);
+  }
+}
+export async function sendTrialEndedEmail(email: string) {
+  const loops = createLoopsClient();
+
+  if (!loops) {
+    return;
+  }
+
+  try {
+    await loops.sendEvent({
+      eventName: 'userFreeTrialExpired',
+      email,
+    });
+  } catch (error) {
+    captureException(error);
+  }
+}

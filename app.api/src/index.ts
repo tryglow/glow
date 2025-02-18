@@ -9,6 +9,7 @@ import { authenticateDecorator } from '@/decorators/authenticate';
 import assetsRoutes from '@/modules/assets';
 import billingRoutes from '@/modules/billing';
 import integrationsRoutes from '@/modules/integrations';
+import internalJobsRoutes from '@/modules/internal-jobs';
 import orchestratorsRoutes from '@/modules/orchestrators';
 import reactionsRoutes from '@/modules/reactions';
 import instagramServiceRoutes from '@/modules/services/instagram';
@@ -16,6 +17,7 @@ import spotifyServiceRoutes from '@/modules/services/spotify';
 import threadsServiceRoutes from '@/modules/services/threads';
 import teamsRoutes from '@/modules/teams';
 import themesRoutes from '@/modules/themes';
+import usersRoutes from '@/modules/users';
 import { ExpressAuth } from '@auth/express';
 import cors from '@fastify/cors';
 import fastifyExpress from '@fastify/express';
@@ -59,6 +61,7 @@ fastify.register(blocksRoutes, { prefix: '/blocks' });
 fastify.register(pagesRoutes, { prefix: '/pages' });
 fastify.register(themesRoutes, { prefix: '/themes' });
 fastify.register(teamsRoutes, { prefix: '/teams' });
+fastify.register(usersRoutes, { prefix: '/users' });
 fastify.register(integrationsRoutes, { prefix: '/integrations' });
 fastify.register(reactionsRoutes, { prefix: '/reactions' });
 fastify.register(assetsRoutes, { prefix: '/assets' });
@@ -71,6 +74,8 @@ fastify.register(threadsServiceRoutes, { prefix: '/services/threads' });
 fastify.register(spotifyServiceRoutes, {
   prefix: '/services/spotify',
 });
+
+fastify.register(internalJobsRoutes, { prefix: '/internal-jobs' });
 
 fastify.use('/auth', ExpressAuth(authConfig));
 

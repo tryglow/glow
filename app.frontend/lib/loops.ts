@@ -7,6 +7,7 @@ export const transactionalEmailIds = {
   subscriptionCreatedPremium: 'cm32vtzjm0173100eosidocyw',
   subscriptionCreatedTeam: 'cm32w9hz101lj1ztajhesqu9z',
   invitationToTeam: 'cm32wb5yt01uyf362gulg1kjn',
+  newUserTrialStarted: 'cm7ansgdt0168etsyf0qj36yf',
 };
 
 export const createLoopsClient = () => {

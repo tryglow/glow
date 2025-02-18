@@ -24,6 +24,7 @@ import {
 } from './service';
 import { posthog } from '@/lib/posthog';
 import prisma from '@/lib/prisma';
+import { checkUserHasActivePlan } from '@/modules/utils';
 import { FastifyInstance, FastifyReply } from 'fastify';
 import { FastifyRequest } from 'fastify';
 
@@ -246,6 +247,16 @@ async function createPageHandler(
   response: FastifyReply
 ) {
   const session = await request.server.authenticate(request, response);
+
+  const hasActivePlan = await checkUserHasActivePlan(request, response);
+
+  if (!hasActivePlan) {
+    return response.status(400).send({
+      error: {
+        message: 'No active plan found',
+      },
+    });
+  }
 
   const { slug, themeId } = request.body;
 
