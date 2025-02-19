@@ -9,8 +9,8 @@
     "prisma:migrate": "prisma migrate deploy"
   },
   "dependencies": {
-    "prisma": "^5.22.0",
-    "@prisma/client": "^5.22.0",
+    "prisma": "^6.4.0",
+    "@prisma/client": "^6.4.0",
     "typescript": "^5"
   },
   "exports": {

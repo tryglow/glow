@@ -2,8 +2,7 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider        = "prisma-client-js"
-  previewFeatures = ["tracing"]
+  provider = "prisma-client-js"
 }
 
 datasource db {
@@ -32,6 +31,7 @@ model Account {
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
+  @@index([userId])
 }
 
 model VerificationToken {
@@ -92,6 +92,9 @@ model TeamUser {
   userId         String
   user           User         @relation(fields: [userId], references: [id])
   claimedInvites TeamInvite[] @relation("ClaimedInvites")
+
+  @@index([userId])
+  @@index([teamId])
 }
 
 model Page {
@@ -118,6 +121,10 @@ model Page {
   verificationRequests VerificationRequest[]
   orchestrations       Orchestration[]
   isFeatured           Boolean               @default(false)
+
+  @@index([userId])
+  @@index([teamId])
+  @@index([themeId])
 }
 
 model Block {
@@ -131,6 +138,9 @@ model Block {
   data          Json
   integration   Integration? @relation(fields: [integrationId], references: [id])
   integrationId String?
+
+  @@index([pageId])
+  @@index([integrationId])
 }
 
 model Integration {
@@ -149,6 +159,8 @@ model Integration {
   blocks          Block[]
 
   @@index([type])
+  @@index([userId])
+  @@index([teamId])
 }
 
 model Theme {
@@ -169,6 +181,9 @@ model Theme {
   pages               Page[]
   teamId              String?
   team                Team?    @relation(fields: [teamId], references: [id])
+
+  @@index([createdById])
+  @@index([teamId])
 }
 
 model InviteCode {
@@ -180,6 +195,9 @@ model InviteCode {
   assignedTo   User?    @relation("AssignedInviteCodes", fields: [assignedToId], references: [id])
   claimedById  String?
   claimedBy    User?    @relation("ClaimedInviteCodes", fields: [claimedById], references: [id])
+
+  @@index([assignedToId])
+  @@index([claimedById])
 }
 
 model TeamInvite {
@@ -194,6 +212,9 @@ model TeamInvite {
   claimedAt   DateTime?
   claimedBy   TeamUser? @relation("ClaimedInvites", fields: [claimedById], references: [id])
   claimedById String?
+
+  @@index([teamId])
+  @@index([claimedById])
 }
 
 enum VerificationRequestStatus {
@@ -216,6 +237,9 @@ model VerificationRequest {
   verifiedAt         DateTime?
   rejectedAt         DateTime?
   requestedPageTitle String
+
+  @@index([requestedByUserId])
+  @@index([pageId])
 }
 
 enum OrchestrationType {
@@ -231,4 +255,6 @@ model Orchestration {
   pageId          String?
   page            Page?             @relation(fields: [pageId], references: [id])
   type            OrchestrationType
+
+  @@index([pageId])
 }
