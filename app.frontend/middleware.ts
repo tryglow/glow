@@ -30,10 +30,7 @@ export default async function middleware(req: NextRequest) {
   // Create base URL once
   const baseUrl = new URL('', req.url);
 
-  // Handle app subdomain
-  if (hostname === `app.${rootDomain}`) {
-    return handleAppSubdomain(req, url.pathname, baseUrl);
-  }
+  console.log('hostname', hostname);
 
   // Handle root domain
   if (hostname === rootDomain) {
@@ -42,33 +39,6 @@ export default async function middleware(req: NextRequest) {
 
   // Handle unknown domains - reuse baseUrl
   baseUrl.pathname = `/${hostname}/unknown`;
-  return NextResponse.rewrite(baseUrl);
-}
-
-async function handleAppSubdomain(
-  req: NextRequest,
-  path: string,
-  baseUrl: URL
-) {
-  const getToken = (await import('@auth/core/jwt')).getToken;
-  const session = await getToken({ req });
-
-  // Handle authentication redirects
-  if (!session && path !== '/login') {
-    baseUrl.pathname = '/login';
-    baseUrl.search = req.nextUrl.searchParams.toString();
-    return NextResponse.redirect(baseUrl);
-  }
-
-  if (session && path === '/login') {
-    baseUrl.pathname = '/';
-    baseUrl.search = req.nextUrl.searchParams.toString();
-    return NextResponse.redirect(baseUrl);
-  }
-
-  // Rewrite to app directory
-  baseUrl.pathname = `/app${path === '/' ? '' : path}`;
-  baseUrl.search = req.nextUrl.searchParams.toString();
   return NextResponse.rewrite(baseUrl);
 }
 
