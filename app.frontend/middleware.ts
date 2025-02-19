@@ -20,67 +20,77 @@ export const config: MiddlewareConfig = {
 
 export default async function middleware(req: NextRequest) {
   const url = req.nextUrl;
+  const rootDomain = process.env.NEXT_PUBLIC_ROOT_DOMAIN;
 
-  // Get hostname and normalize for dev environment
+  // Get hostname and normalize for dev environment - using a regex for better performance
   const hostname = req.headers
     .get('host')!
-    .replace('.dev.glow:3000', `.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}`);
+    .replace(new RegExp(`.dev.glow:3000$`), `.${rootDomain}`);
+
+  // Create base URL once
+  const baseUrl = new URL('', req.url);
 
   // Handle app subdomain
-  if (hostname === `app.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}`) {
-    return handleAppSubdomain(req, url.pathname);
+  if (hostname === `app.${rootDomain}`) {
+    return handleAppSubdomain(req, url.pathname, baseUrl);
   }
 
   // Handle root domain
-  if (hostname === process.env.NEXT_PUBLIC_ROOT_DOMAIN) {
-    return handleRootDomain(req, url.pathname);
+  if (hostname === rootDomain) {
+    return handleRootDomain(req, url.pathname, baseUrl);
   }
 
-  // Handle unknown domains
-  return NextResponse.rewrite(new URL(`/${hostname}/unknown`, req.url));
+  // Handle unknown domains - reuse baseUrl
+  baseUrl.pathname = `/${hostname}/unknown`;
+  return NextResponse.rewrite(baseUrl);
 }
 
-async function handleAppSubdomain(req: NextRequest, path: string) {
+async function handleAppSubdomain(
+  req: NextRequest,
+  path: string,
+  baseUrl: URL
+) {
   const getToken = (await import('@auth/core/jwt')).getToken;
-
   const session = await getToken({ req });
 
   // Handle authentication redirects
   if (!session && path !== '/login') {
-    const loginUrl = new URL('/login', req.url);
-    loginUrl.search = req.nextUrl.searchParams.toString();
-    return NextResponse.redirect(loginUrl);
+    baseUrl.pathname = '/login';
+    baseUrl.search = req.nextUrl.searchParams.toString();
+    return NextResponse.redirect(baseUrl);
   }
 
   if (session && path === '/login') {
-    const homeUrl = new URL('/', req.url);
-    homeUrl.search = req.nextUrl.searchParams.toString();
-    return NextResponse.redirect(homeUrl);
+    baseUrl.pathname = '/';
+    baseUrl.search = req.nextUrl.searchParams.toString();
+    return NextResponse.redirect(baseUrl);
   }
 
   // Rewrite to app directory
-  const rewriteUrl = new URL(`/app${path === '/' ? '' : path}`, req.url);
-  rewriteUrl.search = req.nextUrl.searchParams.toString();
-  return NextResponse.rewrite(rewriteUrl);
+  baseUrl.pathname = `/app${path === '/' ? '' : path}`;
+  baseUrl.search = req.nextUrl.searchParams.toString();
+  return NextResponse.rewrite(baseUrl);
 }
 
-function handleRootDomain(req: NextRequest, path: string) {
+function handleRootDomain(req: NextRequest, path: string, baseUrl: URL) {
+  const searchParams = req.nextUrl.searchParams.toString();
+
   // Redirect root to landing page
   if (path === '/') {
-    const newUrl = new URL('/i/landing-page', req.url);
-    newUrl.search = req.nextUrl.searchParams.toString();
-    return NextResponse.rewrite(newUrl);
+    baseUrl.pathname = '/i/landing-page';
+    baseUrl.search = searchParams;
+    return NextResponse.rewrite(baseUrl);
   }
 
   // Handle special paths
   if (path.startsWith('/new')) {
-    const newUrl = new URL(path, req.url);
-    newUrl.search = req.nextUrl.searchParams.toString();
-    return NextResponse.rewrite(newUrl);
+    baseUrl.pathname = path;
+    baseUrl.search = searchParams;
+    return NextResponse.rewrite(baseUrl);
   }
 
   // Rewrite all other paths
-  const rewriteUrl = new URL(`/${req.headers.get('host')}${path}`, req.url);
-  rewriteUrl.search = req.nextUrl.searchParams.toString();
-  return NextResponse.rewrite(rewriteUrl);
+  baseUrl.pathname = `/${req.headers.get('host')}${path}`;
+  baseUrl.search = searchParams;
+  return NextResponse.rewrite(baseUrl);
 }
