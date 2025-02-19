@@ -1,6 +1,6 @@
 import { MiddlewareConfig, NextRequest, NextResponse } from 'next/server';
 
-export const runtime = 'nodejs';
+export const runtime = 'experimental-edge';
 
 export const config: MiddlewareConfig = {
   matcher: [
@@ -22,8 +22,6 @@ export default async function middleware(req: NextRequest) {
   const url = req.nextUrl;
   const rootDomain = process.env.NEXT_PUBLIC_ROOT_DOMAIN;
 
-  console.log('URL', url);
-
   // Get hostname and normalize for dev environment - using a regex for better performance
   const hostname = req.headers
     .get('host')!
@@ -31,8 +29,6 @@ export default async function middleware(req: NextRequest) {
 
   // Create base URL once
   const baseUrl = new URL('', req.url);
-
-  console.log('HOSTNAME', hostname);
 
   // Handle app subdomain
   if (hostname === `app.${rootDomain}`) {
@@ -54,11 +50,8 @@ async function handleAppSubdomain(
   path: string,
   baseUrl: URL
 ) {
-  console.log('handleAppSubdomain');
   const getToken = (await import('@auth/core/jwt')).getToken;
   const session = await getToken({ req });
-
-  console.log('SESSION', session);
 
   // Handle authentication redirects
   if (!session && path !== '/login') {
@@ -81,10 +74,6 @@ async function handleAppSubdomain(
 
 function handleRootDomain(req: NextRequest, path: string, baseUrl: URL) {
   const searchParams = req.nextUrl.searchParams.toString();
-
-  console.log('handleRootDomain');
-
-  console.log('handleRootDomain path', path);
 
   // Redirect root to landing page
   if (path === '/') {
