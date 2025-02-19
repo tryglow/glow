@@ -1,9 +1,8 @@
-import { getToken } from '@auth/core/jwt';
-import { NextRequest, NextResponse } from 'next/server';
+import { MiddlewareConfig, NextRequest, NextResponse } from 'next/server';
 
-export const runtime = 'experimental-edge';
+export const runtime = 'nodejs';
 
-export const config = {
+export const config: MiddlewareConfig = {
   matcher: [
     /*
      * Match all paths except for:
@@ -42,6 +41,8 @@ export default async function middleware(req: NextRequest) {
 }
 
 async function handleAppSubdomain(req: NextRequest, path: string) {
+  const getToken = (await import('@auth/core/jwt')).getToken;
+
   const session = await getToken({ req });
 
   // Handle authentication redirects
