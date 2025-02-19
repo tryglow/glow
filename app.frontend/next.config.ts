@@ -10,6 +10,9 @@ const withMDX = createMDX({
 });
 
 const nextConfig: NextConfig = {
+  experimental: {
+    nodeMiddleware: true,
+  },
   rewrites: async () => [
     {
       source: '/',
