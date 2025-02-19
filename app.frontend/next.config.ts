@@ -62,5 +62,7 @@ export default withSentryConfig(withMDX(nextConfig), {
   org: 'hyperdusk',
   project: 'glow',
   silent: false,
-  hideSourceMaps: true,
+  sourcemaps: {
+    deleteSourcemapsAfterUpload: true,
+  },
 });
