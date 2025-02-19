@@ -8,6 +8,7 @@ import {
 } from '@/app/components/ui/sidebar';
 import { internalApiFetcher } from '@/lib/fetch';
 import { Blocks } from '@tryglow/blocks';
+import { SearchIcon } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import useSWR from 'swr';
 
@@ -36,12 +37,15 @@ export function SidebarBlocks() {
   return (
     <>
       <SidebarContentHeader title="Blocks">
-        <SidebarInput
-          placeholder="Filter blocks"
-          value={search}
-          onChange={(ev) => setSearch(ev.target.value)}
-          className="mt-2"
-        />
+        <div className="relative">
+          <SidebarInput
+            placeholder="Filter blocks"
+            value={search}
+            onChange={(ev) => setSearch(ev.target.value)}
+            className="mt-2 pl-7"
+          />
+          <SearchIcon className="absolute left-2 top-2 text-muted-foreground/50 size-4" />
+        </div>
       </SidebarContentHeader>
 
       <SidebarGroup>
