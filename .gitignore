@@ -6,6 +6,9 @@ node_modules
 .pnp.js
 .yarn/install-state.gz
 
+.tinyb
+.venv
+
 # Turbo
 .turbo
 

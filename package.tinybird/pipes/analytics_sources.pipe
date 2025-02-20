@@ -1,0 +1,20 @@
+NODE analytics_sources_1
+DESCRIPTION >
+    Aggregate by referral and calculate session and hits
+
+SQL >
+    SELECT
+        toDate(timestamp) AS date,
+        device,
+        browser,
+        location,
+        referrer,
+        uniqState(session_id) AS visits,
+        countState() AS hits,
+        page_id
+    FROM analytics_hits
+    WHERE domainWithoutWWW(referrer) != current_domain
+    GROUP BY date, device, browser, location, referrer, page_id
+
+TYPE MATERIALIZED
+DATASOURCE analytics_sources_mv
