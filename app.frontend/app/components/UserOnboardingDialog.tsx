@@ -1,7 +1,6 @@
 'use client';
 
 import { hideGlowTour } from '@/app/lib/auth-actions';
-import { useIsMobile } from '@/hooks/use-mobile';
 import { useTour } from '@reactour/tour';
 import { captureException } from '@sentry/nextjs';
 import {
@@ -12,6 +11,7 @@ import {
   DialogHeader,
   DialogTitle,
   Button,
+  useIsMobile,
 } from '@tryglow/ui';
 import { useSession } from 'next-auth/react';
 import { useState } from 'react';

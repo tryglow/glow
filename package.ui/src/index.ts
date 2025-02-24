@@ -4,7 +4,6 @@ export * from './ui/avatar';
 export * from './ui/breadcrumb';
 export * from './ui/button';
 export * from './ui/card';
-export * from './ui/chart';
 export * from './ui/checkbox';
 export * from './ui/collapsible';
 export * from './ui/command';
@@ -27,3 +26,4 @@ export * from './ui/tooltip';
 export * from './ui/use-toast';
 
 export * from './lib/utils';
+export * from './hooks/use-mobile';
