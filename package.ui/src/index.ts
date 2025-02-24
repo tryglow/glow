@@ -25,3 +25,5 @@ export * from './ui/toast';
 export * from './ui/toaster';
 export * from './ui/tooltip';
 export * from './ui/use-toast';
+
+export * from './lib/utils';

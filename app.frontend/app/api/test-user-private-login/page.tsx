@@ -1,10 +1,9 @@
 'use client';
 
+import { signInWithCredentials } from '@/app/lib/auth-actions';
+import { Button } from '@tryglow/ui';
 import Link from 'next/link';
 import { FormEvent, useState } from 'react';
-
-import { signInWithCredentials } from '@/app/lib/auth-actions';
-import { Button } from '@/components/ui/button';
 
 export default function TestUserPrivateLogin() {
   const [email, setEmail] = useState('');

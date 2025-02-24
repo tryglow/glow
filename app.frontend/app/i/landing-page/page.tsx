@@ -14,10 +14,8 @@ import { auth } from '@/app/lib/auth';
 import { LoginWidget } from '@/components/LoginWidget';
 import prisma from '@/lib/prisma';
 import { defaultThemeSeeds, themeColorToCssValue } from '@/lib/theme';
-import { cn } from '@/lib/utils';
 import { ArrowRightIcon, ArrowUpRightIcon } from '@heroicons/react/20/solid';
-import { Button } from '@tryglow/ui';
-import clsx from 'clsx';
+import { Button, cn } from '@tryglow/ui';
 import Image from 'next/image';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
@@ -494,7 +492,7 @@ export default async function LandingPage(props: {
                       }}
                     >
                       <ArrowUpRightIcon
-                        className={clsx(
+                        className={cn(
                           'absolute top-2 right-2 w-6 h-6 opacity-0 group-hover:opacity-100 transition-opacity duration-200 ease-in-out',
                           profile.isLight
                             ? 'text-stone-800/20'
@@ -506,7 +504,7 @@ export default async function LandingPage(props: {
                           src={profile.avatarUrl}
                           width={56}
                           height={56}
-                          className={clsx(
+                          className={cn(
                             'w-14 h-14 rounded-lg outline outline-3',
                             profile.isLight
                               ? 'outline-stone-200'
@@ -515,7 +513,7 @@ export default async function LandingPage(props: {
                           alt=""
                         />
                         <span
-                          className={clsx(
+                          className={cn(
                             'font-bold text-lg mt-2 ',
                             profile.isLight ? 'text-stone-900' : 'text-white'
                           )}
@@ -523,7 +521,7 @@ export default async function LandingPage(props: {
                           {profile.name}
                         </span>
                         <span
-                          className={clsx(
+                          className={cn(
                             'font-normal text-sm',
                             profile.isLight ? 'text-stone-700' : 'text-white/70'
                           )}

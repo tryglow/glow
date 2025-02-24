@@ -1,16 +1,17 @@
 'use client';
 
 import { NewPageDialog } from '@/components/NewPageDialog';
-import { cn } from '@/lib/utils';
 import {
   CaretSortIcon,
   CheckIcon,
   PlusCircledIcon,
 } from '@radix-ui/react-icons';
 import { Page } from '@tryglow/prisma';
-import { Avatar, AvatarFallback, AvatarImage } from '@tryglow/ui';
-import { Button } from '@tryglow/ui';
 import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+  Button,
   Command,
   CommandEmpty,
   CommandGroup,
@@ -18,6 +19,7 @@ import {
   CommandItem,
   CommandList,
   CommandSeparator,
+  cn,
 } from '@tryglow/ui';
 import { Popover, PopoverContent, PopoverTrigger } from '@tryglow/ui';
 import { useParams, useRouter } from 'next/navigation';

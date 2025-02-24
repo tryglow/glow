@@ -1,9 +1,8 @@
 'use client';
 
 import { AssetContexts } from '@/lib/asset';
-import { cn } from '@/lib/utils';
 import { PhotoIcon } from '@heroicons/react/24/solid';
-import { Button } from '@tryglow/ui';
+import { Button, cn } from '@tryglow/ui';
 import { ChangeEvent, useEffect, useState } from 'react';
 
 interface Props {

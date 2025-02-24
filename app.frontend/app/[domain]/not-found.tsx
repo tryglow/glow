@@ -1,7 +1,6 @@
 import { auth } from '@/app/lib/auth';
-
 import { LoginWidget } from '@/components/LoginWidget';
-import { Button } from '@/components/ui/button';
+import { Button } from '@tryglow/ui';
 import Link from 'next/link';
 
 /**

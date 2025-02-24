@@ -41,7 +41,7 @@ export function SidebarBlocks() {
           <SidebarInput
             placeholder="Filter blocks"
             value={search}
-            onChange={(ev) => setSearch(ev.target.value)}
+            onChange={(ev: any) => setSearch(ev.target.value)}
             className="mt-2 pl-7"
           />
           <SearchIcon className="absolute left-2 top-2 text-muted-foreground/50 size-4" />

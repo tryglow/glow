@@ -1,7 +1,6 @@
 'use client';
 
 import { Icon, icons } from './icons';
-import { cn } from '@/lib/utils';
 import { CheckIcon } from '@radix-ui/react-icons';
 import {
   Command,
@@ -12,6 +11,7 @@ import {
   Avatar,
   AvatarFallback,
   AvatarImage,
+  cn,
 } from '@tryglow/ui';
 import { useEffect, useState } from 'react';
 

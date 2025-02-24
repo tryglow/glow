@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import styles from '@/lib/blocks/spotify-playing-now/styles.module.css';
 import { SpotifyLogo } from '@/lib/blocks/spotify-playing-now/ui-server';
-import { cn } from '@/lib/utils';
+import { cn } from '@tryglow/ui';
 
 const CoreBlockMock = ({
   isFrameless,

@@ -1,4 +1,4 @@
-import { cn } from '@/lib/utils';
+import { cn } from '@tryglow/ui';
 import { ReactNode } from 'react';
 
 export const MarketingContainer = (props: {

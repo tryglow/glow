@@ -1,5 +1,4 @@
 import { DraggableBlockButton } from '@/components/DraggableBlockButton';
-import { cn } from '@/lib/utils';
 import { ChevronLeftIcon, MagnifyingGlassIcon } from '@radix-ui/react-icons';
 import { Blocks } from '@tryglow/blocks';
 import {
@@ -8,6 +7,7 @@ import {
   SheetContent,
   SheetHeader,
   SheetTitle,
+  cn,
 } from '@tryglow/ui';
 import { useEffect, useState } from 'react';
 

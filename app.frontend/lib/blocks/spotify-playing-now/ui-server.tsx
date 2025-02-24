@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import styles from './styles.module.css';
 import { fetchData } from './utils';
-import { cn } from '@/lib/utils';
+import { cn } from '@tryglow/ui';
 import Link from 'next/link';
 import { FunctionComponent } from 'react';
 

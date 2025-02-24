@@ -1,10 +1,10 @@
 'use client';
 
 import { switchTeam } from '@/app/lib/actions/team';
-import { cn } from '@/lib/utils';
 import { CaretSortIcon, CheckIcon } from '@radix-ui/react-icons';
 import { Team } from '@tryglow/prisma';
 import {
+  cn,
   Command,
   CommandEmpty,
   CommandItem,
