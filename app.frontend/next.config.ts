@@ -13,6 +13,7 @@ const nextConfig: NextConfig = {
   experimental: {
     nodeMiddleware: true,
   },
+  transpilePackages: ['@tryglow/ui'],
   rewrites: async () => [
     {
       source: '/',
