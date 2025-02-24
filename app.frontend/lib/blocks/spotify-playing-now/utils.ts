@@ -162,6 +162,8 @@ const fetchSpotifyData = async (
 
   let playingNowResponse = await fetchData(fetchPlayingNow, config.accessToken);
 
+  console.log('playingNowResponse', playingNowResponse.statusCode);
+
   // Handle token refresh if necessary
   if (
     (!playingNowResponse.data || playingNowResponse?.statusCode === 401) &&
@@ -193,6 +195,8 @@ const fetchSpotifyData = async (
     fetchRecentlyPlayed,
     config.accessToken
   );
+
+  console.log('recentlyPlayedData', recentlyPlayedData.statusCode);
 
   return processTrackData(recentlyPlayedData.data, false);
 };
