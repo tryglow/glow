@@ -30,8 +30,6 @@ export default async function middleware(req: NextRequest) {
   // Create base URL once
   const baseUrl = new URL('', req.url);
 
-  console.log('hostname', hostname);
-
   // Handle root domain
   if (hostname === rootDomain) {
     return handleRootDomain(req, url.pathname, baseUrl);

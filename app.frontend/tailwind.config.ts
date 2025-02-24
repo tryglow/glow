@@ -9,6 +9,7 @@ const config: Config = {
     './app/**/*.{ts,tsx}',
     './src/**/*.{ts,tsx}',
     './lib/**/*.{ts,tsx}',
+    '../package.ui/src/**/*.{ts,tsx}',
   ],
 };
 

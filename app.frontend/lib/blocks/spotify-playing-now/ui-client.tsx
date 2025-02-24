@@ -1,11 +1,8 @@
-import { FunctionComponent, Suspense } from 'react';
-
-import { CoreBlock } from '@/components/CoreBlock';
-
-import { Skeleton } from '@/components/ui/skeleton';
-
 import { BlockProps } from '../ui';
 import { SpotifyLogo, SpotifyPlayingNowServerUI } from './ui-server';
+import { CoreBlock } from '@/components/CoreBlock';
+import { Skeleton } from '@tryglow/ui';
+import { FunctionComponent, Suspense } from 'react';
 
 export const SpotifyPlayingNow: FunctionComponent<BlockProps> = ({
   pageId,

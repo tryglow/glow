@@ -1,5 +1,6 @@
 'use server';
 
+import { verifyVerificationStatus } from './utils';
 import {
   Dialog,
   DialogContent,
@@ -7,8 +8,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '@/app/components/ui/dialog';
-import { verifyVerificationStatus } from './utils';
+} from '@tryglow/ui';
 
 const VerifiedBadge = () => {
   return (
