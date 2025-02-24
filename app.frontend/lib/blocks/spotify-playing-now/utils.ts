@@ -113,7 +113,6 @@ const fetchSpotifyData = async (
     const [error, response] = await safeAwait(fetchFunction(token));
 
     if (error) {
-      console.log('Captured Error', error);
       captureException(error);
       return {
         data: null,
@@ -139,7 +138,6 @@ const fetchSpotifyData = async (
       };
     }
 
-    console.log('Uncaptured Error', response);
     return {
       data: null,
       statusCode: response?.status || 401,
@@ -163,8 +161,6 @@ const fetchSpotifyData = async (
   // Try fetching currently playing track
 
   let playingNowResponse = await fetchData(fetchPlayingNow, config.accessToken);
-
-  console.log('playingNowResponse', playingNowResponse.statusCode);
 
   // Handle token refresh if necessary
   if (
@@ -197,8 +193,6 @@ const fetchSpotifyData = async (
     fetchRecentlyPlayed,
     config.accessToken
   );
-
-  console.log('recentlyPlayedData', recentlyPlayedData.statusCode);
 
   return processTrackData(recentlyPlayedData.data, false);
 };
