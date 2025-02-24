@@ -12,11 +12,11 @@ import {
 } from '@/app/i/landing-page/ui-mockups';
 import { auth } from '@/app/lib/auth';
 import { LoginWidget } from '@/components/LoginWidget';
-import { Button } from '@/components/ui/button';
 import prisma from '@/lib/prisma';
 import { defaultThemeSeeds, themeColorToCssValue } from '@/lib/theme';
 import { cn } from '@/lib/utils';
 import { ArrowRightIcon, ArrowUpRightIcon } from '@heroicons/react/20/solid';
+import { Button } from '@tryglow/ui';
 import clsx from 'clsx';
 import Image from 'next/image';
 import Link from 'next/link';

@@ -1,24 +1,24 @@
 'use client';
 
 import { switchTeam } from '@/app/lib/actions/team';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Button } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
+import { CaretSortIcon, CheckIcon } from '@radix-ui/react-icons';
+import { Team } from '@tryglow/prisma';
 import {
   Command,
   CommandEmpty,
   CommandItem,
   CommandList,
   CommandSeparator,
-} from '@/components/ui/command';
-import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
   Popover,
+  toast,
+  Button,
   PopoverContent,
   PopoverTrigger,
-} from '@/components/ui/popover';
-import { toast } from '@/components/ui/use-toast';
-import { cn } from '@/lib/utils';
-import { CaretSortIcon, CheckIcon } from '@radix-ui/react-icons';
-import { Team } from '@tryglow/prisma';
+} from '@tryglow/ui';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';

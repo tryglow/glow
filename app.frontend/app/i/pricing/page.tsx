@@ -1,15 +1,10 @@
 import { MarketingContainer } from '@/app/components/MarketingContainer';
 import { PricingTable } from '@/app/i/pricing/table';
-
-import { ArrowRightIcon } from '@heroicons/react/20/solid';
-
-import Image from 'next/image';
-
-import { LoginWidget } from '@/components/LoginWidget';
-
 import { auth } from '@/app/lib/auth';
-
-import { Button } from '@/components/ui/button';
+import { LoginWidget } from '@/components/LoginWidget';
+import { ArrowRightIcon } from '@heroicons/react/20/solid';
+import { Button } from '@tryglow/ui';
+import Image from 'next/image';
 
 export default async function PricingPage() {
   const session = await auth();

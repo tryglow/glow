@@ -1,12 +1,9 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
-
-import { Button } from '@/components/ui/button';
-import { toast } from '@/components/ui/use-toast';
-
-import { LoginForm } from '@/app/components/LoginForm';
 import { acceptInvite } from './actions';
+import { LoginForm } from '@/app/components/LoginForm';
+import { Button, toast } from '@tryglow/ui';
+import { useRouter } from 'next/navigation';
 
 export function LoggedInAcceptInviteUI({ inviteCode }: { inviteCode: string }) {
   const router = useRouter();

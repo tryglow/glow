@@ -1,10 +1,8 @@
-import { auth } from '@/app/lib/auth';
-import prisma from '@/lib/prisma';
-
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-
 import { LoggedInAcceptInviteUI, LoggedOutAcceptInviteUI } from './accept-ui';
 import { createInviteCodeHash } from './actions';
+import { auth } from '@/app/lib/auth';
+import prisma from '@/lib/prisma';
+import { Avatar, AvatarFallback, AvatarImage } from '@tryglow/ui';
 
 const getInvite = async (inviteCode: string) => {
   const invite = await prisma.teamInvite.findUnique({
@@ -19,11 +17,9 @@ const getInvite = async (inviteCode: string) => {
   return invite;
 };
 
-export default async function AcceptInvitePage(
-  props: {
-    params: Promise<{ inviteCode: string }>;
-  }
-) {
+export default async function AcceptInvitePage(props: {
+  params: Promise<{ inviteCode: string }>;
+}) {
   const params = await props.params;
   const session = await auth();
 

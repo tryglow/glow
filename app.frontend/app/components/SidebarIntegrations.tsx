@@ -2,16 +2,14 @@ import {
   integrationUIConfig,
   SupportedIntegrations,
 } from '@/app/components/BlockIntegrationUI';
-import {
-  SidebarContentHeader,
-  SidebarGroup,
-  SidebarGroupContent,
-} from '@/app/components/ui/sidebar';
 import { InternalApi } from '@/app/lib/api';
 import { internalApiFetcher } from '@/lib/fetch';
 import { captureException } from '@sentry/nextjs';
 import { Integration } from '@tryglow/prisma';
 import {
+  SidebarContentHeader,
+  SidebarGroup,
+  SidebarGroupContent,
   Button,
   Dialog,
   DialogContent,

@@ -2,9 +2,9 @@
 
 import { MarketingContainer } from '@/app/components/MarketingContainer';
 import { LoginWidget } from '@/components/LoginWidget';
-import { Button } from '@/components/ui/button';
 import { getCheckoutLink } from '@/lib/stripe';
 import { PlusIcon } from '@heroicons/react/16/solid';
+import { Button } from '@tryglow/ui';
 
 const tiers = [
   {

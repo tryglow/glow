@@ -1,18 +1,17 @@
 import { CreateEditThemeForm } from '@/app/components/EditPageSettingsDialog/CreateNewTheme';
 import { PageThemePreview } from '@/app/components/PageThemePreview';
-import { Button } from '@/app/components/ui/button';
-import {
-  SidebarContentHeader,
-  SidebarGroup,
-  SidebarGroupContent,
-  SidebarSeparator,
-} from '@/app/components/ui/sidebar';
-import { toast } from '@tryglow/ui';
-import { toast } from '@/app/components/ui/use-toast';
 import { setPageTheme } from '@/app/lib/actions/themes';
 import { internalApiFetcher } from '@/lib/fetch';
 import { themeColorToCssValue } from '@/lib/theme';
 import { Theme } from '@tryglow/prisma';
+import {
+  toast,
+  SidebarContentHeader,
+  SidebarGroup,
+  SidebarGroupContent,
+  SidebarSeparator,
+  Button,
+} from '@tryglow/ui';
 import { Plus } from 'lucide-react';
 import { useParams } from 'next/navigation';
 import { useState } from 'react';

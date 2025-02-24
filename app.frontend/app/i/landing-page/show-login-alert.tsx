@@ -1,9 +1,8 @@
 'use client';
 
+import { toast } from '@tryglow/ui';
 import { useSearchParams } from 'next/navigation';
 import { useEffect } from 'react';
-
-import { toast } from '@/components/ui/use-toast';
 
 export function ShowLoginAlert() {
   const params = useSearchParams();

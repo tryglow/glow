@@ -2,7 +2,7 @@ import {
   SidebarContentHeader,
   SidebarGroup,
   SidebarGroupContent,
-} from '@/app/components/ui/sidebar';
+} from '@tryglow/ui';
 
 export function SidebarAnalytics() {
   return (

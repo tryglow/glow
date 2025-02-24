@@ -1,9 +1,5 @@
 'use client';
 
-import { useRouter, useSearchParams } from 'next/navigation';
-import { useState } from 'react';
-
-import { Button } from '@/components/ui/button';
 import {
   Dialog,
   DialogContent,
@@ -11,7 +7,10 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from '@/components/ui/dialog';
+  Button,
+} from '@tryglow/ui';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { useState } from 'react';
 
 export function PremiumOnboardingDialog() {
   const params = useSearchParams();

@@ -1,11 +1,11 @@
 import { config } from '@/app/components/DraggableBlockButton';
 import { EditForm } from '@/app/components/EditForm';
+import { useEditModeContext } from '@/app/contexts/Edit';
 import {
   SidebarContentHeader,
   SidebarGroup,
   SidebarGroupContent,
-} from '@/app/components/ui/sidebar';
-import { useEditModeContext } from '@/app/contexts/Edit';
+} from '@tryglow/ui';
 
 export function SidebarBlockForm({ onClose }: { onClose: () => void }) {
   const { currentEditingBlock } = useEditModeContext();
