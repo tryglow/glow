@@ -113,6 +113,7 @@ const fetchSpotifyData = async (
     const [error, response] = await safeAwait(fetchFunction(token));
 
     if (error) {
+      console.log('Captured Error', error);
       captureException(error);
       return {
         data: null,
@@ -138,6 +139,7 @@ const fetchSpotifyData = async (
       };
     }
 
+    console.log('Uncaptured Error', response);
     return {
       data: null,
       statusCode: response?.status || 401,
