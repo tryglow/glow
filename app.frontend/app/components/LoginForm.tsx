@@ -1,13 +1,9 @@
 'use client';
 
-import { useState } from 'react';
-
-import { Button } from '@/app/components/ui/button';
-import { Input } from '@/app/components/ui/input';
-import { toast } from '@/app/components/ui/use-toast';
-import { LoginProviderButton } from '@/components/LoginProviderButton';
-
 import { signInWithEmail } from '@/app/lib/auth-actions';
+import { LoginProviderButton } from '@/components/LoginProviderButton';
+import { Button, Input, toast } from '@tryglow/ui';
+import { useState } from 'react';
 
 interface Props {
   onComplete?: () => void;

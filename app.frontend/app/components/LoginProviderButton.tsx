@@ -1,13 +1,12 @@
 'use client';
 
-import { ReactNode } from 'react';
-
-import { Button } from '@/app/components/ui/button';
 import {
   signInWithGoogle,
   signInWithTikTok,
   signInWithTwitter,
 } from '@/app/lib/auth-actions';
+import { Button } from '@tryglow/ui';
+import { ReactNode } from 'react';
 
 type EnabledProviders = 'google' | 'twitter' | 'tiktok';
 

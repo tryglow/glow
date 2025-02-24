@@ -7,6 +7,7 @@ import {
   SidebarGroupContent,
   SidebarSeparator,
 } from '@/app/components/ui/sidebar';
+import { toast } from '@tryglow/ui';
 import { toast } from '@/app/components/ui/use-toast';
 import { setPageTheme } from '@/app/lib/actions/themes';
 import { internalApiFetcher } from '@/lib/fetch';

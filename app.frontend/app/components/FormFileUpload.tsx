@@ -1,10 +1,9 @@
 'use client';
 
-import { InternalApi } from '@/app/lib/api';
-import { Button } from '@/components/ui/button';
 import { AssetContexts } from '@/lib/asset';
 import { cn } from '@/lib/utils';
 import { PhotoIcon } from '@heroicons/react/24/solid';
+import { Button } from '@tryglow/ui';
 import { ChangeEvent, useEffect, useState } from 'react';
 
 interface Props {

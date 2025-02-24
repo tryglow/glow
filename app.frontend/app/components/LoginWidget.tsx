@@ -1,7 +1,5 @@
 'use client';
 
-import { useState } from 'react';
-
 import { LoginForm } from '@/app/components/LoginForm';
 import {
   Dialog,
@@ -10,7 +8,8 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '@/components/ui/dialog';
+} from '@tryglow/ui';
+import { useState } from 'react';
 
 interface Props {
   trigger: React.ReactNode;

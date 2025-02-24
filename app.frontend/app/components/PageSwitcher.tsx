@@ -1,19 +1,15 @@
 'use client';
 
+import { NewPageDialog } from '@/components/NewPageDialog';
+import { cn } from '@/lib/utils';
 import {
   CaretSortIcon,
   CheckIcon,
   PlusCircledIcon,
 } from '@radix-ui/react-icons';
 import { Page } from '@tryglow/prisma';
-import { useParams, useRouter } from 'next/navigation';
-import { useState } from 'react';
-
-import { cn } from '@/lib/utils';
-
-import { NewPageDialog } from '@/components/NewPageDialog';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Button } from '@/components/ui/button';
+import { Avatar, AvatarFallback, AvatarImage } from '@tryglow/ui';
+import { Button } from '@tryglow/ui';
 import {
   Command,
   CommandEmpty,
@@ -22,12 +18,10 @@ import {
   CommandItem,
   CommandList,
   CommandSeparator,
-} from '@/components/ui/command';
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from '@/components/ui/popover';
+} from '@tryglow/ui';
+import { Popover, PopoverContent, PopoverTrigger } from '@tryglow/ui';
+import { useParams, useRouter } from 'next/navigation';
+import { useState } from 'react';
 
 interface Props {
   teamPages?: Partial<Page>[] | null;

@@ -1,7 +1,7 @@
+import { cn } from '@/lib/utils';
+import { Input } from '@tryglow/ui';
 import { Field } from 'formik';
 import { ReactNode } from 'react';
-
-import { cn } from '@/lib/utils';
 
 interface Props {
   name: string;
@@ -31,24 +31,24 @@ export function FormInput({
   disabled,
 }: Props) {
   return (
-    <Field
-      as={fieldType}
-      name={name}
-      placeholder={placeholder}
-      type={type}
-      className={cn(
-        'block rounded-md border-0 px-3 py-1.5 ring-1 ring-inset focus:ring-2 focus:ring-inset sm:text-sm sm:leading-6',
-        type !== 'checkbox' && 'w-full',
-        disabled && 'bg-gray-100',
-        hasError
-          ? 'text-red-900 ring-red-300 placeholder:text-red-300 focus:ring-red-500'
-          : 'text-gray-900 ring-input placeholder:text-gray-400 focus:ring-gray-500'
+    <Field name={name}>
+      {({ field }: any) => (
+        <Input
+          {...field}
+          placeholder={placeholder}
+          type={type}
+          className={cn(
+            type !== 'checkbox' && 'w-full',
+            disabled && 'bg-gray-100',
+            hasError && 'border-red-500'
+          )}
+          aria-invalid={ariaInvalid}
+          aria-describedby={ariaDescribedby}
+          disabled={disabled}
+        >
+          {fieldType === 'select' ? children : undefined}
+        </Input>
       )}
-      aria-invalid={ariaInvalid}
-      aria-describedby={ariaDescribedby}
-      disabled={disabled}
-    >
-      {fieldType === 'select' ? children : undefined}
     </Field>
   );
 }
@@ -70,16 +70,19 @@ export function FormInputWithPrefix({
       <span className="inline-flex items-center rounded-l-md border border-r-0 border-gray-300 px-3 text-gray-500 sm:text-sm">
         {prefix}
       </span>
-      <Field
-        as={fieldType}
-        name={name}
-        placeholder={placeholder}
-        type={type}
-        className="block w-full min-w-0 flex-1 pl-3 rounded-none rounded-r-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-input placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-        aria-invalid={ariaInvalid}
-        aria-describedby={ariaDescribedby}
-      >
-        {fieldType === 'select' ? children : undefined}
+      <Field name={name}>
+        {({ field }: any) => (
+          <Input
+            {...field}
+            placeholder={placeholder}
+            type={type}
+            className="block w-full min-w-0 flex-1 pl-3 rounded-none rounded-r-md"
+            aria-invalid={ariaInvalid}
+            aria-describedby={ariaDescribedby}
+          >
+            {fieldType === 'select' ? children : undefined}
+          </Input>
+        )}
       </Field>
     </div>
   );

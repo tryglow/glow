@@ -1,7 +1,7 @@
 'use client';
 
-import { Button } from '@/app/components/ui/button';
 import { signInWithTikTok } from '@/app/lib/auth-actions';
+import { Button } from '@tryglow/ui';
 
 const TikTokMark = () => {
   return (

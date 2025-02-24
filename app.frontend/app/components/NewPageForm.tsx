@@ -3,14 +3,17 @@
 import { FormField } from './FormField';
 import { PageThemePreview } from '@/app/components/PageThemePreview';
 import { InternalApi } from '@/app/lib/api';
-import { Button } from '@/components/ui/button';
-import { DialogFooter } from '@/components/ui/dialog';
-import { Label } from '@/components/ui/label';
-import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
-import { useToast } from '@/components/ui/use-toast';
 import { regexSlug } from '@/lib/slugs';
 import { defaultThemeSeeds } from '@/lib/theme';
 import { captureException } from '@sentry/nextjs';
+import {
+  Button,
+  DialogFooter,
+  Label,
+  RadioGroup,
+  RadioGroupItem,
+  useToast,
+} from '@tryglow/ui';
 import { Form, Formik, FormikHelpers } from 'formik';
 import { Loader2 } from 'lucide-react';
 import { useRouter } from 'next/navigation';

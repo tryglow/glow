@@ -4,26 +4,24 @@ import { FormField } from '../FormField';
 import { updateGeneralPageSettings } from './actions';
 import { generalPageSettingsSchema } from './shared';
 import VerificationRequestDialog from '@/app/components/VerificationRequestDialog';
+import { InternalApi } from '@/app/lib/api';
+import { ChevronDownIcon } from '@radix-ui/react-icons';
+import { captureException } from '@sentry/nextjs';
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
-} from '@/app/components/ui/collapsible';
-import { InternalApi } from '@/app/lib/api';
-import { Button } from '@/components/ui/button';
-import {
+  Button,
   Dialog,
   DialogContent,
   DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from '@/components/ui/dialog';
-import { Label } from '@/components/ui/label';
-import { Switch } from '@/components/ui/switch';
-import { useToast } from '@/components/ui/use-toast';
-import { ChevronDownIcon } from '@radix-ui/react-icons';
-import { captureException } from '@sentry/nextjs';
+  Label,
+  Switch,
+  useToast,
+} from '@tryglow/ui';
 import { Form, Formik, FormikHelpers } from 'formik';
 import { withZodSchema } from 'formik-validator-zod';
 import { Loader2 } from 'lucide-react';

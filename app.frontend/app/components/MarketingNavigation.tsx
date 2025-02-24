@@ -1,10 +1,10 @@
 'use client';
 
 import { MarketingContainer } from '@/app/components/MarketingContainer';
-import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { Dialog } from '@headlessui/react';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
+import { Button } from '@tryglow/ui';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { ReactNode, useState } from 'react';

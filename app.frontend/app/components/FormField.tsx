@@ -1,8 +1,7 @@
-import { ExclamationCircleIcon } from '@heroicons/react/20/solid';
-import { ReactNode } from 'react';
-
 import { FormInput, FormInputWithPrefix } from '@/components/FormInput';
-import { Label } from '@/components/ui/label';
+import { ExclamationCircleIcon } from '@heroicons/react/20/solid';
+import { Label } from '@tryglow/ui';
+import { ReactNode } from 'react';
 
 interface Props {
   name: string;

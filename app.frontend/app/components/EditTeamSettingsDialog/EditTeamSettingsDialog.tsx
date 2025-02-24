@@ -1,20 +1,21 @@
 'use client';
 
-import { Team, TeamInvite, User } from '@tryglow/prisma';
-import { useEffect, useState } from 'react';
-
+import { fetchTeamMembers, fetchTeamSettings } from './actions';
 import { EditTeamSettingsGeneral } from '@/components/EditTeamSettingsDialog/EditTeamSettingsGeneralForm';
 import { EditTeamSettingsMembers } from '@/components/EditTeamSettingsDialog/EditTeamSettingsMembersForm';
+import { Team, TeamInvite, User } from '@tryglow/prisma';
 import {
   Dialog,
   DialogContent,
   DialogDescription,
   DialogHeader,
   DialogTitle,
-} from '@/components/ui/dialog';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-
-import { fetchTeamMembers, fetchTeamSettings } from './actions';
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from '@tryglow/ui';
+import { useEffect, useState } from 'react';
 
 interface Props {
   open: boolean;

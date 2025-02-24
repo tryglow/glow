@@ -1,17 +1,17 @@
 'use client';
 
 import { FormField } from '@/app/components/FormField';
-import { Button } from '@/app/components/ui/button';
+import { createVerificationRequest } from '@/app/lib/actions/verification';
 import {
+  Button,
   Dialog,
   DialogContent,
   DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from '@/app/components/ui/dialog';
-import { toast } from '@/app/components/ui/use-toast';
-import { createVerificationRequest } from '@/app/lib/actions/verification';
+  toast,
+} from '@tryglow/ui';
 import { Form, Formik } from 'formik';
 import { withZodSchema } from 'formik-validator-zod';
 import { z } from 'zod';

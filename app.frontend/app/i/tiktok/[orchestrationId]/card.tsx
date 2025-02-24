@@ -1,7 +1,7 @@
 import { BrandLogo, TiktokLogo } from './assets';
-import { Button } from '@/app/components/ui/button';
 import { apiServerFetch } from '@/app/lib/api-server';
 import { captureMessage } from '@sentry/nextjs';
+import { Button } from '@tryglow/ui';
 import Link from 'next/link';
 
 async function fetchTiktokOrchestrator(orchestrationId: string) {
