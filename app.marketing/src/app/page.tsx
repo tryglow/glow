@@ -359,7 +359,7 @@ export default async function LandingPage(props: {
           <div className="grid grid-cols-1 md:grid-cols-3 md:grid-rows-2 gap-6 w-full">
             <div className="w-full bg-[#e2e5ea] bg-gradient-to-tr from-[#607166] to-[#87a290] border border-stone-200 md:row-span-2 overflow-hidden rounded-xl flex flex-col justify-between">
               <Image
-                src="/assets/landing-page/dynamic.png"
+                src="/i/assets/landing-page/dynamic.png"
                 width={789}
                 height={1311}
                 className="w-full border-b border-stone-100"
@@ -377,7 +377,7 @@ export default async function LandingPage(props: {
             </div>
             <div className="w-full bg-gradient-to-tr from-[#4e54c8] to-[#8f94fb] border border-stone-200 overflow-hidden rounded-xl flex flex-col justify-between md:col-span-2">
               <Image
-                src="/assets/landing-page/drag.png"
+                src="/i/assets/landing-page/drag.png"
                 width={789}
                 height={294}
                 className="w-full border-b border-stone-100"
@@ -396,7 +396,7 @@ export default async function LandingPage(props: {
               <Image
                 width={789}
                 height={479}
-                src="/assets/landing-page/themes.png"
+                src="/i/assets/landing-page/themes.png"
                 className="w-full border-b border-stone-100"
                 alt=""
               />
@@ -414,7 +414,7 @@ export default async function LandingPage(props: {
               <Image
                 width={789}
                 height={479}
-                src="/assets/landing-page/devices.png"
+                src="/i/assets/landing-page/devices.png"
                 className="w-full border-b border-stone-100"
                 alt=""
               />
@@ -437,7 +437,7 @@ export default async function LandingPage(props: {
             Explore
           </h2>
           <Link
-            href="/explore"
+            href="/i/explore"
             className="inline-block text-base text-slate-600 mb-8"
           >
             View all →
@@ -588,7 +588,7 @@ export default async function LandingPage(props: {
               <Image
                 width={831}
                 height={831}
-                src="/assets/landing-page/blocks.webp"
+                src="/i/assets/landing-page/blocks.webp"
                 className="hidden md:block flex-1 h-full w-full object-cover"
                 alt=""
               />
