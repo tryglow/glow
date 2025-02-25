@@ -17,39 +17,6 @@ export default async function analyticsRoutes(
   );
 }
 
-const fakeData = [
-  {
-    date: '2025-02-14',
-    total_views: 20,
-    unique_visitors: 1,
-  },
-  {
-    date: '2025-02-15',
-    total_views: 210,
-    unique_visitors: 10,
-  },
-  {
-    date: '2025-02-16',
-    total_views: 34,
-    unique_visitors: 10,
-  },
-  {
-    date: '2025-02-17',
-    total_views: 27,
-    unique_visitors: 1,
-  },
-  {
-    date: '2025-02-18',
-    total_views: 4,
-    unique_visitors: 2,
-  },
-  {
-    date: '2025-02-19',
-    total_views: 20,
-    unique_visitors: 1,
-  },
-];
-
 async function getPageAnalyticsHandler(
   request: FastifyRequest<{ Params: { pageId: string } }>,
   response: FastifyReply
@@ -102,10 +69,6 @@ async function getPageAnalyticsHandler(
     }
 
     const analyticsData = await analyticsResponse.json();
-
-    // const analyticsData = {
-    //   data: [...(await analyticsResponse.json()).data, ...fakeData],
-    // };
 
     const totalViews = analyticsData.data.reduce(
       (acc: number, curr: any) => acc + curr.total_views,
