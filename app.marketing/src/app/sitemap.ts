@@ -1,5 +1,5 @@
-import { getArticles } from '../../app.marketing/app/blog/utils';
-import { getLearnPosts } from '@/app/i/learn/utils';
+import { getArticles } from '@/app/blog/utils';
+import { getLearnPosts } from '@/app/learn/utils';
 import { MetadataRoute } from 'next';
 
 const baseUrl = `https://glow.as`;

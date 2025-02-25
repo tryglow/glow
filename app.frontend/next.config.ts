@@ -24,6 +24,10 @@ const nextConfig: NextConfig = {
       destination: `${process.env.NEXT_PUBLIC_MARKETING_URL}/i`,
     },
     {
+      source: '/sitemap.xml',
+      destination: `${process.env.NEXT_PUBLIC_MARKETING_URL}/i/sitemap.xml`,
+    },
+    {
       source: '/i/:path*',
       destination: `${process.env.NEXT_PUBLIC_MARKETING_URL}/i/:path*`,
     },
