@@ -24,7 +24,7 @@ export async function GET() {
   });
 
   if (!pages || pages.length === 0) {
-    return redirect('/');
+    return redirect('/new');
   }
 
   return redirect(`/${pages[0].slug}`);
