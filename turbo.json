@@ -9,8 +9,16 @@
       "inputs": ["$TURBO_DEFAULT$", ".env"],
       "cache": false
     },
+    "build:tracker": {
+      "dependsOn": [],
+      "outputs": ["package.tinybird/dist/tracker.js"]
+    },
+    "copy-tinybird-tracker": {
+      "dependsOn": ["^build:tracker"],
+      "outputs": ["app.frontend/public/assets/tinybird/tracker.js"]
+    },
     "build:frontend": {
-      "dependsOn": ["^prisma:generate:no-engine"],
+      "dependsOn": ["^prisma:generate:no-engine", "^copy-tinybird-tracker"],
       "env": [
         "DATABASE_URL",
         "DIRECT_URL",
@@ -49,7 +57,6 @@
         "SPOTIFY_CLIENT_ID",
         "SPOTIFY_CLIENT_SECRET",
         "STRIPE_API_SECRET_KEY",
-        "TINYBIRD_DASHBOARD_TOKEN",
         "LOOPS_API_KEY",
 
         "VERCEL_UNDICI"
@@ -94,6 +101,7 @@
         "TIKTOK_CALLBACK_URL",
         "TIKTOK_CLIENT_KEY",
         "TIKTOK_CLIENT_SECRET",
+        "TINYBIRD_API_KEY",
         "INTERNAL_API_KEY"
       ],
       "inputs": ["$TURBO_DEFAULT$", ".env"]
@@ -140,6 +148,7 @@
         "TIKTOK_CALLBACK_URL",
         "TIKTOK_CLIENT_KEY",
         "TIKTOK_CLIENT_SECRET",
+        "TINYBIRD_API_KEY",
         "INTERNAL_API_KEY"
       ],
       "inputs": ["$TURBO_DEFAULT$", ".env"]
@@ -155,6 +164,10 @@
     "prisma:migrate": {
       "cache": false,
       "env": ["DATABASE_URL", "DIRECT_URL"]
+    },
+    "build": {
+      "dependsOn": ["^build"],
+      "outputs": ["dist/**"]
     }
   }
 }

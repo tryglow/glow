@@ -8,6 +8,7 @@ import pagesRoutes from './modules/pages';
 import tiktokServiceRoutes from './modules/services/tiktok';
 import { authenticateDecorator } from '@/decorators/authenticate';
 import { authenticateApiKeyDecorator } from '@/decorators/authenticateApiKey';
+import analyticsRoutes from '@/modules/analytics';
 import assetsRoutes from '@/modules/assets';
 import billingRoutes from '@/modules/billing';
 import integrationsRoutes from '@/modules/integrations';
@@ -70,6 +71,7 @@ fastify.register(reactionsRoutes, { prefix: '/reactions' });
 fastify.register(assetsRoutes, { prefix: '/assets' });
 fastify.register(billingRoutes, { prefix: '/billing' });
 fastify.register(orchestratorsRoutes, { prefix: '/orchestrators' });
+fastify.register(analyticsRoutes, { prefix: '/analytics' });
 
 fastify.register(tiktokServiceRoutes, { prefix: '/services/tiktok' });
 fastify.register(instagramServiceRoutes, { prefix: '/services/instagram' });
