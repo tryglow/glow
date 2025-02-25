@@ -1,6 +1,5 @@
 import { BrandLogo, TiktokLogo } from './assets';
 import { runOrchestration } from '@/app/tiktok/actions';
-import { captureMessage } from '@sentry/nextjs';
 import { Button } from '@tryglow/ui';
 import Link from 'next/link';
 
@@ -14,12 +13,6 @@ export async function Card({
   const orchestrator = isLoading
     ? null
     : await runOrchestration(orchestrationId);
-
-  if (orchestrator?.error) {
-    captureMessage(
-      `TikTok orchestration ${orchestrationId} error: ${orchestrator.error}`
-    );
-  }
 
   const title = orchestrator?.error
     ? 'Oh no!'

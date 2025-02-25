@@ -4,13 +4,14 @@
   "private": true,
   "scripts": {
     "dev": "dotenvx run -f ../.env.local -- next dev --port 3002",
-    "build:frontend": "next build",
-    "start:frontend": "next start",
+    "build:marketing": "next build",
+    "start:marketing": "next start",
     "lint": "next lint",
     "vercel:build": "next build"
   },
   "dependencies": {
     "@tryglow/ui": "*",
+    "@next/mdx": "^15.0.2",
     "next": "canary",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
