@@ -1,19 +1,12 @@
 import { auth } from '@/app/lib/auth';
 import prisma from '@/lib/prisma';
 import { redirect } from 'next/navigation';
-import { NextRequest } from 'next/server';
 
-export async function GET(req: NextRequest) {
+export async function GET() {
   const session = await auth();
 
-  if (!session) {
+  if (!session || !session.currentTeamId) {
     return redirect('/');
-  }
-
-  if (!session?.currentTeamId) {
-    return {
-      pages: [],
-    };
   }
 
   const pages = await prisma.page.findMany({
