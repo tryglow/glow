@@ -1,37 +1,31 @@
-import createMDX from '@next/mdx';
 import { withSentryConfig } from '@sentry/nextjs';
 import type { NextConfig } from 'next';
-import remarkGfm from 'remark-gfm';
-
-const withMDX = createMDX({
-  options: {
-    remarkPlugins: [remarkGfm],
-  },
-});
 
 const nextConfig: NextConfig = {
   experimental: {
     nodeMiddleware: true,
   },
   transpilePackages: ['@tryglow/ui'],
-  rewrites: async () => [
-    {
-      source: '/new-api/:path*',
-      destination: 'http://localhost:3001/:path*',
-    },
-    {
-      source: '/',
-      destination: `${process.env.NEXT_PUBLIC_MARKETING_URL}/i`,
-    },
-    {
-      source: '/sitemap.xml',
-      destination: `${process.env.NEXT_PUBLIC_MARKETING_URL}/i/sitemap.xml`,
-    },
-    {
-      source: '/i/:path*',
-      destination: `${process.env.NEXT_PUBLIC_MARKETING_URL}/i/:path*`,
-    },
-  ],
+  rewrites: async () => ({
+    beforeFiles: [
+      {
+        source: '/new-api/:path*',
+        destination: 'http://localhost:3001/:path*',
+      },
+      {
+        source: '/',
+        destination: `${process.env.NEXT_PUBLIC_MARKETING_URL}/i`,
+      },
+      {
+        source: '/sitemap.xml',
+        destination: `${process.env.NEXT_PUBLIC_MARKETING_URL}/i/sitemap.xml`,
+      },
+      {
+        source: '/i/:path*',
+        destination: `${process.env.NEXT_PUBLIC_MARKETING_URL}/i/:path*`,
+      },
+    ],
+  }),
   redirects: async () => [
     {
       source: '/pricing',
@@ -70,7 +64,7 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default withSentryConfig(withMDX(nextConfig), {
+export default withSentryConfig(nextConfig, {
   org: 'hyperdusk',
   project: 'glow',
   silent: false,

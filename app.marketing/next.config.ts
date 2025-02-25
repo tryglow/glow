@@ -1,5 +1,5 @@
 import createMDX from '@next/mdx';
-import type { NextConfig } from 'next';
+import { NextConfig } from 'next';
 import remarkGfm from 'remark-gfm';
 
 const withMDX = createMDX({
@@ -45,4 +45,5 @@ const nextConfig: NextConfig = {
   },
 };
 
+// @ts-expect-error
 export default withMDX(nextConfig);
