@@ -11,6 +11,7 @@ import {
   CardContent,
   Skeleton,
 } from '@tryglow/ui';
+import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { Area, AreaChart, CartesianGrid, XAxis } from 'recharts';
 import { useSWRConfig } from 'swr';
@@ -37,17 +38,27 @@ const chartConfig = {
 
 export function SidebarAnalytics() {
   const [analyticsData, setAnalyticsData] = useState<{
-    totals: {
-      total_views: number;
-      unique_visitors: number;
+    stats: {
+      totals: {
+        views: number;
+        uniqueVisitors: number;
+      };
+      data: { date: string; total_views: number; unique_visitors: number }[];
     };
-    data: { date: string; total_views: number; unique_visitors: number }[];
+    locations: {
+      location: string;
+      hits: number;
+      visits: number;
+    }[];
   }>({
-    totals: {
-      total_views: 0,
-      unique_visitors: 0,
+    stats: {
+      totals: {
+        views: 0,
+        uniqueVisitors: 0,
+      },
+      data: [],
     },
-    data: [],
+    locations: [],
   });
   const [isLoading, setIsLoading] = useState(true);
 
@@ -59,6 +70,8 @@ export function SidebarAnalytics() {
       try {
         setIsLoading(true);
         const data = await InternalApi.get(`/analytics/pages/${pageId}`);
+
+        console.log('DATA', data);
         setAnalyticsData(data);
       } catch (error) {
         console.error(error);
@@ -90,8 +103,8 @@ export function SidebarAnalytics() {
                       <>
                         <span className="text-3xl font-bold">
                           {dataPoint.key === 'total_views'
-                            ? analyticsData.totals.total_views
-                            : analyticsData.totals.unique_visitors}
+                            ? analyticsData.stats.totals.views
+                            : analyticsData.stats.totals.uniqueVisitors}
                         </span>
                         <span className="text-sm text-neutral-500">
                           {dataPoint.name}
@@ -105,7 +118,10 @@ export function SidebarAnalytics() {
                         <Skeleton className="h-[100px] w-full" />
                       </div>
                     ) : (
-                      <AreaChart accessibilityLayer data={analyticsData.data}>
+                      <AreaChart
+                        accessibilityLayer
+                        data={analyticsData.stats.data}
+                      >
                         <CartesianGrid vertical={false} />
                         <XAxis
                           dataKey="date"
@@ -133,6 +149,63 @@ export function SidebarAnalytics() {
               </Card>
             </div>
           ))}
+
+          <Card className="shadow-none mb-4">
+            <CardContent>
+              <div className="flex flex-col gap-0 mt-4 mb-4">
+                <span className="text-lg font-semibold mb-4">
+                  Top Locations
+                </span>
+                {isLoading ? (
+                  <div className="space-y-2">
+                    <Skeleton className="h-8 w-full" />
+                    <Skeleton className="h-8 w-full" />
+                    <Skeleton className="h-8 w-full" />
+                  </div>
+                ) : (
+                  <div className="space-y-3">
+                    {analyticsData.locations.map((location, index) => (
+                      <div
+                        key={location.location}
+                        className="flex items-center gap-2"
+                      >
+                        <Image
+                          src={`https://flag.vercel.app/s/${location.location}.svg`}
+                          alt={location.location}
+                          width={20}
+                          height={15}
+                          className="rounded-sm"
+                        />
+                        <div className="flex-1 h-8 relative">
+                          <div
+                            className="absolute inset-y-0 left-0 bg-stone-100 rounded"
+                            style={{
+                              width: `${(location.hits / Math.max(...analyticsData.locations.map((l) => l.hits))) * 100}%`,
+                            }}
+                          />
+                          <div className="absolute inset-y-0 left-2 flex items-center">
+                            <span className="text-sm font-medium">
+                              {location.location}
+                            </span>
+                          </div>
+                          <div className="absolute inset-y-0 right-2 flex items-center">
+                            <span className="text-sm text-stone-500">
+                              {Math.round(
+                                (location.hits /
+                                  analyticsData.stats.totals.views) *
+                                  100
+                              )}
+                              %
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </CardContent>
+          </Card>
         </SidebarGroupContent>
       </SidebarGroup>
     </>

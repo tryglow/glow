@@ -4,19 +4,35 @@ export const getPageAnalyticsSchema: FastifySchema = {
   response: {
     200: {
       properties: {
-        totals: {
+        stats: {
           type: 'object',
           properties: {
-            total_views: { type: 'number' },
-            unique_visitors: { type: 'number' },
+            totals: {
+              type: 'object',
+              properties: {
+                views: { type: 'number' },
+                uniqueVisitors: { type: 'number' },
+              },
+            },
+            data: {
+              type: 'array',
+              items: {
+                date: { type: 'string' },
+                total_views: { type: 'number' },
+                unique_visitors: { type: 'number' },
+              },
+            },
           },
         },
-        data: {
+        locations: {
           type: 'array',
           items: {
-            date: { type: 'string' },
-            total_views: { type: 'number' },
-            unique_visitors: { type: 'number' },
+            type: 'object',
+            properties: {
+              location: { type: 'string' },
+              visits: { type: 'number' },
+              hits: { type: 'number' },
+            },
           },
         },
       },
