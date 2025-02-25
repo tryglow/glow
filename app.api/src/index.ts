@@ -3,9 +3,11 @@ import prisma from './lib/prisma';
 import './lib/sentry';
 import blocksRoutes from './modules/blocks';
 import { coreRoutes } from './modules/core';
+import marketingRoutes from './modules/marketing';
 import pagesRoutes from './modules/pages';
 import tiktokServiceRoutes from './modules/services/tiktok';
 import { authenticateDecorator } from '@/decorators/authenticate';
+import { authenticateApiKeyDecorator } from '@/decorators/authenticateApiKey';
 import assetsRoutes from '@/modules/assets';
 import billingRoutes from '@/modules/billing';
 import integrationsRoutes from '@/modules/integrations';
@@ -57,6 +59,7 @@ await fastify.register(cors, {
 });
 
 fastify.register(coreRoutes);
+fastify.register(marketingRoutes);
 fastify.register(blocksRoutes, { prefix: '/blocks' });
 fastify.register(pagesRoutes, { prefix: '/pages' });
 fastify.register(themesRoutes, { prefix: '/themes' });
@@ -80,6 +83,7 @@ fastify.register(internalJobsRoutes, { prefix: '/internal-jobs' });
 fastify.use('/auth', ExpressAuth(authConfig));
 
 fastify.decorate('authenticate', authenticateDecorator);
+fastify.decorate('authenticateApiKey', authenticateApiKeyDecorator);
 
 Sentry.setupFastifyErrorHandler(fastify);
 

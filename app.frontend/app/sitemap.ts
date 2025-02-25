@@ -1,4 +1,4 @@
-import { getArticles } from '@/app/i/blog/utils';
+import { getArticles } from '../../app.marketing/app/blog/utils';
 import { getLearnPosts } from '@/app/i/learn/utils';
 import { MetadataRoute } from 'next';
 

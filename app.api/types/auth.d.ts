@@ -26,5 +26,12 @@ declare module 'fastify' {
         throwError?: boolean;
       }
     ) => Promise<{ user: { id: string } } | HttpError>;
+    authenticateApiKey: (
+      request: FastifyRequest,
+      reply: FastifyReply,
+      options?: {
+        throwError?: boolean;
+      }
+    ) => Promise<boolean | HttpError>;
   }
 }

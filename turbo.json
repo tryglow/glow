@@ -56,7 +56,10 @@
       ],
       "inputs": ["$TURBO_DEFAULT$", ".env"]
     },
-
+    "build:marketing": {
+      "env": ["NEXT_PUBLIC_API_URL", "INTERNAL_API_KEY", "NEXT_PUBLIC_APP_URL"],
+      "inputs": ["$TURBO_DEFAULT$", ".env"]
+    },
     "build:api": {
       "env": [
         "PORT",
@@ -90,12 +93,17 @@
         "THREADS_CLIENT_SECRET",
         "TIKTOK_CALLBACK_URL",
         "TIKTOK_CLIENT_KEY",
-        "TIKTOK_CLIENT_SECRET"
+        "TIKTOK_CLIENT_SECRET",
+        "INTERNAL_API_KEY"
       ],
       "inputs": ["$TURBO_DEFAULT$", ".env"]
     },
     "start:frontend": {
       "dependsOn": ["build:frontend"],
+      "inputs": ["$TURBO_DEFAULT$", ".env"]
+    },
+    "start:marketing": {
+      "dependsOn": ["build:marketing"],
       "inputs": ["$TURBO_DEFAULT$", ".env"]
     },
     "start:api": {
@@ -131,7 +139,8 @@
         "THREADS_CLIENT_SECRET",
         "TIKTOK_CALLBACK_URL",
         "TIKTOK_CLIENT_KEY",
-        "TIKTOK_CLIENT_SECRET"
+        "TIKTOK_CLIENT_SECRET",
+        "INTERNAL_API_KEY"
       ],
       "inputs": ["$TURBO_DEFAULT$", ".env"]
     },

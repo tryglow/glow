@@ -16,12 +16,16 @@ const nextConfig: NextConfig = {
   transpilePackages: ['@tryglow/ui'],
   rewrites: async () => [
     {
-      source: '/',
-      destination: '/i/landing-page',
-    },
-    {
       source: '/new-api/:path*',
       destination: 'http://localhost:3001/:path*',
+    },
+    {
+      source: '/',
+      destination: `${process.env.NEXT_PUBLIC_MARKETING_URL}/i`,
+    },
+    {
+      source: '/i/:path*',
+      destination: `${process.env.NEXT_PUBLIC_MARKETING_URL}/i/:path*`,
     },
   ],
   redirects: async () => [
