@@ -90,6 +90,8 @@ services:
         sync: false
       - key: TINYBIRD_API_KEY
         sync: false
+      - key: SCREENSHOT_API_KEY
+        sync: false
     region: frankfurt
     buildCommand:
       npm install && turbo run prisma:migrate prisma:generate --filter=@tryglow/prisma && turbo run build:api
