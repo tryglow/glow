@@ -5,6 +5,19 @@ export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
   const redirectTo = searchParams.get('redirectTo');
   const provider = searchParams.get('provider');
+  const email = searchParams.get('email');
+
+  if (provider === 'http-email') {
+    if (!email) {
+      return NextResponse.json({ error: 'Email is required' }, { status: 400 });
+    }
+
+    return await signIn('http-email', {
+      email,
+      redirectTo: redirectTo || undefined,
+      redirect: true,
+    });
+  }
 
   if (provider === 'google') {
     return await signIn('google', {

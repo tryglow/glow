@@ -1,6 +1,7 @@
 'use client';
 
-import { LoginProviderButton } from '@/components/LoginProviderButton';
+import { LoginProviderButton } from './LoginProviderButton';
+import { signInWithEmail } from '@/app/lib/auth-actions';
 import { Button, Input, toast } from '@tryglow/ui';
 import { useState } from 'react';
 
@@ -11,10 +12,7 @@ interface Props {
 
 export function LoginForm({ onComplete, redirectTo }: Props) {
   const [email, setEmail] = useState('');
-
-  const handleEmailSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
+  const handleEmailSubmit = async () => {
     if (!email || email === '') {
       toast({
         title: 'Please enter your email',
@@ -22,21 +20,7 @@ export function LoginForm({ onComplete, redirectTo }: Props) {
       return;
     }
 
-    try {
-      const url = new URL('/api/auth/signin', window.location.origin);
-      url.searchParams.set('provider', 'http-email');
-      url.searchParams.set('email', email);
-      url.searchParams.set('redirectTo', redirectTo || '');
-
-      const req = await fetch(url);
-
-      if (req.ok) {
-        window.location.href = '/i/auth/verify';
-      }
-    } catch (error) {
-      console.error(error);
-    }
-
+    await signInWithEmail(email, redirectTo);
     if (onComplete) {
       onComplete();
     }
@@ -44,7 +28,7 @@ export function LoginForm({ onComplete, redirectTo }: Props) {
 
   return (
     <div className="flex flex-col gap-2 w-full">
-      <form onSubmit={handleEmailSubmit}>
+      <form action={handleEmailSubmit}>
         <Input
           type="email"
           value={email}

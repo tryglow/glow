@@ -18,7 +18,7 @@ export default function VerifyLoginPage() {
           <Image
             width={40}
             height={40}
-            src="/assets/logo.png"
+            src="/i/assets/logo.png"
             alt="Glow"
             className="mx-auto h-10 w-auto rounded-md mb-4"
           />

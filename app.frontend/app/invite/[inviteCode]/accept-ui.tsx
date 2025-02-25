@@ -1,7 +1,7 @@
 'use client';
 
 import { acceptInvite } from './actions';
-import { LoginForm } from '@/app/components/LoginForm';
+import { LoginForm } from '@/components/LoginForm';
 import { Button, toast } from '@tryglow/ui';
 import { useRouter } from 'next/navigation';
 
