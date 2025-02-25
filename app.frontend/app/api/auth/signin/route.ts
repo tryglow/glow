@@ -14,28 +14,28 @@ export async function GET(req: NextRequest) {
 
     return await signIn('http-email', {
       email,
-      redirectTo: redirectTo || undefined,
+      redirectTo: redirectTo || '/edit',
       redirect: true,
     });
   }
 
   if (provider === 'google') {
     return await signIn('google', {
-      redirectTo: redirectTo || undefined,
+      redirectTo: redirectTo || '/edit',
       redirect: true,
     });
   }
 
   if (provider === 'twitter') {
     return await signIn('twitter', {
-      redirectTo: redirectTo || undefined,
+      redirectTo: redirectTo || '/edit',
       redirect: true,
     });
   }
 
   if (provider === 'tiktok') {
     return await signIn('tiktok', {
-      redirectTo: redirectTo || undefined,
+      redirectTo: redirectTo || '/edit',
       redirect: true,
     });
   }
