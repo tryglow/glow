@@ -6,6 +6,8 @@ node_modules
 .pnp.js
 .yarn/install-state.gz
 
+app.frontend/public/assets/tinybird
+
 .tinyb
 .venv
 

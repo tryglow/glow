@@ -3,11 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "dotenvx run -f ../.env.local -- next dev",
-    "build:frontend": "next build",
+    "dev": "npm run copy-tracker && dotenvx run -f ../.env.local -- next dev",
+    "copy-tracker": "node scripts/copy-tracker.js",
+    "build:frontend": "npm run copy-tracker && next build",
     "start:frontend": "next start",
     "lint": "next lint",
-    "vercel:build": "prisma generate --no-engine && prisma migrate deploy && next build"
+    "vercel:build": "prisma generate --no-engine && prisma migrate deploy && npm run copy-tracker && next build"
   },
   "prisma": {
     "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
@@ -55,6 +56,7 @@
     "@tailwindcss/typography": "^0.5.15",
     "@tryglow/blocks": "*",
     "@tryglow/prisma": "*",
+    "@tryglow/tinybird": "*",
     "@types/mdx": "^2.0.13",
     "@vercel/analytics": "^1.5.0",
     "class-variance-authority": "^0.7.0",

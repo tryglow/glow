@@ -49,7 +49,6 @@
         "SPOTIFY_CLIENT_ID",
         "SPOTIFY_CLIENT_SECRET",
         "STRIPE_API_SECRET_KEY",
-        "TINYBIRD_DASHBOARD_TOKEN",
         "LOOPS_API_KEY",
 
         "VERCEL_UNDICI"
@@ -90,7 +89,8 @@
         "THREADS_CLIENT_SECRET",
         "TIKTOK_CALLBACK_URL",
         "TIKTOK_CLIENT_KEY",
-        "TIKTOK_CLIENT_SECRET"
+        "TIKTOK_CLIENT_SECRET",
+        "TINYBIRD_API_KEY"
       ],
       "inputs": ["$TURBO_DEFAULT$", ".env"]
     },
@@ -131,7 +131,8 @@
         "THREADS_CLIENT_SECRET",
         "TIKTOK_CALLBACK_URL",
         "TIKTOK_CLIENT_KEY",
-        "TIKTOK_CLIENT_SECRET"
+        "TIKTOK_CLIENT_SECRET",
+        "TINYBIRD_API_KEY"
       ],
       "inputs": ["$TURBO_DEFAULT$", ".env"]
     },
@@ -146,6 +147,10 @@
     "prisma:migrate": {
       "cache": false,
       "env": ["DATABASE_URL", "DIRECT_URL"]
+    },
+    "build": {
+      "dependsOn": ["^build"],
+      "outputs": ["dist/**"]
     }
   }
 }
