@@ -4,6 +4,8 @@ import {
   sendSubscriptionCancelledEmail,
   sendSubscriptionCreatedEmail,
 } from '@/modules/notifications/service';
+import { captureMessage } from '@sentry/node';
+import { User } from '@tryglow/prisma';
 import Stripe from 'stripe';
 
 const stripe = new Stripe(process.env.STRIPE_API_SECRET_KEY as string);
@@ -115,4 +117,118 @@ export async function cancelSubscription(subscriptionId: string) {
   }
 
   return;
+}
+
+export async function createStripeCustomer(userId: string) {
+  const user = await prisma.user.findUnique({
+    where: {
+      id: userId,
+    },
+  });
+
+  if (!user) {
+    throw Error('User not found');
+  }
+
+  if (user.stripeCustomerId) {
+    captureMessage('User already has a stripe customer ID', {
+      level: 'info',
+      extra: {
+        stripeCustomerId: user.stripeCustomerId,
+      },
+    });
+
+    return user.stripeCustomerId;
+  }
+
+  const customer = await stripe.customers.create({
+    name: user.name ?? '',
+    email: user.email ?? '',
+    metadata: {
+      dbUserId: user.id,
+    },
+  });
+
+  if (!customer) {
+    throw Error('Error creating customer');
+  }
+
+  await prisma.user.update({
+    where: {
+      id: user.id,
+    },
+    data: {
+      stripeCustomerId: customer.id,
+    },
+  });
+
+  return customer.id;
+}
+
+export async function getOrCreateStripeCustomer(userId: string) {
+  if (!userId) {
+    throw Error('User not found');
+  }
+
+  return await createStripeCustomer(userId);
+}
+
+export const getBillingPortalLink = async (userId: string) => {
+  const stripeCustomerId = await getOrCreateStripeCustomer(userId);
+
+  const stripeSession = await stripe.billingPortal.sessions.create({
+    customer: stripeCustomerId,
+    return_url: `${process.env.NEXT_PUBLIC_BASE_URL}/`,
+  });
+
+  return stripeSession.url;
+};
+
+export async function getCheckoutLink({
+  planType,
+  user,
+}: {
+  planType: 'premium' | 'team';
+  user: User;
+}) {
+  let stripeCustomerId = user?.stripeCustomerId;
+
+  if (!user?.stripeCustomerId) {
+    stripeCustomerId = await getOrCreateStripeCustomer(user.id);
+
+    if (!stripeCustomerId) {
+      throw Error('Unable to create Stripe Customer');
+    }
+  }
+
+  const price =
+    prices[process.env.NODE_ENV as 'development' | 'production'][planType];
+
+  if (!price) {
+    throw Error('Price ID not found');
+  }
+
+  if (!price) {
+    throw Error('Price not found');
+  }
+
+  const successUrl =
+    planType === 'team'
+      ? `${process.env.NEXT_PUBLIC_BASE_URL}/?showTeamOnboarding=true`
+      : `${process.env.NEXT_PUBLIC_BASE_URL}/?showPremiumOnboarding=true`;
+
+  const stripeSession = await stripe.checkout.sessions.create({
+    customer: stripeCustomerId as string,
+    success_url: successUrl,
+    line_items: [
+      {
+        price,
+        quantity: 1,
+      },
+    ],
+    allow_promotion_codes: true,
+    mode: 'subscription',
+  });
+
+  return stripeSession.url;
 }

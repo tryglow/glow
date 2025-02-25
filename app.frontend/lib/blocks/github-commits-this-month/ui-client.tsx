@@ -1,8 +1,8 @@
 import { BlockProps } from '../ui';
 import { GithubLogo, GithubServerUI } from './ui-server';
 import { CoreBlock } from '@/components/CoreBlock';
-import { Skeleton } from '@/components/ui/skeleton';
 import { GithubCommitsThisMonthBlockConfig } from '@tryglow/blocks';
+import { Skeleton } from '@tryglow/ui';
 import { FunctionComponent, Suspense } from 'react';
 
 export const GitHubCommitsThisMonth: FunctionComponent<

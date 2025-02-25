@@ -1,14 +1,13 @@
 'use client';
 
+import { CreatePageForm } from './NewPageForm';
 import {
   Dialog,
   DialogContent,
   DialogDescription,
   DialogHeader,
   DialogTitle,
-} from '@/components/ui/dialog';
-
-import { CreatePageForm } from './NewPageForm';
+} from '@tryglow/ui';
 
 interface Props {
   open: boolean;

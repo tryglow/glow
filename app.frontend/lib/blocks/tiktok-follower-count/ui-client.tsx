@@ -1,8 +1,8 @@
 import { BlockProps } from '../ui';
 import { CoreBlock } from '@/components/CoreBlock';
-import { Skeleton } from '@/components/ui/skeleton';
 import { TikTokFollowerCountServerUI } from '@/lib/blocks/tiktok-follower-count/ui-server';
 import { TikTokFollowerCountBlockConfig } from '@tryglow/blocks';
+import { Skeleton } from '@tryglow/ui';
 import { FunctionComponent, Suspense } from 'react';
 
 export const TikTokFollowerCount: FunctionComponent<

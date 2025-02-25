@@ -1,6 +1,11 @@
 'use strict';
 
-import { cancelSubscription, setupSubscription } from './service';
+import {
+  cancelSubscription,
+  getCheckoutLink,
+  setupSubscription,
+} from './service';
+import prisma from '@/lib/prisma';
 import { captureException } from '@sentry/node';
 import { FastifyInstance, FastifyReply } from 'fastify';
 import { FastifyRequest } from 'fastify';
@@ -15,6 +20,7 @@ export default async function billingRoutes(
     { config: { rawBody: true } },
     postStripeCallbackHandler
   );
+  fastify.get('/checkout/get-checkout-link', getCheckoutLinkHandler);
 }
 
 const stripe = new Stripe(process.env.STRIPE_API_SECRET_KEY as string);
@@ -53,4 +59,31 @@ async function postStripeCallbackHandler(
   }
 
   return response.status(200).send({ received: true });
+}
+
+async function getCheckoutLinkHandler(
+  request: FastifyRequest,
+  response: FastifyReply
+) {
+  const { planType } = request.query as { planType: 'premium' | 'team' };
+
+  const session = await request.server.authenticate(request, response);
+
+  const user = await prisma.user.findUnique({
+    where: {
+      id: session?.user.id,
+    },
+  });
+
+  if (!user) {
+    return response.status(401).send({ error: 'Unauthorized' });
+  }
+
+  const checkoutLink = await getCheckoutLink({ planType, user });
+
+  if (!checkoutLink) {
+    return response.status(400).send({ error: 'Failed to get checkout link' });
+  }
+
+  return response.status(200).send({ checkoutLink });
 }

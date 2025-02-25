@@ -1,5 +1,5 @@
 import { EditSidebar } from '@/app/components/EditSidebar';
-import { SidebarInset, SidebarTrigger } from '@/app/components/ui/sidebar';
+import { SidebarInset, SidebarTrigger } from '@tryglow/ui';
 import { ReactNode } from 'react';
 
 export function EditLayout({ children }: { children: ReactNode }) {

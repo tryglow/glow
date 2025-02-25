@@ -1,16 +1,10 @@
 'use client';
 
-import { Team } from '@tryglow/prisma';
-import { useSession } from 'next-auth/react';
-import { useState } from 'react';
-
 import { signOut } from '@/app/lib/auth-actions';
-import { getBillingPortalLink } from '@/lib/stripe';
-
 import { EditTeamSettingsDialog } from '@/components/EditTeamSettingsDialog/EditTeamSettingsDialog';
 import { NewPageDialog } from '@/components/NewPageDialog';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Button } from '@/components/ui/button';
+import { getBillingPortalLink } from '@/lib/stripe';
+import { Team } from '@tryglow/prisma';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -18,7 +12,13 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
+  Button,
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+} from '@tryglow/ui';
+import { useSession } from 'next-auth/react';
+import { useState } from 'react';
 
 interface Props {
   usersTeams?: Partial<Team>[];

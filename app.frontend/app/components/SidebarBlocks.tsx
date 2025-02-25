@@ -1,13 +1,13 @@
 import { DraggableBlockButton } from '@/app/components/DraggableBlockButton';
+import { internalApiFetcher } from '@/lib/fetch';
+import { Blocks } from '@tryglow/blocks';
 import {
   SidebarContentHeader,
   SidebarGroup,
   SidebarGroupContent,
   SidebarInput,
   SidebarMenu,
-} from '@/app/components/ui/sidebar';
-import { internalApiFetcher } from '@/lib/fetch';
-import { Blocks } from '@tryglow/blocks';
+} from '@tryglow/ui';
 import { SearchIcon } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import useSWR from 'swr';
@@ -41,7 +41,7 @@ export function SidebarBlocks() {
           <SidebarInput
             placeholder="Filter blocks"
             value={search}
-            onChange={(ev) => setSearch(ev.target.value)}
+            onChange={(ev: any) => setSearch(ev.target.value)}
             className="mt-2 pl-7"
           />
           <SearchIcon className="absolute left-2 top-2 text-muted-foreground/50 size-4" />

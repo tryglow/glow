@@ -1,15 +1,13 @@
 'use client';
 
-import {
-  BlocksIcon,
-  CableIcon,
-  ChartNoAxesCombined,
-  Cog,
-  MailIcon,
-  Palette,
-} from 'lucide-react';
-
+import { SidebarAnalytics } from './SidebarAnalytics';
+import { SidebarBlockForm } from './SidebarBlockForm';
+import { SidebarBlocks } from './SidebarBlocks';
+import { SidebarIntegrations } from './SidebarIntegrations';
+import { SidebarPageSettings } from './SidebarPageSettings';
+import { SidebarThemes } from './SidebarThemes';
 import { SidebarForms } from '@/app/components/SidebarForms';
+import { useEditModeContext } from '@/app/contexts/Edit';
 import {
   Sidebar,
   SidebarContent,
@@ -19,14 +17,15 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   useSidebar,
-} from '@/app/components/ui/sidebar';
-import { useEditModeContext } from '@/app/contexts/Edit';
-import { SidebarAnalytics } from './SidebarAnalytics';
-import { SidebarBlockForm } from './SidebarBlockForm';
-import { SidebarBlocks } from './SidebarBlocks';
-import { SidebarIntegrations } from './SidebarIntegrations';
-import { SidebarPageSettings } from './SidebarPageSettings';
-import { SidebarThemes } from './SidebarThemes';
+} from '@tryglow/ui';
+import {
+  BlocksIcon,
+  CableIcon,
+  ChartNoAxesCombined,
+  Cog,
+  MailIcon,
+  Palette,
+} from 'lucide-react';
 
 const pageMenuItems: {
   label: string;

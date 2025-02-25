@@ -1,18 +1,14 @@
 'use client';
 
+import { FormField } from '../FormField';
+import { updateGeneralTeamSettings } from './actions';
+import { generalTeamSettingsSchema } from './shared';
+import { captureException } from '@sentry/nextjs';
+import { Button, DialogFooter, useToast } from '@tryglow/ui';
 import { Form, Formik, FormikHelpers } from 'formik';
 import { withZodSchema } from 'formik-validator-zod';
 import { Loader2 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
-
-import { Button } from '@/components/ui/button';
-import { DialogFooter } from '@/components/ui/dialog';
-import { useToast } from '@/components/ui/use-toast';
-
-import { captureException } from '@sentry/nextjs';
-import { FormField } from '../FormField';
-import { updateGeneralTeamSettings } from './actions';
-import { generalTeamSettingsSchema } from './shared';
 
 export type FormValues = {
   name: string;

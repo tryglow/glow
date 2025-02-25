@@ -2,19 +2,19 @@ import { InstagramLogo } from '@/app/components/integration-icons/Instagram';
 import { SpotifyLogo } from '@/app/components/integration-icons/spotify';
 import { ThreadsLogo } from '@/app/components/integration-icons/threads';
 import { TikTokLogo } from '@/app/components/integration-icons/tiktok';
+import { InternalApi } from '@/app/lib/api';
+import { internalApiFetcher } from '@/lib/fetch';
+import { captureException } from '@sentry/nextjs';
+import { Integration } from '@tryglow/prisma';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/app/components/ui/select';
-import { InternalApi } from '@/app/lib/api';
-import { Button } from '@/components/ui/button';
-import { toast } from '@/components/ui/use-toast';
-import { internalApiFetcher } from '@/lib/fetch';
-import { captureException } from '@sentry/nextjs';
-import { Integration } from '@tryglow/prisma';
+  Button,
+  toast,
+} from '@tryglow/ui';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';

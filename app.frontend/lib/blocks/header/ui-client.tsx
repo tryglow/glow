@@ -1,8 +1,8 @@
 import { BlockProps } from '../ui';
 import { HeaderServerUI } from './ui-server';
 import { CoreBlock } from '@/components/CoreBlock';
-import { cn } from '@/lib/utils';
 import { HeaderBlockConfig } from '@tryglow/blocks';
+import { cn } from '@tryglow/ui';
 import Image from 'next/image';
 import { FunctionComponent, Suspense } from 'react';
 

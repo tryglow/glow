@@ -2,10 +2,15 @@ import { EditFormProps } from '../types';
 import { FormField } from '@/components/FormField';
 import { FormFileUpload } from '@/components/FormFileUpload';
 import { IconSelect } from '@/components/IconSelect';
-import { Button } from '@/components/ui/button';
-import { Label } from '@/components/ui/label';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { LinkBoxBlockConfig, LinkBoxSchema } from '@tryglow/blocks';
+import {
+  Button,
+  Label,
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from '@tryglow/ui';
 import { Form, Formik, FormikHelpers } from 'formik';
 import { Loader2 } from 'lucide-react';
 

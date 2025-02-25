@@ -1,20 +1,19 @@
 'use client';
 
+import { Icon, icons } from './icons';
 import { CheckIcon } from '@radix-ui/react-icons';
-import { useEffect, useState } from 'react';
-
-import { cn } from '@/lib/utils';
-
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import {
   Command,
   CommandEmpty,
   CommandInput,
   CommandItem,
   CommandList,
-} from '@/components/ui/command';
-
-import { Icon, icons } from './icons';
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+  cn,
+} from '@tryglow/ui';
+import { useEffect, useState } from 'react';
 
 interface IconSelectProps {
   onIconChange: (iconSrc: string) => void;

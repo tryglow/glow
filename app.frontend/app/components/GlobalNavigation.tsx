@@ -1,14 +1,5 @@
 'use client';
 
-import { Button } from '@/app/components/ui/button';
-import {
-  Dialog,
-  DialogContent,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from '@/app/components/ui/dialog';
-import { useSidebar } from '@/app/components/ui/sidebar';
 import { useEditModeContext } from '@/app/contexts/Edit';
 import { PageSwitcher } from '@/components/PageSwitcher';
 import { TeamSwitcher } from '@/components/TeamSwitcher';
@@ -20,6 +11,15 @@ import {
   DevicePhoneMobileIcon,
 } from '@heroicons/react/24/outline';
 import { Page, Team } from '@tryglow/prisma';
+import {
+  Dialog,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  Button,
+  useSidebar,
+} from '@tryglow/ui';
 import { PlusCircleIcon } from 'lucide-react';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';

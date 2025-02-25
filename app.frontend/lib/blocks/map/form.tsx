@@ -1,6 +1,8 @@
 import { EditFormProps } from '../types';
-import { FormField } from '@/app/components/FormField';
-import { Button } from '@/components/ui/button';
+import { FormField } from '@/components/FormField';
+import { useLoadScript } from '@react-google-maps/api';
+import { captureException } from '@sentry/nextjs';
+import { MapBlockConfig, mapThemes } from '@tryglow/blocks';
 import {
   Command,
   CommandEmpty,
@@ -8,10 +10,8 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
-} from '@/components/ui/command';
-import { useLoadScript } from '@react-google-maps/api';
-import { captureException } from '@sentry/nextjs';
-import { MapBlockConfig, mapThemes } from '@tryglow/blocks';
+  Button,
+} from '@tryglow/ui';
 import { Form, Formik, FormikHelpers, useFormikContext } from 'formik';
 import { Loader2 } from 'lucide-react';
 import { ChangeEvent, useEffect, useRef, useState } from 'react';
@@ -60,21 +60,7 @@ export function EditForm({
           <GoogleMapsAutoCompleteInput />
 
           <div className="mt-4">
-            <FormField
-              fieldType="select"
-              label="Map theme"
-              name="mapTheme"
-              id="mapTheme"
-              error={errors.mapTheme}
-            >
-              {Object.entries(mapThemes).map(([key, { label }]) => {
-                return (
-                  <option value={key} key={key}>
-                    {label}
-                  </option>
-                );
-              })}
-            </FormField>
+            <MapThemeSelect />
           </div>
 
           <div className="flex flex-shrink-0 justify-between py-4 border-t border-stone-200">
@@ -187,6 +173,33 @@ const GoogleMapsAutoCompleteInput = () => {
               }}
             >
               {prediction.description}
+            </CommandItem>
+          ))}
+        </CommandGroup>
+      </CommandList>
+    </Command>
+  );
+};
+
+const MapThemeSelect = () => {
+  const { values, setFieldValue } = useFormikContext<MapBlockConfig>();
+  const [open, setOpen] = useState(false);
+
+  return (
+    <Command>
+      <CommandInput placeholder="Search themes..." />
+      <CommandList>
+        <CommandEmpty>No themes found.</CommandEmpty>
+        <CommandGroup>
+          {Object.entries(mapThemes).map(([key, theme]) => (
+            <CommandItem
+              key={key}
+              onSelect={(currentValue: string) => {
+                setFieldValue('theme', currentValue);
+                setOpen(false);
+              }}
+            >
+              {theme.label}
             </CommandItem>
           ))}
         </CommandGroup>

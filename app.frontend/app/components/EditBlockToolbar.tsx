@@ -1,14 +1,13 @@
 'use client';
 
 import { PageConfig } from '@/app/[domain]/[slug]/grid';
-import { useSidebar } from '@/app/components/ui/sidebar';
 import { useEditModeContext } from '@/app/contexts/Edit';
 import { InternalApi } from '@/app/lib/api';
-import { useToast } from '@/components/ui/use-toast';
 import { internalApiFetcher } from '@/lib/fetch';
 import { PencilSquareIcon, TrashIcon } from '@heroicons/react/24/outline';
 import { captureException } from '@sentry/nextjs';
 import { Blocks } from '@tryglow/blocks';
+import { useSidebar, useToast } from '@tryglow/ui';
 import { useParams, useRouter } from 'next/navigation';
 import useSWR, { useSWRConfig } from 'swr';
 

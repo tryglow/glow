@@ -1,19 +1,21 @@
 'use client';
 
+import { FormField } from '../FormField';
+import { createTeamInvite } from './actions';
+import { teamInviteSchema } from './shared';
+import { captureException } from '@sentry/nextjs';
 import { TeamInvite, User } from '@tryglow/prisma';
+import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+  Button,
+  useToast,
+} from '@tryglow/ui';
 import { Form, Formik, FormikHelpers } from 'formik';
 import { withZodSchema } from 'formik-validator-zod';
 import { Loader2 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
-
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Button } from '@/components/ui/button';
-import { useToast } from '@/components/ui/use-toast';
-
-import { captureException } from '@sentry/nextjs';
-import { FormField } from '../FormField';
-import { createTeamInvite } from './actions';
-import { teamInviteSchema } from './shared';
 
 export type TeamInviteFormValues = {
   email: string;

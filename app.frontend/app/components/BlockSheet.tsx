@@ -1,14 +1,14 @@
 import { DraggableBlockButton } from '@/components/DraggableBlockButton';
+import { ChevronLeftIcon, MagnifyingGlassIcon } from '@radix-ui/react-icons';
+import { Blocks } from '@tryglow/blocks';
 import {
   Sheet,
   SheetClose,
   SheetContent,
   SheetHeader,
   SheetTitle,
-} from '@/components/ui/sheet';
-import { cn } from '@/lib/utils';
-import { ChevronLeftIcon, MagnifyingGlassIcon } from '@radix-ui/react-icons';
-import { Blocks } from '@tryglow/blocks';
+  cn,
+} from '@tryglow/ui';
 import { useEffect, useState } from 'react';
 
 const BlockIcon = ({ className }: { className: string }) => {

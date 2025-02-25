@@ -15,8 +15,6 @@ import {
   PremiumOnboardingDialog,
   TeamOnboardingDialog,
 } from '@/components/PremiumOnboardingDialog';
-import { Button } from '@/components/ui/button';
-import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import Script from 'next/script';
 
@@ -107,16 +105,6 @@ export default async function PageLayout(props: {
         revalidateIfStale: currentUserIsOwner,
       }}
     >
-      {!session?.user && (
-        <Button
-          variant="default"
-          asChild
-          className="fixed z-50 top-3 right-3 font-bold flex"
-        >
-          <Link href="https://glow.as">Built with Glow</Link>
-        </Button>
-      )}
-
       {pageTheme?.publishedAt && !currentUserIsOwner ? (
         <main className="bg-sys-bg-base min-h-screen">
           <div className="w-full max-w-[672px] mx-auto px-3 md:px-6 gap-3 pt-16 pb-8">

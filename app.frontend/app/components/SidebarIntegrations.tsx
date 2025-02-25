@@ -2,25 +2,23 @@ import {
   integrationUIConfig,
   SupportedIntegrations,
 } from '@/app/components/BlockIntegrationUI';
-import { Button } from '@/app/components/ui/button';
+import { InternalApi } from '@/app/lib/api';
+import { internalApiFetcher } from '@/lib/fetch';
+import { captureException } from '@sentry/nextjs';
+import { Integration } from '@tryglow/prisma';
 import {
+  SidebarContentHeader,
+  SidebarGroup,
+  SidebarGroupContent,
+  Button,
   Dialog,
   DialogContent,
   DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from '@/app/components/ui/dialog';
-import {
-  SidebarContentHeader,
-  SidebarGroup,
-  SidebarGroupContent,
-} from '@/app/components/ui/sidebar';
-import { toast } from '@/app/components/ui/use-toast';
-import { InternalApi } from '@/app/lib/api';
-import { internalApiFetcher } from '@/lib/fetch';
-import { captureException } from '@sentry/nextjs';
-import { Integration } from '@tryglow/prisma';
+  toast,
+} from '@tryglow/ui';
 import { useState } from 'react';
 import useSWR, { useSWRConfig } from 'swr';
 

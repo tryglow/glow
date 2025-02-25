@@ -2,7 +2,7 @@ import './globals.css';
 import './react-grid-layout.scss';
 import { auth } from '@/app/lib/auth';
 import { PostHogIdentify, PostHogProvider } from '@/app/posthog-provider';
-import { Toaster } from '@/components/ui/toaster';
+import { Toaster } from '@tryglow/ui';
 import { Analytics } from '@vercel/analytics/react';
 import { Metadata } from 'next';
 import localFont from 'next/font/local';

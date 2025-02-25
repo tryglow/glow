@@ -3,9 +3,9 @@
 import { BlockProps } from '../ui';
 import { submitSignupToWaitlistCom } from './action';
 import { CoreBlock } from '@/components/CoreBlock';
-import { toast } from '@/components/ui/use-toast';
 import { internalApiFetcher } from '@/lib/fetch';
 import { WaitlistEmailBlockConfig } from '@tryglow/blocks';
+import { toast } from '@tryglow/ui';
 import { FunctionComponent, useState } from 'react';
 import { useFormStatus } from 'react-dom';
 import useSWR from 'swr';

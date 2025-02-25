@@ -4,12 +4,10 @@ import { PageConfig } from '@/app/[domain]/[slug]/grid';
 import { useEditModeContext } from '@/app/contexts/Edit';
 import { InternalApi } from '@/app/lib/api';
 import { CoreBlock } from '@/components/CoreBlock';
-import { Skeleton } from '@/components/ui/skeleton';
-import { useToast } from '@/components/ui/use-toast';
 import { internalApiFetcher } from '@/lib/fetch';
 import { enableDragDropTouch } from '@/lib/polyfills/drag-drop-touch.esm.min.js';
-import { cn } from '@/lib/utils';
 import { captureException } from '@sentry/nextjs';
+import { Skeleton, useToast, cn } from '@tryglow/ui';
 import { useParams, useRouter } from 'next/navigation';
 import {
   ReactNode,

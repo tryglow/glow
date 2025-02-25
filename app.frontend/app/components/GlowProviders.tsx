@@ -1,11 +1,10 @@
 'use client';
 
-import { Button } from '@/app/components/ui/button';
-import { SidebarProvider } from '@/app/components/ui/sidebar';
 import { hideGlowTour } from '@/app/lib/auth-actions';
 import { fetcher } from '@/lib/fetch';
 import { StepType, TourProvider, useTour } from '@reactour/tour';
 import { captureException } from '@sentry/nextjs';
+import { SidebarProvider, Button } from '@tryglow/ui';
 import { Session } from 'next-auth';
 import { SessionProvider } from 'next-auth/react';
 import { ReactNode } from 'react';

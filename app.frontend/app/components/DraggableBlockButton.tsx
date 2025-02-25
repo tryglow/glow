@@ -14,9 +14,9 @@ import blockThreadsFollowerCountIcon from '@/app/assets/ui/type-threads-follower
 import blockTiktokIcon from '@/app/assets/ui/type-tiktok.svg';
 import blockWaitlistEmailIcon from '@/app/assets/ui/type-waitlist-email.svg';
 import blockYoutubeIcon from '@/app/assets/ui/type-youtube.svg';
-import { useSidebar } from '@/app/components/ui/sidebar';
 import { useEditModeContext } from '@/app/contexts/Edit';
 import { Blocks } from '@tryglow/blocks';
+import { useSidebar } from '@tryglow/ui';
 import Image from 'next/image';
 
 export const config: Record<

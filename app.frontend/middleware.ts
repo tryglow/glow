@@ -1,3 +1,4 @@
+import { getToken } from '@auth/core/jwt';
 import { MiddlewareConfig, NextRequest, NextResponse } from 'next/server';
 
 export const runtime = 'experimental-edge';
@@ -14,13 +15,14 @@ export const config: MiddlewareConfig = {
      * 6. _vercel
      * 7. assets
      */
-    '/((?!api/|_next/|i/|_static/|_vercel|assets|[\\w-]+\\.\\w+).*)',
+    '/((?!api/|_next/|i/|_static/|_vercel|edit|invite|new|new-api|assets|[\\w-]+\\.\\w+).*)',
   ],
 };
 
+const rootDomain = process.env.NEXT_PUBLIC_ROOT_DOMAIN;
+
 export default async function middleware(req: NextRequest) {
   const url = req.nextUrl;
-  const rootDomain = process.env.NEXT_PUBLIC_ROOT_DOMAIN;
 
   // Get hostname and normalize for dev environment - using a regex for better performance
   const hostname = req.headers
@@ -29,8 +31,6 @@ export default async function middleware(req: NextRequest) {
 
   // Create base URL once
   const baseUrl = new URL('', req.url);
-
-  console.log('hostname', hostname);
 
   // Handle root domain
   if (hostname === rootDomain) {
@@ -42,21 +42,23 @@ export default async function middleware(req: NextRequest) {
   return NextResponse.rewrite(baseUrl);
 }
 
-function handleRootDomain(req: NextRequest, path: string, baseUrl: URL) {
+async function handleRootDomain(req: NextRequest, path: string, baseUrl: URL) {
   const searchParams = req.nextUrl.searchParams.toString();
 
-  // Redirect root to landing page
   if (path === '/') {
-    baseUrl.pathname = '/i/landing-page';
-    baseUrl.search = searchParams;
-    return NextResponse.rewrite(baseUrl);
-  }
+    const session = await getToken({
+      req,
+      secret: process.env.NEXTAUTH_SECRET,
+    });
 
-  // Handle special paths
-  if (path.startsWith('/new')) {
-    baseUrl.pathname = path;
-    baseUrl.search = searchParams;
-    return NextResponse.rewrite(baseUrl);
+    if (session)
+      if (req.nextUrl.searchParams.get('force') !== 'true') {
+        baseUrl.pathname = '/edit';
+        baseUrl.search = searchParams;
+        return NextResponse.redirect(baseUrl);
+      }
+
+    return NextResponse.next();
   }
 
   // Rewrite all other paths
