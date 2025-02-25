@@ -60,5 +60,6 @@ SQL >
             else 'Unknown'
         END as browser
     FROM parsed_hits
+    WHERE page_id = {{ String(pageId, '') }}
 
 TYPE endpoint
