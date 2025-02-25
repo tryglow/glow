@@ -37,6 +37,7 @@ const chartConfig = {
 } satisfies ChartConfig;
 
 export function SidebarAnalytics() {
+  const [showPlaceholder, setShowPlaceholder] = useState(false);
   const [analyticsData, setAnalyticsData] = useState<{
     stats: {
       totals: {
@@ -71,10 +72,15 @@ export function SidebarAnalytics() {
         setIsLoading(true);
         const data = await InternalApi.get(`/analytics/pages/${pageId}`);
 
-        console.log('DATA', data);
+        if (!data || Object.keys(data).length === 0) {
+          setShowPlaceholder(true);
+          return;
+        }
+
         setAnalyticsData(data);
       } catch (error) {
         console.error(error);
+        setShowPlaceholder(true);
       } finally {
         setIsLoading(false);
       }
@@ -82,6 +88,10 @@ export function SidebarAnalytics() {
 
     fetchData();
   }, [pageId]);
+
+  if (showPlaceholder) {
+    return <SidebarAnalyticsComingsoon />;
+  }
 
   return (
     <>

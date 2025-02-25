@@ -25,6 +25,10 @@ async function getPageAnalyticsHandler(
 ) {
   const { pageId } = request.params;
 
+  if (pageId !== 'c1c5aa2f-f5ff-4245-a1d9-2a18cfcba6b6') {
+    return response.status(404).send({});
+  }
+
   const session = await request.server.authenticate(request, response);
 
   const userHasAccess = await checkUserHasAccessToPage(pageId, session.user.id);

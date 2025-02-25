@@ -163,13 +163,7 @@ export function EditSidebar({
             {sidebarView === 'settings' && <SidebarPageSettings />}
             {sidebarView === 'themes' && <SidebarThemes />}
             {sidebarView === 'integrations' && <SidebarIntegrations />}
-            {sidebarView === 'analytics' &&
-              process.env.NODE_ENV === 'development' && <SidebarAnalytics />}
-            {sidebarView === 'analytics' &&
-              process.env.NODE_ENV === 'production' && (
-                <SidebarAnalyticsComingsoon />
-              )}
-
+            {sidebarView === 'analytics' && <SidebarAnalytics />}
             {sidebarView === 'forms' && <SidebarForms />}
           </SidebarContent>
         </Sidebar>
