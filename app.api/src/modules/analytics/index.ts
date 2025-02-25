@@ -35,14 +35,9 @@ async function getPageAnalyticsHandler(
 
   try {
     const [stats, topLocations] = await Promise.all([
-      fetchStats('306a4678-78c2-4cd2-9992-24131a5d38a9'),
-      fetchTopLocations('306a4678-78c2-4cd2-9992-24131a5d38a9'),
-      // fetchStats(pageId),
-      // fetchTopLocations(pageId),
+      fetchStats(pageId),
+      fetchTopLocations(pageId),
     ]);
-
-    console.log('STATS', stats);
-    console.log('TOP LOCATIONS', topLocations);
 
     return response.status(200).send({
       stats,
