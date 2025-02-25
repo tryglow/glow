@@ -12,7 +12,7 @@
   "dependencies": {
     "@tryglow/ui": "*",
     "@next/mdx": "^15.0.2",
-    "next": "canary",
+    "next": "15.2.0-canary.73",
     "@heroicons/react": "^2.1.5",
     "@headlessui/react": "^2.2.0",
     "react": "^19.0.0",
