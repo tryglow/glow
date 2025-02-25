@@ -3,7 +3,7 @@ import { JsonObject } from '@prisma/client/runtime/library';
 import { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify';
 
 export default async function marketingRoutes(fastify: FastifyInstance) {
-  fastify.get('/marketing/featured-pages', {
+  fastify.post('/marketing/featured-pages', {
     handler: getFeaturedPagesHandler,
   });
 }
@@ -12,6 +12,8 @@ async function getFeaturedPagesHandler(
   request: FastifyRequest,
   response: FastifyReply
 ) {
+  await request.server.authenticateApiKey(request, response);
+
   const pages = await prisma.page.findMany({
     where: {
       deletedAt: null,

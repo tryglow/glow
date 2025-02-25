@@ -1,4 +1,5 @@
 import { MarketingContainer } from '@/components/MarketingContainer';
+import { apiServerFetch } from '@/lib/api-server';
 import { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -15,20 +16,19 @@ type FeaturedPage = {
 };
 
 const getFeaturedPages = async (): Promise<FeaturedPage[]> => {
-  const response = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/marketing/featured-pages`,
-    {
-      next: {
-        revalidate: 600, // Revalidate every 10 minutes
-      },
-    }
-  );
+  const response = await apiServerFetch('/marketing/featured-pages', {
+    method: 'POST',
+    body: JSON.stringify({}),
+    next: {
+      revalidate: 600, // Revalidate every 10 minutes
+    },
+  });
 
   if (!response.ok) {
     throw new Error('Failed to fetch featured pages');
   }
 
-  return response.json();
+  return await response.json();
 };
 
 export default async function ExploreLandingPage() {
