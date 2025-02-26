@@ -3,26 +3,24 @@ import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
   transpilePackages: ['@tryglow/ui'],
-  rewrites: async () => ({
-    beforeFiles: [
-      {
-        source: '/new-api/:path*',
-        destination: 'http://localhost:3001/:path*',
-      },
-      {
-        source: '/',
-        destination: `${process.env.NEXT_PUBLIC_MARKETING_URL}/i`,
-      },
-      {
-        source: '/sitemap.xml',
-        destination: `${process.env.NEXT_PUBLIC_MARKETING_URL}/i/sitemap.xml`,
-      },
-      {
-        source: '/i/:path*',
-        destination: `${process.env.NEXT_PUBLIC_MARKETING_URL}/i/:path*`,
-      },
-    ],
-  }),
+  rewrites: async () => [
+    {
+      source: '/new-api/:path*',
+      destination: 'http://localhost:3001/:path*',
+    },
+    {
+      source: '/',
+      destination: `${process.env.NEXT_PUBLIC_MARKETING_URL}/i`,
+    },
+    {
+      source: '/sitemap.xml',
+      destination: `${process.env.NEXT_PUBLIC_MARKETING_URL}/i/sitemap.xml`,
+    },
+    {
+      source: '/i/:path*',
+      destination: `${process.env.NEXT_PUBLIC_MARKETING_URL}/i/:path*`,
+    },
+  ],
   redirects: async () => [
     {
       source: '/pricing',
