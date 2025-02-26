@@ -10,14 +10,14 @@
     "vercel:build": "next build"
   },
   "dependencies": {
-    "@tryglow/ui": "*",
-    "@next/mdx": "^15.1.7",
-    "next": "15.1.7",
-    "@heroicons/react": "^2.1.5",
     "@headlessui/react": "^2.2.0",
-    "react": "^19.0.0",
+    "@heroicons/react": "^2.1.5",
+    "@next/mdx": "^15.1.7",
+    "@tryglow/ui": "*",
     "@vercel/analytics": "^1.5.0",
+    "next": "15.1.7",
     "react-dom": "^19.0.0",
+    "react": "^19.0.0",
     "remark-gfm": "^4.0.0",
     "sass": "^1.85.0"
   },
