@@ -13,11 +13,11 @@ SQL >
         action,
         version,
         coalesce(session_id, '0') as session_id,
+        coalesce(page_id, '0') as page_id,
         JSONExtractString(payload, 'locale') as locale,
         JSONExtractString(payload, 'location') as location,
         JSONExtractString(payload, 'referrer') as referrer,
         JSONExtractString(payload, 'pathname') as pathname,
-        JSONExtractString(payload, 'page_id') as page_id,
         JSONExtractString(payload, 'href') as href,
         domainWithoutWWW(href) as current_domain,
         lower(JSONExtractString(payload, 'user-agent')) as user_agent
