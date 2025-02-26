@@ -2,9 +2,6 @@ import { withSentryConfig } from '@sentry/nextjs';
 import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
-  experimental: {
-    nodeMiddleware: true,
-  },
   transpilePackages: ['@tryglow/ui'],
   rewrites: async () => ({
     beforeFiles: [

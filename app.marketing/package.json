@@ -11,8 +11,8 @@
   },
   "dependencies": {
     "@tryglow/ui": "*",
-    "@next/mdx": "^15.2.0-canary.74",
-    "next": "15.2.0-canary.74",
+    "@next/mdx": "^15.1.7",
+    "next": "15.1.7",
     "@heroicons/react": "^2.1.5",
     "@headlessui/react": "^2.2.0",
     "react": "^19.0.0",
