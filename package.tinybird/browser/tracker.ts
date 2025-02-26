@@ -53,6 +53,23 @@ declare global {
     return crypto.randomUUID();
   }
 
+  async function _getLocation(): Promise<string | null> {
+    try {
+      const response = await fetch('/api/user/location');
+      const data = await response.json();
+
+      if (!data.location) {
+        const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+        return timezones[timezone as keyof typeof timezones];
+      }
+
+      return data.location;
+    } catch (error) {
+      const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+      return timezones[timezone as keyof typeof timezones];
+    }
+  }
+
   function _getSessionIdFromCookie(): string | undefined {
     const cookie: Record<string, string> = {};
     document.cookie.split(';').forEach(function (el) {
@@ -229,17 +246,16 @@ declare global {
   /**
    * Track page hit
    */
-  function _trackPageHit() {
+  async function _trackPageHit() {
     // If local development environment
     // if (/^localhost$|^127(\.[0-9]+){0,2}\.[0-9]+$|^\[::1?\]$/.test(location.hostname) || location.protocol === 'file:') return;
     // If test environment
     if (window.__nightmare || window.navigator.webdriver || window.Cypress)
       return;
 
-    let country: string | undefined, locale: string;
+    let location: string | null, locale: string;
     try {
-      const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-      country = timezones[timezone as keyof typeof timezones];
+      location = await _getLocation();
       locale =
         navigator.languages && navigator.languages.length
           ? navigator.languages[0]
@@ -253,7 +269,7 @@ declare global {
       _sendEvent('page_hit', {
         'user-agent': window.navigator.userAgent,
         locale,
-        location: country,
+        location,
         referrer: document.referrer,
         pathname: window.location.pathname,
         href: window.location.href,
