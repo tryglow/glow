@@ -20,7 +20,7 @@ export const Header: FunctionComponent<BlockProps & HeaderBlockConfig> = ({
       <header
         className={cn(
           'py-4 flex flex-col',
-          alignment === 'center' && 'items-center',
+          alignment === 'center' && 'items-center text-center text-pretty',
           alignment === 'right' && 'items-end'
         )}
       >
