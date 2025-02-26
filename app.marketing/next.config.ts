@@ -45,5 +45,4 @@ const nextConfig: NextConfig = {
   },
 };
 
-// @ts-expect-error
 export default withMDX(nextConfig);
