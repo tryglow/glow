@@ -131,7 +131,6 @@ export default async function PageLayout(props: {
             data-host="https://api.us-west-2.aws.tinybird.co"
             data-token={process.env.NEXT_PUBLIC_TINYBIRD_TRACKER_TOKEN}
             data-page-id={page.id}
-            data-location={location}
           />
         )}
     </GlowProviders>
