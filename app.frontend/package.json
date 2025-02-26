@@ -44,7 +44,7 @@
     "framer-motion": "^12.0.0-alpha.1",
     "loops": "^3.4.0",
     "lucide-react": "^0.454.0",
-    "mapbox-gl": "^3.7.0",
+    "mapbox-gl": "^3.10.0",
     "next-auth": "^5.0.0-beta.25",
     "next": "15.1.7",
     "posthog-js": "^1.187.1",
