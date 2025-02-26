@@ -33,7 +33,7 @@ export const Header: FunctionComponent<BlockProps & HeaderBlockConfig> = ({
             className="mb-6 rounded-lg"
           />
         )}
-        <h1 className="font-bold text-4xl mb-1 text-sys-label-primary flex items-center gap-2">
+        <h1 className="font-bold text-4xl mb-1 text-sys-label-primary">
           {showVerifiedBadge ? (
             <Suspense>
               <HeaderServerUI

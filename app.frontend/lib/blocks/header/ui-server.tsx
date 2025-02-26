@@ -42,7 +42,7 @@ export async function HeaderServerUI({
     <Dialog>
       {verifiedPageTitle}
       <DialogTrigger asChild>
-        <button type="button">
+        <button type="button" className="inline-block ml-2">
           <VerifiedBadge />
         </button>
       </DialogTrigger>
