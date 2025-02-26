@@ -57,7 +57,7 @@ export default async function RootLayout({
         )}
       </head>
       <PostHogProvider>
-        <body className="bg-stone-50 min-h-screen">
+        <body className="bg-stone-50 min-h-screen relative">
           {children}
           <Toaster />
         </body>
