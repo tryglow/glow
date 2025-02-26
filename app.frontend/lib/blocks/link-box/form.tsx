@@ -5,6 +5,7 @@ import { IconSelect } from '@/components/IconSelect';
 import { LinkBoxBlockConfig, LinkBoxSchema } from '@tryglow/blocks';
 import {
   Button,
+  Checkbox,
   Label,
   Tabs,
   TabsContent,
@@ -37,6 +38,7 @@ export function EditForm({
         icon: {
           src: initialValues?.icon?.src,
         },
+        showPreview: initialValues?.showPreview,
       }}
       validationSchema={LinkBoxSchema}
       onSubmit={onSubmit}
@@ -71,6 +73,19 @@ export function EditForm({
               error={errors.label}
             />
             <FormField label="Link" name="link" id="link" error={errors.link} />
+            <div className="flex items-start space-x-2 my-4">
+              <Checkbox
+                onCheckedChange={(checked: boolean) =>
+                  setFieldValue('showPreview', checked)
+                }
+                checked={values.showPreview}
+                id="showPreview"
+              />
+              <div className="flex flex-col gap-1">
+                <Label htmlFor="showPreview">Show preview</Label>
+              </div>
+            </div>
+
             <Label className="mb-1 mt-3">Select an icon</Label>
 
             <Tabs defaultValue={initialTab} className="w-full">

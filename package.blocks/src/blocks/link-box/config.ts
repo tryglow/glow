@@ -7,6 +7,7 @@ export interface LinkBoxBlockConfig {
     src: string;
   };
   link: string;
+  showPreview: boolean;
 }
 
 export const linkBoxBlockDefaults: LinkBoxBlockConfig = {
@@ -16,6 +17,7 @@ export const linkBoxBlockDefaults: LinkBoxBlockConfig = {
   link: 'https://x.com/tryglow',
   title: 'X',
   label: 'Follow us on X',
+  showPreview: false,
 };
 
 export const LinkBoxSchema = Yup.object().shape({
@@ -25,4 +27,5 @@ export const LinkBoxSchema = Yup.object().shape({
   icon: Yup.object().shape({
     src: Yup.string().required('Please provide an icon'),
   }),
+  showPreview: Yup.boolean().optional(),
 });
