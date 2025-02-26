@@ -1,5 +1,6 @@
 import { RenderPageTheme } from '@/app/[domain]/[slug]/render-page-theme';
 import { GlowProviders } from '@/app/components/GlowProviders';
+import { ShareButton } from '@/app/components/ShareButton';
 import { UserOnboardingDialog } from '@/app/components/UserOnboardingDialog';
 import { getEnabledBlocks } from '@/app/lib/actions/blocks';
 import { getTeamIntegrations } from '@/app/lib/actions/integrations';
@@ -93,28 +94,29 @@ export default async function PageLayout(props: {
     >
       {pageTheme?.publishedAt && !currentUserIsOwner ? (
         <main className="bg-sys-bg-base min-h-screen">
-          <div className="w-full max-w-[672px] mx-auto px-3 md:px-6 gap-3 pt-16 pb-8">
+          <div className="w-full max-w-[672px] mx-auto px-3 md:px-6 gap-3 pb-8">
+            <div className="w-full py-3 flex items-center">
+              <ShareButton />
+            </div>
             {children}
+
+            <div className="w-full py-3 flex items-center justify-center">
+              <Link
+                href={`https://glow.as/?utm_source=page_footer&utm_campaign=${page.slug}`}
+                className="flex flex-col text-center justify-center"
+              >
+                <span className="uppercase text-[0.6rem] tracking-tight font-medium text-sys-label-secondary">
+                  Made with{' '}
+                </span>
+                <span className="font-bold text-lg -mt-1 text-sys-label-primary">
+                  glow
+                </span>
+              </Link>
+            </div>
           </div>
         </main>
       ) : (
         children
-      )}
-
-      {!session?.user && (
-        <div className="w-full h-24 flex items-center justify-center absolute bottom-0">
-          <Link
-            href={`https://glow.as/?utm_source=page_footer&utm_campaign=${page.slug}`}
-            className="flex flex-col text-center justify-center"
-          >
-            <span className="uppercase text-[0.6rem] tracking-tight font-medium text-sys-label-secondary">
-              Made with{' '}
-            </span>
-            <span className="font-bold text-lg -mt-1 text-sys-label-primary">
-              glow
-            </span>
-          </Link>
-        </div>
       )}
 
       {(pageTheme?.publishedAt || currentUserIsOwner) && (
