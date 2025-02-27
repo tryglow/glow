@@ -27,12 +27,17 @@ export async function fetchStats(pageId: string) {
       0
     );
 
+    const sortedDataByDate = analyticsData.data.sort(
+      (a: any, b: any) =>
+        new Date(a.date).getTime() - new Date(b.date).getTime()
+    );
+
     return {
       totals: {
         views: totalViews,
         uniqueVisitors: totalUniqueVisitors,
       },
-      data: analyticsData.data,
+      data: sortedDataByDate,
     };
   } catch (error) {
     captureException(error);
