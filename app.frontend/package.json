@@ -38,7 +38,7 @@
     "loops": "^3.4.0",
     "lucide-react": "^0.454.0",
     "mapbox-gl": "^3.10.0",
-    "next": "15.1.7",
+    "next": "15.2",
     "next-auth": "^5.0.0-beta.25",
     "posthog-js": "^1.187.1",
     "react": "^19.0.0",
