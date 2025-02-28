@@ -70,14 +70,21 @@ export function SidebarAnalytics() {
     const fetchData = async () => {
       try {
         setIsLoading(true);
-        const data = await InternalApi.get(`/analytics/pages/${pageId}`);
+        const responseData = await InternalApi.get(
+          `/analytics/pages/${pageId}`
+        );
 
-        if (!data || Object.keys(data).length === 0) {
+        if (responseData.error?.code) {
           setShowPlaceholder(true);
           return;
         }
 
-        setAnalyticsData(data);
+        if (!responseData || Object.keys(responseData).length === 0) {
+          setShowPlaceholder(true);
+          return;
+        }
+
+        setAnalyticsData(responseData);
       } catch (error) {
         console.error(error);
         setShowPlaceholder(true);
@@ -138,7 +145,13 @@ export function SidebarAnalytics() {
                           tickLine={false}
                           axisLine={false}
                           tickMargin={8}
-                          tickFormatter={(value) => value.slice(0, 3)}
+                          tickFormatter={(value) => {
+                            const date = new Date(value);
+                            return date.toLocaleDateString('en-US', {
+                              month: 'short',
+                              day: 'numeric',
+                            });
+                          }}
                         />
                         <ChartTooltip
                           cursor={false}
@@ -147,6 +160,7 @@ export function SidebarAnalytics() {
                         <Area
                           dataKey={dataPoint.key}
                           type="natural"
+                          fill="#aec8ff"
                           fillOpacity={0.4}
                         />
                       </AreaChart>
@@ -229,9 +243,13 @@ export function SidebarAnalyticsComingsoon() {
 
       <SidebarGroup>
         <SidebarGroupContent>
-          <div className="w-full aspect-square bg-stone-200 rounded-lg flex items-center justify-center">
-            <span className="text-muted-foreground text-sm">
-              Available soon
+          <div className="w-full p-6 bg-stone-50 rounded-lg flex flex-col items-center justify-center text-center">
+            <span className="text-lg font-medium mb-2">
+              Analytics coming soon
+            </span>
+            <span className="text-sm text-muted-foreground">
+              We're still collecting data for this page. Please check back in a
+              few days.
             </span>
           </div>
         </SidebarGroupContent>

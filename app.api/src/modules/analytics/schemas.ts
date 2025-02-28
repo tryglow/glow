@@ -46,6 +46,9 @@ export const getPageAnalyticsSchema: FastifySchema = {
             message: {
               type: 'string',
             },
+            code: {
+              type: 'string',
+            },
           },
         },
       },
