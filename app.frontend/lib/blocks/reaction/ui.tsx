@@ -6,7 +6,7 @@ import { BlockProps } from '@/lib/blocks/ui';
 import { internalApiFetcher } from '@/lib/fetch';
 import NumberFlow from '@number-flow/react';
 import { motion } from 'framer-motion';
-import { FunctionComponent, useEffect, useState } from 'react';
+import { FunctionComponent, useEffect, useState, useRef } from 'react';
 import useSWR from 'swr';
 
 const Icon = () => {
@@ -34,10 +34,14 @@ export const Reactions: FunctionComponent<BlockProps> = (props) => {
   const [debounceTimer, setDebounceTimer] = useState<NodeJS.Timeout | null>(
     null
   );
-
   const [isAnimating, setIsAnimating] = useState(false);
 
-  const [increment, setIncrement] = useState(0);
+  const [displayCount, setDisplayCount] = useState(0); // Track whether we're waiting for an API response
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const [pendingClicks, setPendingClicks] = useState(0);
+
+  const pendingClicksRef = useRef(0);
 
   const { data, mutate } = useSWR<{
     current: {
@@ -48,53 +52,82 @@ export const Reactions: FunctionComponent<BlockProps> = (props) => {
     };
   }>(`/reactions?pageId=${pageId}`, internalApiFetcher);
 
+  useEffect(() => {
+    pendingClicksRef.current = pendingClicks;
+  }, [pendingClicks]);
+
+  useEffect(() => {
+    if (data?.total?.love !== undefined && !isSubmitting) {
+      setDisplayCount(data.total.love);
+    }
+  }, [data?.total?.love, isSubmitting]);
+
   const handleClick = () => {
     if (isEditable) {
       return;
     }
 
-    if ((data?.current.love ?? 0) + increment > 16) {
+    // Don't allow more than 16 reactions
+    if (displayCount >= 16) {
       return;
     }
 
-    setIncrement((prev) => prev + 1);
+    setDisplayCount((prev) => prev + 1);
+
+    setPendingClicks((prev) => {
+      const newValue = prev + 1;
+      pendingClicksRef.current = newValue; // Update ref immediately
+      return newValue;
+    });
+    setIsAnimating(true);
 
     if (debounceTimer) {
       clearTimeout(debounceTimer);
     }
 
-    // Set new debounce timer
     const newTimer = setTimeout(async () => {
       try {
+        setIsSubmitting(true);
+
+        const incrementAmount = pendingClicksRef.current;
+
+        if (incrementAmount <= 0) {
+          setIsSubmitting(false);
+          setPendingClicks(0);
+          pendingClicksRef.current = 0;
+          return;
+        }
+
         const response = await InternalApi.post('/reactions', {
           pageId,
-          increment: increment + 1,
+          increment: incrementAmount,
         });
 
         if (response.error) {
           throw new Error(response.error);
         }
 
-        mutate(response.data);
+        setPendingClicks(0);
+        pendingClicksRef.current = 0;
 
-        setIncrement(0);
+        // Update data from server
+        await mutate(response.data);
+
+        setIsSubmitting(false);
       } catch (error) {
         console.error('Error liking resource:', error);
+
+        if (data?.total?.love !== undefined) {
+          setDisplayCount(data.total.love);
+        }
+        setPendingClicks(0);
+        pendingClicksRef.current = 0;
+        setIsSubmitting(false);
       }
     }, 1600);
 
     setDebounceTimer(newTimer);
   };
-
-  useEffect(() => {
-    if (isAnimating) {
-      return;
-    }
-
-    if (data?.current?.love || increment > 0) {
-      setIsAnimating(true);
-    }
-  }, [data?.current?.love, increment]);
 
   return (
     <CoreBlock className="relative !p-0 overflow-hidden" {...props}>
@@ -107,7 +140,7 @@ export const Reactions: FunctionComponent<BlockProps> = (props) => {
             Love
           </span>
           <NumberFlow
-            value={(data?.total.love ?? 0) + increment}
+            value={displayCount}
             className="text-4xl font-medium text-sys-label-primary"
           />
         </div>
@@ -119,8 +152,8 @@ export const Reactions: FunctionComponent<BlockProps> = (props) => {
             className="absolute bottom-0 left-0 right-0 w-full"
             initial={{ height: 0 }}
             animate={{
-              height: isAnimating
-                ? `calc(${Math.min((((data?.current?.love || 0) + increment) / 16) * 100, 100)}% + 32px)`
+              height: displayCount
+                ? `calc(${Math.min((displayCount / 16) * 100, 100)}% + 32px)`
                 : '32px',
             }}
             transition={{ duration: 0.3, ease: 'easeInOut' }}
