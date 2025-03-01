@@ -4,6 +4,7 @@ const themeFields = {
   id: true,
   isDefault: true,
   name: true,
+  font: true,
   colorBgBase: true,
   colorBgPrimary: true,
   colorBgSecondary: true,

@@ -14,6 +14,7 @@ export async function createTheme({
   colorLabelSecondary,
   colorLabelTertiary,
   colorBorderPrimary,
+  font,
 }: ThemeData) {
   const session = await auth();
 
@@ -43,6 +44,7 @@ export async function createTheme({
         colorLabelSecondary,
         colorLabelTertiary,
         colorBorderPrimary,
+        font,
       },
     });
 
@@ -97,6 +99,7 @@ export async function updateTheme(themeId: string, data: ThemeData) {
         colorLabelSecondary: data.colorLabelSecondary,
         colorLabelTertiary: data.colorLabelTertiary,
         colorBorderPrimary: data.colorBorderPrimary,
+        font: data.font,
       },
     });
 
@@ -134,6 +137,7 @@ export async function fetchTheme(themeId: string) {
       colorLabelSecondary: true,
       colorLabelTertiary: true,
       colorBorderPrimary: true,
+      font: true,
     },
   });
 

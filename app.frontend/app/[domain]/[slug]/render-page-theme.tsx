@@ -1,8 +1,10 @@
 'use client';
 
 import { internalApiFetcher } from '@/lib/fetch';
+import { getFontFamilyValue, getGoogleFontUrl } from '@/lib/fonts';
 import { defaultThemeSeeds, themeColorToCssValue } from '@/lib/theme';
 import { Theme } from '@tryglow/prisma';
+import { useEffect } from 'react';
 import useSWR from 'swr';
 
 export function RenderPageTheme({ pageId }: { pageId: string }) {
@@ -13,7 +15,23 @@ export function RenderPageTheme({ pageId }: { pageId: string }) {
 
   let theme = pageTheme?.theme || defaultThemeSeeds.Default;
 
+  // Load the font if specified
+  useEffect(() => {
+    if (theme.font) {
+      const link = document.createElement('link');
+      link.rel = 'stylesheet';
+      link.href = getGoogleFontUrl(theme.font);
+      document.head.appendChild(link);
+
+      return () => {
+        document.head.removeChild(link);
+      };
+    }
+  }, [theme.font]);
+
   if (!pageTheme) return null;
+
+  const fontFamily = theme.font ? getFontFamilyValue(theme.font) : null;
 
   return (
     <style>
@@ -25,6 +43,7 @@ export function RenderPageTheme({ pageId }: { pageId: string }) {
           
           --color-sys-label-primary: ${themeColorToCssValue(theme.colorLabelPrimary)};
           --color-sys-label-secondary: ${themeColorToCssValue(theme.colorLabelSecondary)};
+          --font-sys-body: ${fontFamily || 'initial'};
           }`}
     </style>
   );

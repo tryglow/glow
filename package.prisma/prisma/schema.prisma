@@ -178,6 +178,7 @@ model Theme {
   colorLabelPrimary   Json?
   colorLabelSecondary Json?
   colorLabelTertiary  Json?
+  font                String?
   pages               Page[]
   teamId              String?
   team                Team?    @relation(fields: [teamId], references: [id])

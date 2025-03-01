@@ -1,3 +1,4 @@
+import { getFontFamilyValue } from '@/lib/fonts';
 import { themeColorToCssValue } from '@/lib/theme';
 import { Theme } from '@tryglow/prisma';
 
@@ -15,6 +16,10 @@ export function PageThemePreview({
     | 'colorLabelSecondary'
   >;
 }) {
+  const fontFamily = themeValues.font
+    ? getFontFamilyValue(themeValues.font)
+    : undefined;
+
   return (
     <div
       className="space-y-2 rounded-lg p-2"
@@ -22,6 +27,7 @@ export function PageThemePreview({
         backgroundColor: `hsl(${themeColorToCssValue(
           themeValues.colorBgBase
         )})`,
+        fontFamily: fontFamily,
       }}
     >
       <div
@@ -74,6 +80,18 @@ export function PageThemePreview({
           }}
         />
       </div>
+      {themeValues.font && (
+        <div
+          className="text-xs text-center overflow-hidden text-ellipsis whitespace-nowrap"
+          style={{
+            color: `hsl(${themeColorToCssValue(
+              themeValues.colorLabelPrimary
+            )})`,
+          }}
+        >
+          {themeValues.font}
+        </div>
+      )}
     </div>
   );
 }

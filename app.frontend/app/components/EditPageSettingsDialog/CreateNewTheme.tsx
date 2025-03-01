@@ -1,5 +1,6 @@
 'use client';
 
+import { FontSelector } from '@/app/components/FontSelector';
 import { createTheme, updateTheme } from '@/app/lib/actions/themes';
 import { internalApiFetcher } from '@/lib/fetch';
 import { HSLColor, hslToHex, themeFields } from '@/lib/theme';
@@ -33,6 +34,7 @@ export function CreateEditThemeForm({
   onCreateSuccess?: (newThemeId: string) => void;
 }) {
   const [themeName, setThemeName] = useState('');
+  const [font, setFont] = useState<string | undefined>(undefined);
 
   const { data: themes } = useSWR<Theme[]>(
     '/themes/me/team',
@@ -44,6 +46,7 @@ export function CreateEditThemeForm({
   useEffect(() => {
     if (currentTheme) {
       setThemeName(currentTheme.name);
+      setFont(currentTheme.font || undefined);
 
       setColors({
         colorBgBase: {
@@ -102,6 +105,7 @@ export function CreateEditThemeForm({
       colorLabelSecondary: colors.colorLabelSecondary.hsl,
       colorLabelTertiary: colors.colorLabelTertiary.hsl,
       colorBorderPrimary: colors.colorBorderPrimary.hsl,
+      font: font,
     };
     if (action === 'create') {
       const req = await createTheme(values);
@@ -152,6 +156,15 @@ export function CreateEditThemeForm({
           placeholder="Give your theme a name"
           value={themeName}
           onChange={(e) => setThemeName(e.target.value)}
+        />
+      </div>
+
+      <div className="col-span-2">
+        <FontSelector
+          value={font}
+          onChange={setFont}
+          label="Font"
+          id="theme-font"
         />
       </div>
 

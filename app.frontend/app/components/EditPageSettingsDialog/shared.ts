@@ -23,4 +23,5 @@ export type ThemeData = {
   colorLabelSecondary: HSLColor;
   colorLabelTertiary: HSLColor;
   colorBorderPrimary: HSLColor;
+  font?: string;
 };

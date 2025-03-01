@@ -2,6 +2,7 @@ import { CreateEditThemeForm } from '@/app/components/EditPageSettingsDialog/Cre
 import { PageThemePreview } from '@/app/components/PageThemePreview';
 import { setPageTheme } from '@/app/lib/actions/themes';
 import { internalApiFetcher } from '@/lib/fetch';
+import { getFontFamilyValue, getGoogleFontUrl } from '@/lib/fonts';
 import { themeColorToCssValue } from '@/lib/theme';
 import { Theme } from '@tryglow/prisma';
 import {
@@ -14,7 +15,7 @@ import {
 } from '@tryglow/ui';
 import { Plus } from 'lucide-react';
 import { useParams } from 'next/navigation';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import useSWR, { useSWRConfig } from 'swr';
 
 export function SidebarThemes() {
@@ -35,6 +36,20 @@ export function SidebarThemes() {
   const previewThemeValues = currentTeamThemes?.find(
     (theme) => theme.id === previewTheme
   );
+
+  // Load the font if specified in the preview theme
+  useEffect(() => {
+    if (previewThemeValues?.font) {
+      const link = document.createElement('link');
+      link.rel = 'stylesheet';
+      link.href = getGoogleFontUrl(previewThemeValues.font);
+      document.head.appendChild(link);
+
+      return () => {
+        document.head.removeChild(link);
+      };
+    }
+  }, [previewThemeValues?.font]);
 
   const handleSetPageTheme = async (themeId: string) => {
     if (!params.slug) {
@@ -73,6 +88,8 @@ export function SidebarThemes() {
                       setShowCreateNewTheme(false);
                       handleSetPageTheme(theme.id);
                     }}
+                    onMouseEnter={() => setPreviewTheme(theme.id)}
+                    onMouseLeave={() => setPreviewTheme(null)}
                   >
                     <PageThemePreview themeValues={theme} />
                   </button>
@@ -145,6 +162,7 @@ export function SidebarThemes() {
           --color-sys-label-primary: ${themeColorToCssValue(previewThemeValues.colorLabelPrimary)} !important;
           --color-sys-label-secondary: ${themeColorToCssValue(previewThemeValues.colorLabelSecondary)} !important;
           --color-sys-label-tertiary: ${themeColorToCssValue(previewThemeValues.colorLabelTertiary)} !important;
+          ${previewThemeValues.font ? `font-family: ${getFontFamilyValue(previewThemeValues.font)} !important;` : ''}
           }`}
           </style>
         )}

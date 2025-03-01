@@ -34,23 +34,28 @@ const themeFields = [
 
 const themeFieldsSchema = {
   type: 'object',
-  properties: themeFields.reduce((acc: Record<string, any>, field) => {
-    acc[field] = {
-      type: 'object',
-      properties: {
-        h: {
-          type: 'number',
+  properties: {
+    font: {
+      type: 'string',
+    },
+    ...themeFields.reduce((acc: Record<string, any>, field) => {
+      acc[field] = {
+        type: 'object',
+        properties: {
+          h: {
+            type: 'number',
+          },
+          l: {
+            type: 'number',
+          },
+          s: {
+            type: 'number',
+          },
         },
-        l: {
-          type: 'number',
-        },
-        s: {
-          type: 'number',
-        },
-      },
-    };
-    return acc;
-  }, {}),
+      };
+      return acc;
+    }, {}),
+  },
 };
 
 export const getPageThemeSchema = {

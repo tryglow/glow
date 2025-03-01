@@ -159,7 +159,10 @@ export default async function Page(props: { params: Promise<Params> }) {
         .filter((block) => mergedIds.includes(block.id))
         .map((block) => {
           return (
-            <section key={block.id}>
+            <section
+              key={block.id}
+              style={{ fontFamily: 'var(--font-sys-body)' }}
+            >
               {renderBlock(block, page.id, isEditMode)}
             </section>
           );
