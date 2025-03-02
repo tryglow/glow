@@ -27,6 +27,8 @@ const themeFields = [
   'colorBgPrimary',
   'colorBgSecondary',
   'colorBorderPrimary',
+  'colorTitlePrimary',
+  'colorTitleSecondary',
   'colorLabelPrimary',
   'colorLabelSecondary',
   'colorLabelTertiary',
@@ -36,6 +38,9 @@ const themeFieldsSchema = {
   type: 'object',
   properties: {
     font: {
+      type: 'string',
+    },
+    backgroundImage: {
       type: 'string',
     },
     ...themeFields.reduce((acc: Record<string, any>, field) => {

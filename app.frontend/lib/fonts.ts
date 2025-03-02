@@ -41,6 +41,11 @@ export const popularGoogleFonts: GoogleFont[] = [
     category: 'serif',
   },
   {
+    family: 'DM Mono',
+    variants: ['400', '500'],
+    category: 'sans-serif',
+  },
+  {
     family: 'Merriweather',
     variants: ['400', '700', '900'],
     category: 'serif',

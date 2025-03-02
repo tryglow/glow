@@ -5,6 +5,7 @@ const themeFields = {
   isDefault: true,
   name: true,
   font: true,
+  backgroundImage: true,
   colorBgBase: true,
   colorBgPrimary: true,
   colorBgSecondary: true,
@@ -12,6 +13,8 @@ const themeFields = {
   colorLabelPrimary: true,
   colorLabelSecondary: true,
   colorLabelTertiary: true,
+  colorTitlePrimary: true,
+  colorTitleSecondary: true,
 };
 
 export async function getThemesForTeam(teamId: string) {

@@ -31,7 +31,6 @@ export async function getPageThemeById(pageId: string) {
     },
     select: {
       theme: true,
-      backgroundImage: true,
       publishedAt: true,
       teamId: true,
     },

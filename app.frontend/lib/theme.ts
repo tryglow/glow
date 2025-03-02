@@ -109,6 +109,16 @@ export const themeFields = [
     label: 'Secondary background',
   },
   {
+    id: 'colorTitlePrimary',
+    variable: 'color-sys-title-primary',
+    label: 'Primary title',
+  },
+  {
+    id: 'colorTitleSecondary',
+    variable: 'color-sys-title-secondary',
+    label: 'Secondary title',
+  },
+  {
     id: 'colorLabelPrimary',
     variable: 'color-sys-label-primary',
     label: 'Primary text',

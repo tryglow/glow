@@ -10,10 +10,10 @@ export function ShareButton() {
   return (
     <>
       <button
-        className="bg-transparent border-none p-2 rounded-sm hover:bg-sys-label-primary/10"
+        className="bg-transparent border-none p-2 rounded-sm hover:bg-sys-title-primary/10"
         onClick={() => setDialogOpen(true)}
       >
-        <Share1Icon className="size-5 text-sys-label-primary" />
+        <Share1Icon className="size-5 text-sys-title-primary" />
         <span className="sr-only">Share</span>
       </button>
 

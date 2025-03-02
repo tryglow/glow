@@ -19,15 +19,21 @@ export function PageThemePreview({
   const fontFamily = themeValues.font
     ? getFontFamilyValue(themeValues.font)
     : undefined;
+  const hasBackgroundImage = !!themeValues.backgroundImage;
 
   return (
     <div
-      className="space-y-2 rounded-lg p-2"
+      className="space-y-2 rounded-lg p-2 relative"
       style={{
         backgroundColor: `hsl(${themeColorToCssValue(
           themeValues.colorBgBase
         )})`,
         fontFamily: fontFamily,
+        backgroundImage: hasBackgroundImage
+          ? `url(${themeValues.backgroundImage})`
+          : undefined,
+        backgroundSize: hasBackgroundImage ? 'cover' : undefined,
+        backgroundPosition: hasBackgroundImage ? 'center' : undefined,
       }}
     >
       <div
@@ -80,18 +86,6 @@ export function PageThemePreview({
           }}
         />
       </div>
-      {themeValues.font && (
-        <div
-          className="text-xs text-center overflow-hidden text-ellipsis whitespace-nowrap"
-          style={{
-            color: `hsl(${themeColorToCssValue(
-              themeValues.colorLabelPrimary
-            )})`,
-          }}
-        >
-          {themeValues.font}
-        </div>
-      )}
     </div>
   );
 }

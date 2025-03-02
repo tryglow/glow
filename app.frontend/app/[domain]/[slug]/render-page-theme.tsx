@@ -31,20 +31,44 @@ export function RenderPageTheme({ pageId }: { pageId: string }) {
 
   if (!pageTheme) return null;
 
+  return <RenderThemeStyle theme={theme} />;
+}
+
+export function RenderThemeStyle({
+  theme,
+  important,
+}: {
+  theme: Partial<Theme>;
+  important?: boolean;
+}) {
   const fontFamily = theme.font ? getFontFamilyValue(theme.font) : null;
+  const backgroundImage = theme.backgroundImage
+    ? `url(${theme.backgroundImage})`
+    : 'none';
 
   return (
     <style>
       {`:root {
-          --color-sys-bg-base: ${themeColorToCssValue(theme.colorBgBase)};
-          --color-sys-bg-primary: ${themeColorToCssValue(theme.colorBgPrimary)};
-          --color-sys-bg-secondary: ${themeColorToCssValue(theme.colorBgSecondary)};
-          --color-sys-bg-border: ${themeColorToCssValue(theme.colorBorderPrimary)};
+          --color-sys-bg-base: ${themeColorToCssValue(theme.colorBgBase)} ${important ? '!important' : ''};
+          --color-sys-bg-primary: ${themeColorToCssValue(theme.colorBgPrimary)} ${important ? '!important' : ''};
+          --color-sys-bg-secondary: ${themeColorToCssValue(theme.colorBgSecondary)} ${important ? '!important' : ''};
+          --color-sys-bg-border: ${themeColorToCssValue(theme.colorBorderPrimary)} ${important ? '!important' : ''};
           
-          --color-sys-label-primary: ${themeColorToCssValue(theme.colorLabelPrimary)};
-          --color-sys-label-secondary: ${themeColorToCssValue(theme.colorLabelSecondary)};
+          --color-sys-label-primary: ${themeColorToCssValue(theme.colorLabelPrimary)} ${important ? '!important' : ''};
+          --color-sys-label-secondary: ${themeColorToCssValue(theme.colorLabelSecondary)} ${important ? '!important' : ''};
+          
+          --color-sys-title-primary: ${themeColorToCssValue(theme.colorTitlePrimary)} ${important ? '!important' : ''};
+          --color-sys-title-secondary: ${themeColorToCssValue(theme.colorTitleSecondary)} ${important ? '!important' : ''};
           --font-sys-body: ${fontFamily || 'initial'};
-          }`}
+        }
+          
+        .app-page {
+          background-image: ${backgroundImage} ${important ? '!important' : ''};
+          background-size: cover;
+          background-position: center;
+          background-repeat: no-repeat;
+          background-attachment: fixed;
+        }`}
     </style>
   );
 }

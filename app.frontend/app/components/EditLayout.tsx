@@ -6,8 +6,8 @@ export function EditLayout({ children }: { children: ReactNode }) {
   return (
     <>
       <EditSidebar />
-      <SidebarInset className="mt-[68px]" id="tour-canvas">
-        <SidebarTrigger className="mt-3 ml-3 text-sys-label-primary" />
+      <SidebarInset className="mt-[68px] app-page" id="tour-canvas">
+        <SidebarTrigger className="mt-3 ml-3 text-sys-title-primary" />
         {children}
       </SidebarInset>
     </>

@@ -10,11 +10,14 @@ export async function createTheme({
   colorBgBase,
   colorBgPrimary,
   colorBgSecondary,
+  colorTitlePrimary,
+  colorTitleSecondary,
   colorLabelPrimary,
   colorLabelSecondary,
   colorLabelTertiary,
   colorBorderPrimary,
   font,
+  backgroundImage,
 }: ThemeData) {
   const session = await auth();
 
@@ -40,11 +43,14 @@ export async function createTheme({
         colorBgBase,
         colorBgPrimary,
         colorBgSecondary,
+        colorTitlePrimary,
+        colorTitleSecondary,
         colorLabelPrimary,
         colorLabelSecondary,
         colorLabelTertiary,
         colorBorderPrimary,
         font,
+        backgroundImage,
       },
     });
 
@@ -95,11 +101,14 @@ export async function updateTheme(themeId: string, data: ThemeData) {
         colorBgBase: data.colorBgBase,
         colorBgPrimary: data.colorBgPrimary,
         colorBgSecondary: data.colorBgSecondary,
+        colorTitlePrimary: data.colorTitlePrimary,
+        colorTitleSecondary: data.colorTitleSecondary,
         colorLabelPrimary: data.colorLabelPrimary,
         colorLabelSecondary: data.colorLabelSecondary,
         colorLabelTertiary: data.colorLabelTertiary,
         colorBorderPrimary: data.colorBorderPrimary,
         font: data.font,
+        backgroundImage: data.backgroundImage,
       },
     });
 
@@ -138,6 +147,7 @@ export async function fetchTheme(themeId: string) {
       colorLabelTertiary: true,
       colorBorderPrimary: true,
       font: true,
+      backgroundImage: true,
     },
   });
 

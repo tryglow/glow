@@ -36,6 +36,10 @@ const config: Config = {
             positive: 'hsl(var(--color-sys-label-positive) / <alpha-value>)',
             negative: 'hsl(var(--color-sys-label-negative) / <alpha-value>)',
           },
+          title: {
+            primary: 'hsl(var(--color-sys-title-primary) / <alpha-value>)',
+            secondary: 'hsl(var(--color-sys-title-secondary) / <alpha-value>)',
+          },
         },
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',

@@ -1,3 +1,4 @@
+import { RenderThemeStyle } from '@/app/[domain]/[slug]/render-page-theme';
 import { CreateEditThemeForm } from '@/app/components/EditPageSettingsDialog/CreateNewTheme';
 import { PageThemePreview } from '@/app/components/PageThemePreview';
 import { setPageTheme } from '@/app/lib/actions/themes';
@@ -77,65 +78,13 @@ export function SidebarThemes() {
     <>
       <SidebarContentHeader title="Themes" />
       <SidebarGroup>
-        <SidebarGroupContent className="px-2">
-          <div className="grid grid-cols-2 gap-4">
-            {currentTeamThemes?.map((theme) => {
-              return (
-                <div className="flex flex-col gap-1" key={theme.id}>
-                  <button
-                    onClick={() => {
-                      setEditThemeId(null);
-                      setShowCreateNewTheme(false);
-                      handleSetPageTheme(theme.id);
-                    }}
-                    onMouseEnter={() => setPreviewTheme(theme.id)}
-                    onMouseLeave={() => setPreviewTheme(null)}
-                  >
-                    <PageThemePreview themeValues={theme} />
-                  </button>
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm font-medium text-stone-800">
-                      {theme.name}
-                    </span>
-                    {!theme.isDefault && (
-                      <Button
-                        type="button"
-                        variant="ghost"
-                        className="text-xs text-indigo-600 px-0"
-                        onClick={() => {
-                          setEditThemeId(theme.id);
-                        }}
-                      >
-                        Edit
-                      </Button>
-                    )}
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-
-          <SidebarSeparator className="my-4" />
-
-          <Button
-            variant="outline"
-            className="w-full"
-            onClick={() => {
-              setShowCreateNewTheme(true);
-            }}
-          >
-            <Plus size={16} />
-            <span>Create theme</span>
-          </Button>
-
-          {editThemeId && (
-            <section className="px-4 py-4 bg-stone-100 rounded-lg mt-4">
+        {editThemeId || (showCreateNewTheme && !editThemeId) ? (
+          <SidebarGroupContent className="px-2">
+            {editThemeId && (
               <CreateEditThemeForm action="edit" editThemeId={editThemeId} />
-            </section>
-          )}
+            )}
 
-          {showCreateNewTheme && !editThemeId && (
-            <section className="px-4 py-4 bg-stone-100 rounded-lg mt-4">
+            {showCreateNewTheme && !editThemeId && (
               <CreateEditThemeForm
                 action="create"
                 onCreateSuccess={(newThemeId) => {
@@ -143,28 +92,65 @@ export function SidebarThemes() {
                   setEditThemeId(newThemeId);
                 }}
               />
-            </section>
-          )}
-        </SidebarGroupContent>
+            )}
+          </SidebarGroupContent>
+        ) : (
+          <SidebarGroupContent className="px-2">
+            <Button
+              variant="outline"
+              className="w-full mb-4"
+              onClick={() => {
+                setShowCreateNewTheme(true);
+              }}
+            >
+              <Plus size={16} />
+              <span>Create theme</span>
+            </Button>
+            <div className="grid grid-cols-2 gap-4">
+              {currentTeamThemes?.map((theme) => {
+                return (
+                  <div className="flex flex-col gap-1" key={theme.id}>
+                    <button
+                      onClick={() => {
+                        setEditThemeId(null);
+                        setShowCreateNewTheme(false);
+                        handleSetPageTheme(theme.id);
+                      }}
+                      onMouseEnter={() => setPreviewTheme(theme.id)}
+                      onMouseLeave={() => setPreviewTheme(null)}
+                    >
+                      <PageThemePreview themeValues={theme} />
+                    </button>
+                    <div className="flex items-center justify-between">
+                      <span className="text-xs font-medium text-stone-800">
+                        {theme.name}
+                      </span>
+                      {!theme.isDefault && (
+                        <Button
+                          type="button"
+                          variant="ghost"
+                          className="text-xs text-indigo-600 px-0"
+                          onClick={() => {
+                            setEditThemeId(theme.id);
+                          }}
+                        >
+                          Edit
+                        </Button>
+                      )}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </SidebarGroupContent>
+        )}
       </SidebarGroup>
 
       {previewTheme &&
         previewThemeValues &&
         !showCreateNewTheme &&
         !editThemeId && (
-          <style>
-            {`:root {
-          --color-sys-bg-base: ${themeColorToCssValue(previewThemeValues.colorBgBase)} !important;
-          --color-sys-bg-primary: ${themeColorToCssValue(previewThemeValues.colorBgPrimary)} !important;
-          --color-sys-bg-secondary: ${themeColorToCssValue(previewThemeValues.colorBgSecondary)} !important;
-          --color-sys-bg-border: ${themeColorToCssValue(previewThemeValues.colorBorderPrimary)} !important;
-          
-          --color-sys-label-primary: ${themeColorToCssValue(previewThemeValues.colorLabelPrimary)} !important;
-          --color-sys-label-secondary: ${themeColorToCssValue(previewThemeValues.colorLabelSecondary)} !important;
-          --color-sys-label-tertiary: ${themeColorToCssValue(previewThemeValues.colorLabelTertiary)} !important;
-          ${previewThemeValues.font ? `font-family: ${getFontFamilyValue(previewThemeValues.font)} !important;` : ''}
-          }`}
-          </style>
+          <RenderThemeStyle theme={previewThemeValues} important={true} />
         )}
     </>
   );
