@@ -1,7 +1,7 @@
 import './globals.css';
-import { LoginWidget } from '@/components/LoginWidget';
-import MarketingFooter from '@/components/MarketingFooter';
-import MarketingNavigation from '@/components/MarketingNavigation';
+import { LoginWidget } from '@/components/login-widget';
+import MarketingFooter from '@/components/marketing-footer';
+import MarketingNavigation from '@/components/marketing-navigation';
 import { Button } from '@tryglow/ui';
 import { Analytics } from '@vercel/analytics/react';
 import { Metadata } from 'next';
@@ -9,34 +9,34 @@ import localFont from 'next/font/local';
 import Script from 'next/script';
 import { ReactNode } from 'react';
 
-const saans = localFont({
-  src: './saans-font.woff2',
+const seasonFont = localFont({
+  src: './season.woff2',
   display: 'swap',
 });
 
 export const metadata: Metadata = {
-  title: 'Glow - A delightfully rich link-in-bio.',
+  title: 'Linky - A delightfully rich link-in-bio.',
   description:
-    'Create your own dynamic link in bio page effortlessly with Glow, the personal page builder designed to help you stand out and connect with your audience.',
-  metadataBase: new URL('https://glow.as'),
+    'Create your own dynamic link in bio page effortlessly with Linky, the personal page builder designed to help you stand out and connect with your audience.',
+  metadataBase: new URL('https://lin.ky'),
   openGraph: {
     images: [
       {
-        url: 'https://glow.as/assets/og.png',
+        url: 'https://lin.ky/assets/og.png',
       },
     ],
     type: 'website',
-    url: 'https://glow.as',
-    title: 'Glow',
+    url: 'https://lin.ky',
+    title: 'Linky',
     description:
-      'Create your own dynamic link in bio page effortlessly with Glow, the personal page builder designed to help you stand out and connect with your audience.',
-    siteName: 'Glow',
+      'Create your own dynamic link in bio page effortlessly with Linky, the personal page builder designed to help you stand out and connect with your audience.',
+    siteName: 'Linky',
   },
   twitter: {
     card: 'summary_large_image',
     site: '@tryglow',
     creator: '@tryglow',
-    images: 'https://glow.as/assets/og.png',
+    images: 'https://lin.ky/assets/og.png',
   },
 };
 
@@ -46,7 +46,7 @@ export default async function RootLayout({
   children: ReactNode;
 }) {
   return (
-    <html lang="en" className={saans.className}>
+    <html lang="en" className={seasonFont.className}>
       <head>
         {process.env.NODE_ENV === 'production' && (
           <Script
@@ -56,23 +56,25 @@ export default async function RootLayout({
           />
         )}
       </head>
-      <body className="bg-stone-50 min-h-screen">
+      <body className="min-h-screen">
         <MarketingNavigation>
           <>
             <LoginWidget
               trigger={
-                <Button variant="ghost" className="block">
+                <Button variant="ghost" className="block rounded-full">
                   Log in
                 </Button>
               }
             />
             <LoginWidget
               isSignup
-              trigger={<Button className="block">Get started</Button>}
+              trigger={
+                <Button className="block rounded-full">Get started</Button>
+              }
             />
           </>
         </MarketingNavigation>
-        <main className="bg-white min-h-full">{children}</main>
+        <main className="min-h-full">{children}</main>
         <MarketingFooter />
       </body>
 

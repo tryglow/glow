@@ -22,6 +22,16 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
+        hostname: 'cdn.dev.lin.ky',
+        port: '',
+      },
+      {
+        protocol: 'https',
+        hostname: 'cdn.lin.ky',
+        port: '',
+      },
+      {
+        protocol: 'https',
         hostname: 'cdn.dev.glow.as',
         port: '',
       },

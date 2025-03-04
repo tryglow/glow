@@ -145,7 +145,63 @@
   }
 
   .font-black {
-    font-variation-settings: 'wght' 900;
+    font-variation-settings:
+      'wght' 900,
+      'SERF' 24;
+  }
+
+  .font-thin.font-serf {
+    font-variation-settings:
+      'wght' 100,
+      'SERF' 24;
+  }
+
+  .font-extralight.font-serf {
+    font-variation-settings:
+      'wght' 200,
+      'SERF' 24;
+  }
+
+  .font-light.font-serf {
+    font-variation-settings:
+      'wght' 300,
+      'SERF' 24;
+  }
+
+  .font-normal.font-serf {
+    font-variation-settings:
+      'wght' 400,
+      'SERF' 24;
+  }
+
+  .font-medium.font-serf {
+    font-variation-settings:
+      'wght' 500,
+      'SERF' 24;
+  }
+
+  .font-semibold.font-serf {
+    font-variation-settings:
+      'wght' 600,
+      'SERF' 24;
+  }
+
+  .font-bold.font-serf {
+    font-variation-settings:
+      'wght' 700,
+      'SERF' 24;
+  }
+
+  .font-extrabold.font-serf {
+    font-variation-settings:
+      'wght' 800,
+      'SERF' 24;
+  }
+
+  .font-black.font-serf {
+    font-variation-settings:
+      'wght' 900,
+      'SERF' 24;
   }
 
   .no-scrollbar::-webkit-scrollbar {
@@ -162,6 +218,7 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply text-foreground;
+    background: #f8f7f3;
   }
 }

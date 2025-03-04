@@ -19,7 +19,7 @@ export default function VerifyLoginPage() {
             width={40}
             height={40}
             src="/i/assets/logo.png"
-            alt="Glow"
+            alt="Linky"
             className="mx-auto h-10 w-auto rounded-md mb-4"
           />
 

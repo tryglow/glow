@@ -1,11 +1,11 @@
 import { getLearnPosts } from './utils';
 import { LearnPost } from '@/app/learn/utils';
-import { MarketingContainer } from '@/components/MarketingContainer';
+import { MarketingContainer } from '@/components/marketing-container';
 import { Metadata } from 'next';
 import Link from 'next/link';
 
 export const metadata: Metadata = {
-  title: 'Learn - Glow',
+  title: 'Learn - Linky',
 };
 
 const learnPostCategories: Record<
@@ -14,8 +14,8 @@ const learnPostCategories: Record<
     title: string;
   }
 > = {
-  glow: {
-    title: 'Glow',
+  linky: {
+    title: 'Linky',
   },
   'link-in-bio': {
     title: 'Link in Bio',
@@ -36,7 +36,7 @@ export default async function LearnLandingPage() {
 
   return (
     <main>
-      <div className="w-full flex-auto bg-gradient-to-b from-[#f6dc99] to-[#ffc0af]">
+      <div className="w-full flex-auto bg-gradient-to-b from-[#f9f9f8] to-[#f5f3ea]">
         <MarketingContainer>
           <div className="mx-auto max-w-2xl lg:max-w-none pt-32 pb-16">
             <div>
@@ -46,7 +46,7 @@ export default async function LearnLandingPage() {
                 </span>
               </h1>
               <div className="mt-6 max-w-3xl text-xl text-slate-900">
-                <p>Common questions and answers about Glow and link-in-bio.</p>
+                <p>Common questions and answers about Linky and link-in-bio.</p>
               </div>
             </div>
           </div>

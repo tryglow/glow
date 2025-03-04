@@ -9,7 +9,7 @@ import localFont from 'next/font/local';
 import Script from 'next/script';
 
 const saans = localFont({
-  src: './saans-font.woff2',
+  src: './season.woff2',
   display: 'swap',
 });
 

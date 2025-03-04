@@ -195,14 +195,14 @@ export const StackMockup = ({ className }: { className?: string }) => {
       title: 'Figma',
       label: 'Design',
       icon: {
-        src: 'https://cdn.glow.as/default-data/figma.jpeg',
+        src: 'https://cdn.lin.ky/default-data/figma.jpeg',
       },
     },
     {
       title: 'Warp',
       label: 'Engineering',
       icon: {
-        src: 'https://cdn.glow.as/default-data/warp.png',
+        src: 'https://cdn.lin.ky/default-data/warp.png',
       },
     },
   ];
@@ -239,7 +239,7 @@ export const ImageMockup = ({ className }: { className?: string }) => {
   return (
     <CoreBlockMock className={cn('relative !p-0 overflow-hidden', className)}>
       <img
-        src="https://cdn.glow.as/block-610e4b68-f485-4730-b374-8c69fcec6928/8fca8b36-3f2d-48be-9519-5bb566044cbb"
+        src="https://cdn.lin.ky/block-610e4b68-f485-4730-b374-8c69fcec6928/8fca8b36-3f2d-48be-9519-5bb566044cbb"
         className="absolute w-full h-full object-cover"
         alt=""
       />
@@ -265,17 +265,17 @@ export const LinkBoxMockup = ({
     }
   > = {
     x: {
-      icon: 'https://cdn.glow.as/default-data/x-logo.png',
+      icon: 'https://cdn.lin.ky/default-data/x-logo.png',
       title: 'X / Twitter',
       username: '@tryglow',
     },
     instagram: {
-      icon: 'https://cdn.glow.as/default-data/icons/instagram.svg',
+      icon: 'https://cdn.lin.ky/default-data/icons/instagram.svg',
       title: 'Instagram',
       username: '@getglowapp',
     },
     linkedin: {
-      icon: 'https://cdn.glow.as/default-data/icons/linkedin.svg',
+      icon: 'https://cdn.lin.ky/default-data/icons/linkedin.svg',
       title: 'LinkedIn',
       username: '@getglowapp',
     },

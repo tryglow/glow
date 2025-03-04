@@ -1,41 +1,18 @@
-import { MarketingContainer } from '@/components/MarketingContainer';
-import { apiServerFetch } from '@/lib/api-server';
+import { getFeaturedPages } from '@/actions/get-featured-pages';
+import { MarketingContainer } from '@/components/marketing-container';
 import { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 
 export const metadata: Metadata = {
-  title: 'Explore - Glow',
-};
-
-type FeaturedPage = {
-  id: string;
-  slug: string;
-  headerTitle: string;
-  headerDescription: string;
-};
-
-const getFeaturedPages = async (): Promise<FeaturedPage[]> => {
-  const response = await apiServerFetch('/marketing/featured-pages', {
-    method: 'POST',
-    body: JSON.stringify({}),
-    next: {
-      revalidate: 600, // Revalidate every 10 minutes
-    },
-  });
-
-  if (!response.ok) {
-    throw new Error('Failed to fetch featured pages');
-  }
-
-  return await response.json();
+  title: 'Explore - Linky',
 };
 
 export default async function ExploreLandingPage() {
   const featuredPages = await getFeaturedPages();
 
   return (
-    <main>
+    <main className="bg-[#FCFBF8]">
       <div className="w-full flex-auto">
         <MarketingContainer>
           <div className="mx-auto max-w-2xl lg:max-w-none pt-24 pb-8">
@@ -47,8 +24,8 @@ export default async function ExploreLandingPage() {
               </h1>
               <div className="mt-6 max-w-3xl text-xl text-slate-900">
                 <p>
-                  Explore some of the best link-in-bio pages created by the Glow
-                  community.
+                  Explore some of the best link-in-bio pages created by the
+                  Linky community.
                 </p>
               </div>
             </div>
@@ -57,7 +34,7 @@ export default async function ExploreLandingPage() {
       </div>
       <MarketingContainer className="pt-8">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-x-2 gap-y-4 w-[calc(100%+2rem)] -ml-4">
-          {featuredPages.map((page: FeaturedPage) => {
+          {featuredPages.map((page) => {
             return (
               <Link
                 key={page.id}

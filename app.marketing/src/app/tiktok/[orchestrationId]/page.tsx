@@ -1,6 +1,6 @@
 import { Card } from './card';
 import { validateOrchestration } from '@/app/tiktok/actions';
-import { MarketingContainer } from '@/components/MarketingContainer';
+import { MarketingContainer } from '@/components/marketing-container';
 import { redirect } from 'next/navigation';
 import { Suspense } from 'react';
 

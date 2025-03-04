@@ -2,7 +2,7 @@ import { getArticles } from '@/app/blog/utils';
 import { getLearnPosts } from '@/app/learn/utils';
 import { MetadataRoute } from 'next';
 
-const baseUrl = `https://glow.as`;
+const baseUrl = `https://lin.ky`;
 
 const baseSitemap = [
   {

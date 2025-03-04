@@ -1,6 +1,6 @@
 'use client';
 
-import { LoginForm } from '@/components/LoginForm';
+import { LoginForm } from '@/components/login-form';
 import { useIsLoggedIn } from '@/hooks/use-is-logged-in';
 import Image from 'next/image';
 import { redirect } from 'next/navigation';
@@ -20,7 +20,7 @@ export default function SignupPage() {
             width={40}
             height={40}
             src="/i/assets/logo.png"
-            alt="Glow"
+            alt="Linky"
             className="mx-auto h-10 w-auto rounded-md mb-4"
           />
 

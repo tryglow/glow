@@ -1,11 +1,7 @@
-.title {
-  display: flex;
-  gap: 4px 8px;
+.titleRainbow {
+  display: inline-flex;
+  gap: 0;
   flex-wrap: wrap;
-
-  @screen md {
-    gap: 8px;
-  }
 
   span {
     animation: fadeInUp 400ms cubic-bezier(0.22, 0.61, 0.36, 1);
@@ -14,32 +10,29 @@
     transform: translateY(40px);
   }
 
-  span:nth-of-type(1) {
-    animation-delay: 500ms;
+  @for $i from 1 through 12 {
+    span:nth-of-type(#{$i}) {
+      animation-delay: #{300 + ($i - 1) * 30}ms;
+    }
   }
-  span:nth-of-type(2) {
-    animation-delay: 600ms;
-  }
+}
 
-  span:nth-of-type(3) {
-    animation-delay: 650ms;
-  }
+.titleFirstPart,
+.titleSecondPart {
+  display: inline-block;
+  animation: fadeInUp 400ms cubic-bezier(0.22, 0.61, 0.36, 1);
+  animation-fill-mode: forwards;
+  opacity: 0;
+  transform: translateY(40px);
+}
 
-  span:nth-of-type(4) {
-    animation-delay: 700ms;
-  }
+.titleFirstPart {
+  animation-delay: 200ms;
+  margin-right: 0.25ch;
+}
 
-  span:nth-of-type(5) {
-    animation-delay: 750ms;
-  }
-
-  span:nth-of-type(6) {
-    animation-delay: 800ms;
-  }
-
-  span:nth-of-type(7) {
-    animation-delay: 850ms;
-  }
+.titleSecondPart {
+  animation-delay: 1100ms;
 }
 
 .subtitle,
@@ -52,15 +45,15 @@
 }
 
 .socialProof {
-  animation-delay: 450ms;
+  animation-delay: 1350ms;
 }
 
 .subtitle {
-  animation-delay: 850ms;
+  animation-delay: 1150ms;
 }
 
 .ctas {
-  animation-delay: 850ms;
+  animation-delay: 1250ms;
   display: flex;
 }
 

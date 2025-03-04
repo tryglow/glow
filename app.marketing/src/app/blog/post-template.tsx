@@ -1,4 +1,4 @@
-import { MarketingContainer } from '@/components/MarketingContainer';
+import { MarketingContainer } from '@/components/marketing-container';
 import { ArticleMetadata } from '@/types/mdx';
 
 interface Props {
@@ -12,8 +12,8 @@ type Author = {
   position: string;
   avatar: string;
   link: string;
-  glowLink: string;
-  glowUsername: string;
+  linkyUsername: string;
+  linkyLink: string;
 };
 
 export const authors: Author[] = [
@@ -22,20 +22,20 @@ export const authors: Author[] = [
     name: 'Alex',
     position: 'Founder',
     avatar:
-      'https://cdn.glow.as/block-f5a2d44d-6933-4a51-a9e2-9fbb27923585/f4fdd080-46be-483f-9b04-e5646efb157d',
+      'https://cdn.lin.ky/block-f5a2d44d-6933-4a51-a9e2-9fbb27923585/f4fdd080-46be-483f-9b04-e5646efb157d',
     link: 'https://x.com/alexjpate',
-    glowUsername: 'alex',
-    glowLink: 'https://alex.now',
+    linkyUsername: 'alex',
+    linkyLink: 'https://alex.now',
   },
   {
     id: 'jack',
     name: 'Jack',
     position: 'Co-founder',
     avatar:
-      'https://cdn.glow.as/666b7445-c171-4ad7-a21d-eb1954b7bd40/0885d7ec-9af4-4430-94f4-ad1a033c2704',
+      'https://cdn.lin.ky/666b7445-c171-4ad7-a21d-eb1954b7bd40/0885d7ec-9af4-4430-94f4-ad1a033c2704',
     link: 'https://x.com/tryglow',
-    glowUsername: 'jack',
-    glowLink: 'https://glow.as/jack',
+    linkyUsername: 'jack',
+    linkyLink: 'https://lin.ky/jack',
   },
 ];
 
@@ -53,10 +53,10 @@ export function ArticleTemplate({ children, meta }: Props) {
     },
     publisher: {
       '@type': 'Organization',
-      name: 'Glow',
+      name: 'Linky',
       logo: {
         '@type': 'ImageObject',
-        url: 'https://glow.as/assets/logo.png',
+        url: 'https://lin.ky/assets/logo.png',
       },
     },
     datePublished: meta.publishDate,
@@ -66,9 +66,9 @@ export function ArticleTemplate({ children, meta }: Props) {
   return (
     <>
       <article>
-        <div className="bg-gradient-to-b from-[#bbb5ff] to-[#f4cbdc]">
+        <div className="bg-gradient-to-b from-[#f9f9f8] to-[#f5f3ea] pt-16">
           <MarketingContainer>
-            <header className="flex max-w-4xl flex-col pt-16 pb-16">
+            <header className="flex max-w-2xl flex-col pt-16 pb-16">
               <h1 className="text-pretty text-5xl lg:text-6xl font-black text-slate-900 tracking-tight">
                 {meta.title}
               </h1>

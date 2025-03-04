@@ -1,39 +1,59 @@
 'use client';
 
-import { LoginWidget } from '@/components/LoginWidget';
-import { MarketingContainer } from '@/components/MarketingContainer';
+import { LoginWidget } from '@/components/login-widget';
+import { MarketingContainer } from '@/components/marketing-container';
 import { useIsLoggedIn } from '@/hooks/use-is-logged-in';
 import { InternalApi } from '@/lib/api';
-import { PlusIcon } from '@heroicons/react/16/solid';
-import { Button } from '@tryglow/ui';
+import {
+  LockClosedIcon,
+  UserGroupIcon,
+  ChatBubbleBottomCenterTextIcon,
+  Cog6ToothIcon,
+  CreditCardIcon,
+  UserIcon,
+  DocumentTextIcon,
+  GlobeAltIcon,
+  ArrowPathIcon,
+  EyeSlashIcon,
+  ArrowDownTrayIcon,
+  ClockIcon,
+} from '@heroicons/react/24/outline';
+import { Button, cn } from '@tryglow/ui';
 
 const tiers = [
   {
     name: 'Premium',
     id: 'premium',
-    description: 'The best way to get started.',
-    priceMonthly: '$4',
+    badge: 'Popular',
+    description: 'The best way to get started',
+    priceMonthly: '4',
+    billingPeriod: 'per month',
     href: '#',
     highlights: [
-      { description: 'Custom domains' },
-      { description: 'Unlimited blocks' },
-      { description: 'Unlimited pages' },
-      { description: 'Premium only blocks' },
-      { description: 'Verification badge' },
-      { description: 'Private pages' },
+      { description: 'Custom Domains', icon: GlobeAltIcon },
+      { description: 'Unlimited pages', icon: ArrowPathIcon },
+      { description: 'Unlimited blocks', icon: LockClosedIcon },
+      { description: 'Verification badge', icon: EyeSlashIcon },
+      { description: 'Private pages', icon: ArrowDownTrayIcon },
+      { description: 'Analytics', icon: ClockIcon },
     ],
   },
   {
     name: 'Team',
     id: 'team',
-    description: 'Built for teams.',
-    priceMonthly: '$10',
+    description: 'For teams & agencies',
+    priceMonthly: '14',
+    billingPeriod: 'per month',
     href: '#',
     highlights: [
-      { description: 'A team with unlimited pages/blocks' },
-      { description: 'Invite up to 5 team members' },
-      { description: 'Google Analytics integration' },
-      { description: 'Facebook Pixel integration' },
+      { description: 'All Premium features', icon: LockClosedIcon },
+      { description: 'A separate team space', icon: LockClosedIcon },
+      { description: 'Invite up to 5 team members', icon: UserGroupIcon },
+      {
+        description: 'Google Analytics integration',
+        icon: ChatBubbleBottomCenterTextIcon,
+      },
+      { description: 'Facebook Pixel integration', icon: Cog6ToothIcon },
     ],
   },
 ];
@@ -56,83 +76,78 @@ export function PricingTable() {
   const isLoggedIn = useIsLoggedIn();
 
   return (
-    <div className="relative pt-16 sm:pt-16 pb-16">
-      <div className="absolute inset-x-0 bottom-0 top-48 bg-gradient-to-b from-white to-stone-100" />
-      <MarketingContainer className="relative z-10">
-        <div className="grid grid-cols-1 gap-10 lg:grid-cols-2">
+    <div className="relative py-16">
+      <MarketingContainer className="relative z-[2] max-w-2xl">
+        <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
           {tiers.map((tier) => (
             <div
               key={tier.name}
-              className="-m-2 grid grid-cols-1 rounded-[2rem] shadow-[inset_0_0_2px_1px_#ffffff4d] ring-1 ring-black/5 max-lg:mx-auto max-lg:w-full max-lg:max-w-md"
+              className={cn(
+                'rounded-2xl bg-transparent p-8 shadow-sm ring-1 ring-gray-200',
+                tier.id === 'premium' && 'bg-white ring-0'
+              )}
             >
-              <div className="grid grid-cols-1 rounded-[2rem] p-2 shadow-md shadow-black/5">
-                <div className="rounded-3xl bg-white p-10 pb-9 shadow-2xl ring-1 ring-black/5">
-                  <h2 className="text-2xl font-black text-[#FF4F17]">
-                    {tier.name} <span className="sr-only">plan</span>
-                  </h2>
-                  <p className="mt-2 text-pretty text-sm/6 text-gray-600">
-                    {tier.description}
-                  </p>
-                  <div className="mt-8 flex items-center gap-4">
-                    <div className="text-5xl font-black tracking-tight text-gray-950">
-                      {tier.priceMonthly}
-                    </div>
-                    {tier.name !== 'Free' && (
-                      <div className="text-sm/5 text-gray-600">
-                        <p>USD</p>
-                        <p>per month</p>
-                      </div>
-                    )}
-                  </div>
-                  <div className="mt-8">
-                    {isLoggedIn && tier.id !== 'free' ? (
-                      <Button
-                        size="lg"
-                        className="w-full"
-                        onClick={() =>
-                          handleGetPlan(tier.id as 'premium' | 'team')
-                        }
-                      >
-                        {tier.name === 'Premium'
-                          ? 'Try free for 14 days'
-                          : tier.name === 'Team'
-                            ? 'Get Team'
-                            : 'Get Started'}
-                      </Button>
-                    ) : (
-                      <LoginWidget
-                        isSignup
-                        trigger={
-                          <Button size="lg" className="w-full">
-                            {tier.name === 'Team' ? 'Get Team' : 'Get Started'}
-                          </Button>
-                        }
-                      />
-                    )}
-                  </div>
-                  <div className="mt-8">
-                    <h3 className="text-sm/6 font-medium text-gray-950">
-                      {tier.name === 'Team' && 'Everything in Premium plus:'}
-                    </h3>
-                    <ul className="mt-3 space-y-3">
-                      {tier.highlights.map((highlight) => (
-                        <li
-                          key={highlight.description}
-                          className="group flex items-start gap-4 text-sm/6 text-gray-600 data-[disabled]:text-gray-400"
-                        >
-                          <span className="inline-flex h-6 items-center">
-                            <PlusIcon
-                              aria-hidden="true"
-                              className="size-4 fill-gray-400 group-data-[disabled]:fill-gray-300"
-                            />
-                          </span>
+              <div className="flex items-center gap-2">
+                <h2 className="text-xl font-serf font-semibold text-gray-900">
+                  {tier.name}
+                </h2>
+                {tier.badge && (
+                  <span className="rounded-full bg-[#e26c1e] px-3 py-1 text-xs font-medium text-white">
+                    {tier.badge}
+                  </span>
+                )}
+              </div>
+              <p className="mt-1 text-sm text-gray-500">{tier.description}</p>
 
-                          {highlight.description}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
+              <div className="mt-6">
+                <div className="flex items-baseline">
+                  <span className="text-4xl font-bold tracking-tight text-gray-900">
+                    ${tier.priceMonthly}
+                  </span>
+                  <span className="ml-2 text-sm text-gray-500">
+                    {tier.billingPeriod}
+                  </span>
                 </div>
+
+                <div className="mt-6">
+                  {isLoggedIn && tier.id !== 'free' ? (
+                    <Button
+                      variant="default"
+                      size="lg"
+                      className="w-full rounded-full bg-black text-white hover:bg-gray-800"
+                      onClick={() =>
+                        handleGetPlan(tier.id as 'premium' | 'team')
+                      }
+                    >
+                      Get started
+                    </Button>
+                  ) : (
+                    <LoginWidget
+                      isSignup
+                      trigger={
+                        <Button
+                          variant="default"
+                          size="lg"
+                          className="w-full rounded-full bg-black text-white hover:bg-gray-800"
+                        >
+                          Get started
+                        </Button>
+                      }
+                    />
+                  )}
+                </div>
+
+                <ul className="mt-8 space-y-3">
+                  {tier.highlights.map((highlight) => (
+                    <li
+                      key={highlight.description}
+                      className="flex items-center gap-3 text-sm text-gray-600"
+                    >
+                      <highlight.icon className="h-5 w-5 flex-shrink-0 text-gray-400" />
+                      {highlight.description}
+                    </li>
+                  ))}
+                </ul>
               </div>
             </div>
           ))}

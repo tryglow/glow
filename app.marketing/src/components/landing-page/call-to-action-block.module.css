@@ -1,0 +1,25 @@
+@keyframes scroll {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-50%);
+  }
+}
+
+.animateScroll {
+  animation: scroll 70s linear infinite;
+}
+
+.animateScrollReverse {
+  animation: scrollReverse 70s linear infinite;
+}
+
+@keyframes scrollReverse {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(50%);
+  }
+}

@@ -1,13 +1,13 @@
 import { authors } from './post-template';
 import { getArticles } from './utils';
-import { MarketingContainer } from '@/components/MarketingContainer';
+import { MarketingContainer } from '@/components/marketing-container';
 import { Button } from '@tryglow/ui';
 import { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 
 export const metadata: Metadata = {
-  title: 'Blog - Glow',
+  title: 'Blog | Linky',
 };
 
 export default async function ArticlesLandingPage() {
@@ -15,7 +15,7 @@ export default async function ArticlesLandingPage() {
 
   return (
     <main>
-      <div className="w-full flex-auto bg-gradient-to-b from-[#bbb5ff] to-[#f4cbdc]">
+      <div className="w-full flex-auto bg-gradient-to-b from-[#f9f9f8] to-[#f5f3ea]">
         <MarketingContainer>
           <div className="mx-auto max-w-2xl lg:max-w-none pt-32 pb-16">
             <div>
@@ -27,7 +27,7 @@ export default async function ArticlesLandingPage() {
               <div className="mt-6 max-w-3xl text-xl text-slate-800">
                 <p>
                   Product updates, tutorials, and other helpful content from the
-                  Glow team.
+                  Linky team.
                 </p>
               </div>
             </div>
@@ -46,7 +46,7 @@ export default async function ArticlesLandingPage() {
                   <article>
                     <div className="relative lg:-mx-4 lg:flex lg:justify-end">
                       <div className="pt-10 lg:w-2/3 lg:flex-none lg:px-4 lg:pt-0">
-                        <h2 className="font-display text-2xl font-semibold text-slate-800">
+                        <h2 className="font-serf text-2xl font-bold text-slate-800">
                           <Link href={`/i/blog/${article.slug}`}>
                             {article.title}
                           </Link>
@@ -79,12 +79,12 @@ export default async function ArticlesLandingPage() {
                               <div className="font-semibold">
                                 {author?.name}
                               </div>
-                              {author?.glowLink && (
+                              {author?.linkyLink && (
                                 <Link
-                                  href={author.glowLink}
+                                  href={author.linkyLink}
                                   className="text-slate-500"
                                 >
-                                  glow.as/{author.glowUsername}
+                                  lin.ky/{author.linkyUsername}
                                 </Link>
                               )}
                             </div>

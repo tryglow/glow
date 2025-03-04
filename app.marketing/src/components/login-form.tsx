@@ -1,6 +1,6 @@
 'use client';
 
-import { LoginProviderButton } from '@/components/LoginProviderButton';
+import { LoginProviderButton } from '@/components/login-provider-button';
 import { Button, Input, toast } from '@tryglow/ui';
 import { useState } from 'react';
 
