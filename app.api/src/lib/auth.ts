@@ -1,4 +1,3 @@
-import authClient from '@/lib/auth-client';
 import prisma from '@/lib/prisma';
 import {
   sendMagicLinkEmail,
@@ -10,12 +9,7 @@ import { stripe } from '@better-auth/stripe';
 import slugify from '@sindresorhus/slugify';
 import { betterAuth, BetterAuthOptions } from 'better-auth';
 import { prismaAdapter } from 'better-auth/adapters/prisma';
-import {
-  admin,
-  customSession,
-  magicLink,
-  organization,
-} from 'better-auth/plugins';
+import { admin, magicLink, organization } from 'better-auth/plugins';
 import Stripe from 'stripe';
 
 const stripeClient = new Stripe(process.env.STRIPE_API_SECRET_KEY!);
