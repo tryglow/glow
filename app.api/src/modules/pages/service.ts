@@ -16,7 +16,7 @@ export async function getPageLayoutById(pageId: string) {
       config: true,
       mobileConfig: true,
       publishedAt: true,
-      teamId: true,
+      organizationId: true,
     },
   });
 
@@ -32,7 +32,7 @@ export async function getPageThemeById(pageId: string) {
     select: {
       theme: true,
       publishedAt: true,
-      teamId: true,
+      organizationId: true,
     },
   });
 
@@ -65,7 +65,7 @@ export async function getPageBlocks(pageId: string) {
       deletedAt: null,
     },
     select: {
-      teamId: true,
+      organizationId: true,
       publishedAt: true,
       blocks: {
         select: {
@@ -85,10 +85,10 @@ export async function getPageBlocks(pageId: string) {
   return page;
 }
 
-export async function getPagesForTeamId(teamId: string) {
+export async function getPagesForOrganizationId(organizationId: string) {
   const pages = await prisma.page.findMany({
     where: {
-      teamId,
+      organizationId,
       deletedAt: null,
     },
     select: {
@@ -110,7 +110,7 @@ export async function getPageSettings(pageId: string) {
       id: pageId,
     },
     select: {
-      teamId: true,
+      organizationId: true,
       id: true,
       publishedAt: true,
       slug: true,
@@ -152,7 +152,7 @@ export async function checkUserHasAccessToPage(pageId: string, userId: string) {
   const page = await prisma.page.count({
     where: {
       id: pageId,
-      team: {
+      organization: {
         members: {
           some: {
             userId,
@@ -173,12 +173,12 @@ export async function createNewPage({
   slug,
   themeId,
   userId,
-  teamId,
+  organizationId,
 }: {
   slug: string;
   themeId: string;
   userId: string;
-  teamId: string;
+  organizationId: string;
 }) {
   const existingPage = await prisma.page.findUnique({
     where: {
@@ -227,9 +227,7 @@ export async function createNewPage({
 
   const newPage = await prisma.page.create({
     data: {
-      // Temporary until we drop userId from the page model
-      userId,
-      teamId,
+      organizationId,
       slug,
       publishedAt: new Date(),
       themeId,

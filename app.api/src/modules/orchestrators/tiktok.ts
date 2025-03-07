@@ -10,11 +10,11 @@ const generateRandomCode = () => {
 };
 
 const createPage = async ({
-  teamId,
+  organizationId,
   userId,
   tiktokUsername,
 }: {
-  teamId: string;
+  organizationId: string;
   userId: string;
   tiktokUsername: string;
 }) => {
@@ -40,8 +40,7 @@ const createPage = async ({
   try {
     const page = await prisma.page.create({
       data: {
-        userId,
-        teamId,
+        organizationId,
         slug: newPageSlug,
         metaTitle: `${tiktokUsername} on Glow`,
         metaDescription: `${tiktokUsername} on Glow`,
@@ -243,14 +242,12 @@ const createTikTokLatestVideoBlock = async ({
 };
 
 const createTiktokIntegration = async ({
-  userId,
-  teamId,
+  organizationId,
   accessToken,
   refreshToken,
   displayName,
 }: {
-  userId: string;
-  teamId: string;
+  organizationId: string;
   accessToken: string;
   refreshToken: string;
   displayName: string;
@@ -263,8 +260,7 @@ const createTiktokIntegration = async ({
   try {
     const integration = await prisma.integration.create({
       data: {
-        userId,
-        teamId,
+        organizationId,
         type: 'tiktok',
         encryptedConfig,
         config: {},
@@ -477,7 +473,7 @@ const getTikTokAccessToken = async ({ userId }: { userId: string }) => {
   const tiktokAccount = await prisma.account.findFirst({
     where: {
       userId,
-      provider: 'tiktok',
+      providerId: 'tiktok',
     },
   });
 
@@ -486,8 +482,8 @@ const getTikTokAccessToken = async ({ userId }: { userId: string }) => {
   }
 
   return {
-    refreshToken: tiktokAccount?.refresh_token,
-    accessToken: tiktokAccount?.access_token,
+    refreshToken: tiktokAccount?.refreshToken,
+    accessToken: tiktokAccount?.accessToken,
   };
 };
 
@@ -528,11 +524,11 @@ const uploadAvatar = async ({
 
 export async function orchestrateTikTok({
   orchestrationId,
-  teamId,
+  organizationId,
   userId,
 }: {
   orchestrationId: string;
-  teamId: string;
+  organizationId: string;
   userId: string;
 }) {
   const orchestration = await prisma.orchestration.findUnique({
@@ -586,7 +582,7 @@ export async function orchestrateTikTok({
   });
 
   const page = await createPage({
-    teamId,
+    organizationId,
     userId,
     tiktokUsername: tiktokData?.profile?.username,
   });
@@ -604,8 +600,7 @@ export async function orchestrateTikTok({
   });
 
   const tiktokIntegration = await createTiktokIntegration({
-    teamId,
-    userId,
+    organizationId,
     accessToken: tiktokTokens.accessToken,
     refreshToken: tiktokTokens.refreshToken,
     displayName: `@${tiktokData?.profile?.username}`,

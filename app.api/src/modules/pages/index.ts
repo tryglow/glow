@@ -18,14 +18,15 @@ import {
   getPageIdBySlugOrDomain,
   getPageLayoutById,
   getPageSettings,
-  getPagesForTeamId,
+  getPagesForOrganizationId,
   getPageThemeById,
   updatePageLayout,
 } from './service';
 import { posthog } from '@/lib/posthog';
 import prisma from '@/lib/prisma';
 import { checkUserHasActivePlan } from '@/modules/utils';
-import { FastifyInstance, FastifyReply } from 'fastify';
+import { fromNodeHeaders } from 'better-auth/node';
+import fastify, { FastifyInstance, FastifyReply } from 'fastify';
 import { FastifyRequest } from 'fastify';
 
 export default async function pagesRoutes(fastify: FastifyInstance, opts: any) {
@@ -85,7 +86,7 @@ async function getPageLayoutHandler(
   const page = await getPageLayoutById(pageId);
 
   if (!page?.publishedAt) {
-    if (session?.currentTeamId !== page?.teamId) {
+    if (session?.activeOrganizationId !== page?.organizationId) {
       return response.status(404).send({});
     }
   }
@@ -109,7 +110,7 @@ async function getPageThemeHandler(
   const page = await getPageThemeById(pageId);
 
   if (!page?.publishedAt) {
-    if (session?.currentTeamId !== page?.teamId) {
+    if (session?.activeOrganizationId !== page?.organizationId) {
       return response.status(404).send({});
     }
   }
@@ -158,7 +159,10 @@ async function getPageBlocksHandler(
 
   let currentUserIsOwner = false;
 
-  if (session?.user.id && page?.teamId === session?.currentTeamId) {
+  if (
+    session?.user.id &&
+    page?.organizationId === session?.activeOrganizationId
+  ) {
     currentUserIsOwner = true;
   }
 
@@ -178,7 +182,7 @@ async function getCurrentUserTeamPagesHandler(
 ) {
   const session = await request.server.authenticate(request, response);
 
-  const pages = await getPagesForTeamId(session.currentTeamId);
+  const pages = await getPagesForOrganizationId(session.activeOrganizationId);
 
   return response.status(200).send(pages);
 }
@@ -199,7 +203,10 @@ export async function getPageSettingsHandler(
 
   let currentUserIsOwner = false;
 
-  if (session?.user.id && page?.teamId === session?.currentTeamId) {
+  if (
+    session?.user.id &&
+    page?.organizationId === session?.activeOrganizationId
+  ) {
     currentUserIsOwner = true;
   }
 
@@ -248,16 +255,9 @@ async function createPageHandler(
 ) {
   const session = await request.server.authenticate(request, response);
 
-  const hasActivePlan = await checkUserHasActivePlan(request, response);
-
-  if (!hasActivePlan) {
-    return response.status(400).send({
-      error: {
-        message: 'No active plan found',
-      },
-    });
-  }
-
+  /**
+   * CHECK USER HAS ACTIVE PLAN
+   */
   const { slug, themeId } = request.body;
 
   if (!slug) {
@@ -271,8 +271,8 @@ async function createPageHandler(
   const teamPages = await prisma.page.findMany({
     where: {
       deletedAt: null,
-      team: {
-        id: session.currentTeamId,
+      organization: {
+        id: session.activeOrganizationId,
         members: {
           some: {
             userId: session.user.id,
@@ -281,9 +281,13 @@ async function createPageHandler(
       },
     },
     include: {
-      user: {
+      organization: {
         select: {
-          isAdmin: true,
+          members: {
+            select: {
+              role: true,
+            },
+          },
         },
       },
     },
@@ -295,11 +299,10 @@ async function createPageHandler(
     },
   });
 
-  const maxNumberOfPages =
-    user?.hasPremiumAccess || user?.hasTeamAccess ? 1000 : 2;
+  const maxNumberOfPages = 100;
 
   if (teamPages.length >= maxNumberOfPages) {
-    if (!user?.isAdmin) {
+    if (user?.role !== 'ADMIN') {
       return response.status(400).send({
         error: {
           message: 'You have reached the maximum number of pages',
@@ -314,7 +317,7 @@ async function createPageHandler(
       slug,
       themeId,
       userId: session.user.id,
-      teamId: session.currentTeamId,
+      organizationId: session.activeOrganizationId,
     });
 
     if ('error' in res) {

@@ -85,9 +85,7 @@ async function getSpotifyCallbackHandler(
 
     const integration = await prisma.integration.create({
       data: {
-        // TODO To be cleaned up once userId is dropped from the integration table
-        userId: session.user.id,
-        teamId: session.currentTeamId,
+        organizationId: session.activeOrganizationId,
         type: 'spotify',
         encryptedConfig,
         // TODO Remove this once we drop the old config field.

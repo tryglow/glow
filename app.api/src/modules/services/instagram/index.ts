@@ -122,9 +122,7 @@ async function getInstagramCallbackHandler(
 
     const integration = await prisma.integration.create({
       data: {
-        // To be cleaned up once userId is dropped from the integration table
-        userId: session.user.id,
-        teamId: session.currentTeamId,
+        organizationId: session.activeOrganizationId,
         type: 'instagram',
         config: {},
         encryptedConfig,
@@ -246,9 +244,7 @@ async function getInstagramLegacyCallbackHandler(
 
     const integration = await prisma.integration.create({
       data: {
-        // To be cleaned up once userId is dropped from the integration table
-        userId: session.user.id,
-        teamId: session.currentTeamId,
+        organizationId: session.activeOrganizationId,
         type: 'instagram',
         config: {},
         encryptedConfig,
