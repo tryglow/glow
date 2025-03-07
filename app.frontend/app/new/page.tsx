@@ -1,14 +1,14 @@
+import { getSession } from '@/app/lib/auth';
+import { NewPageDialog } from '@/components/NewPageDialog';
+import { headers } from 'next/headers';
 import { redirect } from 'next/navigation';
 
-import { auth } from '@/app/lib/auth';
-
-import { NewPageDialog } from '@/components/NewPageDialog';
-
 export default async function NewPage() {
-  const session = await auth();
-  const user = session?.user;
+  const session = await getSession({
+    fetchOptions: { headers: await headers() },
+  });
 
-  if (!user) {
+  if (!session) {
     redirect('/');
   }
 

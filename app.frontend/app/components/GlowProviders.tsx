@@ -5,15 +5,13 @@ import { fetcher } from '@/lib/fetch';
 import { StepType, TourProvider, useTour } from '@reactour/tour';
 import { captureException } from '@sentry/nextjs';
 import { SidebarProvider, Button } from '@tryglow/ui';
-import { Session } from 'next-auth';
-import { SessionProvider } from 'next-auth/react';
 import { ReactNode } from 'react';
 import { SWRConfig, SWRConfiguration } from 'swr';
 
 interface Props {
   children: ReactNode;
   value: SWRConfiguration;
-  session: Session | null;
+
   currentUserIsOwner: boolean;
   pageId: string;
 }
@@ -114,17 +112,7 @@ const tourSteps: StepType[] = [
   },
 ];
 
-const WithTourProvider = ({
-  children,
-  session,
-}: {
-  children: ReactNode;
-  session: Session | null;
-}) => {
-  if (!session) {
-    return <>{children}</>;
-  }
-
+const WithTourProvider = ({ children }: { children: ReactNode }) => {
   return (
     <TourProvider
       steps={tourSteps}
@@ -151,7 +139,6 @@ export const GlowProviders = ({
   children,
   value,
   currentUserIsOwner,
-  session,
   pageId,
 }: Props) => {
   const cache = new Map();
@@ -159,20 +146,18 @@ export const GlowProviders = ({
 
   return (
     <SWRConfig value={{ ...value, fetcher, provider: () => cache }}>
-      <SessionProvider session={session}>
-        <WithTourProvider session={session}>
-          <SidebarProvider
-            style={
-              {
-                '--sidebar-width': '390px',
-              } as React.CSSProperties
-            }
-            skipSidebar={!currentUserIsOwner}
-          >
-            {children}
-          </SidebarProvider>
-        </WithTourProvider>
-      </SessionProvider>
+      <WithTourProvider>
+        <SidebarProvider
+          style={
+            {
+              '--sidebar-width': '390px',
+            } as React.CSSProperties
+          }
+          skipSidebar={!currentUserIsOwner}
+        >
+          {children}
+        </SidebarProvider>
+      </WithTourProvider>
     </SWRConfig>
   );
 };

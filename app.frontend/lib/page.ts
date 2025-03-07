@@ -1,8 +1,9 @@
 import prisma from './prisma';
-import { auth } from '@/app/lib/auth';
+import { getSession } from '@/app/lib/auth';
 import { headerBlockDefaults } from '@tryglow/blocks';
 import { track } from '@vercel/analytics/server';
 import { randomUUID } from 'crypto';
+import { headers } from 'next/headers';
 
 export const MAX_PAGES_PER_TEAM = 10;
 
@@ -13,22 +14,25 @@ interface NewPageInput {
 
 export async function createNewPage(input: NewPageInput) {
   const headerSectionId = randomUUID();
-  const session = await auth();
+
+  const session = await getSession({
+    fetchOptions: { headers: await headers() },
+  });
 
   if (!session) {
     return null;
   }
 
+  const { user, session: sessionData } = session.data ?? {};
+
   await track('pageCreated', {
-    teamId: session.currentTeamId,
+    teamId: sessionData?.activeOrganizationId ?? 'unknown',
     slug: input.slug,
   });
 
   return prisma.page.create({
     data: {
-      // Temporary until we drop userId from the page model
-      userId: session.user.id,
-      teamId: session.currentTeamId,
+      organizationId: sessionData?.activeOrganizationId,
       slug: input.slug,
       publishedAt: new Date(),
       themeId: input.themeId,

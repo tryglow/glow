@@ -1,22 +1,16 @@
-import { getUserJwt } from '@/app/lib/auth';
+import { headers } from 'next/headers';
 
 export const apiServerFetch = async (
   path: string,
   requestOptions: RequestInit = {}
 ) => {
-  let jwt;
-  const headers: Record<string, string> =
-    (requestOptions.headers as Record<string, string>) || {};
-
-  jwt = await getUserJwt();
-
-  if (jwt) {
-    headers.Authorization = `Bearer ${jwt}`;
-  }
+  const headersList = await headers();
 
   return fetch(`${process.env.NEXT_PUBLIC_API_URL}${path}`, {
-    headers,
-    body: requestOptions.body,
     ...requestOptions,
+    headers: {
+      ...requestOptions.headers,
+      cookie: headersList.get('cookie') || '',
+    },
   });
 };

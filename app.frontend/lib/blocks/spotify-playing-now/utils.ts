@@ -120,6 +120,8 @@ const fetchSpotifyData = async (
       };
     }
 
+    console.log('RESPONSE => ', response);
+
     // Spotify returns 204 if the user is not playing anything, which is a
     // successful response, so we need to handle it accordingly.
     if (response?.status === 204) {

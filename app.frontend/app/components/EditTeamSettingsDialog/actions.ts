@@ -1,97 +1,16 @@
 'use server';
 
-import { sendTeamInvitationEmail } from '@/notifications/team-invitation';
-
-import { auth } from '@/app/lib/auth';
-import prisma from '@/lib/prisma';
-
 import { FormValues } from './EditTeamSettingsGeneralForm';
 import { TeamInviteFormValues } from './EditTeamSettingsMembersForm';
 import { teamInviteSchema } from './shared';
-
-export const fetchTeamSettings = async () => {
-  const session = await auth();
-
-  if (!session) {
-    return null;
-  }
-
-  const team = await prisma.team.findFirst({
-    where: {
-      id: session.currentTeamId,
-      members: {
-        some: {
-          userId: session.user.id,
-        },
-      },
-    },
-  });
-
-  return {
-    team,
-  };
-};
-
-export const fetchTeamMembers = async () => {
-  const session = await auth();
-
-  if (!session) {
-    return {
-      members: [],
-      invites: [],
-    };
-  }
-
-  const team = await prisma.team.findFirst({
-    where: {
-      id: session.currentTeamId,
-      members: {
-        some: {
-          userId: session.user.id,
-        },
-      },
-    },
-  });
-
-  if (team?.isPersonal) {
-    return {
-      members: [],
-      invites: [],
-    };
-  }
-
-  const members = await prisma.teamUser.findMany({
-    where: {
-      teamId: team?.id,
-    },
-    select: {
-      user: {
-        select: {
-          id: true,
-          name: true,
-          email: true,
-          image: true,
-        },
-      },
-    },
-  });
-
-  const invites = await prisma.teamInvite.findMany({
-    where: {
-      teamId: team?.id,
-      claimedAt: null,
-      claimedById: null,
-    },
-  });
-
-  return {
-    members,
-    invites,
-  };
-};
+import { authClient, getSession } from '@/app/lib/auth';
+import prisma from '@/lib/prisma';
+import { headers } from 'next/headers';
 
 export const updateGeneralTeamSettings = async (values: FormValues) => {
-  const session = await auth();
+  const session = await getSession({
+    fetchOptions: { headers: await headers() },
+  });
 
   if (!session) {
     return {
@@ -99,14 +18,22 @@ export const updateGeneralTeamSettings = async (values: FormValues) => {
     };
   }
 
-  const teamId = session.currentTeamId;
+  const { user, session: sessionData } = session?.data ?? {};
 
-  const team = await prisma.team.findFirst({
+  const orgId = sessionData?.activeOrganizationId;
+
+  if (!orgId) {
+    return {
+      error: { message: 'You must be in a team to update team settings' },
+    };
+  }
+
+  const team = await prisma.organization.findFirst({
     where: {
-      id: teamId,
+      id: orgId,
       members: {
         some: {
-          userId: session.user.id,
+          userId: user?.id,
         },
       },
     },
@@ -122,30 +49,13 @@ export const updateGeneralTeamSettings = async (values: FormValues) => {
 };
 
 export const createTeamInvite = async (values: TeamInviteFormValues) => {
-  const session = await auth();
+  const session = await getSession({
+    fetchOptions: { headers: await headers() },
+  });
 
   if (!session) {
     return {
       error: { message: 'You must be logged in to create a team invite' },
-    };
-  }
-
-  const teamId = session.currentTeamId;
-
-  const team = await prisma.team.findFirst({
-    where: {
-      id: teamId,
-      members: {
-        some: {
-          userId: session.user.id,
-        },
-      },
-    },
-  });
-
-  if (!team) {
-    return {
-      error: { message: 'You must be in a team to create a team invite' },
     };
   }
 
@@ -157,17 +67,12 @@ export const createTeamInvite = async (values: TeamInviteFormValues) => {
     };
   }
 
-  const invite = await prisma.teamInvite.create({
-    data: {
-      teamId,
-      email: validatedValues.data.email,
-      expiresAt: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7), // 1 week
-    },
+  await authClient.organization.inviteMember({
+    email: values.email,
+    role: 'member',
   });
 
-  await sendTeamInvitationEmail(invite);
-
   return {
-    invite,
+    success: true,
   };
 };

@@ -1,16 +1,17 @@
 'use client';
 
 import { useEditModeContext } from '@/app/contexts/Edit';
+import { authClient } from '@/app/lib/auth';
 import { PageSwitcher } from '@/components/PageSwitcher';
 import { TeamSwitcher } from '@/components/TeamSwitcher';
 import { UserWidget } from '@/components/UserWidget';
 import { internalApiFetcher } from '@/lib/fetch';
-import { getCheckoutLink } from '@/lib/stripe';
+import { Subscription } from '@better-auth/stripe';
 import {
   ComputerDesktopIcon,
   DevicePhoneMobileIcon,
 } from '@heroicons/react/24/outline';
-import { Page, Team } from '@tryglow/prisma';
+import { Page } from '@tryglow/prisma';
 import {
   Dialog,
   DialogContent,
@@ -28,19 +29,24 @@ import useSWR from 'swr';
 export function GlobalNavigation({ isEditMode }: { isEditMode: boolean }) {
   const { setOpen, toggleSidebar } = useSidebar();
 
+  const [subscriptions, setSubscriptions] = useState<Subscription | null>(null);
+
   const [showPremiumDialog, setShowPremiumDialog] = useState(false);
   const [getPlanLoading, setGetPlanLoading] = useState(false);
 
-  const { data: usersTeams } = useSWR<Partial<Team>[]>(
-    '/teams/me',
-    internalApiFetcher
-  );
+  const { data: usersOrganizations } = authClient.useListOrganizations();
 
-  const { data: userPlan } = useSWR<{
-    plan: string;
-    status: 'legacyFree' | 'active' | 'inactive' | 'trial';
-    daysRemainingOnTrial: number | null;
-  }>('/users/me/plan', internalApiFetcher);
+  useEffect(() => {
+    async function fetchSubscriptions() {
+      const { data: teamSubscriptions } = await authClient.subscription.list();
+
+      if (teamSubscriptions) {
+        setSubscriptions(teamSubscriptions[0]);
+      }
+    }
+
+    fetchSubscriptions();
+  }, []);
 
   const { data: teamPages } = useSWR<Partial<Page>[]>(
     '/pages/me',
@@ -49,20 +55,11 @@ export function GlobalNavigation({ isEditMode }: { isEditMode: boolean }) {
 
   const handleGetPlan = async (planType: 'premium' | 'team') => {
     setGetPlanLoading(true);
-    const link = await getCheckoutLink({ planType });
 
-    if (link) {
-      window.open(link);
-    }
+    // TODO
 
     setGetPlanLoading(false);
   };
-
-  useEffect(() => {
-    if (userPlan?.status === 'inactive') {
-      setShowPremiumDialog(true);
-    }
-  }, [userPlan]);
 
   return (
     <>
@@ -86,9 +83,10 @@ export function GlobalNavigation({ isEditMode }: { isEditMode: boolean }) {
               </Link>
 
               <div className="flex gap-2">
-                {usersTeams?.length && usersTeams?.length > 1 && (
-                  <TeamSwitcher usersTeams={usersTeams} />
-                )}
+                {usersOrganizations?.length &&
+                  usersOrganizations?.length > 1 && (
+                    <TeamSwitcher usersOrganizations={usersOrganizations} />
+                  )}
                 <PageSwitcher teamPages={teamPages} />
 
                 <Button
@@ -111,20 +109,26 @@ export function GlobalNavigation({ isEditMode }: { isEditMode: boolean }) {
             </div>
 
             <div className="flex items-center justify-end gap-4">
-              {userPlan?.status === 'trial' ? (
-                <button
-                  type="button"
-                  onClick={() => setShowPremiumDialog(true)}
-                  className="hidden md:flex text-white font-bold text-sm bg-gradient-to-b from-orange-400 to-orange-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 rounded-full px-4 py-1 text-center h-8 items-center"
-                >
-                  {userPlan?.daysRemainingOnTrial} days left
-                </button>
-              ) : userPlan?.status === 'inactive' ? (
-                <span className="hidden md:flex text-white font-bold text-sm bg-gradient-to-b from-red-400 to-red-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 rounded-full px-4 py-1 text-center h-8 items-center">
-                  Plan Expired
-                </span>
-              ) : null}
-              <UserWidget usersTeams={usersTeams} />
+              {subscriptions?.status && (
+                <>
+                  {subscriptions?.status === 'trialing' ? (
+                    <button
+                      type="button"
+                      onClick={() => setShowPremiumDialog(true)}
+                      className="hidden md:flex text-white font-bold text-sm bg-gradient-to-b from-orange-400 to-orange-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 rounded-full px-4 py-1 text-center h-8 items-center"
+                    >
+                      {subscriptions.plan} trial
+                    </button>
+                  ) : ['past_due', 'canceled'].includes(
+                      subscriptions?.status
+                    ) ? (
+                    <span className="hidden md:flex text-white font-bold text-sm bg-gradient-to-b from-red-400 to-red-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 rounded-full px-4 py-1 text-center h-8 items-center">
+                      Plan Expired
+                    </span>
+                  ) : null}
+                </>
+              )}
+              <UserWidget usersOrganizations={usersOrganizations} />
             </div>
           </div>
         </div>
@@ -133,7 +137,7 @@ export function GlobalNavigation({ isEditMode }: { isEditMode: boolean }) {
       <Dialog
         open={showPremiumDialog}
         onOpenChange={() => {
-          if (userPlan?.status === 'inactive') {
+          if (subscriptions?.status === 'canceled') {
             return;
           }
 
@@ -142,7 +146,7 @@ export function GlobalNavigation({ isEditMode }: { isEditMode: boolean }) {
         }}
       >
         <DialogContent
-          hideCloseButton={userPlan?.status === 'inactive'}
+          hideCloseButton={subscriptions?.status === 'canceled'}
           className="p-0 !border-0"
         >
           <DialogHeader className="pt-14 pb-4 bg-gradient-to-b from-orange-300 to-white text-center">

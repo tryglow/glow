@@ -1,11 +1,12 @@
 import './globals.css';
 import './react-grid-layout.scss';
-import { auth } from '@/app/lib/auth';
+import { getSession } from '@/app/lib/auth';
 import { PostHogIdentify, PostHogProvider } from '@/app/posthog-provider';
 import { Toaster } from '@tryglow/ui';
 import { Analytics } from '@vercel/analytics/react';
 import { Metadata } from 'next';
 import localFont from 'next/font/local';
+import { headers } from 'next/headers';
 import Script from 'next/script';
 
 const saans = localFont({
@@ -44,7 +45,14 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const session = await auth();
+  const session = await getSession({
+    fetchOptions: { headers: await headers() },
+  });
+
+  const sessionData = session.data;
+
+  const { user } = sessionData ?? {};
+
   return (
     <html lang="en" className={saans.className}>
       <head>
@@ -61,10 +69,10 @@ export default async function RootLayout({
           {children}
           <Toaster />
         </body>
-        {session?.user && (
+        {user && (
           <PostHogIdentify
-            userId={session.user.id}
-            teamId={session.currentTeamId}
+            userId={user.id}
+            organizationId={sessionData?.session.activeOrganizationId ?? ''}
           />
         )}
       </PostHogProvider>

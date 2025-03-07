@@ -1,6 +1,8 @@
 'use client';
 
+import { useSession } from '@/app/lib/auth';
 import { hideGlowTour } from '@/app/lib/auth-actions';
+// import { hideGlowTour } from '@/app/lib/auth-actions';
 import { useTour } from '@reactour/tour';
 import { captureException } from '@sentry/nextjs';
 import {
@@ -13,7 +15,6 @@ import {
   Button,
   useIsMobile,
 } from '@tryglow/ui';
-import { useSession } from 'next-auth/react';
 import { useState } from 'react';
 
 export function UserOnboardingDialog() {
@@ -22,7 +23,13 @@ export function UserOnboardingDialog() {
   const { setIsOpen } = useTour();
   const isMobile = useIsMobile();
 
-  if (!session?.features.showGlowTour || isMobile) return null;
+  console.log('Session', session);
+
+  const metadata = session?.user.metadata as any as { showTour: boolean };
+
+  if (metadata?.showTour === false || isMobile) {
+    return null;
+  }
 
   const handleClose = async () => {
     try {

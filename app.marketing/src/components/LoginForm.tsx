@@ -1,6 +1,7 @@
 'use client';
 
 import { LoginProviderButton } from '@/components/LoginProviderButton';
+import { signIn } from '@/lib/auth';
 import { Button, Input, toast } from '@tryglow/ui';
 import { useState } from 'react';
 
@@ -22,24 +23,23 @@ export function LoginForm({ onComplete, redirectTo }: Props) {
       return;
     }
 
-    try {
-      const url = new URL('/api/auth/signin', window.location.origin);
-      url.searchParams.set('provider', 'http-email');
-      url.searchParams.set('email', email);
-      url.searchParams.set('redirectTo', redirectTo || '');
+    const { data, error } = await signIn.magicLink({
+      email,
+      callbackURL: redirectTo || `${process.env.NEXT_PUBLIC_BASE_URL}/edit`,
+    });
 
-      const req = await fetch(url);
-
-      if (req.ok) {
-        window.location.href = '/i/auth/verify';
-      }
-    } catch (error) {
-      console.error(error);
+    if (error || !data.status) {
+      console.log(error);
+      return;
     }
+
+    window.location.href = '/i/auth/verify';
 
     if (onComplete) {
       onComplete();
     }
+
+    return;
   };
 
   return (

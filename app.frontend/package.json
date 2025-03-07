@@ -16,6 +16,7 @@
   "dependencies": {
     "@auth/core": "^0.37.3",
     "@auth/prisma-adapter": "^2.7.4",
+    "@better-auth/stripe": "^1.2.3",
     "@headlessui/react": "^2.2.0",
     "@heroicons/react": "^2.1.5",
     "@number-flow/react": "^0.4.2",
@@ -31,6 +32,7 @@
     "@tryglow/ui": "*",
     "@vercel/analytics": "^1.5.0",
     "@vercel/functions": "^2.0.0",
+    "better-auth": "^1.2.2",
     "date-fns": "^4.1.0",
     "formik": "^2.4.6",
     "formik-validator-zod": "^2.0.1",

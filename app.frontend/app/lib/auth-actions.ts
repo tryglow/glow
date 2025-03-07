@@ -1,49 +1,24 @@
 'use server';
 
-import { auth, signOut as authSignOut, signIn, unstable_update } from './auth';
+import { authClient } from './auth';
+import { captureException } from '@sentry/nextjs';
 
 export async function signOut() {
-  await authSignOut();
-}
-
-export async function signInWithEmail(email: string, redirectTo?: string) {
-  return await signIn('http-email', { email, redirectTo, redirect: true });
-}
-
-export async function signInWithCredentials(email: string, password: string) {
-  return await signIn('credentials', {
-    email,
-    password,
-    redirect: true,
-    redirectTo: '/',
-  });
-}
-
-export async function signInWithGoogle(redirectTo?: string) {
-  return await signIn('google', { redirectTo, redirect: true });
-}
-
-export async function signInWithTwitter(redirectTo?: string) {
-  return await signIn('twitter', { redirectTo, redirect: true });
-}
-
-export async function signInWithTikTok(redirectTo?: string) {
-  return await signIn('tiktok', { redirectTo, redirect: true });
+  await authClient.signOut();
 }
 
 export async function hideGlowTour() {
-  const session = await auth();
+  try {
+    const req = await authClient.updateUser({
+      metadata: {
+        showTour: false,
+        hello: 'world,',
+      },
+    });
 
-  if (!session) return;
-
-  await unstable_update({
-    ...session,
-    features: {
-      showGlowTour: false,
-    },
-  });
-
-  return {
-    success: true,
-  };
+    console.log(req);
+  } catch (error) {
+    console.log('Error hiding glow tour', error);
+    captureException(error);
+  }
 }

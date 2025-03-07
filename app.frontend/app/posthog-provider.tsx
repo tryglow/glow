@@ -20,19 +20,19 @@ export function PostHogProvider({ children }: { children: React.ReactNode }) {
 
 export function PostHogIdentify({
   userId,
-  teamId,
+  organizationId,
 }: {
   userId: string;
-  teamId: string;
+  organizationId: string;
 }) {
   const _posthog = usePostHog();
 
   useEffect(() => {
     if (userId) {
       _posthog?.identify(userId);
-      _posthog?.group('team', teamId);
+      _posthog?.group('team', organizationId);
     }
-  }, [_posthog, userId, teamId]);
+  }, [_posthog, userId, organizationId]);
 
   return null;
 }

@@ -1,8 +1,9 @@
 'use server';
 
-import { auth } from '@/app/lib/auth';
+import { getSession } from '@/app/lib/auth';
 import prisma from '@/lib/prisma';
 import { VerificationRequestStatus } from '@tryglow/prisma';
+import { headers } from 'next/headers';
 
 export async function createVerificationRequest({
   pageId,
@@ -11,13 +12,17 @@ export async function createVerificationRequest({
   pageId: string;
   requestedPageTitle: string;
 }) {
-  const session = await auth();
+  const session = await getSession({
+    fetchOptions: { headers: await headers() },
+  });
 
-  if (!session?.user) {
+  if (!session) {
     return {
       error: 'Unauthorized',
     };
   }
+
+  const { user } = session?.data ?? {};
 
   if (!requestedPageTitle || requestedPageTitle.length === 0) {
     return {
@@ -28,10 +33,10 @@ export async function createVerificationRequest({
   const page = await prisma.page.findUnique({
     where: {
       id: pageId,
-      team: {
+      organization: {
         members: {
           some: {
-            userId: session.user.id,
+            userId: user?.id,
           },
         },
       },
@@ -73,7 +78,7 @@ export async function createVerificationRequest({
       },
       requestedBy: {
         connect: {
-          id: session.user.id,
+          id: user?.id,
         },
       },
       requestedPageTitle,

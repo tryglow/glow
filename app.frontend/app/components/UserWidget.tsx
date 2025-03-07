@@ -1,10 +1,10 @@
 'use client';
 
-import { signOut } from '@/app/lib/auth-actions';
+import { ManageBillingDialog } from '@/app/components/ManageBillingDialog';
+import { authClient, useSession } from '@/app/lib/auth';
 import { EditTeamSettingsDialog } from '@/components/EditTeamSettingsDialog/EditTeamSettingsDialog';
 import { NewPageDialog } from '@/components/NewPageDialog';
-import { getBillingPortalLink } from '@/lib/stripe';
-import { Team } from '@tryglow/prisma';
+import { Organization } from '@tryglow/prisma';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -17,20 +17,22 @@ import {
   AvatarFallback,
   AvatarImage,
 } from '@tryglow/ui';
-import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
 interface Props {
-  usersTeams?: Partial<Team>[];
+  usersOrganizations?: Partial<Organization>[] | null;
 }
 
-export function UserWidget({ usersTeams }: Props) {
+export function UserWidget({ usersOrganizations }: Props) {
   const [showNewTeamDialog, setShowNewTeamDialog] = useState(false);
   const [showTeamSettingsDialog, setShowTeamSettingsDialog] = useState(false);
-
+  const [showManageBillingDialog, setShowManageBillingDialog] = useState(false);
   const { data: session } = useSession();
 
-  const user = session?.user;
+  const router = useRouter();
+
+  const { user } = session ?? {};
 
   if (!user) {
     return null;
@@ -62,7 +64,7 @@ export function UserWidget({ usersTeams }: Props) {
           </DropdownMenuLabel>
           <DropdownMenuSeparator />
 
-          {usersTeams && usersTeams?.length > 1 && (
+          {usersOrganizations && usersOrganizations?.length > 1 && (
             <>
               <DropdownMenuItem onClick={() => setShowTeamSettingsDialog(true)}>
                 Team settings
@@ -72,17 +74,27 @@ export function UserWidget({ usersTeams }: Props) {
           )}
 
           <DropdownMenuItem
-            onClick={async () => {
-              const billingPortalLink = await getBillingPortalLink();
-              if (billingPortalLink) {
-                window.open(billingPortalLink, '_blank');
-              }
-            }}
+            onClick={() => setShowManageBillingDialog(true)}
+
+            // await authClient.subscription.upgrade({
+            //   plan: 'team',
+            //   referenceId: session?.session.activeOrganizationId,
+            //   seats: 1,
+            //   successUrl: '/edit',
+            //   cancelUrl: '/edit',
+            // });
+            // TODO - Hook this up to the pricing table
+            // }}
           >
             Manage Billing
           </DropdownMenuItem>
 
-          <DropdownMenuItem onClick={async () => await signOut()}>
+          <DropdownMenuItem
+            onClick={async () => {
+              await authClient.signOut();
+              router.refresh();
+            }}
+          >
             Log out
           </DropdownMenuItem>
         </DropdownMenuContent>
@@ -99,6 +111,11 @@ export function UserWidget({ usersTeams }: Props) {
           onClose={() => setShowTeamSettingsDialog(false)}
         />
       )}
+
+      <ManageBillingDialog
+        open={showManageBillingDialog}
+        onOpenChange={setShowManageBillingDialog}
+      />
     </>
   );
 }

@@ -1,17 +1,22 @@
-import { auth } from '@/app/lib/auth';
+import { getSession } from '@/app/lib/auth';
 import prisma from '@/lib/prisma';
+import { headers } from 'next/headers';
 import { redirect } from 'next/navigation';
 
 export async function GET() {
-  const session = await auth();
+  const session = await getSession({
+    fetchOptions: { headers: await headers() },
+  });
 
-  if (!session || !session.currentTeamId) {
+  const { user, session: sessionData } = session?.data ?? {};
+
+  if (!user || !sessionData?.activeOrganizationId) {
     return redirect('/');
   }
 
   const pages = await prisma.page.findMany({
     where: {
-      teamId: session?.currentTeamId,
+      organizationId: sessionData?.activeOrganizationId,
       deletedAt: null,
     },
     orderBy: {
