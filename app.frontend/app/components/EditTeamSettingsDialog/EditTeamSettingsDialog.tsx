@@ -47,7 +47,6 @@ export function EditTeamSettingsDialog({ open, onOpenChange, onClose }: Props) {
 
   const teamMetaData = JSON.parse(teamSettings?.metadata ?? '{}');
 
-  console.log('Team teamMetaData', teamMetaData);
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent>

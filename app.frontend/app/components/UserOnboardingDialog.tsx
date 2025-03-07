@@ -23,8 +23,6 @@ export function UserOnboardingDialog() {
   const { setIsOpen } = useTour();
   const isMobile = useIsMobile();
 
-  console.log('Session', session);
-
   const metadata = session?.user.metadata as any as { showTour: boolean };
 
   if (metadata?.showTour === false || isMobile) {

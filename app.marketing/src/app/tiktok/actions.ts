@@ -10,10 +10,7 @@ export async function createNewOrchestration() {
     }),
   });
 
-  console.log(response);
-
   const data = await response.json();
-  console.log(data);
 
   if (!response.ok) {
     throw new Error('Failed to create new orchestration');

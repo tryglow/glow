@@ -1,5 +1,5 @@
-import { PrismaClient } from '@prisma/client';
 import { defaultThemeSeeds } from '../../app.frontend/lib/theme';
+import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 

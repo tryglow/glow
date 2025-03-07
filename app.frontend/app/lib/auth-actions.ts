@@ -15,10 +15,7 @@ export async function hideGlowTour() {
         hello: 'world,',
       },
     });
-
-    console.log(req);
   } catch (error) {
-    console.log('Error hiding glow tour', error);
     captureException(error);
   }
 }

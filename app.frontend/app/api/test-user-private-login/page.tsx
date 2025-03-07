@@ -16,13 +16,12 @@ export default function TestUserPrivateLogin() {
       alert('Please enter your email and password');
     }
 
-    await authClient.signIn.emailAndPassword({
+    await authClient.signIn.email({
       email,
       password,
     });
-
-    await signInWithCredentials(email, password);
   };
+
   return (
     <div className="w-full h-full min-h-screen flex flex-col items-center justify-center">
       <h1 className="text-2xl font-bold">
