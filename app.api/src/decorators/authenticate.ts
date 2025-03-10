@@ -31,6 +31,7 @@ export async function authenticateDecorator(
         user: {
           id: user.id,
         },
+        // @ts-ignore
         activeOrganizationId: session.session.activeOrganizationId,
       };
     }
