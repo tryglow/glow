@@ -9,6 +9,4 @@ export const authClient = createAuthClient({
   plugins: [organizationClient(), magicLinkClient()],
 });
 
-console.log('NEXT_PUBLIC_API_URL', process.env.NEXT_PUBLIC_API_URL);
-
 export const { signIn, signOut, useSession } = authClient;

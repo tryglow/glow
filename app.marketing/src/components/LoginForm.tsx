@@ -25,7 +25,7 @@ export function LoginForm({ onComplete, redirectTo }: Props) {
 
     const { data, error } = await signIn.magicLink({
       email,
-      callbackURL: redirectTo || `${process.env.NEXT_PUBLIC_BASE_URL}/edit`,
+      callbackURL: redirectTo || `${process.env.NEXT_PUBLIC_APP_URL}/edit`,
     });
 
     if (error || !data.status) {
