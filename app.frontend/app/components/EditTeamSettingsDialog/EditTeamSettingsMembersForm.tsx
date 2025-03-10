@@ -4,7 +4,7 @@ import { FormField } from '../FormField';
 import { createTeamInvite } from './actions';
 import { teamInviteSchema } from './shared';
 import { captureException } from '@sentry/nextjs';
-import { TeamInvite, User } from '@tryglow/prisma';
+import { Invitation, User } from '@tryglow/prisma';
 import {
   Avatar,
   AvatarFallback,
@@ -24,7 +24,7 @@ export type TeamInviteFormValues = {
 interface Props {
   onCancel: () => void;
   members: { user: Partial<User> }[];
-  invites?: TeamInvite[];
+  invites?: Partial<Invitation>[];
 }
 
 export function EditTeamSettingsMembers({ onCancel, members, invites }: Props) {

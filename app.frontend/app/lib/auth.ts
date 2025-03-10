@@ -1,6 +1,5 @@
 import { stripeClient } from '@better-auth/stripe/client';
 import {
-  inferAdditionalFields,
   magicLinkClient,
   organizationClient,
 } from 'better-auth/client/plugins';
@@ -14,13 +13,6 @@ export const authClient = createAuthClient({
       subscription: true,
     }),
     magicLinkClient(),
-    inferAdditionalFields({
-      user: {
-        metadata: {
-          type: 'string',
-        },
-      },
-    }),
   ],
 });
 

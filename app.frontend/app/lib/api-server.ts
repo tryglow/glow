@@ -1,4 +1,5 @@
 import { headers } from 'next/headers';
+import 'server-only';
 
 export const apiServerFetch = async (
   path: string,

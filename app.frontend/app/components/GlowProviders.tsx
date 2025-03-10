@@ -1,6 +1,6 @@
 'use client';
 
-import { hideGlowTour } from '@/app/lib/auth-actions';
+import { hideOnboardingTour } from '@/app/lib/auth-actions';
 import { fetcher } from '@/lib/fetch';
 import { StepType, TourProvider, useTour } from '@reactour/tour';
 import { captureException } from '@sentry/nextjs';
@@ -29,7 +29,7 @@ const BlockContent = ({
 
   const handleFinishTour = async () => {
     try {
-      await hideGlowTour();
+      await hideOnboardingTour();
     } catch (error) {
       captureException(error);
     } finally {

@@ -1,10 +1,11 @@
 'use client';
 
 import { useSession } from '@/app/lib/auth';
-import { hideGlowTour } from '@/app/lib/auth-actions';
-// import { hideGlowTour } from '@/app/lib/auth-actions';
+import { hideOnboardingTour } from '@/app/lib/auth-actions';
+import { internalApiFetcher } from '@/lib/fetch';
 import { useTour } from '@reactour/tour';
 import { captureException } from '@sentry/nextjs';
+import { Theme, UserFlag } from '@tryglow/prisma';
 import {
   Dialog,
   DialogContent,
@@ -16,6 +17,7 @@ import {
   useIsMobile,
 } from '@tryglow/ui';
 import { useState } from 'react';
+import useSWR from 'swr';
 
 export function UserOnboardingDialog() {
   const [dialogOpen, setDialogOpen] = useState(true);
@@ -23,15 +25,22 @@ export function UserOnboardingDialog() {
   const { setIsOpen } = useTour();
   const isMobile = useIsMobile();
 
-  const metadata = session?.user.metadata as any as { showTour: boolean };
+  const { data: userFlags } = useSWR<{ flags: Partial<UserFlag>[] }>(
+    `/flags/me`,
+    internalApiFetcher
+  );
 
-  if (metadata?.showTour === false || isMobile) {
+  const showOnboardingTour = userFlags?.flags.find(
+    (flag) => flag.key === 'showOnboardingTour'
+  )?.value;
+
+  if (!showOnboardingTour) {
     return null;
   }
 
   const handleClose = async () => {
     try {
-      await hideGlowTour();
+      await hideOnboardingTour();
     } catch (error) {
       captureException(error);
     } finally {

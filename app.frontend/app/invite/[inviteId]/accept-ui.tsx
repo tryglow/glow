@@ -5,11 +5,11 @@ import { LoginForm } from '@/components/LoginForm';
 import { Button, toast } from '@tryglow/ui';
 import { useRouter } from 'next/navigation';
 
-export function LoggedInAcceptInviteUI({ inviteCode }: { inviteCode: string }) {
+export function LoggedInAcceptInviteUI({ inviteId }: { inviteId: string }) {
   const router = useRouter();
 
   const handleAcceptInvite = async () => {
-    const { error } = await acceptInvite(inviteCode);
+    const { error } = await acceptInvite(inviteId);
 
     if (error) {
       toast({
@@ -26,16 +26,6 @@ export function LoggedInAcceptInviteUI({ inviteCode }: { inviteCode: string }) {
   return <Button onClick={handleAcceptInvite}>Accept Invite</Button>;
 }
 
-export function LoggedOutAcceptInviteUI({
-  inviteCode,
-  inviteCodeHash,
-}: {
-  inviteCode: string;
-  inviteCodeHash: string;
-}) {
-  return (
-    <LoginForm
-      redirectTo={`/i/invite/${inviteCode}/accept?hash=${inviteCodeHash}`}
-    />
-  );
+export function LoggedOutAcceptInviteUI({ inviteId }: { inviteId: string }) {
+  return <LoginForm redirectTo={`/i/invite/${inviteId}/accept`} />;
 }
