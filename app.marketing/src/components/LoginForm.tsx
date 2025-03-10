@@ -67,11 +67,11 @@ export function LoginForm({
       </div>
 
       <div className="flex flex-col md:flex-row gap-2">
-        <LoginProviderButton
+        {/* <LoginProviderButton
           provider="twitter"
           className="mt-2 md:mt-0"
           redirectTo={redirectTo}
-        />
+        /> */}
         <LoginProviderButton provider="google" redirectTo={redirectTo} />
         <LoginProviderButton provider="tiktok" redirectTo={redirectTo} />
       </div>
