@@ -10,7 +10,10 @@ interface Props {
   redirectTo?: string;
 }
 
-export function LoginForm({ onComplete, redirectTo }: Props) {
+export function LoginForm({
+  onComplete,
+  redirectTo = `${process.env.NEXT_PUBLIC_APP_URL}/edit`,
+}: Props) {
   const [email, setEmail] = useState('');
 
   const handleEmailSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -25,7 +28,7 @@ export function LoginForm({ onComplete, redirectTo }: Props) {
 
     const { data, error } = await signIn.magicLink({
       email,
-      callbackURL: redirectTo || `${process.env.NEXT_PUBLIC_APP_URL}/edit`,
+      callbackURL: redirectTo,
     });
 
     if (error || !data.status) {
