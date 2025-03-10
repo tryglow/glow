@@ -51,7 +51,8 @@ const options: BetterAuthOptions = {
       clientSecret: process.env.AUTH_TWITTER_CLIENT_SECRET as string,
     },
     tiktok: {
-      clientId: process.env.AUTH_TIKTOK_CLIENT_KEY as string,
+      clientId: process.env.AUTH_TIKTOK_CLIENT_ID as string,
+      clientKey: process.env.AUTH_TIKTOK_CLIENT_KEY as string,
       clientSecret: process.env.AUTH_TIKTOK_CLIENT_SECRET as string,
     },
   },
