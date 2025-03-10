@@ -3,6 +3,7 @@ import {
   sendMagicLinkEmail,
   sendOrganizationInvitationEmail,
   sendTrialEndedEmail,
+  sendTrialReminderEmail,
   sendWelcomeEmail,
 } from '@/modules/notifications/service';
 import { stripe } from '@better-auth/stripe';
@@ -154,14 +155,12 @@ const options: BetterAuthOptions = {
             freeTrial: {
               days: 14,
               onTrialExpired: async (subscription) => {
-                const orgUsers = await getUsersForOrganization(
-                  subscription.referenceId
-                );
+                const fullSubscription =
+                  await stripeClient.subscriptions.retrieve(subscription.id);
 
-                orgUsers.forEach(async (user) => {
-                  if (user.user.email) {
-                    await sendTrialEndedEmail(user.user.email);
-                  }
+                await handleTrialExpired({
+                  stripeCustomerId: fullSubscription.customer as string,
+                  stripeSubscriptionId: subscription.id,
                 });
               },
             },
@@ -197,6 +196,16 @@ const options: BetterAuthOptions = {
 
           return member?.role === 'OWNER' || member?.role === 'ADMIN';
         },
+      },
+      onEvent: async (event) => {
+        if (event.type === 'customer.subscription.trial_will_end') {
+          const subscription = await stripeClient.subscriptions.retrieve(
+            event.data.object.id
+          );
+          if (subscription.customer) {
+            await handleTrialEndingSoon(subscription.customer as string);
+          }
+        }
       },
     }),
     magicLink({
@@ -326,5 +335,110 @@ const createUserInitialFlags = async (userId: string) => {
       key: 'showOnboardingTour',
       value: true,
     },
+  });
+};
+
+const handleTrialEndingSoon = async (stripeCustomerId: string) => {
+  const subscription = await prisma.subscription.findFirst({
+    where: {
+      stripeCustomerId: stripeCustomerId,
+      status: 'trialing',
+    },
+    select: {
+      organization: {
+        select: {
+          members: {
+            select: {
+              user: {
+                select: {
+                  email: true,
+                },
+              },
+            },
+          },
+        },
+      },
+    },
+  });
+
+  if (!subscription) {
+    return;
+  }
+
+  const users = subscription.organization?.members.map((member) => member.user);
+
+  if (!users) {
+    return;
+  }
+
+  users.forEach(async (user) => {
+    if (user.email) {
+      await sendTrialReminderEmail(user.email);
+    }
+  });
+};
+
+const handleTrialExpired = async ({
+  stripeCustomerId,
+  stripeSubscriptionId,
+}: {
+  stripeCustomerId: string;
+  stripeSubscriptionId: string;
+}) => {
+  const subscription = await prisma.subscription.findFirst({
+    where: {
+      stripeCustomerId: stripeCustomerId,
+      stripeSubscriptionId: stripeSubscriptionId,
+    },
+    select: {
+      organization: {
+        select: {
+          id: true,
+          members: {
+            select: {
+              user: {
+                select: {
+                  email: true,
+                },
+              },
+            },
+          },
+        },
+      },
+    },
+  });
+
+  if (!subscription) {
+    return;
+  }
+
+  const orgUsers = subscription.organization?.members.map(
+    (member) => member.user
+  );
+
+  if (!orgUsers) {
+    return;
+  }
+
+  orgUsers.forEach(async (user) => {
+    if (user.email) {
+      await sendTrialEndedEmail(user.email);
+    }
+  });
+
+  const pages = await prisma.page.findMany({
+    where: {
+      organizationId: subscription.organization?.id,
+    },
+  });
+
+  // Unpublish all pages
+  pages.forEach(async (page) => {
+    await prisma.page.update({
+      where: { id: page.id },
+      data: {
+        publishedAt: null,
+      },
+    });
   });
 };
