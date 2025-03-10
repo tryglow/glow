@@ -33,6 +33,10 @@ const trustedOrigins =
     : ['http://localhost:3000', 'http://localhost:3001'];
 
 const options: BetterAuthOptions = {
+  rateLimit: {
+    window: 10, // time window in seconds
+    max: 100, // max requests in the window
+  },
   trustedOrigins: trustedOrigins,
   database: prismaAdapter(prisma, {
     provider: 'postgresql',
