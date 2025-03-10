@@ -1,11 +1,12 @@
 'use client';
 
 import { useEditModeContext } from '@/app/contexts/Edit';
-import { authClient } from '@/app/lib/auth';
+import { authClient, useSession } from '@/app/lib/auth';
 import { PageSwitcher } from '@/components/PageSwitcher';
 import { TeamSwitcher } from '@/components/TeamSwitcher';
 import { UserWidget } from '@/components/UserWidget';
 import { internalApiFetcher } from '@/lib/fetch';
+import { getNextPlan, plansToNames } from '@/lib/plans';
 import { Subscription } from '@better-auth/stripe';
 import {
   ComputerDesktopIcon,
@@ -36,9 +37,19 @@ export function GlobalNavigation({ isEditMode }: { isEditMode: boolean }) {
 
   const { data: usersOrganizations } = authClient.useListOrganizations();
 
+  const session = useSession();
+
   useEffect(() => {
     async function fetchSubscriptions() {
-      const { data: teamSubscriptions } = await authClient.subscription.list();
+      if (!session.data?.session.activeOrganizationId) {
+        return;
+      }
+
+      const { data: teamSubscriptions } = await authClient.subscription.list({
+        query: {
+          referenceId: session.data?.session.activeOrganizationId,
+        },
+      });
 
       if (teamSubscriptions) {
         setSubscriptions(teamSubscriptions[0]);
@@ -46,7 +57,7 @@ export function GlobalNavigation({ isEditMode }: { isEditMode: boolean }) {
     }
 
     fetchSubscriptions();
-  }, []);
+  }, [session.data?.session.activeOrganizationId]);
 
   const { data: teamPages } = useSWR<Partial<Page>[]>(
     '/pages/me',
@@ -56,9 +67,18 @@ export function GlobalNavigation({ isEditMode }: { isEditMode: boolean }) {
   const handleGetPlan = async (planType: 'premium' | 'team') => {
     setGetPlanLoading(true);
 
-    // TODO
+    if (!session.data?.session.activeOrganizationId) {
+      console.log('No active organization id');
+      return;
+    }
 
-    setGetPlanLoading(false);
+    await authClient.subscription.upgrade({
+      plan: planType,
+      referenceId: session.data?.session.activeOrganizationId,
+      seats: 1,
+      successUrl: window.location.href,
+      cancelUrl: window.location.href,
+    });
   };
 
   return (
@@ -117,7 +137,7 @@ export function GlobalNavigation({ isEditMode }: { isEditMode: boolean }) {
                       onClick={() => setShowPremiumDialog(true)}
                       className="hidden md:flex text-white font-bold text-sm bg-gradient-to-b from-orange-400 to-orange-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 rounded-full px-4 py-1 text-center h-8 items-center"
                     >
-                      {subscriptions.plan} trial
+                      {plansToNames[subscriptions.plan]} trial
                     </button>
                   ) : ['past_due', 'canceled'].includes(
                       subscriptions?.status
@@ -187,6 +207,7 @@ export function GlobalNavigation({ isEditMode }: { isEditMode: boolean }) {
     </>
   );
 }
+
 function ScreenSizeSwitcher() {
   const { editLayoutMode, setEditLayoutMode } = useEditModeContext();
 
