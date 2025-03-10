@@ -51,6 +51,7 @@ model Session {
   createdAt            DateTime @default(now())
   updatedAt            DateTime @updatedAt
   activeOrganizationId String?
+  impersonatedBy       String?
 
   user User @relation(fields: [userId], references: [id])
 }
