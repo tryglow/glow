@@ -3,6 +3,7 @@
 import { FormField } from '../FormField';
 import { createTeamInvite } from './actions';
 import { teamInviteSchema } from './shared';
+import { authClient } from '@/app/lib/auth';
 import { captureException } from '@sentry/nextjs';
 import { Invitation, User } from '@tryglow/prisma';
 import {
@@ -38,13 +39,16 @@ export function EditTeamSettingsMembers({ onCancel, members, invites }: Props) {
     setSubmitting(true);
 
     try {
-      const response = await createTeamInvite(values);
+      const invite = await authClient.organization.inviteMember({
+        email: values.email,
+        role: 'member',
+      });
 
-      if (response?.error) {
+      if (invite?.error) {
         toast({
           variant: 'error',
           title: 'Something went wrong',
-          description: response.error.message,
+          description: invite.error.message,
         });
 
         return;
@@ -52,7 +56,7 @@ export function EditTeamSettingsMembers({ onCancel, members, invites }: Props) {
 
       toast({
         title: 'Invite sent',
-        description: 'We sent an invite to ' + values.email,
+        description: 'We sent an invite to ' + invite.data?.email,
       });
       router.refresh();
       onCancel();

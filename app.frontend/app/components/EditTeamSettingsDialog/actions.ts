@@ -67,12 +67,29 @@ export const createTeamInvite = async (values: TeamInviteFormValues) => {
     };
   }
 
-  await authClient.organization.inviteMember({
-    email: values.email,
-    role: 'member',
+  const org = await authClient.organization.getFullOrganization({
+    query: {
+      organizationId: session.data?.session.activeOrganizationId ?? '',
+    },
   });
 
-  return {
-    success: true,
-  };
+  console.log('ORG', org);
+
+  try {
+    const invite = await authClient.organization.inviteMember({
+      email: values.email,
+      role: 'member',
+    });
+
+    console.log('Invite', invite);
+
+    return {
+      success: true,
+    };
+  } catch (error) {
+    console.error(error);
+    return {
+      error: { message: 'Failed to create invite' },
+    };
+  }
 };

@@ -3,6 +3,7 @@
 import { authClient } from '@/app/lib/auth';
 import { EditTeamSettingsGeneral } from '@/components/EditTeamSettingsDialog/EditTeamSettingsGeneralForm';
 import { EditTeamSettingsMembers } from '@/components/EditTeamSettingsDialog/EditTeamSettingsMembersForm';
+import { internalApiFetcher } from '@/lib/fetch';
 import { Invitation, Organization, User } from '@tryglow/prisma';
 import {
   Dialog,
@@ -16,6 +17,7 @@ import {
   TabsTrigger,
 } from '@tryglow/ui';
 import { useEffect, useState } from 'react';
+import useSWR from 'swr';
 
 interface Props {
   open: boolean;
@@ -33,6 +35,11 @@ export function EditTeamSettingsDialog({ open, onOpenChange, onClose }: Props) {
     []
   );
 
+  const { data: orgs } = useSWR<Partial<Organization>[]>(
+    '/organizations/me',
+    internalApiFetcher
+  );
+
   useEffect(() => {
     const getPageData = async () => {
       const org = await authClient.organization.getFullOrganization();
@@ -45,7 +52,7 @@ export function EditTeamSettingsDialog({ open, onOpenChange, onClose }: Props) {
     getPageData();
   }, []);
 
-  const teamMetaData = JSON.parse(teamSettings?.metadata ?? '{}');
+  const currentOrg = orgs?.find((org) => org.id === teamSettings?.id);
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -57,7 +64,7 @@ export function EditTeamSettingsDialog({ open, onOpenChange, onClose }: Props) {
           </DialogDescription>
         </DialogHeader>
 
-        {teamSettings?.isPersonal === false ? (
+        {currentOrg?.isPersonal === false ? (
           <Tabs defaultValue="general" className="w-full">
             <TabsList className="w-full">
               <TabsTrigger value="general" className="w-1/2">

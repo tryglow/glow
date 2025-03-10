@@ -115,6 +115,7 @@ const options: BetterAuthOptions = {
   plugins: [
     admin(),
     organization({
+      allowUserToCreateOrganization: false,
       async sendInvitationEmail(data) {
         const inviteLink = `${process.env.APP_FRONTEND_URL}/invite/${data.id}`;
         sendOrganizationInvitationEmail({
