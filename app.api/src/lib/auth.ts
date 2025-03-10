@@ -29,8 +29,17 @@ const prices = {
 
 const trustedOrigins =
   process.env.NODE_ENV === 'production'
-    ? ['https://glow.as', 'https://api.glow.as', 'https://www.glow.as']
-    : ['http://localhost:3000', 'http://localhost:3001'];
+    ? [
+        'https://glow.as',
+        'https://api.glow.as',
+        'https://admin.glow.as',
+        'https://www.glow.as',
+      ]
+    : [
+        'http://localhost:3000',
+        'http://localhost:3001',
+        'http://localhost:3004',
+      ];
 
 const options: BetterAuthOptions = {
   rateLimit: {
