@@ -163,8 +163,8 @@ export function BlockIntegrationUI({
             <div className="mt-4">
               <span className="font-normal text-stone-600 mt-1">
                 You already have an {integrationUIConfig[integrationType].name}{' '}
-                account connected to Glow. Select your account below, or connect
-                a new one.
+                account connected to Linky. Select your account below, or
+                connect a new one.
               </span>
               <Select onValueChange={handleSelectIntegration}>
                 <SelectTrigger className="w-full max-w-[220px] mx-auto mt-4 bg-white">

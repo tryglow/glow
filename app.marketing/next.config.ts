@@ -40,17 +40,25 @@ const nextConfig: NextConfig = {
         hostname: 'cdn.glow.as',
         port: '',
       },
-      process.env.NODE_ENV === 'production'
-        ? {
-            protocol: 'https',
-            hostname: 'glow.as',
-            port: '',
-          }
-        : {
-            protocol: 'http',
-            hostname: 'localhost',
-            port: '3000',
-          },
+      {
+        protocol: 'https',
+        hostname: 'glow.as',
+        port: '',
+      },
+      {
+        protocol: 'https',
+        hostname: 'lin.ky',
+        port: '',
+      },
+      ...(process.env.NODE_ENV === 'development'
+        ? [
+            {
+              protocol: 'http' as const,
+              hostname: 'localhost',
+              port: '3000',
+            },
+          ]
+        : []),
     ],
   },
 };

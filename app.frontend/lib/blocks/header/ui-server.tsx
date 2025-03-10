@@ -49,9 +49,9 @@ export async function HeaderServerUI({
       <DialogContent className="max-w-sm !rounded-xl">
         <DialogHeader className="flex flex-col items-center text-center">
           <VerifiedBadge />
-          <DialogTitle>Verified by Glow</DialogTitle>
+          <DialogTitle>Verified by Linky</DialogTitle>
           <DialogDescription className="text-center">
-            This page has been manually verified by Glow to ensure that the
+            This page has been manually verified by Linky to ensure that the
             person or brand is authentic.
           </DialogDescription>
         </DialogHeader>

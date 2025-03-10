@@ -43,10 +43,10 @@ export function PremiumOnboardingDialog() {
             />
           </svg>
           <DialogTitle className="text-center font-bold text-2xl mb-1">
-            Welcome to Glow Premium!
+            Welcome to Linky Premium!
           </DialogTitle>
           <span className="text-center text-slate-600">
-            Your account has been upgraded to Glow Premium.
+            Your account has been upgraded to Linky Premium.
           </span>
         </DialogHeader>
         <section className="px-8 pb-4">
@@ -92,10 +92,10 @@ export function TeamOnboardingDialog() {
             />
           </svg>
           <DialogTitle className="text-center font-bold text-2xl mb-1">
-            Welcome to Glow for Teams!
+            Welcome to Linky for Teams!
           </DialogTitle>
           <span className="text-center text-slate-600">
-            Your account has been upgraded to Glow for Teams.
+            Your account has been upgraded to Linky for Teams.
           </span>
         </DialogHeader>
         <section className="px-8 py-4">

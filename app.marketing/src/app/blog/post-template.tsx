@@ -33,7 +33,7 @@ export const authors: Author[] = [
     position: 'Co-founder',
     avatar:
       'https://cdn.lin.ky/666b7445-c171-4ad7-a21d-eb1954b7bd40/0885d7ec-9af4-4430-94f4-ad1a033c2704',
-    link: 'https://x.com/tryglow',
+    link: 'https://x.com/trylinky',
     linkyUsername: 'jack',
     linkyLink: 'https://lin.ky/jack',
   },

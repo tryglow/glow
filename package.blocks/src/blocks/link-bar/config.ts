@@ -12,8 +12,8 @@ export interface LinkBarBlockConfig {
 export const linkBarBlockDefaults: LinkBarBlockConfig = {
   links: [
     {
-      link: 'https://x.com/tryglow',
-      icon: { src: 'https://cdn.glow.as/default-data/icons/twitter.svg' },
+      link: 'https://x.com/trylinky',
+      icon: { src: 'https://cdn.lin.ky/default-data/icons/twitter.svg' },
     },
   ],
 };

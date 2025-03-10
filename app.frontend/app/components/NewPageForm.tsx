@@ -106,7 +106,7 @@ export function CreatePageForm({ onCancel }: Props) {
             <div className="border-b border-white/10 pb-12">
               <div>
                 <FormField
-                  withPrefix="glow.as/"
+                  withPrefix="lin.ky/"
                   label="Handle"
                   name="pageSlug"
                   placeholder="your-page"

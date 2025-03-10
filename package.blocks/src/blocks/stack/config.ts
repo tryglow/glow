@@ -22,7 +22,7 @@ export const stackBlockDefaults: StackBlockConfig = {
       label: 'Design',
       link: 'https://figma.com',
       icon: {
-        src: 'https://cdn.glow.as/default-data/figma.jpeg',
+        src: 'https://cdn.lin.ky/default-data/figma.jpeg',
       },
     },
     {
@@ -30,7 +30,7 @@ export const stackBlockDefaults: StackBlockConfig = {
       label: 'Productivity',
       link: 'https://amie.so',
       icon: {
-        src: 'https://cdn.glow.as/default-data/amie.jpg',
+        src: 'https://cdn.lin.ky/default-data/amie.jpg',
       },
     },
     {
@@ -38,7 +38,7 @@ export const stackBlockDefaults: StackBlockConfig = {
       label: 'Engineering',
       link: 'https://warp.dev',
       icon: {
-        src: 'https://cdn.glow.as/default-data/warp.png',
+        src: 'https://cdn.lin.ky/default-data/warp.png',
       },
     },
   ],

@@ -824,7 +824,7 @@ export function isForbiddenSlug(slug: string): boolean {
 }
 
 export function isReservedSlug(slug: string): boolean {
-  const reservedSlugs = ['onedash', 'glow'];
+  const reservedSlugs = ['onedash', 'glow', 'linky'];
 
   if (reservedSlugs.includes(slug.toLowerCase())) {
     return true;

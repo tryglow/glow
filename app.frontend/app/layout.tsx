@@ -15,28 +15,28 @@ const saans = localFont({
 });
 
 export const metadata: Metadata = {
-  title: 'Glow - A delightfully rich link-in-bio.',
+  title: 'Linky - A delightfully rich link-in-bio.',
   description:
-    'Create your own dynamic link in bio page effortlessly with Glow, the personal page builder designed to help you stand out and connect with your audience.',
-  metadataBase: new URL('https://glow.as'),
+    'Create your own dynamic link in bio page effortlessly with Linky, the personal page builder designed to help you stand out and connect with your audience.',
+  metadataBase: new URL('https://lin.ky'),
   openGraph: {
     images: [
       {
-        url: 'https://glow.as/assets/og.png',
+        url: 'https://lin.ky/assets/og.png',
       },
     ],
     type: 'website',
-    url: 'https://glow.as',
-    title: 'Glow',
+    url: 'https://lin.ky',
+    title: 'Linky',
     description:
-      'Create your own dynamic link in bio page effortlessly with Glow, the personal page builder designed to help you stand out and connect with your audience.',
-    siteName: 'Glow',
+      'Create your own dynamic link in bio page effortlessly with Linky, the personal page builder designed to help you stand out and connect with your audience.',
+    siteName: 'Linky',
   },
   twitter: {
     card: 'summary_large_image',
     site: '@trylinky',
     creator: '@trylinky',
-    images: 'https://glow.as/assets/og.png',
+    images: 'https://lin.ky/assets/og.png',
   },
 };
 

@@ -53,13 +53,13 @@ export function EditForm({
 
                       const initialUploadedIcon = !values.links[
                         index
-                      ].icon.src.startsWith('https://cdn.glow.as/default-data')
+                      ].icon.src.startsWith('https://cdn.lin.ky/default-data')
                         ? values.links[index].icon.src
                         : undefined;
 
                       const initialTab = values.links[
                         index
-                      ].icon.src?.startsWith('https://cdn.glow.as/default-data')
+                      ].icon.src?.startsWith('https://cdn.lin.ky/default-data')
                         ? 'iconGallery'
                         : 'uploadCustom';
 
@@ -81,7 +81,7 @@ export function EditForm({
                               name={`links.${index}.link`}
                               id={`links.${index}.link`}
                               error={linkErrors?.link}
-                              placeholder="https://twitter.com/tryglow"
+                              placeholder="https://twitter.com/trylinky"
                             />
 
                             <div>

@@ -4,17 +4,6 @@ import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
 async function main() {
-  const initialTeam = await prisma.team.upsert({
-    where: {
-      id: '01929fe6-7ade-7dd9-b5ca-26ef831c2914',
-    },
-    update: {},
-    create: {
-      name: 'Initial Team',
-      isPersonal: true,
-    },
-  });
-
   const initialUser = await prisma.user.upsert({
     where: {
       id: '62b6a104-6f6e-44e2-b610-801b5e103b29',
@@ -22,13 +11,25 @@ async function main() {
     update: {},
     create: {
       name: 'Initial User',
-      email: 'hello@glow.as',
-      emailVerified: new Date(),
-      isAdmin: true,
+      email: 'hello@lin.ky',
+      emailVerified: true,
+      role: 'user',
+    },
+  });
 
-      teams: {
+  const initialTeam = await prisma.organization.upsert({
+    where: {
+      id: '01929fe6-7ade-7dd9-b5ca-26ef831c2914',
+    },
+    update: {},
+    create: {
+      name: 'Initial Team',
+      isPersonal: true,
+      slug: 'initial-team',
+      members: {
         create: {
-          teamId: initialTeam.id,
+          userId: initialUser.id,
+          role: 'admin',
         },
       },
     },

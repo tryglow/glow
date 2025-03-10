@@ -125,7 +125,7 @@ export function LoginProviderButton({
         const baseUrl = new URL(
           '/api/auth/signin',
           process.env.NODE_ENV === 'production'
-            ? 'https://api.glow.as/'
+            ? 'https://api.lin.ky/'
             : window.location.origin
         );
 

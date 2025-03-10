@@ -55,6 +55,16 @@ const nextConfig: NextConfig = {
         hostname: 'cdn.glow.as',
         port: '',
       },
+      {
+        protocol: 'https',
+        hostname: 'cdn.dev.lin.ky',
+        port: '',
+      },
+      {
+        protocol: 'https',
+        hostname: 'cdn.lin.ky',
+        port: '',
+      },
     ],
   },
 };

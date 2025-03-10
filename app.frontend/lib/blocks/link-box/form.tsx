@@ -46,13 +46,13 @@ export function EditForm({
     >
       {({ isSubmitting, setFieldValue, errors, values }) => {
         const initialUploadedIcon = !initialValues?.icon?.src.startsWith(
-          'https://cdn.glow.as/default-data'
+          'https://cdn.lin.ky/default-data'
         )
           ? initialValues?.icon?.src
           : undefined;
 
         const initialTab = values?.icon?.src?.startsWith(
-          'https://cdn.glow.as/default-data'
+          'https://cdn.lin.ky/default-data'
         )
           ? 'iconGallery'
           : 'uploadCustom';

@@ -4,4 +4,4 @@ Disallow: /api/
 Disallow: /_next
 
 
-Sitemap: https://glow.as/sitemap.xml
+Sitemap: https://lin.ky/sitemap.xml

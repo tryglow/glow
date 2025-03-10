@@ -135,7 +135,7 @@ const WithTourProvider = ({ children }: { children: ReactNode }) => {
   );
 };
 
-export const GlowProviders = ({
+export const LinkyProviders = ({
   children,
   value,
   currentUserIsOwner,

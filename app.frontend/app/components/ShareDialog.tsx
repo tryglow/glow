@@ -52,27 +52,27 @@ export function ShareDialog({ open, onOpenChange }: ShareDialogProps) {
   const socialPlatforms = [
     {
       name: 'X',
-      icon: 'https://cdn.glow.as/default-data/icons/twitter-x.svg',
+      icon: 'https://cdn.lin.ky/default-data/icons/twitter-x.svg',
       shareUrl: `https://twitter.com/intent/tweet?url=${encodeURIComponent(currentUrl)}`,
     },
     {
       name: 'Facebook',
-      icon: 'https://cdn.glow.as/default-data/icons/facebook.svg',
+      icon: 'https://cdn.lin.ky/default-data/icons/facebook.svg',
       shareUrl: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(currentUrl)}`,
     },
     {
       name: 'LinkedIn',
-      icon: 'https://cdn.glow.as/default-data/icons/linkedin.svg',
+      icon: 'https://cdn.lin.ky/default-data/icons/linkedin.svg',
       shareUrl: `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(currentUrl)}`,
     },
     {
       name: 'Reddit',
-      icon: 'https://cdn.glow.as/default-data/icons/reddit.svg',
+      icon: 'https://cdn.lin.ky/default-data/icons/reddit.svg',
       shareUrl: `https://www.reddit.com/submit?url=${encodeURIComponent(currentUrl)}`,
     },
     {
       name: 'WhatsApp',
-      icon: 'https://cdn.glow.as/default-data/icons/whatsapp.svg',
+      icon: 'https://cdn.lin.ky/default-data/icons/whatsapp.svg',
       shareUrl: `https://api.whatsapp.com/send?text=${encodeURIComponent(currentUrl)}`,
     },
   ];

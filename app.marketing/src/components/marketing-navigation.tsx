@@ -200,13 +200,13 @@ export default function MarketingNavigation({ children }: Props) {
                     Learn
                   </Link>
                   <Link
-                    href="https://x.com/tryglow"
+                    href="https://x.com/trylinky"
                     className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
                   >
                     Twitter / X
                   </Link>
                   <Link
-                    href="https://github.com/tryglow/glow"
+                    href="https://github.com/trylinky/linky"
                     className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
                   >
                     View Source on GitHub

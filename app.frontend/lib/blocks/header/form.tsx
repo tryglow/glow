@@ -85,7 +85,7 @@ export function EditForm({
               <div className="flex flex-col gap-1">
                 <Label htmlFor="showVerifiedBadge">Show verified badge</Label>
                 <span className="text-sm text-stone-500">
-                  Your page has been verified by Glow. You can choose to show
+                  Your page has been verified by Linky. You can choose to show
                   this badge on your page.
                 </span>
               </div>

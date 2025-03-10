@@ -1,5 +1,5 @@
 import { RenderPageTheme } from '@/app/[domain]/[slug]/render-page-theme';
-import { GlowProviders } from '@/app/components/GlowProviders';
+import { LinkyProviders } from '@/app/components/LinkyProviders';
 import { ShareButton } from '@/app/components/ShareButton';
 import { UserOnboardingDialog } from '@/app/components/UserOnboardingDialog';
 import { getEnabledBlocks } from '@/app/lib/actions/blocks';
@@ -88,7 +88,7 @@ export default async function PageLayout(props: {
   }
 
   return (
-    <GlowProviders
+    <LinkyProviders
       currentUserIsOwner={currentUserIsOwner}
       pageId={page.id}
       value={{
@@ -108,14 +108,14 @@ export default async function PageLayout(props: {
 
             <div className="w-full py-3 flex items-center justify-center">
               <Link
-                href={`https://glow.as/?utm_source=page_footer&utm_campaign=${page.slug}`}
+                href={`https://lin.ky/?utm_source=page_footer&utm_campaign=${page.slug}`}
                 className="flex flex-col text-center justify-center"
               >
                 <span className="uppercase text-[0.6rem] tracking-tight font-medium text-sys-title-secondary">
                   Made with{' '}
                 </span>
                 <span className="font-bold text-lg -mt-1 text-sys-title-primary">
-                  glow
+                  linky
                 </span>
               </Link>
             </div>
@@ -158,6 +158,6 @@ export default async function PageLayout(props: {
             data-page-id={page.id}
           />
         )}
-    </GlowProviders>
+    </LinkyProviders>
   );
 }

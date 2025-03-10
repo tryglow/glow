@@ -183,10 +183,10 @@ export function GlobalNavigation({ isEditMode }: { isEditMode: boolean }) {
               />
             </svg>
             <DialogTitle className="text-center font-bold text-2xl mb-1">
-              Upgrade to Glow Premium
+              Upgrade to Linky Premium
             </DialogTitle>
             <span className="text-center text-slate-600">
-              Want to get the most out of Glow? Upgrade to Glow Premium to get
+              Want to get the most out of Linky? Upgrade to Linky Premium to get
               access to unlimited pages, premium-only blocks, analytics, custom
               domains, and more!
             </span>

@@ -63,7 +63,7 @@ export async function generateMetadata(
         `${process.env.NEXT_PUBLIC_BASE_URL}/${page?.slug}/opengraph-image`,
       ],
     },
-    title: `${page?.metaTitle} - Glow` || parentMeta.title?.absolute,
+    title: `${page?.metaTitle} - Linky` || parentMeta.title?.absolute,
     description: page?.metaDescription || parentMeta.description,
     alternates: {
       canonical: isCustomDomain

@@ -109,7 +109,7 @@ export default async function Image({ params }: { params: { slug: string } }) {
             {headerDescription}
           </span>
         </div>
-        <GlowLogo
+        <LinkyLogo
           style={{
             position: 'absolute',
             bottom: 20,
@@ -138,7 +138,7 @@ export default async function Image({ params }: { params: { slug: string } }) {
   );
 }
 
-const GlowLogo = ({ style }: { style: CSSProperties }) => {
+const LinkyLogo = ({ style }: { style: CSSProperties }) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"

@@ -97,17 +97,17 @@ const OpenSourceLogo = () => {
 const socialLinks = [
   {
     label: 'X / Twitter',
-    href: 'https://x.com/tryglow',
+    href: 'https://x.com/trylinky',
     icon: XTwitterLogo,
   },
   {
     label: 'Github',
-    href: 'https://github.com/tryglow/glow',
+    href: 'https://github.com/trylinky/linky',
     icon: GithubLogo,
   },
   {
     label: 'Instagram',
-    href: 'https://www.instagram.com/getglowapp',
+    href: 'https://www.instagram.com/trylinky',
     icon: InstagramLogo,
   },
 ];
@@ -151,7 +151,7 @@ export default function MarketingFooter() {
                 <Link
                   target="_blank"
                   className="group flex max-w-fit items-center space-x-2 rounded-lg border border-gray-200 bg-white px-3 py-2 transition-colors hover:bg-gray-100"
-                  href="https://github.com/tryglow/glow"
+                  href="https://github.com/trylinky/linky"
                 >
                   <OpenSourceLogo />
                   <p className="text-xs font-semibold text-gray-800">

@@ -12,9 +12,9 @@ export interface LinkBoxBlockConfig {
 
 export const linkBoxBlockDefaults: LinkBoxBlockConfig = {
   icon: {
-    src: 'https://cdn.glow.as/default-data/x-logo.png',
+    src: 'https://cdn.lin.ky/default-data/x-logo.png',
   },
-  link: 'https://x.com/tryglow',
+  link: 'https://x.com/trylinky',
   title: 'X',
   label: 'Follow us on X',
   showPreview: false,

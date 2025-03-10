@@ -161,7 +161,7 @@ export const InstagramLatestPostMockup = ({
             <div className="absolute h-32 w-full bg-gradient-to-b from-transparent to-black bottom-0 z-10 px-6 py-6 flex flex-row justify-between items-end">
               <span className="flex flex-col">
                 <span className="text-white font-bold text-base">
-                  @getglowapp
+                  @trylinky
                 </span>
                 <span className="text-white/70 text-sm">
                   Posted about 2 days ago

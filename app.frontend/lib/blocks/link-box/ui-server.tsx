@@ -13,7 +13,7 @@ export const LinkBoxServerUI: FunctionComponent<{
       <div className="flex flex-row gap-4 items-center relative h-full w-full">
         {showPreview && (
           <img
-            src={`https://shots.glow.as/take?url=${link}`}
+            src={`https://shots.lin.ky/take?url=${link}`}
             className="w-full h-full object-cover"
             alt={`Preview of ${link}`}
           />

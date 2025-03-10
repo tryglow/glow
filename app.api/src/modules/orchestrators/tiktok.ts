@@ -42,8 +42,8 @@ const createPage = async ({
       data: {
         organizationId,
         slug: newPageSlug,
-        metaTitle: `${tiktokUsername} on Glow`,
-        metaDescription: `${tiktokUsername} on Glow`,
+        metaTitle: `${tiktokUsername} on Linky`,
+        metaDescription: `${tiktokUsername} on Linky`,
         publishedAt: new Date(),
         config: {},
       },
@@ -75,7 +75,7 @@ const createHeaderBlock = async ({
         config: {},
         data: {
           title: tiktokDisplayName,
-          description: `@${tiktokUsername} on Glow`,
+          description: `@${tiktokUsername} on Linky`,
           avatar: avatarUrl
             ? {
                 src: avatarUrl,
@@ -102,7 +102,7 @@ const createContentBlock = async ({ pageId }: { pageId: string }) => {
         data: {
           title: 'Welcome to my page!',
           content:
-            "This is my new page on Glow. I'm a TikTok creator, and I post videos about... well, you'll have to see for yourself!",
+            "This is my new page on Linky. I'm a TikTok creator, and I post videos about... well, you'll have to see for yourself!",
         },
       },
     });
@@ -125,7 +125,7 @@ const createStackBlock = async ({ pageId }: { pageId: string }) => {
           items: [
             {
               icon: {
-                src: 'https://cdn.glow.as/default-data/icons/instagram.svg',
+                src: 'https://cdn.lin.ky/default-data/icons/instagram.svg',
               },
               link: 'https://instagram.com',
               label: '@yourinstagramhandle',
@@ -133,7 +133,7 @@ const createStackBlock = async ({ pageId }: { pageId: string }) => {
             },
             {
               icon: {
-                src: 'https://cdn.glow.as/default-data/icons/twitter.svg',
+                src: 'https://cdn.lin.ky/default-data/icons/twitter.svg',
               },
               link: 'https://x.com',
               label: '@yourxhandle',
@@ -141,7 +141,7 @@ const createStackBlock = async ({ pageId }: { pageId: string }) => {
             },
             {
               icon: {
-                src: 'https://cdn.glow.as/default-data/icons/youtube.svg',
+                src: 'https://cdn.lin.ky/default-data/icons/youtube.svg',
               },
               link: 'https://youtube.com',
               label: '@youryoutubechannel',
