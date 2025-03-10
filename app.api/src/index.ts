@@ -56,7 +56,7 @@ await fastify.register(cors, {
 });
 
 fastify.register(coreRoutes);
-fastify.register(marketingRoutes);
+fastify.register(marketingRoutes, { prefix: '/marketing' });
 fastify.register(blocksRoutes, { prefix: '/blocks' });
 fastify.register(pagesRoutes, { prefix: '/pages' });
 fastify.register(themesRoutes, { prefix: '/themes' });
