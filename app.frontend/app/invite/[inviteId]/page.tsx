@@ -1,11 +1,30 @@
 import { LoggedInAcceptInviteUI, LoggedOutAcceptInviteUI } from './accept-ui';
 import { authClient } from '@/app/lib/auth';
+import prisma from '@/lib/prisma';
 import { Avatar, AvatarFallback, AvatarImage } from '@tryglow/ui';
+import { headers } from 'next/headers';
 
 const getInvite = async (inviteId: string) => {
-  const invite = authClient.organization.getInvitation({
-    query: {
+  const invite = await prisma.invitation.findUnique({
+    where: {
       id: inviteId,
+      expiresAt: {
+        gt: new Date(),
+      },
+      status: 'pending',
+    },
+    select: {
+      organization: {
+        select: {
+          id: true,
+          name: true,
+        },
+      },
+      inviter: {
+        select: {
+          name: true,
+        },
+      },
     },
   });
 
@@ -16,7 +35,13 @@ export default async function AcceptInvitePage(props: {
   params: Promise<{ inviteId: string }>;
 }) {
   const params = await props.params;
-  const session = await authClient.getSession();
+  const headersList = await headers();
+
+  const session = await authClient.getSession({
+    fetchOptions: {
+      headers: headersList,
+    },
+  });
 
   const invite = await getInvite(params.inviteId);
 
@@ -36,26 +61,26 @@ export default async function AcceptInvitePage(props: {
       <div className="bg-white shadow-sm px-8 py-12 rounded-2xl border border-slate-200 text-center w-full flex flex-col items-center">
         <Avatar className="h-16 w-16 mb-4">
           <AvatarImage
-            src={`https://avatar.vercel.sh/${invite?.data?.organizationId}.png`}
-            alt={invite?.data?.organizationName}
+            src={`https://avatar.vercel.sh/${invite?.organization.id}.png`}
+            alt={invite?.organization.name}
           />
           <AvatarFallback>
-            {invite?.data?.organizationName.slice(0, 2).toUpperCase()}
+            {invite?.organization.name.slice(0, 2).toUpperCase()}
           </AvatarFallback>
         </Avatar>
         <h1 className="text-2xl font-bold text-slate-900 mb-2">
-          Join {invite?.data?.organizationName} on Glow!
+          Join {invite?.organization.name} on Glow!
         </h1>
         <p className="mb-4 max-w-md mx-auto text-pretty">
-          You&apos;ve been invited to join {invite?.data?.organizationName} on
-          Glow.
+          You&apos;ve been invited to join {invite?.organization.name} on Glow
+          by {invite?.inviter.name}.
           <br />
-          {session
+          {session?.data
             ? 'To accept the invitation, click below.'
             : 'To accept the invitation, signup or login using one of the options below.'}
         </p>
 
-        {session ? (
+        {session?.data ? (
           <LoggedInAcceptInviteUI inviteId={params.inviteId} />
         ) : (
           <LoggedOutAcceptInviteUI inviteId={params.inviteId} />

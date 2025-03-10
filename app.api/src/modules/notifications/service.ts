@@ -98,11 +98,6 @@ export async function sendOrganizationInvitationEmail({
   }
 
   try {
-    await loops.sendEvent({
-      eventName: 'userFreeTrialExpired',
-      email,
-    });
-
     await loops.sendTransactionalEmail({
       transactionalId: 'cm32wb5yt01uyf362gulg1kjn',
       email,

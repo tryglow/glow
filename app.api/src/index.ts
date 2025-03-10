@@ -12,6 +12,7 @@ import assetsRoutes from '@/modules/assets';
 import flagsRoutes from '@/modules/flags';
 import integrationsRoutes from '@/modules/integrations';
 import orchestratorsRoutes from '@/modules/orchestrators';
+import organizationsRoutes from '@/modules/organizations';
 import reactionsRoutes from '@/modules/reactions';
 import instagramServiceRoutes from '@/modules/services/instagram';
 import spotifyServiceRoutes from '@/modules/services/spotify';
@@ -67,6 +68,7 @@ fastify.register(assetsRoutes, { prefix: '/assets' });
 fastify.register(orchestratorsRoutes, { prefix: '/orchestrators' });
 fastify.register(analyticsRoutes, { prefix: '/analytics' });
 fastify.register(flagsRoutes, { prefix: '/flags' });
+fastify.register(organizationsRoutes, { prefix: '/organizations' });
 
 fastify.register(tiktokServiceRoutes, { prefix: '/services/tiktok' });
 fastify.register(instagramServiceRoutes, { prefix: '/services/instagram' });
