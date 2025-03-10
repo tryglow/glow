@@ -1,6 +1,6 @@
 'use strict';
 
-import { getThemesForTeam } from '@/modules/themes/service';
+import { getThemesForOrganization } from '@/modules/themes/service';
 import { FastifyInstance, FastifyReply } from 'fastify';
 import { FastifyRequest } from 'fastify';
 
@@ -17,7 +17,7 @@ async function getThemesForCurrentTeamHandler(
 ) {
   const session = await request.server.authenticate(request, response);
 
-  const themes = await getThemesForTeam(session.currentTeamId);
+  const themes = await getThemesForOrganization(session.activeOrganizationId);
 
   return response.status(200).send(themes);
 }

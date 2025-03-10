@@ -11,11 +11,12 @@ import {
   getPageSettings,
   getPageTheme,
 } from '@/app/lib/actions/page-actions';
-import { auth } from '@/app/lib/auth';
+import { getSession } from '@/app/lib/auth';
 import {
   PremiumOnboardingDialog,
   TeamOnboardingDialog,
 } from '@/components/PremiumOnboardingDialog';
+import { headers } from 'next/headers';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import Script from 'next/script';
@@ -31,7 +32,10 @@ export default async function PageLayout(props: {
 }) {
   const params = await props.params;
   const { children } = props;
-  const session = await auth();
+
+  const session = await getSession({
+    fetchOptions: { headers: await headers() },
+  });
 
   // Combine initial page fetch with settings to reduce queries
   const page = await getPageIdBySlugOrDomain(params.slug, params.domain);
@@ -40,12 +44,15 @@ export default async function PageLayout(props: {
     return notFound();
   }
 
-  if (!page.publishedAt && session?.currentTeamId !== page.teamId) {
+  if (
+    !page.publishedAt &&
+    session?.data?.session.activeOrganizationId !== page.organizationId
+  ) {
     return notFound();
   }
 
   // Batch fetch data for logged in users
-  const [integrations, enabledBlocks, pageSettings] = session?.user
+  const [integrations, enabledBlocks, pageSettings] = session?.data?.user
     ? await Promise.all([
         getTeamIntegrations(),
         getEnabledBlocks(),
@@ -82,7 +89,6 @@ export default async function PageLayout(props: {
 
   return (
     <GlowProviders
-      session={session}
       currentUserIsOwner={currentUserIsOwner}
       pageId={page.id}
       value={{
@@ -133,7 +139,7 @@ export default async function PageLayout(props: {
 
       <RenderPageTheme pageId={page.id} />
 
-      {session?.user && (
+      {session?.data?.user && (
         <>
           <PremiumOnboardingDialog />
           <TeamOnboardingDialog />

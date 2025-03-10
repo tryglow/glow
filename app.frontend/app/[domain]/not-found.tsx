@@ -1,13 +1,8 @@
-import { auth } from '@/app/lib/auth';
-
 /**
  * This is the 404 page for the profile pages. It is in a higher directory as we
  * also call notFound from the nested layout file.
  */
 export default async function NotFoundPage() {
-  const session = await auth();
-
-  const user = session?.user;
   return (
     <main className="bg-sys-bg-base">
       <div className="w-full max-w-[768px] mx-auto px-3 md:px-6 gap-3 pt-16 pb-8">

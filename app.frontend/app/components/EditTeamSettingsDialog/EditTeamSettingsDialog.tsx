@@ -1,9 +1,9 @@
 'use client';
 
-import { fetchTeamMembers, fetchTeamSettings } from './actions';
+import { authClient } from '@/app/lib/auth';
 import { EditTeamSettingsGeneral } from '@/components/EditTeamSettingsDialog/EditTeamSettingsGeneralForm';
 import { EditTeamSettingsMembers } from '@/components/EditTeamSettingsDialog/EditTeamSettingsMembersForm';
-import { Team, TeamInvite, User } from '@tryglow/prisma';
+import { Invitation, Organization, User } from '@tryglow/prisma';
 import {
   Dialog,
   DialogContent,
@@ -24,24 +24,29 @@ interface Props {
 }
 
 export function EditTeamSettingsDialog({ open, onOpenChange, onClose }: Props) {
-  const [teamSettings, setTeamSettings] = useState<Partial<Team> | null>(null);
+  const [teamSettings, setTeamSettings] =
+    useState<Partial<Organization> | null>(null);
   const [teamMembers, setTeamMembers] = useState<
     { user: Partial<User> }[] | null
   >([]);
-  const [teamInvites, setTeamInvites] = useState<TeamInvite[] | null>([]);
+  const [teamInvites, setTeamInvites] = useState<Partial<Invitation>[] | null>(
+    []
+  );
 
   useEffect(() => {
     const getPageData = async () => {
-      const settings = await fetchTeamSettings();
-      const { members, invites } = await fetchTeamMembers();
+      const org = await authClient.organization.getFullOrganization();
 
-      setTeamSettings(settings?.team ?? null);
-      setTeamMembers(members);
-      setTeamInvites(invites ?? null);
+      setTeamSettings(org.data ?? null);
+      setTeamMembers(org.data?.members ?? []);
+      setTeamInvites(org.data?.invitations ?? []);
     };
 
     getPageData();
   }, []);
+
+  const teamMetaData = JSON.parse(teamSettings?.metadata ?? '{}');
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent>

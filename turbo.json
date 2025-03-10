@@ -69,6 +69,13 @@
     },
     "build:api": {
       "env": [
+        "AUTH_GOOGLE_CLIENT_ID",
+        "AUTH_GOOGLE_CLIENT_SECRET",
+        "AUTH_TWITTER_CLIENT_ID",
+        "AUTH_TWITTER_CLIENT_SECRET",
+        "AUTH_TIKTOK_CLIENT_ID",
+        "AUTH_TIKTOK_CLIENT_KEY",
+        "AUTH_TIKTOK_CLIENT_SECRET",
         "PORT",
         "SENTRY_AUTH_TOKEN",
         "SENTRY_DSN",
@@ -118,6 +125,13 @@
     "start:api": {
       "dependsOn": ["build:api"],
       "env": [
+        "AUTH_GOOGLE_CLIENT_ID",
+        "AUTH_GOOGLE_CLIENT_SECRET",
+        "AUTH_TWITTER_CLIENT_ID",
+        "AUTH_TWITTER_CLIENT_SECRET",
+        "AUTH_TIKTOK_CLIENT_ID",
+        "AUTH_TIKTOK_CLIENT_KEY",
+        "AUTH_TIKTOK_CLIENT_SECRET",
         "DATABASE_URL",
         "DIRECT_URL",
         "AUTH_SECRET",

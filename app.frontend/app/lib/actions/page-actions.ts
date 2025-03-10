@@ -13,7 +13,7 @@ export async function getPageIdBySlugOrDomain(slug: string, domain: string) {
     },
     select: {
       id: true,
-      teamId: true,
+      organizationId: true,
       publishedAt: true,
       slug: true,
     },

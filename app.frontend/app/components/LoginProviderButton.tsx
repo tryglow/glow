@@ -122,7 +122,12 @@ export function LoginProviderButton({
           await onClick();
         }
 
-        const baseUrl = new URL('/api/auth/signin', window.location.origin);
+        const baseUrl = new URL(
+          '/api/auth/signin',
+          process.env.NODE_ENV === 'production'
+            ? 'https://api.glow.as/'
+            : window.location.origin
+        );
 
         if (redirectTo) {
           baseUrl.searchParams.set('redirectTo', redirectTo);

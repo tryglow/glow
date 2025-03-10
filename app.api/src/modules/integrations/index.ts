@@ -9,7 +9,7 @@ import {
 } from '@/modules/integrations/schemas';
 import {
   disconnectIntegration,
-  getIntegrationsForTeamId,
+  getIntegrationsForOrganizationId,
 } from '@/modules/integrations/service';
 import { captureException } from '@sentry/node';
 import { Blocks, blocks } from '@tryglow/blocks';
@@ -51,17 +51,15 @@ async function getCurrentUserTeamIntegrationsHandler(
 ) {
   const session = await request.server.authenticate(request, response);
 
-  if (!session.currentTeamId || session.currentTeamId === '') {
-    captureException(
-      new Error('User tried to create a TikTok page without a team')
-    );
-
+  if (!session.activeOrganizationId || session.activeOrganizationId === '') {
     return response.status(400).send({
-      error: 'No team found',
+      error: 'No organization found',
     });
   }
 
-  const integrations = await getIntegrationsForTeamId(session.currentTeamId);
+  const integrations = await getIntegrationsForOrganizationId(
+    session.activeOrganizationId
+  );
 
   return response.status(200).send(integrations);
 }
@@ -77,8 +75,8 @@ async function disconnectIntegrationHandler(
   const integration = await prisma.integration.findUnique({
     where: {
       id: integrationId,
-      team: {
-        id: session.currentTeamId,
+      organization: {
+        id: session.activeOrganizationId,
         members: {
           some: {
             userId: session.user.id,
@@ -123,8 +121,8 @@ async function connectBlockHandler(
     where: {
       id: integrationId,
       deletedAt: null,
-      team: {
-        id: session.currentTeamId,
+      organization: {
+        id: session.activeOrganizationId,
       },
     },
   });
@@ -139,7 +137,7 @@ async function connectBlockHandler(
     where: {
       id: blockId,
       page: {
-        teamId: session.currentTeamId,
+        organizationId: session.activeOrganizationId,
       },
     },
   });
@@ -197,7 +195,7 @@ async function disconnectBlockHandler(
     where: {
       id: blockId,
       page: {
-        teamId: session.currentTeamId,
+        organizationId: session.activeOrganizationId,
       },
     },
   });

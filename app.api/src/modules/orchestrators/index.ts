@@ -1,6 +1,5 @@
 'use strict';
 
-import { authenticateApiKeyDecorator } from '@/decorators/authenticateApiKey';
 import prisma from '@/lib/prisma';
 import {
   orchestratorCreateSchema,
@@ -110,7 +109,7 @@ async function tikTokOrchestratorHandler(
 
   const { error, data } = await orchestrateTikTok({
     orchestrationId,
-    teamId: session.currentTeamId,
+    organizationId: session.activeOrganizationId,
     userId: session.user.id,
   });
 

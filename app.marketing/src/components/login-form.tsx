@@ -1,6 +1,7 @@
 'use client';
 
 import { LoginProviderButton } from '@/components/login-provider-button';
+import { signIn } from '@/lib/auth';
 import { Button, Input, toast } from '@tryglow/ui';
 import { useState } from 'react';
 
@@ -9,7 +10,10 @@ interface Props {
   redirectTo?: string;
 }
 
-export function LoginForm({ onComplete, redirectTo }: Props) {
+export function LoginForm({
+  onComplete,
+  redirectTo = `${process.env.NEXT_PUBLIC_APP_URL}/edit`,
+}: Props) {
   const [email, setEmail] = useState('');
 
   const handleEmailSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -22,24 +26,23 @@ export function LoginForm({ onComplete, redirectTo }: Props) {
       return;
     }
 
-    try {
-      const url = new URL('/api/auth/signin', window.location.origin);
-      url.searchParams.set('provider', 'http-email');
-      url.searchParams.set('email', email);
-      url.searchParams.set('redirectTo', redirectTo || '');
+    const { data, error } = await signIn.magicLink({
+      email,
+      callbackURL: redirectTo,
+    });
 
-      const req = await fetch(url);
-
-      if (req.ok) {
-        window.location.href = '/i/auth/verify';
-      }
-    } catch (error) {
-      console.error(error);
+    if (error || !data.status) {
+      console.log(error);
+      return;
     }
+
+    window.location.href = '/i/auth/verify';
 
     if (onComplete) {
       onComplete();
     }
+
+    return;
   };
 
   return (
@@ -64,11 +67,11 @@ export function LoginForm({ onComplete, redirectTo }: Props) {
       </div>
 
       <div className="flex flex-col md:flex-row gap-2">
-        <LoginProviderButton
+        {/* <LoginProviderButton
           provider="twitter"
           className="mt-2 md:mt-0"
           redirectTo={redirectTo}
-        />
+        /> */}
         <LoginProviderButton provider="google" redirectTo={redirectTo} />
         <LoginProviderButton provider="tiktok" redirectTo={redirectTo} />
       </div>

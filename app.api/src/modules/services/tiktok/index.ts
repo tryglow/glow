@@ -1,9 +1,13 @@
 import { getTiktokUserInfo, requestToken, tiktokScopes } from './service';
-import { getSession } from '@/lib/auth';
 import { decrypt, encrypt, isEncrypted } from '@/lib/encrypt';
 import prisma from '@/lib/prisma';
 import { captureException } from '@sentry/node';
-import { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify';
+import { fromNodeHeaders } from 'better-auth/node';
+import fastify, {
+  FastifyInstance,
+  FastifyReply,
+  FastifyRequest,
+} from 'fastify';
 
 export default async function tiktokServiceRoutes(
   fastify: FastifyInstance,
@@ -25,7 +29,7 @@ async function getTiktokRedirectHandler(
     });
   }
 
-  const session = await getSession(request);
+  const session = await request.server.authenticate(request, response);
 
   if (!session) {
     return response.status(401).send({
@@ -133,9 +137,7 @@ async function getTiktokCallbackHandler(
 
     const integration = await prisma.integration.create({
       data: {
-        // To be cleaned up once userId is dropped from the integration table
-        userId: session.user.id,
-        teamId: session.currentTeamId,
+        organizationId: session.activeOrganizationId,
         type: 'tiktok',
         config: {},
         encryptedConfig,

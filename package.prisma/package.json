@@ -9,8 +9,9 @@
     "prisma:migrate": "prisma migrate deploy"
   },
   "dependencies": {
-    "prisma": "^6.4.0",
     "@prisma/client": "^6.4.0",
+    "@sindresorhus/slugify": "^2.2.1",
+    "prisma": "^6.4.0",
     "typescript": "^5"
   },
   "exports": {

@@ -1,9 +1,9 @@
 import prisma from '@/lib/prisma';
 
-export async function getIntegrationsForTeamId(teamId: string) {
+export async function getIntegrationsForOrganizationId(organizationId: string) {
   const integrations = await prisma.integration.findMany({
     where: {
-      teamId,
+      organizationId,
       deletedAt: null,
     },
     select: {

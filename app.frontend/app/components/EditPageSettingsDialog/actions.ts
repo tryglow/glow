@@ -1,25 +1,29 @@
 'use server';
 
-import { auth } from '@/app/lib/auth';
-import prisma from '@/lib/prisma';
-import { isForbiddenSlug, isReservedSlug } from '@/lib/slugs';
-
 import { FormValues as DesignPageSettingsFormValues } from './EditPageSettingsDesignForm';
 import { FormValues as GeneralPageSettingsFormValues } from './EditPageSettingsGeneralForm';
 import { designPageSettingsSchema, generalPageSettingsSchema } from './shared';
+import { getSession } from '@/app/lib/auth';
+import prisma from '@/lib/prisma';
+import { isForbiddenSlug, isReservedSlug } from '@/lib/slugs';
+import { headers } from 'next/headers';
 
 export const fetchPageSettings = async (slug: string) => {
-  const session = await auth();
+  const session = await getSession({
+    fetchOptions: { headers: await headers() },
+  });
 
   if (!session) {
     return null;
   }
 
+  const { session: sessionData } = session?.data ?? {};
+
   const page = await prisma.page.findUnique({
     where: {
       deletedAt: null,
       slug,
-      userId: session.user.id,
+      organizationId: sessionData?.activeOrganizationId,
     },
     select: {
       id: true,
@@ -38,7 +42,9 @@ export const fetchPageSettings = async (slug: string) => {
 };
 
 export const fetchTeamThemes = async () => {
-  const session = await auth();
+  const session = await getSession({
+    fetchOptions: { headers: await headers() },
+  });
 
   if (!session) {
     return {
@@ -46,9 +52,11 @@ export const fetchTeamThemes = async () => {
     };
   }
 
+  const { user, session: sessionData } = session?.data ?? {};
+
   const themes = await prisma.theme.findMany({
     where: {
-      teamId: session.currentTeamId,
+      organizationId: sessionData?.activeOrganizationId,
     },
     select: {
       id: true,
@@ -76,9 +84,13 @@ export const updateGeneralPageSettings = async (
   formData: GeneralPageSettingsFormValues,
   currentPageSlug: string
 ) => {
-  const session = await auth();
+  const session = await getSession({
+    fetchOptions: { headers: await headers() },
+  });
 
-  if (!session) {
+  const { user, session: sessionData } = session?.data ?? {};
+
+  if (!session || !sessionData?.activeOrganizationId) {
     return {
       message: 'error',
       data: null,
@@ -144,11 +156,11 @@ export const updateGeneralPageSettings = async (
   const page = await prisma.page.findUnique({
     where: {
       deletedAt: null,
-      team: {
-        id: session.currentTeamId,
+      organization: {
+        id: sessionData?.activeOrganizationId,
         members: {
           some: {
-            userId: session.user.id,
+            userId: user?.id,
           },
         },
       },
@@ -166,11 +178,11 @@ export const updateGeneralPageSettings = async (
 
   const updatedPage = await prisma.page.update({
     where: {
-      team: {
-        id: session.currentTeamId,
+      organization: {
+        id: sessionData?.activeOrganizationId,
         members: {
           some: {
-            userId: session.user.id,
+            userId: user?.id,
           },
         },
       },
@@ -197,9 +209,13 @@ export const updateDesignPageSettings = async (
   formData: DesignPageSettingsFormValues,
   currentPageSlug: string
 ) => {
-  const session = await auth();
+  const session = await getSession({
+    fetchOptions: { headers: await headers() },
+  });
 
-  if (!session) {
+  const { user, session: sessionData } = session?.data ?? {};
+
+  if (!session || !sessionData?.activeOrganizationId) {
     return {
       error: {
         message: 'Unauthorized',
@@ -222,11 +238,11 @@ export const updateDesignPageSettings = async (
   const updatedPage = await prisma.page.update({
     where: {
       slug: currentPageSlug,
-      team: {
-        id: session.currentTeamId,
+      organization: {
+        id: sessionData?.activeOrganizationId,
         members: {
           some: {
-            userId: session.user.id,
+            userId: user?.id,
           },
         },
       },

@@ -17,10 +17,10 @@ const themeFields = {
   colorTitleSecondary: true,
 };
 
-export async function getThemesForTeam(teamId: string) {
+export async function getThemesForOrganization(orgId: string) {
   const themes = await prisma.theme.findMany({
     where: {
-      teamId,
+      organizationId: orgId,
       isDefault: false,
     },
     select: themeFields,

@@ -1,4 +1,3 @@
-import { getSession } from '../lib/auth';
 import { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify';
 
 export async function coreRoutes(fastify: FastifyInstance) {
@@ -20,7 +19,7 @@ export async function coreRoutes(fastify: FastifyInstance) {
 
   fastify.get('/session/me', {
     handler: async (req: FastifyRequest, res: FastifyReply) => {
-      const session = await getSession(req);
+      const session = await req.server.authenticate(req, res);
 
       return res.status(200).send({
         session,

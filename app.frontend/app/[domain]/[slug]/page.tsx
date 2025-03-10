@@ -3,7 +3,7 @@ import {
   getPageIdBySlugOrDomain,
   getPageLayout,
 } from '@/app/lib/actions/page-actions';
-import { auth } from '@/app/lib/auth';
+import { getSession } from '@/app/lib/auth';
 import { renderBlock } from '@/lib/blocks/ui';
 import prisma from '@/lib/prisma';
 import { isUserAgentMobile } from '@/lib/user-agent';
@@ -17,10 +17,6 @@ export const revalidate = 0;
 export const dynamicParams = true;
 
 const getPageData = async (pageId: string) => {
-  const session = await auth();
-
-  const user = session?.user;
-
   const page = await prisma.page.findUnique({
     where: {
       deletedAt: null,
@@ -28,7 +24,6 @@ const getPageData = async (pageId: string) => {
     },
     include: {
       blocks: true,
-      user: !!user,
     },
   });
 
@@ -91,10 +86,15 @@ export type InitialDataUsersIntegrations = Pick<
 export default async function Page(props: { params: Promise<Params> }) {
   const startTime = performance.now();
   const params = await props.params;
-  const session = await auth();
+  const session = await getSession({
+    fetchOptions: { headers: await headers() },
+  });
+
   const headersList = await headers();
 
-  const isLoggedIn = !!session?.user;
+  const { user } = session?.data ?? {};
+
+  const isLoggedIn = !!user;
 
   // Track core page fetch time
   const corePageStartTime = performance.now();
@@ -119,7 +119,10 @@ export default async function Page(props: { params: Promise<Params> }) {
 
   let isEditMode = false;
 
-  if (session && page?.teamId === session?.currentTeamId) {
+  if (
+    session &&
+    page?.organizationId === session?.data?.session.activeOrganizationId
+  ) {
     isEditMode = true;
   }
 

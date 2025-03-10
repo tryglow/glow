@@ -1,6 +1,6 @@
 'use client';
 
-import { signInWithCredentials } from '@/app/lib/auth-actions';
+import { authClient } from '@/app/lib/auth';
 import { Button } from '@tryglow/ui';
 import Link from 'next/link';
 import { FormEvent, useState } from 'react';
@@ -16,8 +16,12 @@ export default function TestUserPrivateLogin() {
       alert('Please enter your email and password');
     }
 
-    await signInWithCredentials(email, password);
+    await authClient.signIn.email({
+      email,
+      password,
+    });
   };
+
   return (
     <div className="w-full h-full min-h-screen flex flex-col items-center justify-center">
       <h1 className="text-2xl font-bold">

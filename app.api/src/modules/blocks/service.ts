@@ -14,7 +14,7 @@ export async function getBlockById(blockId: string) {
       config: true,
       page: {
         select: {
-          teamId: true,
+          organizationId: true,
           publishedAt: true,
         },
       },
@@ -63,7 +63,7 @@ export async function getEnabledBlocks(user: User) {
 
   Object.entries(blocks).forEach(([key, block]) => {
     if (block.isBeta) {
-      if (user?.isAdmin || user?.hasBetaAccess) {
+      if (user?.role === 'admin') {
         enabledBlocks.push(key as Blocks);
       }
     } else {
@@ -84,7 +84,7 @@ export async function checkUserHasAccessToBlock(
     where: {
       id: blockId,
       page: {
-        team: {
+        organization: {
           members: {
             some: {
               userId,

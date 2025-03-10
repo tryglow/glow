@@ -13,88 +13,127 @@ datasource db {
 }
 
 model Account {
-  id                String   @id @default(uuid())
-  userId            String
-  type              String
-  provider          String
-  providerAccountId String
-  refresh_token     String?  @db.Text
-  access_token      String?  @db.Text
-  expires_at        Int?
-  token_type        String?
-  scope             String?
-  id_token          String?  @db.Text
-  session_state     String?
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
+  id                    String    @id @default(uuid())
+  userId                String
+  accountId             String
+  providerId            String
+  accessToken           String?   @db.Text
+  refreshToken          String?   @db.Text
+  accessTokenExpiresAt  DateTime?
+  refreshTokenExpiresAt DateTime?
+  scope                 String?
+  idToken               String?   @db.Text
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  @@unique([provider, providerAccountId])
+  @@unique([providerId, accountId])
   @@index([userId])
 }
 
-model VerificationToken {
+model Verification {
+  id         String   @id @default(uuid())
   identifier String
-  token      String   @unique
-  expires    DateTime
+  value      String
+  expiresAt  DateTime
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
 
-  @@unique([identifier, token])
+model Session {
+  id                   String   @id @default(uuid())
+  userId               String
+  token                String   @unique
+  expiresAt            DateTime
+  ipAddress            String?
+  userAgent            String?
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+  activeOrganizationId String?
+
+  user User @relation(fields: [userId], references: [id])
 }
 
 model User {
   id                   String                @id @default(uuid())
   name                 String?
   email                String?               @unique
-  emailVerified        DateTime?
+  emailVerified        Boolean               @default(false)
   image                String?
-  accounts             Account[]
   createdAt            DateTime              @default(now())
   updatedAt            DateTime              @updatedAt
-  pages                Page[]
-  Integration          Integration[]
-  Theme                Theme[]
-  isAdmin              Boolean               @default(false)
-  acceptedInviteAt     DateTime?
-  assignedInviteCodes  InviteCode[]          @relation("AssignedInviteCodes")
-  claimedInvitedCodes  InviteCode[]          @relation("ClaimedInviteCodes")
-  teamId               String?
-  teams                TeamUser[]
-  plan                 String                @default("free")
+  role                 String?
+  banned               Boolean?
+  banReason            String?
+  banExpires           Int?
   stripeCustomerId     String?
-  stripeSubscriptionId String?
-  stripeTrialEnd       DateTime?
-  hasPremiumAccess     Boolean               @default(false)
-  hasTeamAccess        Boolean               @default(false)
-  hasBetaAccess        Boolean               @default(false)
+  metadata             Json?
   verificationRequests VerificationRequest[]
+  sessions             Session[]
+  invitations          Invitation[]
+  memberships          Member[]
+  accounts             Account[]
+  themesCreated        Theme[]
+  UserFlag             UserFlag[]
 }
 
-model Team {
+model Organization {
   id           String        @id @default(uuid())
+  name         String
+  slug         String        @unique
+  logo         String?
+  metadata     String?
   createdAt    DateTime      @default(now())
   updatedAt    DateTime      @updatedAt
-  name         String
-  pages        Page[]
-  members      TeamUser[]
   integrations Integration[]
-  isPersonal   Boolean       @default(true)
-  invites      TeamInvite[]
   themes       Theme[]
+  pages        Page[]
+  invitations  Invitation[]
+  members      Member[]
+  isPersonal   Boolean       @default(true)
+  subscription Subscription?
 }
 
-model TeamUser {
+model Invitation {
   id             String       @id @default(uuid())
+  email          String
+  inviterId      String
+  inviter        User         @relation(fields: [inviterId], references: [id])
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id])
+  role           String
+  status         String
+  expiresAt      DateTime
   createdAt      DateTime     @default(now())
   updatedAt      DateTime     @updatedAt
-  teamId         String
-  team           Team         @relation(fields: [teamId], references: [id])
+}
+
+model Member {
+  id             String       @id @default(uuid())
   userId         String
   user           User         @relation(fields: [userId], references: [id])
-  claimedInvites TeamInvite[] @relation("ClaimedInvites")
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id])
+  role           String
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+}
 
-  @@index([userId])
-  @@index([teamId])
+model Subscription {
+  id                   String        @id @default(uuid())
+  plan                 String
+  referenceId          String        @unique
+  stripeCustomerId     String
+  stripeSubscriptionId String?
+  status               String
+  periodStart          DateTime?
+  periodEnd            DateTime?
+  cancelAtPeriodEnd    Boolean?
+  seats                Int?
+  trialStart           DateTime?
+  trialEnd             DateTime?
+  organization         Organization? @relation(fields: [referenceId], references: [id])
 }
 
 model Page {
@@ -103,8 +142,6 @@ model Page {
   updatedAt            DateTime              @updatedAt
   publishedAt          DateTime?
   deletedAt            DateTime?
-  userId               String
-  user                 User                  @relation(fields: [userId], references: [id])
   slug                 String                @unique
   config               Json
   mobileConfig         Json?
@@ -115,15 +152,14 @@ model Page {
   theme                Theme?                @relation(fields: [themeId], references: [id])
   backgroundImage      String?
   customDomain         String?               @unique
-  team                 Team?                 @relation(fields: [teamId], references: [id])
-  teamId               String?
   verifiedAt           DateTime?
   verificationRequests VerificationRequest[]
   orchestrations       Orchestration[]
   isFeatured           Boolean               @default(false)
+  organization         Organization?         @relation(fields: [organizationId], references: [id])
+  organizationId       String?
 
-  @@index([userId])
-  @@index([teamId])
+  @@index([organizationId])
   @@index([themeId])
 }
 
@@ -144,33 +180,30 @@ model Block {
 }
 
 model Integration {
-  id              String    @id @default(uuid())
-  createdAt       DateTime  @default(now())
-  updatedAt       DateTime  @updatedAt
-  userId          String
-  teamId          String?
-  team            Team?     @relation(fields: [teamId], references: [id])
-  user            User      @relation(fields: [userId], references: [id])
+  id              String        @id @default(uuid())
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
   type            String
   displayName     String?
   config          Json
   encryptedConfig String?
   deletedAt       DateTime?
   blocks          Block[]
+  organization    Organization? @relation(fields: [organizationId], references: [id])
+  organizationId  String?
 
   @@index([type])
-  @@index([userId])
-  @@index([teamId])
+  @@index([organizationId])
 }
 
 model Theme {
-  id                  String   @id @default(uuid())
-  createdAt           DateTime @default(now())
-  updatedAt           DateTime @updatedAt
-  name                String   @default("")
-  isDefault           Boolean  @default(false)
+  id                  String        @id @default(uuid())
+  createdAt           DateTime      @default(now())
+  updatedAt           DateTime      @updatedAt
+  name                String        @default("")
+  isDefault           Boolean       @default(false)
   createdById         String
-  createdBy           User     @relation(fields: [createdById], references: [id])
+  createdBy           User          @relation(fields: [createdById], references: [id])
   colorBgBase         Json?
   colorBgPrimary      Json?
   colorBgSecondary    Json?
@@ -183,42 +216,11 @@ model Theme {
   font                String?
   backgroundImage     String?
   pages               Page[]
-  teamId              String?
-  team                Team?    @relation(fields: [teamId], references: [id])
+  organization        Organization? @relation(fields: [organizationId], references: [id])
+  organizationId      String?
 
   @@index([createdById])
-  @@index([teamId])
-}
-
-model InviteCode {
-  id           String   @id @default(uuid())
-  code         String   @unique
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
-  assignedToId String
-  assignedTo   User?    @relation("AssignedInviteCodes", fields: [assignedToId], references: [id])
-  claimedById  String?
-  claimedBy    User?    @relation("ClaimedInviteCodes", fields: [claimedById], references: [id])
-
-  @@index([assignedToId])
-  @@index([claimedById])
-}
-
-model TeamInvite {
-  id          String    @id @default(uuid())
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
-  teamId      String
-  team        Team      @relation(fields: [teamId], references: [id])
-  email       String
-  code        String    @unique @default(uuid())
-  expiresAt   DateTime
-  claimedAt   DateTime?
-  claimedBy   TeamUser? @relation("ClaimedInvites", fields: [claimedById], references: [id])
-  claimedById String?
-
-  @@index([teamId])
-  @@index([claimedById])
+  @@index([organizationId])
 }
 
 enum VerificationRequestStatus {
@@ -261,4 +263,15 @@ model Orchestration {
   type            OrchestrationType
 
   @@index([pageId])
+}
+
+model UserFlag {
+  id        String   @id @default(uuid())
+  userId    String
+  key       String
+  value     Boolean
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id])
 }

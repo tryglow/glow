@@ -1,5 +1,6 @@
 'use client';
 
+import { signInOauth } from '@/lib/auth-actions';
 import { Button } from '@tryglow/ui';
 import { ReactNode } from 'react';
 
@@ -57,31 +58,19 @@ const providerConfigs: Record<
   {
     id: string;
     name: string;
-    type: 'oauth';
-    signinUrl: string;
-    callbackUrl: string;
   }
 > = {
   google: {
     id: 'google',
     name: 'Google',
-    type: 'oauth',
-    signinUrl: '/api/auth/signin/google',
-    callbackUrl: '/api/auth/callback/google',
   },
   twitter: {
     id: 'twitter',
     name: 'Twitter',
-    type: 'oauth',
-    signinUrl: '/api/auth/signin/twitter',
-    callbackUrl: '/api/auth/callback/twitter',
   },
   tiktok: {
     id: 'tiktok',
     name: 'TikTok',
-    type: 'oauth',
-    signinUrl: '/api/auth/signin/tiktok',
-    callbackUrl: '/api/auth/callback/tiktok',
   },
 };
 
@@ -122,17 +111,12 @@ export function LoginProviderButton({
           await onClick();
         }
 
-        const baseUrl = new URL('/api/auth/signin', window.location.origin);
-
-        if (redirectTo) {
-          baseUrl.searchParams.set('redirectTo', redirectTo);
-        }
-
         if (['google', 'twitter', 'tiktok'].includes(provider)) {
-          baseUrl.searchParams.set('provider', provider);
+          return await signInOauth(
+            provider,
+            redirectTo || `${process.env.NEXT_PUBLIC_BASE_URL}/edit`
+          );
         }
-
-        window.location.href = baseUrl.toString();
       }}
       disabled={disabled}
     >

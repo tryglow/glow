@@ -9,8 +9,7 @@ type FeaturedPage = {
 
 export async function getFeaturedPages(): Promise<FeaturedPage[]> {
   const response = await apiServerFetch('/marketing/featured-pages', {
-    method: 'POST',
-    body: JSON.stringify({}),
+    method: 'GET',
     next: {
       revalidate: 600, // Revalidate every 10 minutes
     },

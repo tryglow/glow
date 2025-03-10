@@ -1,49 +1,35 @@
 'use server';
 
-import { auth, signOut as authSignOut, signIn, unstable_update } from './auth';
+import { authClient } from './auth';
+import { apiServerFetch } from '@/app/lib/api-server';
+import { captureException } from '@sentry/nextjs';
 
 export async function signOut() {
-  await authSignOut();
+  await authClient.signOut();
 }
 
-export async function signInWithEmail(email: string, redirectTo?: string) {
-  return await signIn('http-email', { email, redirectTo, redirect: true });
-}
+export async function hideOnboardingTour() {
+  try {
+    const req = await apiServerFetch('/flags/hide-onboarding-tour', {
+      method: 'POST',
+    });
 
-export async function signInWithCredentials(email: string, password: string) {
-  return await signIn('credentials', {
-    email,
-    password,
-    redirect: true,
-    redirectTo: '/',
-  });
-}
+    const res = await req.json();
 
-export async function signInWithGoogle(redirectTo?: string) {
-  return await signIn('google', { redirectTo, redirect: true });
-}
+    if (res.success) {
+      return {
+        success: true,
+      };
+    }
 
-export async function signInWithTwitter(redirectTo?: string) {
-  return await signIn('twitter', { redirectTo, redirect: true });
-}
+    return {
+      success: false,
+    };
+  } catch (error) {
+    captureException(error);
 
-export async function signInWithTikTok(redirectTo?: string) {
-  return await signIn('tiktok', { redirectTo, redirect: true });
-}
-
-export async function hideGlowTour() {
-  const session = await auth();
-
-  if (!session) return;
-
-  await unstable_update({
-    ...session,
-    features: {
-      showGlowTour: false,
-    },
-  });
-
-  return {
-    success: true,
-  };
+    return {
+      success: false,
+    };
+  }
 }

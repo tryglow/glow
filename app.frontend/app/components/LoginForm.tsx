@@ -1,7 +1,7 @@
 'use client';
 
 import { LoginProviderButton } from './LoginProviderButton';
-import { signInWithEmail } from '@/app/lib/auth-actions';
+import { signIn } from '@/app/lib/auth';
 import { Button, Input, toast } from '@tryglow/ui';
 import { useState } from 'react';
 
@@ -12,7 +12,10 @@ interface Props {
 
 export function LoginForm({ onComplete, redirectTo }: Props) {
   const [email, setEmail] = useState('');
-  const handleEmailSubmit = async () => {
+
+  const handleEmailSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
     if (!email || email === '') {
       toast({
         title: 'Please enter your email',
@@ -20,15 +23,28 @@ export function LoginForm({ onComplete, redirectTo }: Props) {
       return;
     }
 
-    await signInWithEmail(email, redirectTo);
+    const { data, error } = await signIn.magicLink({
+      email,
+      callbackURL: redirectTo || `${process.env.NEXT_PUBLIC_BASE_URL}/edit`,
+    });
+
+    if (error || !data.status) {
+      console.log(error);
+      return;
+    }
+
+    window.location.href = '/i/auth/verify';
+
     if (onComplete) {
       onComplete();
     }
+
+    return;
   };
 
   return (
     <div className="flex flex-col gap-2 w-full">
-      <form action={handleEmailSubmit}>
+      <form onSubmit={handleEmailSubmit}>
         <Input
           type="email"
           value={email}
@@ -48,11 +64,11 @@ export function LoginForm({ onComplete, redirectTo }: Props) {
       </div>
 
       <div className="flex flex-col md:flex-row gap-2">
-        <LoginProviderButton
+        {/* <LoginProviderButton
           provider="twitter"
           className="mt-2 md:mt-0"
           redirectTo={redirectTo}
-        />
+        /> */}
         <LoginProviderButton provider="google" redirectTo={redirectTo} />
         <LoginProviderButton provider="tiktok" redirectTo={redirectTo} />
       </div>

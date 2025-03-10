@@ -53,7 +53,7 @@ async function getBlockHandler(
   const block = await getBlockById(blockId);
 
   if (!block?.page.publishedAt) {
-    if (session?.currentTeamId !== block?.page.teamId) {
+    if (session?.activeOrganizationId !== block?.page.organizationId) {
       return response.status(404).send({
         error: {
           message: 'Block not found',
@@ -97,8 +97,8 @@ async function postCreateBlockHandler(
   const page = await prisma.page.findUnique({
     where: {
       deletedAt: null,
-      team: {
-        id: session.currentTeamId,
+      organization: {
+        id: session.currentOrganizationId,
         members: {
           some: {
             userId: session.user.id,
@@ -130,8 +130,7 @@ async function postCreateBlockHandler(
     },
   });
 
-  const maxNumberOfBlocks =
-    user?.hasPremiumAccess || user?.hasTeamAccess ? 100 : 6;
+  const maxNumberOfBlocks = 100;
   if (page.blocks.length >= maxNumberOfBlocks) {
     return response.status(400).send({
       error: {
@@ -146,7 +145,7 @@ async function postCreateBlockHandler(
     distinctId: session.user.id,
     event: 'block-created',
     properties: {
-      teamId: session.currentTeamId,
+      organizationId: session.activeOrganizationId,
       pageId: newBlock.pageId,
       blockId: newBlock.id,
       blockType: newBlock.type,
@@ -199,8 +198,8 @@ async function deleteBlockHandler(
     where: {
       id: blockId,
       page: {
-        team: {
-          id: session.currentTeamId,
+        organization: {
+          id: session.activeOrganizationId,
           members: {
             some: {
               userId: session.user.id,
@@ -237,7 +236,7 @@ async function deleteBlockHandler(
       distinctId: session.user.id,
       event: 'block-deleted',
       properties: {
-        teamId: session.currentTeamId,
+        organizationId: session.activeOrganizationId,
         pageId: block.pageId,
         blockId: block.id,
         blockType: block.type,

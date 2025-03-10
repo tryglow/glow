@@ -1,8 +1,8 @@
 'use client';
 
-import { switchTeam } from '@/app/lib/actions/team';
+import { authClient, useSession } from '@/app/lib/auth';
 import { CaretSortIcon, CheckIcon } from '@radix-ui/react-icons';
-import { Team } from '@tryglow/prisma';
+import { Organization } from '@tryglow/prisma';
 import {
   cn,
   Command,
@@ -19,51 +19,48 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@tryglow/ui';
-import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { useSWRConfig } from 'swr';
 
 interface Props {
-  usersTeams?: Partial<Team>[] | null;
+  usersOrganizations?: Partial<Organization>[] | null;
 }
 
-export function TeamSwitcher({ usersTeams }: Props) {
+export function TeamSwitcher({ usersOrganizations }: Props) {
   const [open, setOpen] = useState(false);
 
   const router = useRouter();
 
   const { mutate } = useSWRConfig();
 
-  const { data: session, update: updateSession } = useSession();
-  const currentTeam = usersTeams?.find(
-    (team) => team.id === session?.currentTeamId
+  const { data } = useSession();
+  const currentTeam = usersOrganizations?.find(
+    (org) => org.id === data?.session?.activeOrganizationId
   );
 
-  const handleSwitchTeam = async (teamId: string) => {
-    if (!teamId) {
+  const handleSwitchOrganization = async (orgId: string) => {
+    if (!orgId) {
       return;
     }
 
-    const res = await switchTeam(teamId);
-
-    if (res?.error) {
-      toast({
-        title: 'Unable to switch team',
-        variant: 'error',
+    try {
+      await authClient.organization.setActive({
+        organizationId: orgId,
       });
-    }
-
-    if (res?.success) {
       toast({
         title: 'Switching team…',
         variant: 'default',
       });
 
       router.refresh();
-      updateSession();
 
       mutate('/pages/me');
+    } catch (error) {
+      toast({
+        title: 'Unable to switch team',
+        variant: 'error',
+      });
     }
   };
 
@@ -94,27 +91,27 @@ export function TeamSwitcher({ usersTeams }: Props) {
           <Command>
             <CommandList>
               <CommandEmpty>No team found.</CommandEmpty>
-              {usersTeams?.map((team) => {
+              {usersOrganizations?.map((org) => {
                 return (
                   <CommandItem
-                    key={team.id}
-                    onSelect={() => handleSwitchTeam(team.id as string)}
+                    key={org.id}
+                    onSelect={() => handleSwitchOrganization(org.id as string)}
                     className="text-sm"
                   >
                     <Avatar className="mr-2 h-5 w-5">
                       <AvatarImage
-                        src={`https://avatar.vercel.sh/${team.id}.png`}
-                        alt={team.id}
+                        src={`https://avatar.vercel.sh/${org.id}.png`}
+                        alt={org.id}
                       />
                       <AvatarFallback>
-                        {team?.name?.slice(0, 1).toUpperCase()}
+                        {org?.name?.slice(0, 1).toUpperCase()}
                       </AvatarFallback>
                     </Avatar>
-                    {team.name}
+                    {org.name}
                     <CheckIcon
                       className={cn(
                         'ml-auto h-4 w-4',
-                        team?.id === session?.currentTeamId
+                        org.id === data?.session?.activeOrganizationId
                           ? 'opacity-100'
                           : 'opacity-0'
                       )}
