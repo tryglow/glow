@@ -5,6 +5,17 @@ import { MarketingContainer } from '@/components/marketing-container';
 import { useIsLoggedIn } from '@/hooks/use-is-logged-in';
 import { InternalApi } from '@/lib/api';
 import {
+  ArrowTrendingDownIcon,
+  ArrowUpIcon,
+  CheckBadgeIcon,
+  CubeIcon,
+  CubeTransparentIcon,
+  HandThumbUpIcon,
+  UserPlusIcon,
+  UsersIcon,
+} from '@heroicons/react/24/outline';
+import { ArrowTrendingUpIcon } from '@heroicons/react/24/outline';
+import {
   LockClosedIcon,
   UserGroupIcon,
   ChatBubbleBottomCenterTextIcon,
@@ -30,30 +41,30 @@ const tiers = [
     billingPeriod: 'per month',
     href: '#',
     highlights: [
-      { description: 'Custom Domains', icon: GlobeAltIcon },
-      { description: 'Unlimited pages', icon: ArrowPathIcon },
-      { description: 'Unlimited blocks', icon: LockClosedIcon },
-      { description: 'Verification badge', icon: EyeSlashIcon },
-      { description: 'Private pages', icon: ArrowDownTrayIcon },
-      { description: 'Analytics', icon: ClockIcon },
+      { description: 'Custom domains', icon: GlobeAltIcon },
+      { description: 'Unlimited pages', icon: CubeTransparentIcon },
+      { description: 'Unlimited blocks', icon: CubeIcon },
+      { description: 'Verification badge', icon: CheckBadgeIcon },
+      { description: 'Private pages', icon: LockClosedIcon },
+      { description: 'Analytics', icon: ArrowTrendingUpIcon },
     ],
   },
   {
     name: 'Team',
     id: 'team',
     description: 'For teams & agencies',
-    priceMonthly: '14',
+    priceMonthly: '10',
     billingPeriod: 'per month',
     href: '#',
     highlights: [
-      { description: 'All Premium features', icon: LockClosedIcon },
-      { description: 'A separate team space', icon: LockClosedIcon },
-      { description: 'Invite up to 5 team members', icon: UserGroupIcon },
+      { description: 'All Premium features', icon: ArrowUpIcon },
+      { description: 'A separate team space', icon: UsersIcon },
+      { description: 'Invite up to 5 team members', icon: UserPlusIcon },
       {
         description: 'Google Analytics integration',
-        icon: ChatBubbleBottomCenterTextIcon,
+        icon: ArrowTrendingDownIcon,
       },
-      { description: 'Facebook Pixel integration', icon: Cog6ToothIcon },
+      { description: 'Facebook Pixel integration', icon: HandThumbUpIcon },
     ],
   },
 ];

@@ -34,7 +34,7 @@ export default async function ArticlesLandingPage() {
           </div>
         </MarketingContainer>
       </div>
-      <MarketingContainer className="pt-16">
+      <MarketingContainer className="py-16">
         <div className="mx-auto max-w-2xl lg:max-w-none">
           <div className="space-y-16">
             {articles.map((article) => {

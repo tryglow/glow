@@ -52,7 +52,7 @@ export default async function LearnLandingPage() {
           </div>
         </MarketingContainer>
       </div>
-      <MarketingContainer className="pt-16">
+      <MarketingContainer className="py-16">
         <div className="divide-y divide-slate-200 space-y-8">
           {Object.entries(learnPostsByCategory).map(
             ([category, posts]: [string, LearnPost[]]) => {

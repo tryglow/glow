@@ -1,25 +1,18 @@
 @keyframes scroll {
   0% {
-    transform: translateY(0);
+    transform: translate3d(0, 0, 0);
   }
   100% {
-    transform: translateY(-50%);
+    transform: translate3d(0, -100%, 0);
   }
 }
 
 .animateScroll {
-  animation: scroll 70s linear infinite;
+  animation: scroll 240s linear infinite;
+  will-change: transform;
 }
 
 .animateScrollReverse {
-  animation: scrollReverse 70s linear infinite;
-}
-
-@keyframes scrollReverse {
-  0% {
-    transform: translateY(0);
-  }
-  100% {
-    transform: translateY(50%);
-  }
+  animation: scroll 240s linear infinite reverse;
+  will-change: transform;
 }

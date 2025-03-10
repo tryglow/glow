@@ -12,8 +12,6 @@ async function getFeaturedPagesHandler(
   request: FastifyRequest,
   response: FastifyReply
 ) {
-  // await request.server.authenticateApiKey(request, response);
-
   const pages = await prisma.page.findMany({
     where: {
       deletedAt: null,

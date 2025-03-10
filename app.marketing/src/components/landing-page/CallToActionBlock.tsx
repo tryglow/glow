@@ -1,17 +1,38 @@
 import styles from './call-to-action-block.module.css';
+import preview1 from '@/assets/landing-page/previews/1.png';
+import preview2 from '@/assets/landing-page/previews/2.png';
+import preview3 from '@/assets/landing-page/previews/3.png';
+import preview4 from '@/assets/landing-page/previews/4.png';
+import preview5 from '@/assets/landing-page/previews/5.png';
+import preview6 from '@/assets/landing-page/previews/6.png';
+import preview7 from '@/assets/landing-page/previews/7.png';
+import preview8 from '@/assets/landing-page/previews/8.png';
+import preview9 from '@/assets/landing-page/previews/9.png';
+import preview10 from '@/assets/landing-page/previews/10.png';
+import preview11 from '@/assets/landing-page/previews/11.png';
+import preview12 from '@/assets/landing-page/previews/12.png';
+import preview13 from '@/assets/landing-page/previews/13.png';
+import preview14 from '@/assets/landing-page/previews/14.png';
+import preview15 from '@/assets/landing-page/previews/15.png';
+import preview16 from '@/assets/landing-page/previews/16.png';
+import preview17 from '@/assets/landing-page/previews/17.png';
+import preview18 from '@/assets/landing-page/previews/18.png';
+import preview19 from '@/assets/landing-page/previews/19.png';
+import preview20 from '@/assets/landing-page/previews/20.png';
+import preview21 from '@/assets/landing-page/previews/21.png';
+import preview22 from '@/assets/landing-page/previews/22.png';
+import preview23 from '@/assets/landing-page/previews/23.png';
 import { LoginWidget } from '@/components/login-widget';
 import { ArrowRightIcon } from '@heroicons/react/24/solid';
 import { Button, cn } from '@trylinky/ui';
+import Image from 'next/image';
 
-const colors = [
-  'bg-slate-100',
-  'bg-slate-200',
-  'bg-slate-300',
-  'bg-slate-400',
-  'bg-slate-500',
-  'bg-slate-600',
-  'bg-slate-700',
-  'bg-slate-800',
+const columns = [
+  [preview1, preview8, preview15, preview22, preview4],
+  [preview2, preview9, preview16, preview23, preview14],
+  [preview3, preview10, preview17, preview19, preview6],
+  [preview4, preview11, preview18, preview2, preview7],
+  [preview5, preview12, preview20, preview21, preview13],
 ];
 
 function ScrollingColumn({
@@ -21,19 +42,38 @@ function ScrollingColumn({
   delay: number;
   reverse?: boolean;
 }) {
+  const columnIndex = delay % columns.length;
+  const columnImages = columns[columnIndex];
+
   return (
     <div
       className={cn(
-        'flex flex-col h-auto min-h-[3000px] gap-2',
+        'flex flex-col h-auto min-h-[1000px] gap-2',
         reverse ? styles.animateScrollReverse : styles.animateScroll
       )}
     >
-      {[...Array(6)].map((_, i) => {
-        const randomColor = colors[Math.floor(Math.random() * colors.length)];
-        return (
-          <div className={cn('w-[90px] h-[208px] rounded-xl', randomColor)} />
-        );
-      })}
+      {/* First set of images */}
+      {columnImages.map((image, i) => (
+        <Image
+          key={`first-${i}`}
+          src={image}
+          width={1170}
+          height={2532}
+          alt=""
+          className={cn('w-[120px] h-[308px] rounded-xl bg-black/20')}
+        />
+      ))}
+      {/* Duplicate set for seamless loop */}
+      {columnImages.map((image, i) => (
+        <Image
+          key={`second-${i}`}
+          src={image}
+          width={1170}
+          height={2532}
+          alt=""
+          className={cn('w-[120px] h-[308px] rounded-xl')}
+        />
+      ))}
     </div>
   );
 }
@@ -75,16 +115,13 @@ export function CallToActionBlock() {
             </div>
           </div>
         </div>
-        <div className="flex-1 w-full h-[600px] relative overflow-hidden">
-          <div className="absolute inset-0 -left-28 -top-28 flex gap-2 rotate-45">
+        <div className="flex-1 w-full h-[600px] relative overflow-hidden bg-[#e3dfd2]">
+          <div className="absolute inset-0 -left-8 flex gap-2 rotate-45">
             <ScrollingColumn delay={0} />
             <ScrollingColumn delay={1} reverse />
             <ScrollingColumn delay={2} />
             <ScrollingColumn delay={3} reverse />
             <ScrollingColumn delay={4} />
-            <ScrollingColumn delay={5} reverse />
-            <ScrollingColumn delay={6} />
-            <ScrollingColumn delay={7} reverse />
           </div>
         </div>
       </div>
