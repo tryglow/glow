@@ -253,9 +253,7 @@ const createUsersFirstOrganization = async ({
     data: {
       name: newOrgName,
       slug: newOrgSlug,
-      metadata: JSON.stringify({
-        isPersonal: true,
-      }),
+      isPersonal: true,
       members: {
         create: {
           userId: user.id,
