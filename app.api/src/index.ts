@@ -9,6 +9,7 @@ import tiktokServiceRoutes from './modules/services/tiktok';
 import { authenticateDecorator } from '@/decorators/authenticate';
 import analyticsRoutes from '@/modules/analytics';
 import assetsRoutes from '@/modules/assets';
+import flagsRoutes from '@/modules/flags';
 import integrationsRoutes from '@/modules/integrations';
 import orchestratorsRoutes from '@/modules/orchestrators';
 import reactionsRoutes from '@/modules/reactions';
@@ -65,6 +66,7 @@ fastify.register(reactionsRoutes, { prefix: '/reactions' });
 fastify.register(assetsRoutes, { prefix: '/assets' });
 fastify.register(orchestratorsRoutes, { prefix: '/orchestrators' });
 fastify.register(analyticsRoutes, { prefix: '/analytics' });
+fastify.register(flagsRoutes, { prefix: '/flags' });
 
 fastify.register(tiktokServiceRoutes, { prefix: '/services/tiktok' });
 fastify.register(instagramServiceRoutes, { prefix: '/services/instagram' });

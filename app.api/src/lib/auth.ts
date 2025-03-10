@@ -79,22 +79,6 @@ const options: BetterAuthOptions = {
   emailAndPassword: {
     enabled: false,
   },
-  user: {
-    additionalFields: {
-      metadata: {
-        sortable: true,
-        type: 'string',
-        defaultValue: {
-          showTour: true,
-        } as any,
-        transform: {
-          output: (value: any) => {
-            return 'helloworld';
-          },
-        },
-      },
-    },
-  },
   databaseHooks: {
     user: {
       create: {
@@ -103,6 +87,7 @@ const options: BetterAuthOptions = {
             id: user.id,
             email: user.email,
           });
+          await createUserInitialFlags(user.id);
           await sendWelcomeEmail(user.email);
         },
       },
@@ -319,4 +304,14 @@ const createUsersFirstOrganization = async ({
   });
 
   return org.id;
+};
+
+const createUserInitialFlags = async (userId: string) => {
+  await prisma.userFlag.create({
+    data: {
+      userId,
+      key: 'showOnboardingTour',
+      value: true,
+    },
+  });
 };
