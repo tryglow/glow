@@ -267,7 +267,7 @@ const createUsersFirstOrganization = async ({
       members: {
         create: {
           userId: user.id,
-          role: 'ADMIN',
+          role: 'owner',
         },
       },
     },
