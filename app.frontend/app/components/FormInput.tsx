@@ -1,4 +1,4 @@
-import { Input, cn } from '@tryglow/ui';
+import { Input, cn } from '@trylinky/ui';
 import { Field } from 'formik';
 import { ReactNode } from 'react';
 

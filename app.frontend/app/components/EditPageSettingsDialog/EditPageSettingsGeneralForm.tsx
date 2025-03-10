@@ -21,7 +21,7 @@ import {
   Label,
   Switch,
   useToast,
-} from '@tryglow/ui';
+} from '@trylinky/ui';
 import { Form, Formik, FormikHelpers } from 'formik';
 import { withZodSchema } from 'formik-validator-zod';
 import { Loader2 } from 'lucide-react';

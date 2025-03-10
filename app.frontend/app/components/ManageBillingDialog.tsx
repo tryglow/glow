@@ -7,7 +7,7 @@ import {
   DialogContent,
   DialogTitle,
   Button,
-} from '@tryglow/ui';
+} from '@trylinky/ui';
 import { useEffect, useState } from 'react';
 
 interface Props {

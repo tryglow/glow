@@ -20,7 +20,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   useSidebar,
-} from '@tryglow/ui';
+} from '@trylinky/ui';
 import {
   BlocksIcon,
   CableIcon,

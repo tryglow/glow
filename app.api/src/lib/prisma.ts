@@ -1,4 +1,4 @@
-import { PrismaClient } from '@tryglow/prisma';
+import { PrismaClient } from '@trylinky/prisma';
 
 const prismaClientSingleton = () => {
   return new PrismaClient();

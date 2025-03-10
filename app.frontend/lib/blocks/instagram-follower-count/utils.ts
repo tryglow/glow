@@ -3,7 +3,7 @@
 import { decrypt, encrypt } from '@/lib/encrypt';
 import prisma from '@/lib/prisma';
 import { captureException } from '@sentry/nextjs';
-import { InstagramIntegrationConfig } from '@tryglow/blocks';
+import { InstagramIntegrationConfig } from '@trylinky/blocks';
 
 async function refreshLongLivedToken({ accessToken }: { accessToken: string }) {
   const options = {

@@ -12,7 +12,7 @@ import {
   getIntegrationsForOrganizationId,
 } from '@/modules/integrations/service';
 import { captureException } from '@sentry/node';
-import { Blocks, blocks } from '@tryglow/blocks';
+import { Blocks, blocks } from '@trylinky/blocks';
 import { FastifyInstance, FastifyReply } from 'fastify';
 import { FastifyRequest } from 'fastify';
 

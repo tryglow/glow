@@ -3,8 +3,8 @@ import { FormField } from '@/components/FormField';
 import {
   WaitlistEmailBlockConfig,
   WaitlistEmailBlockSchema,
-} from '@tryglow/blocks';
-import { Button } from '@tryglow/ui';
+} from '@trylinky/blocks';
+import { Button } from '@trylinky/ui';
 import { Form, Formik, FormikHelpers } from 'formik';
 import { Loader2 } from 'lucide-react';
 

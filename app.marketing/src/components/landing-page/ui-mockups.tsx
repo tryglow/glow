@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import styles from './styles.module.scss';
-import { cn } from '@tryglow/ui';
+import { cn } from '@trylinky/ui';
 
 const SpotifyLogo = () => {
   return (
@@ -267,17 +267,17 @@ export const LinkBoxMockup = ({
     x: {
       icon: 'https://cdn.lin.ky/default-data/x-logo.png',
       title: 'X / Twitter',
-      username: '@tryglow',
+      username: '@trylinky',
     },
     instagram: {
       icon: 'https://cdn.lin.ky/default-data/icons/instagram.svg',
       title: 'Instagram',
-      username: '@getglowapp',
+      username: '@trylinky',
     },
     linkedin: {
       icon: 'https://cdn.lin.ky/default-data/icons/linkedin.svg',
       title: 'LinkedIn',
-      username: '@getglowapp',
+      username: '@trylinky',
     },
   };
   return (

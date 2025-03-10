@@ -2,8 +2,8 @@ import { InternalApi } from '@/app/lib/api';
 import { editForms } from '@/lib/blocks/edit';
 import { internalApiFetcher } from '@/lib/fetch';
 import { captureException } from '@sentry/nextjs';
-import { Blocks } from '@tryglow/blocks';
-import { toast } from '@tryglow/ui';
+import { Blocks } from '@trylinky/blocks';
+import { toast } from '@trylinky/ui';
 import { useRouter } from 'next/navigation';
 import useSWR from 'swr';
 

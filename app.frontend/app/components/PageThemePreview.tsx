@@ -1,6 +1,6 @@
 import { getFontFamilyValue } from '@/lib/fonts';
 import { themeColorToCssValue } from '@/lib/theme';
-import { Theme } from '@tryglow/prisma';
+import { Theme } from '@trylinky/prisma';
 
 export type RequiredFields<T, K extends keyof T> = T & Required<Pick<T, K>>;
 

@@ -14,7 +14,7 @@ import { SpotifyPlayingNowMockup } from '@/components/landing-page/ui-mockups';
 import { LoginWidget } from '@/components/login-widget';
 import { MarketingContainer } from '@/components/marketing-container';
 import { ArrowRightIcon } from '@heroicons/react/20/solid';
-import { Button, cn } from '@tryglow/ui';
+import { Button, cn } from '@trylinky/ui';
 import Image from 'next/image';
 import Link from 'next/link';
 

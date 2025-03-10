@@ -2,7 +2,7 @@
 
 import { authClient, useSession } from '@/app/lib/auth';
 import { CaretSortIcon, CheckIcon } from '@radix-ui/react-icons';
-import { Organization } from '@tryglow/prisma';
+import { Organization } from '@trylinky/prisma';
 import {
   cn,
   Command,
@@ -18,7 +18,7 @@ import {
   Button,
   PopoverContent,
   PopoverTrigger,
-} from '@tryglow/ui';
+} from '@trylinky/ui';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { useSWRConfig } from 'swr';

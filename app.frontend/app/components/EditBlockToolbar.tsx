@@ -6,8 +6,8 @@ import { InternalApi } from '@/app/lib/api';
 import { internalApiFetcher } from '@/lib/fetch';
 import { PencilSquareIcon, TrashIcon } from '@heroicons/react/24/outline';
 import { captureException } from '@sentry/nextjs';
-import { Blocks } from '@tryglow/blocks';
-import { useSidebar, useToast } from '@tryglow/ui';
+import { Blocks } from '@trylinky/blocks';
+import { useSidebar, useToast } from '@trylinky/ui';
 import { useParams, useRouter } from 'next/navigation';
 import useSWR, { useSWRConfig } from 'swr';
 

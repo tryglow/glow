@@ -3,7 +3,7 @@ import { FormField } from '@/components/FormField';
 import { FormFileUpload } from '@/components/FormFileUpload';
 import { IconSelect } from '@/components/IconSelect';
 import { CaretSortIcon } from '@radix-ui/react-icons';
-import { LinkBarBlockConfig, LinkBarSchema } from '@tryglow/blocks';
+import { LinkBarBlockConfig, LinkBarSchema } from '@trylinky/blocks';
 import {
   Button,
   Collapsible,
@@ -14,7 +14,7 @@ import {
   TabsContent,
   TabsList,
   TabsTrigger,
-} from '@tryglow/ui';
+} from '@trylinky/ui';
 import { FieldArray, Form, Formik, FormikHelpers, getIn } from 'formik';
 import { Loader2 } from 'lucide-react';
 

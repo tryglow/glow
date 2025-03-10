@@ -3,7 +3,7 @@
 import { decrypt, encrypt } from '@/lib/encrypt';
 import prisma from '@/lib/prisma';
 import { captureException } from '@sentry/nextjs';
-import { ThreadsIntegrationConfig } from '@tryglow/blocks';
+import { ThreadsIntegrationConfig } from '@trylinky/blocks';
 
 async function refreshLongLivedToken({ accessToken }: { accessToken: string }) {
   const options = {

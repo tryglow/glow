@@ -1,6 +1,6 @@
 import { BlockIntegrationUI } from '@/app/components/BlockIntegrationUI';
 import { EditFormProps } from '@/lib/blocks/types';
-import { TikTokFollowerCountBlockConfig } from '@tryglow/blocks';
+import { TikTokFollowerCountBlockConfig } from '@trylinky/blocks';
 
 export function EditForm({
   integration,

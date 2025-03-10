@@ -16,7 +16,7 @@ import { ThreadsFollowerCount } from '@/lib/blocks/threads-follower-count/ui-cli
 import TikTokFollowerCount from '@/lib/blocks/tiktok-follower-count/ui-client';
 import TikTokLatestPost from '@/lib/blocks/tiktok-latest-post/ui-client';
 import { YouTube } from '@/lib/blocks/youtube/ui';
-import { Blocks } from '@tryglow/blocks';
+import { Blocks } from '@trylinky/blocks';
 
 export interface BlockConfig {
   x: number;

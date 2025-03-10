@@ -7,7 +7,7 @@ import { createTheme, updateTheme } from '@/app/lib/actions/themes';
 import { internalApiFetcher } from '@/lib/fetch';
 import { HSLColor, hslToHex, themeFields } from '@/lib/theme';
 import { ChevronDownIcon } from '@heroicons/react/24/solid';
-import { Theme } from '@tryglow/prisma';
+import { Theme } from '@trylinky/prisma';
 import {
   Button,
   Collapsible,
@@ -16,7 +16,7 @@ import {
   Input,
   Label,
   toast,
-} from '@tryglow/ui';
+} from '@trylinky/ui';
 import { useEffect, useRef, useState } from 'react';
 import { SketchPicker } from 'react-color';
 import useSWR, { mutate } from 'swr';

@@ -3,7 +3,7 @@
 import { decrypt, encrypt } from '@/lib/encrypt';
 import prisma from '@/lib/prisma';
 import { captureException, captureMessage } from '@sentry/nextjs';
-import { SpotifyIntegrationConfig } from '@tryglow/blocks';
+import { SpotifyIntegrationConfig } from '@trylinky/blocks';
 import safeAwait from 'safe-await';
 
 /**

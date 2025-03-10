@@ -2,7 +2,7 @@
 
 import { LoginProviderButton } from '@/components/login-provider-button';
 import { signIn } from '@/lib/auth';
-import { Button, Input, toast } from '@tryglow/ui';
+import { Button, Input, toast } from '@trylinky/ui';
 import { useState } from 'react';
 
 interface Props {

@@ -4,7 +4,7 @@ import { ManageBillingDialog } from '@/app/components/ManageBillingDialog';
 import { authClient, useSession } from '@/app/lib/auth';
 import { EditTeamSettingsDialog } from '@/components/EditTeamSettingsDialog/EditTeamSettingsDialog';
 import { NewPageDialog } from '@/components/NewPageDialog';
-import { Organization } from '@tryglow/prisma';
+import { Organization } from '@trylinky/prisma';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -16,7 +16,7 @@ import {
   Avatar,
   AvatarFallback,
   AvatarImage,
-} from '@tryglow/ui';
+} from '@trylinky/ui';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 

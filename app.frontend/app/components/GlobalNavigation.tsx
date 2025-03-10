@@ -12,7 +12,7 @@ import {
   ComputerDesktopIcon,
   DevicePhoneMobileIcon,
 } from '@heroicons/react/24/outline';
-import { Page } from '@tryglow/prisma';
+import { Page } from '@trylinky/prisma';
 import {
   Dialog,
   DialogContent,
@@ -21,7 +21,7 @@ import {
   DialogTitle,
   Button,
   useSidebar,
-} from '@tryglow/ui';
+} from '@trylinky/ui';
 import { PlusCircleIcon } from 'lucide-react';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';

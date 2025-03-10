@@ -2,7 +2,7 @@ import './globals.css';
 import { LoginWidget } from '@/components/login-widget';
 import MarketingFooter from '@/components/marketing-footer';
 import MarketingNavigation from '@/components/marketing-navigation';
-import { Button } from '@tryglow/ui';
+import { Button } from '@trylinky/ui';
 import { Analytics } from '@vercel/analytics/react';
 import { Metadata } from 'next';
 import localFont from 'next/font/local';
@@ -34,8 +34,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    site: '@tryglow',
-    creator: '@tryglow',
+    site: '@trylinky',
+    creator: '@trylinky',
     images: 'https://lin.ky/assets/og.png',
   },
 };

@@ -2,7 +2,7 @@ import {
   SidebarContentHeader,
   SidebarGroup,
   SidebarGroupContent,
-} from '@tryglow/ui';
+} from '@trylinky/ui';
 
 export function SidebarForms() {
   return (

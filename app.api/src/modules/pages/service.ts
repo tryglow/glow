@@ -4,7 +4,7 @@ import { isForbiddenSlug } from '@/lib/slugs';
 import { regexSlug } from '@/lib/slugs';
 import { makeId } from '@/modules/pages/utils';
 import { captureException } from '@sentry/node';
-import { headerBlockDefaults } from '@tryglow/blocks';
+import { headerBlockDefaults } from '@trylinky/blocks';
 import { randomUUID } from 'crypto';
 
 export async function getPageLayoutById(pageId: string) {

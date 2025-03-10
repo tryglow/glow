@@ -1,3 +1,3 @@
-# @tryglow/tinybird
+# @trylinky/tinybird
 
-This package contains the Tinybird tracking client for Glow.
+This package contains the Tinybird tracking client for Linky.

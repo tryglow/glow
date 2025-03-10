@@ -1,7 +1,7 @@
 import styles from './call-to-action-block.module.css';
 import { LoginWidget } from '@/components/login-widget';
 import { ArrowRightIcon } from '@heroicons/react/24/solid';
-import { Button, cn } from '@tryglow/ui';
+import { Button, cn } from '@trylinky/ui';
 
 const colors = [
   'bg-slate-100',

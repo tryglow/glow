@@ -1,8 +1,8 @@
 import { BlockProps } from '../ui';
 import { ThreadsFollowerCountServerUI } from './ui-server';
 import { CoreBlock } from '@/components/CoreBlock';
-import { ThreadsFollowerCountBlockConfig } from '@tryglow/blocks';
-import { Skeleton } from '@tryglow/ui';
+import { ThreadsFollowerCountBlockConfig } from '@trylinky/blocks';
+import { Skeleton } from '@trylinky/ui';
 import { FunctionComponent, Suspense } from 'react';
 
 export const ThreadsFollowerCount: FunctionComponent<

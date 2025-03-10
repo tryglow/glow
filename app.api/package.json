@@ -1,5 +1,5 @@
 {
-  "name": "@tryglow/api",
+  "name": "@trylinky/api",
   "version": "1.0.0",
   "main": "index.js",
   "type": "module",
@@ -23,8 +23,8 @@
     "@sentry/node": "^8.10.0",
     "@sentry/types": "^8.7.0",
     "@sindresorhus/slugify": "^2.2.1",
-    "@tryglow/blocks": "*",
-    "@tryglow/prisma": "*",
+    "@trylinky/blocks": "*",
+    "@trylinky/prisma": "*",
     "better-auth": "^1.2.2",
     "cross-env": "^7.0.3",
     "dotenv": "^16.4.5",

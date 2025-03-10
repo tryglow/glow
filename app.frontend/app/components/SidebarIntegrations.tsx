@@ -5,7 +5,7 @@ import {
 import { InternalApi } from '@/app/lib/api';
 import { internalApiFetcher } from '@/lib/fetch';
 import { captureException } from '@sentry/nextjs';
-import { Integration } from '@tryglow/prisma';
+import { Integration } from '@trylinky/prisma';
 import {
   SidebarContentHeader,
   SidebarGroup,
@@ -18,7 +18,7 @@ import {
   DialogHeader,
   DialogTitle,
   toast,
-} from '@tryglow/ui';
+} from '@trylinky/ui';
 import { useState } from 'react';
 import useSWR, { useSWRConfig } from 'swr';
 

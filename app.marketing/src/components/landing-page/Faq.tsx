@@ -5,7 +5,7 @@ import {
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from '@tryglow/ui';
+} from '@trylinky/ui';
 
 const landingPageQuestions = [
   {

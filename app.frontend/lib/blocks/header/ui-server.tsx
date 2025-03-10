@@ -8,7 +8,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '@tryglow/ui';
+} from '@trylinky/ui';
 
 const VerifiedBadge = () => {
   return (

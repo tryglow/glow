@@ -8,7 +8,7 @@ import {
   DialogHeader,
   DialogTitle,
   Button,
-} from '@tryglow/ui';
+} from '@trylinky/ui';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useState } from 'react';
 

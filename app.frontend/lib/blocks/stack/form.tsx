@@ -2,7 +2,7 @@ import { EditFormProps } from '../types';
 import { FormField } from '@/components/FormField';
 import { FormFileUpload } from '@/components/FormFileUpload';
 import { IconSelect } from '@/components/IconSelect';
-import { StackBlockConfig, StackSchema } from '@tryglow/blocks';
+import { StackBlockConfig, StackSchema } from '@trylinky/blocks';
 import {
   Button,
   Label,
@@ -10,7 +10,7 @@ import {
   TabsContent,
   TabsList,
   TabsTrigger,
-} from '@tryglow/ui';
+} from '@trylinky/ui';
 import { FieldArray, Form, Formik, FormikHelpers, getIn } from 'formik';
 import { Loader2 } from 'lucide-react';
 

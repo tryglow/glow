@@ -5,7 +5,7 @@ import { hideOnboardingTour } from '@/app/lib/auth-actions';
 import { internalApiFetcher } from '@/lib/fetch';
 import { useTour } from '@reactour/tour';
 import { captureException } from '@sentry/nextjs';
-import { Theme, UserFlag } from '@tryglow/prisma';
+import { Theme, UserFlag } from '@trylinky/prisma';
 import {
   Dialog,
   DialogContent,
@@ -15,7 +15,7 @@ import {
   DialogTitle,
   Button,
   useIsMobile,
-} from '@tryglow/ui';
+} from '@trylinky/ui';
 import { useState } from 'react';
 import useSWR from 'swr';
 

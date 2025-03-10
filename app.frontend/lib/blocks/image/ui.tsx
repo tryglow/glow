@@ -3,7 +3,7 @@
 import { BlockProps } from '../ui';
 import { CoreBlock } from '@/components/CoreBlock';
 import { internalApiFetcher } from '@/lib/fetch';
-import { ImageBlockConfig } from '@tryglow/blocks';
+import { ImageBlockConfig } from '@trylinky/blocks';
 import { FunctionComponent } from 'react';
 import useSWR from 'swr';
 

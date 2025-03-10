@@ -13,7 +13,7 @@ import {
   RadioGroup,
   RadioGroupItem,
   useToast,
-} from '@tryglow/ui';
+} from '@trylinky/ui';
 import { Form, Formik, FormikHelpers } from 'formik';
 import { Loader2 } from 'lucide-react';
 import { useRouter } from 'next/navigation';

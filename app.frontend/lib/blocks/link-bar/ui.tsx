@@ -3,7 +3,7 @@
 import { BlockProps } from '../ui';
 import { CoreBlock } from '@/components/CoreBlock';
 import { internalApiFetcher } from '@/lib/fetch';
-import { LinkBarBlockConfig } from '@tryglow/blocks';
+import { LinkBarBlockConfig } from '@trylinky/blocks';
 import Link from 'next/link';
 import useSWR from 'swr';
 

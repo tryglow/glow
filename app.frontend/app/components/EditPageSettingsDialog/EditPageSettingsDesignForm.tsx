@@ -8,8 +8,8 @@ import { CreateEditThemeForm } from '@/app/components/EditPageSettingsDialog/Cre
 import { internalApiFetcher } from '@/lib/fetch';
 import { PlusIcon } from '@heroicons/react/20/solid';
 import { captureException } from '@sentry/nextjs';
-import { Theme } from '@tryglow/prisma';
-import { Button, DialogFooter, useToast } from '@tryglow/ui';
+import { Theme } from '@trylinky/prisma';
+import { Button, DialogFooter, useToast } from '@trylinky/ui';
 import { Form, Formik, FormikHelpers } from 'formik';
 import { withZodSchema } from 'formik-validator-zod';
 import { Loader2 } from 'lucide-react';

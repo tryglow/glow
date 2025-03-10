@@ -13,7 +13,7 @@ const nextConfig: NextConfig = {
   experimental: {
     manualClientBasePath: true,
   },
-  transpilePackages: ['@tryglow/ui'],
+  transpilePackages: ['@trylinky/ui'],
   pageExtensions: ['js', 'jsx', 'mdx', 'ts', 'tsx'],
   sassOptions: {
     silenceDeprecations: ['legacy-js-api'],

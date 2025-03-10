@@ -5,7 +5,7 @@ import { setPageTheme } from '@/app/lib/actions/themes';
 import { internalApiFetcher } from '@/lib/fetch';
 import { getFontFamilyValue, getGoogleFontUrl } from '@/lib/fonts';
 import { themeColorToCssValue } from '@/lib/theme';
-import { Theme } from '@tryglow/prisma';
+import { Theme } from '@trylinky/prisma';
 import {
   toast,
   SidebarContentHeader,
@@ -13,7 +13,7 @@ import {
   SidebarGroupContent,
   SidebarSeparator,
   Button,
-} from '@tryglow/ui';
+} from '@trylinky/ui';
 import { Plus } from 'lucide-react';
 import { useParams } from 'next/navigation';
 import { useState, useEffect } from 'react';

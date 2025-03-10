@@ -1,7 +1,7 @@
 import { authors } from './post-template';
 import { getArticles } from './utils';
 import { MarketingContainer } from '@/components/marketing-container';
-import { Button } from '@tryglow/ui';
+import { Button } from '@trylinky/ui';
 import { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';

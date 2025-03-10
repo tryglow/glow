@@ -2,7 +2,7 @@
 
 import { authClient } from '@/app/lib/auth';
 import { LoginForm } from '@/components/LoginForm';
-import { Button, toast } from '@tryglow/ui';
+import { Button, toast } from '@trylinky/ui';
 import { useRouter } from 'next/navigation';
 
 export function LoggedInAcceptInviteUI({ inviteId }: { inviteId: string }) {

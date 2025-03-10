@@ -4,7 +4,7 @@ import { FormField } from '../FormField';
 import { updateGeneralTeamSettings } from './actions';
 import { generalTeamSettingsSchema } from './shared';
 import { captureException } from '@sentry/nextjs';
-import { Button, DialogFooter, useToast } from '@tryglow/ui';
+import { Button, DialogFooter, useToast } from '@trylinky/ui';
 import { Form, Formik, FormikHelpers } from 'formik';
 import { withZodSchema } from 'formik-validator-zod';
 import { Loader2 } from 'lucide-react';

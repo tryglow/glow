@@ -2,7 +2,7 @@ import { EditFormProps } from '../types';
 import { FormField } from '@/components/FormField';
 import { useLoadScript } from '@react-google-maps/api';
 import { captureException } from '@sentry/nextjs';
-import { MapBlockConfig, mapThemes } from '@tryglow/blocks';
+import { MapBlockConfig, mapThemes } from '@trylinky/blocks';
 import {
   Command,
   CommandEmpty,
@@ -11,7 +11,7 @@ import {
   CommandItem,
   CommandList,
   Button,
-} from '@tryglow/ui';
+} from '@trylinky/ui';
 import { Form, Formik, FormikHelpers, useFormikContext } from 'formik';
 import { Loader2 } from 'lucide-react';
 import { ChangeEvent, useEffect, useRef, useState } from 'react';

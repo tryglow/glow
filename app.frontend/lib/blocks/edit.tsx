@@ -16,7 +16,7 @@ import { EditForm as TikTokFollowerCountForm } from './tiktok-follower-count/for
 import { EditForm as TikTokLatestPostForm } from './tiktok-latest-post/form';
 import { EditForm as WaitlistEmailForm } from './waitlist-email/form';
 import { EditForm as YouTubeForm } from './youtube/form';
-import { Blocks } from '@tryglow/blocks';
+import { Blocks } from '@trylinky/blocks';
 import { JSXElementConstructor } from 'react';
 
 export const editForms: Record<Blocks, JSXElementConstructor<any>> = {

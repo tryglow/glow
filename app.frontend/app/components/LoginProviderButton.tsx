@@ -1,6 +1,6 @@
 'use client';
 
-import { Button } from '@tryglow/ui';
+import { Button } from '@trylinky/ui';
 import { ReactNode } from 'react';
 
 type EnabledProviders = 'google' | 'twitter' | 'tiktok';

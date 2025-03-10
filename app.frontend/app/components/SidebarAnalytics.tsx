@@ -10,7 +10,7 @@ import {
   Card,
   CardContent,
   Skeleton,
-} from '@tryglow/ui';
+} from '@trylinky/ui';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { Area, AreaChart, CartesianGrid, XAxis } from 'recharts';

@@ -2,7 +2,7 @@ import './globals.css';
 import './react-grid-layout.scss';
 import { getSession } from '@/app/lib/auth';
 import { PostHogIdentify, PostHogProvider } from '@/app/posthog-provider';
-import { Toaster } from '@tryglow/ui';
+import { Toaster } from '@trylinky/ui';
 import { Analytics } from '@vercel/analytics/react';
 import { Metadata } from 'next';
 import localFont from 'next/font/local';
@@ -34,8 +34,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    site: '@tryglow',
-    creator: '@tryglow',
+    site: '@trylinky',
+    creator: '@trylinky',
     images: 'https://glow.as/assets/og.png',
   },
 };

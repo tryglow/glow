@@ -1,6 +1,6 @@
 import { BrandLogo, TiktokLogo } from './assets';
 import { runOrchestration } from '@/app/tiktok/actions';
-import { Button } from '@tryglow/ui';
+import { Button } from '@trylinky/ui';
 import Link from 'next/link';
 
 export async function Card({

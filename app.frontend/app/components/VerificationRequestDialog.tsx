@@ -11,7 +11,7 @@ import {
   DialogHeader,
   DialogTitle,
   toast,
-} from '@tryglow/ui';
+} from '@trylinky/ui';
 import { Form, Formik } from 'formik';
 import { withZodSchema } from 'formik-validator-zod';
 import { z } from 'zod';

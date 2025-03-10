@@ -2,7 +2,7 @@
 
 import { AssetContexts } from '@/lib/asset';
 import { PhotoIcon } from '@heroicons/react/24/solid';
-import { Button, cn } from '@tryglow/ui';
+import { Button, cn } from '@trylinky/ui';
 import { ChangeEvent, useEffect, useState } from 'react';
 
 interface Props {

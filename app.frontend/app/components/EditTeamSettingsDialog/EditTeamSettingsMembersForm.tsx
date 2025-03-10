@@ -5,14 +5,14 @@ import { createTeamInvite } from './actions';
 import { teamInviteSchema } from './shared';
 import { authClient } from '@/app/lib/auth';
 import { captureException } from '@sentry/nextjs';
-import { Invitation, User } from '@tryglow/prisma';
+import { Invitation, User } from '@trylinky/prisma';
 import {
   Avatar,
   AvatarFallback,
   AvatarImage,
   Button,
   useToast,
-} from '@tryglow/ui';
+} from '@trylinky/ui';
 import { Form, Formik, FormikHelpers } from 'formik';
 import { withZodSchema } from 'formik-validator-zod';
 import { Loader2 } from 'lucide-react';

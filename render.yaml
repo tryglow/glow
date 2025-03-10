@@ -94,8 +94,8 @@ services:
         sync: false
     region: frankfurt
     buildCommand:
-      npm install && turbo run prisma:migrate prisma:generate --filter=@tryglow/prisma && turbo run build:api
-      --filter=@tryglow/api
+      npm install && turbo run prisma:migrate prisma:generate --filter=@trylinky/prisma && turbo run build:api
+      --filter=@trylinky/api
     startCommand: turbo run start:api
     domains:
       - api.glow.as

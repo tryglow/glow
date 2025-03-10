@@ -7,7 +7,7 @@ import {
   DialogDescription,
   DialogHeader,
   DialogTitle,
-} from '@tryglow/ui';
+} from '@trylinky/ui';
 
 interface Props {
   open: boolean;

@@ -7,7 +7,7 @@ import { CoreBlock } from '@/components/CoreBlock';
 import { internalApiFetcher } from '@/lib/fetch';
 import { enableDragDropTouch } from '@/lib/polyfills/drag-drop-touch.esm.min.js';
 import { captureException } from '@sentry/nextjs';
-import { Skeleton, useToast, cn } from '@tryglow/ui';
+import { Skeleton, useToast, cn } from '@trylinky/ui';
 import { useParams, useRouter } from 'next/navigation';
 import {
   ReactNode,

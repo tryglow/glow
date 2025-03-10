@@ -2,15 +2,15 @@ import { EditFormProps } from '../types';
 import { FormField } from '@/app/components/FormField';
 import { FormFileUpload } from '@/components/FormFileUpload';
 import { internalApiFetcher } from '@/lib/fetch';
-import { HeaderBlockConfig, HeaderSchema } from '@tryglow/blocks';
-import { Page } from '@tryglow/prisma';
+import { HeaderBlockConfig, HeaderSchema } from '@trylinky/blocks';
+import { Page } from '@trylinky/prisma';
 import {
   Button,
   Checkbox,
   Label,
   RadioGroup,
   RadioGroupItem,
-} from '@tryglow/ui';
+} from '@trylinky/ui';
 import { Form, Formik, FormikHelpers } from 'formik';
 import { Loader2 } from 'lucide-react';
 import useSWR, { useSWRConfig } from 'swr';

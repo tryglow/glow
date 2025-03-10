@@ -5,7 +5,7 @@ import { TikTokLogo } from '@/app/components/integration-icons/tiktok';
 import { InternalApi } from '@/app/lib/api';
 import { internalApiFetcher } from '@/lib/fetch';
 import { captureException } from '@sentry/nextjs';
-import { Integration } from '@tryglow/prisma';
+import { Integration } from '@trylinky/prisma';
 import {
   Select,
   SelectContent,
@@ -14,7 +14,7 @@ import {
   SelectValue,
   Button,
   toast,
-} from '@tryglow/ui';
+} from '@trylinky/ui';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';

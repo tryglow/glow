@@ -3,7 +3,7 @@
 import { decrypt, encrypt } from '@/lib/encrypt';
 import prisma from '@/lib/prisma';
 import { captureException } from '@sentry/nextjs';
-import { TikTokIntegrationConfig } from '@tryglow/blocks';
+import { TikTokIntegrationConfig } from '@trylinky/blocks';
 
 async function refreshLongLivedToken({
   refreshToken,

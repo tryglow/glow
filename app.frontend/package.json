@@ -1,5 +1,5 @@
 {
-  "name": "@tryglow/frontend",
+  "name": "@trylinky/frontend",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -26,10 +26,10 @@
     "@react-google-maps/api": "^2.20.3",
     "@reactour/tour": "^3.7.0",
     "@sentry/nextjs": "^9.1.0",
-    "@tryglow/blocks": "*",
-    "@tryglow/prisma": "*",
-    "@tryglow/tinybird": "*",
-    "@tryglow/ui": "*",
+    "@trylinky/blocks": "*",
+    "@trylinky/prisma": "*",
+    "@trylinky/tinybird": "*",
+    "@trylinky/ui": "*",
     "@vercel/analytics": "^1.5.0",
     "@vercel/functions": "^2.0.0",
     "better-auth": "^1.2.2",

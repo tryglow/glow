@@ -15,8 +15,8 @@ import blockTiktokIcon from '@/app/assets/ui/type-tiktok.svg';
 import blockWaitlistEmailIcon from '@/app/assets/ui/type-waitlist-email.svg';
 import blockYoutubeIcon from '@/app/assets/ui/type-youtube.svg';
 import { useEditModeContext } from '@/app/contexts/Edit';
-import { Blocks } from '@tryglow/blocks';
-import { useSidebar } from '@tryglow/ui';
+import { Blocks } from '@trylinky/blocks';
+import { useSidebar } from '@trylinky/ui';
 import Image from 'next/image';
 
 export const config: Record<

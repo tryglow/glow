@@ -4,7 +4,7 @@ import { authClient } from '@/app/lib/auth';
 import { EditTeamSettingsGeneral } from '@/components/EditTeamSettingsDialog/EditTeamSettingsGeneralForm';
 import { EditTeamSettingsMembers } from '@/components/EditTeamSettingsDialog/EditTeamSettingsMembersForm';
 import { internalApiFetcher } from '@/lib/fetch';
-import { Invitation, Organization, User } from '@tryglow/prisma';
+import { Invitation, Organization, User } from '@trylinky/prisma';
 import {
   Dialog,
   DialogContent,
@@ -15,7 +15,7 @@ import {
   TabsContent,
   TabsList,
   TabsTrigger,
-} from '@tryglow/ui';
+} from '@trylinky/ui';
 import { useEffect, useState } from 'react';
 import useSWR from 'swr';
 

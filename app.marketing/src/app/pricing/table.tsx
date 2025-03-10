@@ -18,7 +18,7 @@ import {
   ArrowDownTrayIcon,
   ClockIcon,
 } from '@heroicons/react/24/outline';
-import { Button, cn } from '@tryglow/ui';
+import { Button, cn } from '@trylinky/ui';
 
 const tiers = [
   {

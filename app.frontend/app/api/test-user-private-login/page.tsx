@@ -1,7 +1,7 @@
 'use client';
 
 import { authClient } from '@/app/lib/auth';
-import { Button } from '@tryglow/ui';
+import { Button } from '@trylinky/ui';
 import Link from 'next/link';
 import { FormEvent, useState } from 'react';
 

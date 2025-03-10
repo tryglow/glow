@@ -1,7 +1,7 @@
 import { EditFormProps } from '../types';
 import { FormField } from '@/components/FormField';
-import { ContentBlockConfig, ContentSchema } from '@tryglow/blocks';
-import { Button } from '@tryglow/ui';
+import { ContentBlockConfig, ContentSchema } from '@trylinky/blocks';
+import { Button } from '@trylinky/ui';
 import { Form, Formik, FormikHelpers } from 'formik';
 import { Loader2 } from 'lucide-react';
 

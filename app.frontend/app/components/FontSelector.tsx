@@ -5,7 +5,7 @@ import {
   getFontFamilyValue,
   loadGoogleFont,
 } from '@/lib/fonts';
-import { Label } from '@tryglow/ui';
+import { Label } from '@trylinky/ui';
 import { useEffect, useState } from 'react';
 
 interface FontSelectorProps {
