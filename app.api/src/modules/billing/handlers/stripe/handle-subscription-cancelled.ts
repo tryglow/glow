@@ -31,4 +31,8 @@ export async function handleSubscriptionCancelled(event: Stripe.Event) {
       cancelAtPeriodEnd: true,
     },
   });
+
+  return {
+    success: true,
+  };
 }

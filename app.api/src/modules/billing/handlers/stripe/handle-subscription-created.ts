@@ -1,6 +1,7 @@
 import { prices } from '@/lib/plans';
 import { createNewSubscription } from '@/modules/billing/utils/create-new-subscription';
 import { createNewOrganization } from '@/modules/organizations/utils';
+import { sendSlackMessage } from '@/modules/slack/service';
 import { captureMessage } from '@sentry/node';
 import Stripe from 'stripe';
 
@@ -73,6 +74,10 @@ export async function handleSubscriptionCreated(event: Stripe.Event) {
       periodEnd: new Date(subscription.current_period_end * 1000),
     });
 
+    await sendSlackMessage({
+      text: `Team subscription created for ${newTeamOrg.id} (Subscription: ${subscription.id})`,
+    });
+
     return {
       success: true,
     };
@@ -80,6 +85,11 @@ export async function handleSubscriptionCreated(event: Stripe.Event) {
 
   if (plan === 'freeLegacy') {
     // Nothing to do here
+
+    await sendSlackMessage({
+      text: `Free legacy subscription created for ${subscription.id}`,
+    });
+
     return {
       success: true,
     };
@@ -87,6 +97,11 @@ export async function handleSubscriptionCreated(event: Stripe.Event) {
 
   if (plan === 'premium') {
     // Nothing to do here
+
+    await sendSlackMessage({
+      text: `Premium subscription created for ${subscription.id}`,
+    });
+
     return {
       success: true,
     };

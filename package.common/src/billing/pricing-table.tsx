@@ -2,7 +2,7 @@
 
 import { internalApiFetcher } from '../api/fetch';
 import { InternalApi } from '../api/internal-api';
-import { LoginWidget } from './login-widget';
+import { LoginWidget } from '../auth/login-widget';
 import {
   ArrowTrendingDownIcon,
   ArrowUpIcon,

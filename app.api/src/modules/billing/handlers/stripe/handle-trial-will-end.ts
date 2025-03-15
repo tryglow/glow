@@ -1,5 +1,6 @@
 import prisma from '@/lib/prisma';
 import { sendTrialReminderEmail } from '@/modules/notifications/service';
+import { sendSlackMessage } from '@/modules/slack/service';
 import Stripe from 'stripe';
 
 export async function handleTrialWillEnd(event: Stripe.Event) {
@@ -15,8 +16,10 @@ export async function handleTrialWillEnd(event: Stripe.Event) {
       status: 'trialing',
     },
     select: {
+      id: true,
       organization: {
         select: {
+          id: true,
           members: {
             select: {
               user: {
@@ -46,4 +49,12 @@ export async function handleTrialWillEnd(event: Stripe.Event) {
       await sendTrialReminderEmail(user.email);
     }
   });
+
+  await sendSlackMessage({
+    text: `Trial will end for ${subscription.organization?.id} (Subscription: ${subscription.id})`,
+  });
+
+  return {
+    success: true,
+  };
 }

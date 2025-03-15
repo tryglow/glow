@@ -11,10 +11,7 @@ export async function stripeWebhookHandler(
   request: FastifyRequest<{ Body: { rawBody: string }; RawBody: string }>,
   response: FastifyReply
 ) {
-  console.log('Stripe Webhook Handler', request.headers);
   const signature = request.headers['stripe-signature'] as string;
-
-  console.log(signature);
 
   let event: Stripe.Event;
 

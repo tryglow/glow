@@ -1,4 +1,5 @@
 import prisma from '@/lib/prisma';
+import { sendSlackMessage } from '@/modules/slack/service';
 import { captureMessage } from '@sentry/node';
 import Stripe from 'stripe';
 
@@ -11,6 +12,14 @@ export async function handleSubscriptionDeleted(event: Stripe.Event) {
   const dbSubscription = await prisma.subscription.findFirst({
     where: {
       stripeSubscriptionId: subscription.id,
+    },
+    select: {
+      id: true,
+      organization: {
+        select: {
+          id: true,
+        },
+      },
     },
   });
 
@@ -32,4 +41,12 @@ export async function handleSubscriptionDeleted(event: Stripe.Event) {
       periodEnd: new Date(),
     },
   });
+
+  await sendSlackMessage({
+    text: `Subscription deleted for ${dbSubscription.organization?.id} (Subscription: ${dbSubscription.id})`,
+  });
+
+  return {
+    success: true,
+  };
 }

@@ -48,6 +48,11 @@ export function UserWidget({ usersOrganizations }: Props) {
     return null;
   }
 
+  const handleCloseManageBillingDialog = () => {
+    setShowManageBillingDialog(false);
+    router.replace(window.location.pathname);
+  };
+
   return (
     <>
       <DropdownMenu modal={false}>
@@ -110,10 +115,12 @@ export function UserWidget({ usersOrganizations }: Props) {
         />
       )}
 
-      <ManageBillingDialog
-        open={showManageBillingDialog}
-        onOpenChange={setShowManageBillingDialog}
-      />
+      {showManageBillingDialog && (
+        <ManageBillingDialog
+          open={showManageBillingDialog}
+          onOpenChange={handleCloseManageBillingDialog}
+        />
+      )}
     </>
   );
 }

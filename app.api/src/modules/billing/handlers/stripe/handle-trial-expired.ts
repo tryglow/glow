@@ -1,6 +1,7 @@
 import prisma from '@/lib/prisma';
 import { stripeClient } from '@/lib/stripe';
 import { sendTrialEndedEmail } from '@/modules/notifications/service';
+import { sendSlackMessage } from '@/modules/slack/service';
 import { captureException } from '@sentry/node';
 import safeAwait from 'safe-await';
 import Stripe from 'stripe';
@@ -31,6 +32,7 @@ export async function handleTrialExpired(event: Stripe.Event) {
         stripeSubscriptionId: stripeSubscription.id,
       },
       select: {
+        id: true,
         organization: {
           select: {
             id: true,
@@ -72,4 +74,12 @@ export async function handleTrialExpired(event: Stripe.Event) {
       await sendTrialEndedEmail(user.email);
     }
   });
+
+  await sendSlackMessage({
+    text: `Trial expired for ${subscription.organization?.id} (Subscription: ${subscription.id})`,
+  });
+
+  return {
+    success: true,
+  };
 }
