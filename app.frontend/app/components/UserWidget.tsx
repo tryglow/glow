@@ -1,7 +1,7 @@
 'use client';
 
 import { ManageBillingDialog } from '@/app/components/ManageBillingDialog';
-import { authClient, useSession } from '@/app/lib/auth';
+import { auth, useSession } from '@/app/lib/auth';
 import { EditTeamSettingsDialog } from '@/components/EditTeamSettingsDialog/EditTeamSettingsDialog';
 import { NewPageDialog } from '@/components/NewPageDialog';
 import { Organization } from '@trylinky/prisma';
@@ -17,8 +17,8 @@ import {
   AvatarFallback,
   AvatarImage,
 } from '@trylinky/ui';
-import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
 interface Props {
   usersOrganizations?: Partial<Organization>[] | null;
@@ -31,6 +31,16 @@ export function UserWidget({ usersOrganizations }: Props) {
   const { data: session } = useSession();
 
   const router = useRouter();
+
+  const searchParams = useSearchParams();
+
+  const showBilling = searchParams.get('showBilling');
+
+  useEffect(() => {
+    if (showBilling) {
+      setShowManageBillingDialog(true);
+    }
+  }, [showBilling]);
 
   const { user } = session ?? {};
 
@@ -73,25 +83,13 @@ export function UserWidget({ usersOrganizations }: Props) {
             </>
           )}
 
-          <DropdownMenuItem
-            onClick={() => setShowManageBillingDialog(true)}
-
-            // await authClient.subscription.upgrade({
-            //   plan: 'team',
-            //   referenceId: session?.session.activeOrganizationId,
-            //   seats: 1,
-            //   successUrl: '/edit',
-            //   cancelUrl: '/edit',
-            // });
-            // TODO - Hook this up to the pricing table
-            // }}
-          >
+          <DropdownMenuItem onClick={() => setShowManageBillingDialog(true)}>
             Manage Billing
           </DropdownMenuItem>
 
           <DropdownMenuItem
             onClick={async () => {
-              await authClient.signOut();
+              await auth.signOut();
               router.refresh();
             }}
           >

@@ -1,4 +1,4 @@
-import { InternalApi } from '@/app/lib/api';
+import { InternalApi } from '@trylinky/common';
 import {
   ChartConfig,
   ChartContainer,

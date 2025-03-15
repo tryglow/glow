@@ -2,11 +2,10 @@
 
 import { PageConfig } from '@/app/[domain]/[slug]/grid';
 import { useEditModeContext } from '@/app/contexts/Edit';
-import { InternalApi } from '@/app/lib/api';
 import { CoreBlock } from '@/components/CoreBlock';
-import { internalApiFetcher } from '@/lib/fetch';
 import { enableDragDropTouch } from '@/lib/polyfills/drag-drop-touch.esm.min.js';
 import { captureException } from '@sentry/nextjs';
+import { InternalApi, internalApiFetcher } from '@trylinky/common';
 import { Skeleton, useToast, cn } from '@trylinky/ui';
 import { useParams, useRouter } from 'next/navigation';
 import {

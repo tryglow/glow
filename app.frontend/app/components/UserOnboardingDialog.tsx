@@ -2,10 +2,10 @@
 
 import { useSession } from '@/app/lib/auth';
 import { hideOnboardingTour } from '@/app/lib/auth-actions';
-import { internalApiFetcher } from '@/lib/fetch';
 import { useTour } from '@reactour/tour';
 import { captureException } from '@sentry/nextjs';
-import { Theme, UserFlag } from '@trylinky/prisma';
+import { internalApiFetcher } from '@trylinky/common';
+import { UserFlag } from '@trylinky/prisma';
 import {
   Dialog,
   DialogContent,

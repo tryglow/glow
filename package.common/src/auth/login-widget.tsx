@@ -1,6 +1,6 @@
 'use client';
 
-import { LoginForm } from '@/components/login-form';
+import { LoginForm } from './login-form';
 import {
   Dialog,
   DialogContent,

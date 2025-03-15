@@ -1,6 +1,6 @@
 import { DraggableBlockButton } from '@/app/components/DraggableBlockButton';
-import { internalApiFetcher } from '@/lib/fetch';
 import { Blocks } from '@trylinky/blocks';
+import { internalApiFetcher } from '@trylinky/common';
 import {
   SidebarContentHeader,
   SidebarGroup,

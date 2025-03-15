@@ -2,8 +2,8 @@
 
 import { BlockProps } from '../ui';
 import { CoreBlock } from '@/components/CoreBlock';
-import { internalApiFetcher } from '@/lib/fetch';
 import { ContentBlockConfig } from '@trylinky/blocks';
+import { internalApiFetcher } from '@trylinky/common';
 import { FunctionComponent } from 'react';
 import useSWR from 'swr';
 

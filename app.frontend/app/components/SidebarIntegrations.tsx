@@ -2,9 +2,8 @@ import {
   integrationUIConfig,
   SupportedIntegrations,
 } from '@/app/components/BlockIntegrationUI';
-import { InternalApi } from '@/app/lib/api';
-import { internalApiFetcher } from '@/lib/fetch';
 import { captureException } from '@sentry/nextjs';
+import { InternalApi, internalApiFetcher } from '@trylinky/common';
 import { Integration } from '@trylinky/prisma';
 import {
   SidebarContentHeader,

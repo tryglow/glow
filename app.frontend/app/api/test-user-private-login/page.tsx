@@ -1,6 +1,6 @@
 'use client';
 
-import { authClient } from '@/app/lib/auth';
+import { auth } from '@/app/lib/auth';
 import { Button } from '@trylinky/ui';
 import Link from 'next/link';
 import { FormEvent, useState } from 'react';
@@ -16,7 +16,7 @@ export default function TestUserPrivateLogin() {
       alert('Please enter your email and password');
     }
 
-    await authClient.signIn.email({
+    await auth.signIn.email({
       email,
       password,
     });

@@ -25,7 +25,8 @@
     "lint": "turbo lint",
     "dev": "turbo dev",
     "dev:migrate": "dotenvx run -f .env.local -- prisma migrate dev --schema ./package.prisma/prisma/schema.prisma",
-    "dev:seed": "dotenvx run -f .env.local --ts-node ./package.prisma/prisma/seed.ts"
+    "dev:seed": "dotenvx run -f .env.local --ts-node ./package.prisma/prisma/seed.ts",
+    "dev:reset": "dotenvx run -f .env.local -- npx prisma db push --force-reset --schema ./package.prisma/prisma/schema.prisma"
   },
   "packageManager": "npm@10.2.0"
 }

@@ -3,8 +3,8 @@
 import { BlockProps } from '../ui';
 import { Props as DynamicMapboxMapProps } from './ui-client';
 import { CoreBlock } from '@/components/CoreBlock';
-import { internalApiFetcher } from '@/lib/fetch';
 import { MapBlockConfig } from '@trylinky/blocks';
+import { internalApiFetcher } from '@trylinky/common';
 import dynamic from 'next/dynamic';
 import useSWR from 'swr';
 

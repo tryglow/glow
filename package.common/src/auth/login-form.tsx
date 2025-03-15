@@ -1,7 +1,7 @@
 'use client';
 
-import { LoginProviderButton } from './LoginProviderButton';
-import { signIn } from '@/app/lib/auth';
+import { auth } from '../auth/auth';
+import { LoginProviderButton } from './login-provider-button';
 import { Button, Input, toast } from '@trylinky/ui';
 import { useState } from 'react';
 
@@ -10,7 +10,10 @@ interface Props {
   redirectTo?: string;
 }
 
-export function LoginForm({ onComplete, redirectTo }: Props) {
+export function LoginForm({
+  onComplete,
+  redirectTo = `${process.env.NEXT_PUBLIC_APP_URL}/edit`,
+}: Props) {
   const [email, setEmail] = useState('');
 
   const handleEmailSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -23,9 +26,9 @@ export function LoginForm({ onComplete, redirectTo }: Props) {
       return;
     }
 
-    const { data, error } = await signIn.magicLink({
+    const { data, error } = await auth.signIn.magicLink({
       email,
-      callbackURL: redirectTo || `${process.env.NEXT_PUBLIC_BASE_URL}/edit`,
+      callbackURL: redirectTo,
     });
 
     if (error || !data.status) {

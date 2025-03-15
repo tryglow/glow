@@ -1,12 +1,14 @@
 'use strict';
 
 import {
+  getFlagsForCurrentUserHandler,
   getFlagsForCurrentUserSchema,
+} from './handlers/flags-for-current-user';
+import {
+  hideOnboardingTourHandler,
   hideOnboardingTourSchema,
-} from './schemas';
-import prisma from '@/lib/prisma';
-import { FastifyInstance, FastifyReply } from 'fastify';
-import { FastifyRequest } from 'fastify';
+} from './handlers/hide-onboarding-tour';
+import { FastifyInstance } from 'fastify';
 
 export default async function flagsRoutes(fastify: FastifyInstance, opts: any) {
   fastify.get(
@@ -19,46 +21,4 @@ export default async function flagsRoutes(fastify: FastifyInstance, opts: any) {
     { schema: hideOnboardingTourSchema },
     hideOnboardingTourHandler
   );
-}
-
-async function getFlagsForCurrentUserHandler(
-  request: FastifyRequest,
-  response: FastifyReply
-) {
-  const session = await request.server.authenticate(request, response);
-
-  const userFlags = await prisma.userFlag.findMany({
-    where: {
-      userId: session?.user.id,
-    },
-    select: {
-      key: true,
-      value: true,
-    },
-  });
-
-  return response.status(200).send({
-    flags: userFlags,
-  });
-}
-
-async function hideOnboardingTourHandler(
-  request: FastifyRequest,
-  response: FastifyReply
-) {
-  const session = await request.server.authenticate(request, response);
-
-  await prisma.userFlag.updateMany({
-    where: {
-      userId: session?.user.id,
-      key: 'showOnboardingTour',
-    },
-    data: {
-      value: false,
-    },
-  });
-
-  return response.status(200).send({
-    success: true,
-  });
 }

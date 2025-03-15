@@ -2,8 +2,8 @@
 
 import { BlockProps } from '../ui';
 import { CoreBlock } from '@/components/CoreBlock';
-import { internalApiFetcher } from '@/lib/fetch';
 import { LinkBarBlockConfig } from '@trylinky/blocks';
+import { internalApiFetcher } from '@trylinky/common';
 import Link from 'next/link';
 import useSWR from 'swr';
 

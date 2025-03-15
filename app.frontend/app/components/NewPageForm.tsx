@@ -2,10 +2,10 @@
 
 import { FormField } from './FormField';
 import { PageThemePreview } from '@/app/components/PageThemePreview';
-import { InternalApi } from '@/app/lib/api';
 import { regexSlug } from '@/lib/slugs';
 import { defaultThemeSeeds } from '@/lib/theme';
 import { captureException } from '@sentry/nextjs';
+import { InternalApi } from '@trylinky/common';
 import {
   Button,
   DialogFooter,

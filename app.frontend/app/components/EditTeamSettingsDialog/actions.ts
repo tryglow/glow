@@ -3,7 +3,7 @@
 import { FormValues } from './EditTeamSettingsGeneralForm';
 import { TeamInviteFormValues } from './EditTeamSettingsMembersForm';
 import { teamInviteSchema } from './shared';
-import { authClient, getSession } from '@/app/lib/auth';
+import { auth, getSession } from '@/app/lib/auth';
 import prisma from '@/lib/prisma';
 import { headers } from 'next/headers';
 
@@ -67,7 +67,7 @@ export const createTeamInvite = async (values: TeamInviteFormValues) => {
     };
   }
 
-  const org = await authClient.organization.getFullOrganization({
+  const org = await auth.organization.getFullOrganization({
     query: {
       organizationId: session.data?.session.activeOrganizationId ?? '',
     },
@@ -76,7 +76,7 @@ export const createTeamInvite = async (values: TeamInviteFormValues) => {
   console.log('ORG', org);
 
   try {
-    const invite = await authClient.organization.inviteMember({
+    const invite = await auth.organization.inviteMember({
       email: values.email,
       role: 'member',
     });

@@ -1,14 +1,14 @@
-import { authClient, useSession } from '@/app/lib/auth';
-import { Subscription } from '@better-auth/stripe';
+import { useSession } from '@/app/lib/auth';
+import { PricingTable } from '@trylinky/common';
 import {
   Dialog,
   DialogDescription,
   DialogHeader,
   DialogContent,
   DialogTitle,
-  Button,
 } from '@trylinky/ui';
-import { useEffect, useState } from 'react';
+import { router } from 'better-auth/api';
+import { useRouter } from 'next/navigation';
 
 interface Props {
   open: boolean;
@@ -16,50 +16,30 @@ interface Props {
 }
 
 export function ManageBillingDialog({ open, onOpenChange }: Props) {
-  const [subscription, setSubscription] = useState<Subscription | null>(null);
-
   const { data } = useSession();
+  const router = useRouter();
 
-  useEffect(() => {
-    const fetchSubscription = async () => {
-      if (!data?.session?.activeOrganizationId) return;
-      const { data: currentOrgSubscription } =
-        await authClient.subscription.list({
-          query: {
-            referenceId: data?.session?.activeOrganizationId,
-          },
-        });
-
-      if (currentOrgSubscription?.[0]) {
-        setSubscription(currentOrgSubscription?.[0]);
-      }
-    };
-    fetchSubscription();
-  }, []);
-
-  const handleUpgrade = async () => {
-    await authClient.subscription.upgrade({
-      referenceId: data?.session?.activeOrganizationId as string,
-      plan: 'premium',
-    });
+  const handleComplete = () => {
+    onOpenChange(false);
+    // Set the showPremiumOnboarding query param to true
+    router.push(window.location.pathname + '?showPremiumOnboarding=true');
   };
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-2xl w-full">
-        <DialogHeader>
-          <DialogTitle>Manage Billing</DialogTitle>
+      <DialogContent className="max-w-2xl w-full p-0">
+        <DialogHeader className="sr-only">
+          <DialogTitle>Your Plan</DialogTitle>
           <DialogDescription>
             Manage your teams billing information.
           </DialogDescription>
         </DialogHeader>
 
-        <section>
-          <p className="text-sm text-slate-800 mb-4">
-            You are currently on the <strong>{subscription?.plan}</strong> plan.
-            Would you like to upgrade to the <strong>Premium</strong> plan?
-          </p>
-          <Button onClick={handleUpgrade}>Upgrade</Button>
+        <section className="bg-[#f5f3ea] px-6 py-12">
+          <PricingTable
+            isLoggedIn={!!data?.session}
+            onComplete={handleComplete}
+          />
         </section>
       </DialogContent>
     </Dialog>

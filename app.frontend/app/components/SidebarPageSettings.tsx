@@ -1,5 +1,5 @@
 import { EditPageSettingsGeneral } from '@/app/components/EditPageSettingsDialog/EditPageSettingsGeneralForm';
-import { internalApiFetcher } from '@/lib/fetch';
+import { internalApiFetcher } from '@trylinky/common';
 import { Page } from '@trylinky/prisma';
 import {
   SidebarContentHeader,

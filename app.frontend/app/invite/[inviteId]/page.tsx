@@ -1,5 +1,5 @@
 import { LoggedInAcceptInviteUI, LoggedOutAcceptInviteUI } from './accept-ui';
-import { authClient } from '@/app/lib/auth';
+import { auth } from '@/app/lib/auth';
 import prisma from '@/lib/prisma';
 import { Avatar, AvatarFallback, AvatarImage } from '@trylinky/ui';
 import { headers } from 'next/headers';
@@ -37,7 +37,7 @@ export default async function AcceptInvitePage(props: {
   const params = await props.params;
   const headersList = await headers();
 
-  const session = await authClient.getSession({
+  const session = await auth.getSession({
     fetchOptions: {
       headers: headersList,
     },

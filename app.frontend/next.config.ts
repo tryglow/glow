@@ -2,7 +2,7 @@ import { withSentryConfig } from '@sentry/nextjs';
 import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
-  transpilePackages: ['@trylinky/ui'],
+  transpilePackages: ['@trylinky/ui', '@trylinky/common'],
   rewrites: async () => [
     {
       source: '/new-api/:path*',

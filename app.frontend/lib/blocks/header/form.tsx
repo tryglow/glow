@@ -1,8 +1,8 @@
 import { EditFormProps } from '../types';
 import { FormField } from '@/app/components/FormField';
 import { FormFileUpload } from '@/components/FormFileUpload';
-import { internalApiFetcher } from '@/lib/fetch';
 import { HeaderBlockConfig, HeaderSchema } from '@trylinky/blocks';
+import { internalApiFetcher } from '@trylinky/common';
 import { Page } from '@trylinky/prisma';
 import {
   Button,

@@ -1,12 +1,5 @@
-import {
-  magicLinkClient,
-  organizationClient,
-} from 'better-auth/client/plugins';
-import { createAuthClient } from 'better-auth/react';
+import { auth } from '@trylinky/common';
 
-export const authClient = createAuthClient({
-  baseURL: process.env.NEXT_PUBLIC_API_URL,
-  plugins: [organizationClient(), magicLinkClient()],
-});
+export const { signIn, signOut, useSession, getSession } = auth;
 
-export const { signIn, signOut, useSession } = authClient;
+export { auth };

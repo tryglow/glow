@@ -1,10 +1,9 @@
 'use client';
 
 import { CoreBlock } from '@/app/components/CoreBlock';
-import { InternalApi } from '@/app/lib/api';
 import { BlockProps } from '@/lib/blocks/ui';
-import { internalApiFetcher } from '@/lib/fetch';
 import NumberFlow from '@number-flow/react';
+import { InternalApi, internalApiFetcher } from '@trylinky/common';
 import { motion } from 'framer-motion';
 import { FunctionComponent, useEffect, useState, useRef } from 'react';
 import useSWR from 'swr';

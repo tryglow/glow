@@ -1,6 +1,6 @@
 'use client';
 
-import { signInOauth } from '@/lib/auth-actions';
+import { auth } from '../auth/auth';
 import { Button } from '@trylinky/ui';
 import { ReactNode } from 'react';
 
@@ -112,10 +112,11 @@ export function LoginProviderButton({
         }
 
         if (['google', 'twitter', 'tiktok'].includes(provider)) {
-          return await signInOauth(
+          await auth.signIn.social({
             provider,
-            redirectTo || `${process.env.NEXT_PUBLIC_BASE_URL}/edit`
-          );
+            callbackURL:
+              redirectTo || `${process.env.NEXT_PUBLIC_BASE_URL}/edit`,
+          });
         }
       }}
       disabled={disabled}

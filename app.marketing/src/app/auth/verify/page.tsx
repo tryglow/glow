@@ -12,7 +12,7 @@ export default function VerifyLoginPage() {
   }
 
   return (
-    <section className="bg-muted min-h-screen py-16">
+    <section className="bg-muted min-h-screen py-32">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="mx-auto max-w-4xl text-center">
           <Image

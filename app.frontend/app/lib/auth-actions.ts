@@ -1,11 +1,11 @@
 'use server';
 
-import { authClient } from './auth';
 import { apiServerFetch } from '@/app/lib/api-server';
 import { captureException } from '@sentry/nextjs';
+import { auth } from '@trylinky/common';
 
 export async function signOut() {
-  await authClient.signOut();
+  await auth.signOut();
 }
 
 export async function hideOnboardingTour() {

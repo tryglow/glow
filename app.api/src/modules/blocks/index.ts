@@ -14,7 +14,7 @@ import {
   getEnabledBlocks,
   updateBlockData,
 } from './service';
-import { posthog } from '@/lib/posthog';
+import { createPosthogClient } from '@/lib/posthog';
 import prisma from '@/lib/prisma';
 import { FastifyInstance, FastifyReply } from 'fastify';
 import { FastifyRequest } from 'fastify';
@@ -75,6 +75,8 @@ async function postCreateBlockHandler(
   response: FastifyReply
 ) {
   const session = await request.server.authenticate(request, response);
+
+  const posthog = createPosthogClient();
 
   if (!session?.user) {
     return response.status(401).send({
@@ -141,7 +143,7 @@ async function postCreateBlockHandler(
 
   const newBlock = await createBlock(block, pageSlug);
 
-  posthog.capture({
+  posthog?.capture({
     distinctId: session.user.id,
     event: 'block-created',
     properties: {
@@ -192,6 +194,8 @@ async function deleteBlockHandler(
 ) {
   const session = await request.server.authenticate(request, response);
 
+  const posthog = createPosthogClient();
+
   const { blockId } = request.params;
 
   const block = await prisma.block.findUnique({
@@ -232,7 +236,7 @@ async function deleteBlockHandler(
   try {
     await deleteBlockById(blockId, session.user.id);
 
-    posthog.capture({
+    posthog?.capture({
       distinctId: session.user.id,
       event: 'block-deleted',
       properties: {

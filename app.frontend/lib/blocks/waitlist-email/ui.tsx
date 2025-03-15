@@ -3,8 +3,8 @@
 import { BlockProps } from '../ui';
 import { submitSignupToWaitlistCom } from './action';
 import { CoreBlock } from '@/components/CoreBlock';
-import { internalApiFetcher } from '@/lib/fetch';
 import { WaitlistEmailBlockConfig } from '@trylinky/blocks';
+import { internalApiFetcher } from '@trylinky/common';
 import { toast } from '@trylinky/ui';
 import { FunctionComponent, useState } from 'react';
 import { useFormStatus } from 'react-dom';

@@ -1,7 +1,7 @@
 import './globals.css';
-import { LoginWidget } from '@/components/login-widget';
 import MarketingFooter from '@/components/marketing-footer';
 import MarketingNavigation from '@/components/marketing-navigation';
+import { LoginWidget } from '@trylinky/common';
 import { Button } from '@trylinky/ui';
 import { Analytics } from '@vercel/analytics/react';
 import { Metadata } from 'next';

@@ -8,12 +8,13 @@ import logoX from '@/assets/landing-page/logo-x.svg';
 import logoYoutube from '@/assets/landing-page/logo-youtube.svg';
 import { CallToActionBlock } from '@/components/landing-page/CallToActionBlock';
 import { FrequentlyAskedQuestions } from '@/components/landing-page/Faq';
+import { GlowBanner } from '@/components/landing-page/GlowBanner';
 import { ShowLoginAlert } from '@/components/landing-page/ShowLoginAlert';
 import styles from '@/components/landing-page/styles.module.scss';
 import { SpotifyPlayingNowMockup } from '@/components/landing-page/ui-mockups';
-import { LoginWidget } from '@/components/login-widget';
 import { MarketingContainer } from '@/components/marketing-container';
 import { ArrowRightIcon } from '@heroicons/react/20/solid';
+import { LoginWidget } from '@trylinky/common';
 import { Button, cn } from '@trylinky/ui';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -35,8 +36,10 @@ const colors = [
 
 export default async function LandingPage() {
   const featuredPages = await getFeaturedPages();
+
   return (
     <div className="min-h-screen overflow-x-hidden">
+      <GlowBanner />
       <ShowLoginAlert />
       <section className="pt-48 pb-16 bg-gradient-to-b from-[#f9f9f8] to-[#f5f3ea]">
         <MarketingContainer>
@@ -372,74 +375,6 @@ export default async function LandingPage() {
                 New Block: Spotify
               </h2>
               <p className="text-base md:text-lg text-pretty text-white">
-                With live blocks, you can share things like what you&apos;re
-                currently listening to on Spotify, or your latest Instagram
-                post.
-              </p>
-            </div>
-          </div>
-        </MarketingContainer>
-      </section>
-
-      <section className="py-24">
-        <MarketingContainer>
-          <div className="grid grid-cols-1 md:grid-cols-5 items-center gap-10">
-            <div className="w-full px-8 py-8 md:py-16 col-span-2 bg-gradient-to-b from-[#F5F3EA] to-[#FF9349] rounded-xl">
-              <SpotifyPlayingNowMockup
-                className="!border-black/10"
-                variant="kites"
-              />
-            </div>
-            <div className="flex flex-col items-start gap-2 col-span-2">
-              <span className="text-xs font-bold uppercase bg-yellow-300 text-yellow-900 px-2 py-1 rounded-full">
-                Step 1
-              </span>
-              <h2 className="text-3xl md:text-4xl font-black text-[#282723] tracking-tight">
-                Create your page
-              </h2>
-              <p className="text-base md:text-lg text-pretty text-[#282723]">
-                With live blocks, you can share things like what you&apos;re
-                currently listening to on Spotify, or your latest Instagram
-                post.
-              </p>
-            </div>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-5 items-center gap-10 mt-24">
-            <div className="w-full px-8 py-8 md:py-16 col-span-2 bg-gradient-to-b from-[#F5F3EA] to-[#FF9349] rounded-xl">
-              <SpotifyPlayingNowMockup
-                className="!border-black/10"
-                variant="kites"
-              />
-            </div>
-            <div className="flex flex-col items-start gap-2 col-span-2">
-              <span className="text-xs font-bold uppercase bg-yellow-300 text-yellow-900 px-2 py-1 rounded-full">
-                Step 2
-              </span>
-              <h2 className="text-3xl md:text-4xl font-black text-[#282723] tracking-tight">
-                Integrate your favorite platforms
-              </h2>
-              <p className="text-base md:text-lg text-pretty text-[#282723]">
-                With live blocks, you can share things like what you&apos;re
-                currently listening to on Spotify, or your latest Instagram
-                post.
-              </p>
-            </div>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-5 items-center gap-10 mt-24">
-            <div className="w-full px-8 py-8 md:py-16 col-span-2 bg-gradient-to-b from-[#F5F3EA] to-[#FF9349] rounded-xl">
-              <SpotifyPlayingNowMockup
-                className="!border-black/10"
-                variant="kites"
-              />
-            </div>
-            <div className="flex flex-col items-start gap-2 col-span-2">
-              <span className="text-xs font-bold uppercase bg-yellow-300 text-yellow-900 px-2 py-1 rounded-full">
-                Step 3
-              </span>
-              <h2 className="text-3xl md:text-4xl font-black text-[#282723] tracking-tight">
-                Share on your social media
-              </h2>
-              <p className="text-base md:text-lg text-pretty text-[#282723]">
                 With live blocks, you can share things like what you&apos;re
                 currently listening to on Spotify, or your latest Instagram
                 post.

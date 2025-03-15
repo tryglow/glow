@@ -110,7 +110,8 @@
         "TIKTOK_CLIENT_SECRET",
         "TINYBIRD_API_KEY",
         "INTERNAL_API_KEY",
-        "SCREENSHOT_API_KEY"
+        "SCREENSHOT_API_KEY",
+        "SLACK_TOKEN"
       ],
       "inputs": ["$TURBO_DEFAULT$", ".env"]
     },
@@ -165,7 +166,8 @@
         "TIKTOK_CLIENT_SECRET",
         "TINYBIRD_API_KEY",
         "INTERNAL_API_KEY",
-        "SCREENSHOT_API_KEY"
+        "SCREENSHOT_API_KEY",
+        "SLACK_TOKEN"
       ],
       "inputs": ["$TURBO_DEFAULT$", ".env"]
     },

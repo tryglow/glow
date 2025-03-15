@@ -1,6 +1,6 @@
 'use client';
 
-import { authClient, useSession } from '@/app/lib/auth';
+import { auth, useSession } from '@/app/lib/auth';
 import { CaretSortIcon, CheckIcon } from '@radix-ui/react-icons';
 import { Organization } from '@trylinky/prisma';
 import {
@@ -45,7 +45,7 @@ export function TeamSwitcher({ usersOrganizations }: Props) {
     }
 
     try {
-      await authClient.organization.setActive({
+      await auth.organization.setActive({
         organizationId: orgId,
       });
       toast({

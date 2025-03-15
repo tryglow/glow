@@ -1,8 +1,8 @@
 'use client';
 
-import { internalApiFetcher } from '@/lib/fetch';
 import { getFontFamilyValue, getGoogleFontUrl } from '@/lib/fonts';
 import { defaultThemeSeeds, themeColorToCssValue } from '@/lib/theme';
+import { internalApiFetcher } from '@trylinky/common';
 import { Theme } from '@trylinky/prisma';
 import { useEffect } from 'react';
 import useSWR from 'swr';

@@ -2,16 +2,14 @@ import { RenderThemeStyle } from '@/app/[domain]/[slug]/render-page-theme';
 import { CreateEditThemeForm } from '@/app/components/EditPageSettingsDialog/CreateNewTheme';
 import { PageThemePreview } from '@/app/components/PageThemePreview';
 import { setPageTheme } from '@/app/lib/actions/themes';
-import { internalApiFetcher } from '@/lib/fetch';
-import { getFontFamilyValue, getGoogleFontUrl } from '@/lib/fonts';
-import { themeColorToCssValue } from '@/lib/theme';
+import { getGoogleFontUrl } from '@/lib/fonts';
+import { internalApiFetcher } from '@trylinky/common';
 import { Theme } from '@trylinky/prisma';
 import {
   toast,
   SidebarContentHeader,
   SidebarGroup,
   SidebarGroupContent,
-  SidebarSeparator,
   Button,
 } from '@trylinky/ui';
 import { Plus } from 'lucide-react';

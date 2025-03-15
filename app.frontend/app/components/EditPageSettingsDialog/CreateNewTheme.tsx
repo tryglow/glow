@@ -4,9 +4,9 @@ import { RenderThemeStyle } from '@/app/[domain]/[slug]/render-page-theme';
 import { FontSelector } from '@/app/components/FontSelector';
 import { FormFileUpload } from '@/app/components/FormFileUpload';
 import { createTheme, updateTheme } from '@/app/lib/actions/themes';
-import { internalApiFetcher } from '@/lib/fetch';
 import { HSLColor, hslToHex, themeFields } from '@/lib/theme';
 import { ChevronDownIcon } from '@heroicons/react/24/solid';
+import { internalApiFetcher } from '@trylinky/common';
 import { Theme } from '@trylinky/prisma';
 import {
   Button,

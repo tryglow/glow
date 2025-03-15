@@ -22,11 +22,9 @@ import {
   getPageThemeById,
   updatePageLayout,
 } from './service';
-import { posthog } from '@/lib/posthog';
+import { createPosthogClient } from '@/lib/posthog';
 import prisma from '@/lib/prisma';
-import { checkUserHasActivePlan } from '@/modules/utils';
-import { fromNodeHeaders } from 'better-auth/node';
-import fastify, { FastifyInstance, FastifyReply } from 'fastify';
+import { FastifyInstance, FastifyReply } from 'fastify';
 import { FastifyRequest } from 'fastify';
 
 export default async function pagesRoutes(fastify: FastifyInstance, opts: any) {
@@ -226,6 +224,8 @@ async function updatePageLayoutHandler(
 ) {
   const session = await request.server.authenticate(request, response);
 
+  const posthog = createPosthogClient();
+
   const { pageId } = request.params;
 
   const userHasAccess = await checkUserHasAccessToPage(pageId, session.user.id);
@@ -238,7 +238,7 @@ async function updatePageLayoutHandler(
 
   const updatedPage = await updatePageLayout(pageId, newLayout);
 
-  posthog.capture({
+  posthog?.capture({
     distinctId: session.user.id,
     event: 'page-layout-updated',
     properties: {

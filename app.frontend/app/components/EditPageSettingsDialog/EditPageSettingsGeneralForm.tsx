@@ -4,9 +4,9 @@ import { FormField } from '../FormField';
 import { updateGeneralPageSettings } from './actions';
 import { generalPageSettingsSchema } from './shared';
 import VerificationRequestDialog from '@/app/components/VerificationRequestDialog';
-import { InternalApi } from '@/app/lib/api';
 import { ChevronDownIcon } from '@radix-ui/react-icons';
 import { captureException } from '@sentry/nextjs';
+import { InternalApi } from '@trylinky/common';
 import {
   Collapsible,
   CollapsibleContent,

@@ -1,8 +1,9 @@
-import { PricingTable } from './table';
 import { CallToActionBlock } from '@/components/landing-page/CallToActionBlock';
 import { FrequentlyAskedQuestions } from '@/components/landing-page/Faq';
 import { MarketingContainer } from '@/components/marketing-container';
+import { PricingTable, auth } from '@trylinky/common';
 import { Metadata } from 'next';
+import { headers } from 'next/headers';
 
 export const metadata: Metadata = {
   title: 'Pricing | Linky',
@@ -10,6 +11,14 @@ export const metadata: Metadata = {
 };
 
 export default async function PricingPage() {
+  const headersList = await headers();
+
+  const session = await auth.getSession({
+    fetchOptions: {
+      headers: headersList,
+    },
+  });
+
   return (
     <div className="bg-gradient-to-b from-[#f9f9f8] to-[#f5f3ea] pt-24 sm:pt-32 pb-8">
       <MarketingContainer className="text-center">
@@ -20,7 +29,9 @@ export default async function PricingPage() {
           Take Linky to the next level with one of our paid plans.
         </p>
       </MarketingContainer>
-      <PricingTable />
+      <section className="py-16">
+        <PricingTable isLoggedIn={!!session?.data?.session} />
+      </section>
 
       <section className="my-24">
         <MarketingContainer>

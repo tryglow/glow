@@ -2,9 +2,8 @@ import { InstagramLogo } from '@/app/components/integration-icons/Instagram';
 import { SpotifyLogo } from '@/app/components/integration-icons/spotify';
 import { ThreadsLogo } from '@/app/components/integration-icons/threads';
 import { TikTokLogo } from '@/app/components/integration-icons/tiktok';
-import { InternalApi } from '@/app/lib/api';
-import { internalApiFetcher } from '@/lib/fetch';
 import { captureException } from '@sentry/nextjs';
+import { InternalApi, internalApiFetcher } from '@trylinky/common';
 import { Integration } from '@trylinky/prisma';
 import {
   Select,

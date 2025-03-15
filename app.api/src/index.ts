@@ -7,8 +7,10 @@ import marketingRoutes from './modules/marketing';
 import pagesRoutes from './modules/pages';
 import tiktokServiceRoutes from './modules/services/tiktok';
 import { authenticateDecorator } from '@/decorators/authenticate';
+import { trustedOrigins } from '@/lib/origins';
 import analyticsRoutes from '@/modules/analytics';
 import assetsRoutes from '@/modules/assets';
+import billingRoutes from '@/modules/billing';
 import flagsRoutes from '@/modules/flags';
 import integrationsRoutes from '@/modules/integrations';
 import orchestratorsRoutes from '@/modules/orchestrators';
@@ -48,7 +50,7 @@ await fastify.register(fastifyMultipart, {
 });
 
 await fastify.register(cors, {
-  origin: true, // Allow all origins
+  origin: trustedOrigins,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization', 'x-api-key'],
   exposedHeaders: ['Content-Length'], // Expose specific headers
@@ -69,6 +71,7 @@ fastify.register(orchestratorsRoutes, { prefix: '/orchestrators' });
 fastify.register(analyticsRoutes, { prefix: '/analytics' });
 fastify.register(flagsRoutes, { prefix: '/flags' });
 fastify.register(organizationsRoutes, { prefix: '/organizations' });
+fastify.register(billingRoutes, { prefix: '/billing' });
 
 fastify.register(tiktokServiceRoutes, { prefix: '/services/tiktok' });
 fastify.register(instagramServiceRoutes, { prefix: '/services/instagram' });

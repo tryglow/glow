@@ -1,9 +1,8 @@
 'use client';
 
 import { FormField } from '../FormField';
-import { createTeamInvite } from './actions';
 import { teamInviteSchema } from './shared';
-import { authClient } from '@/app/lib/auth';
+import { auth } from '@/app/lib/auth';
 import { captureException } from '@sentry/nextjs';
 import { Invitation, User } from '@trylinky/prisma';
 import {
@@ -11,6 +10,7 @@ import {
   AvatarFallback,
   AvatarImage,
   Button,
+  cn,
   useToast,
 } from '@trylinky/ui';
 import { Form, Formik, FormikHelpers } from 'formik';
@@ -24,7 +24,7 @@ export type TeamInviteFormValues = {
 
 interface Props {
   onCancel: () => void;
-  members: { user: Partial<User> }[];
+  members: { user: Partial<User>; role: 'owner' | 'admin' | 'member' }[];
   invites?: Partial<Invitation>[];
 }
 
@@ -39,7 +39,7 @@ export function EditTeamSettingsMembers({ onCancel, members, invites }: Props) {
     setSubmitting(true);
 
     try {
-      const invite = await authClient.organization.inviteMember({
+      const invite = await auth.organization.inviteMember({
         email: values.email,
         role: 'member',
       });
@@ -72,6 +72,27 @@ export function EditTeamSettingsMembers({ onCancel, members, invites }: Props) {
     }
   };
 
+  const handleCancelInvite = async (inviteId: string) => {
+    try {
+      await auth.organization.cancelInvitation({
+        invitationId: inviteId,
+      });
+
+      toast({
+        title: 'Invite cancelled',
+        description: 'The invite has been cancelled',
+      });
+
+      router.refresh();
+    } catch (error) {
+      captureException(error);
+      toast({
+        title: 'Something went wrong',
+        description: 'Sorry, there was a problem cancelling the invite',
+      });
+    }
+  };
+
   return (
     <>
       <table className="min-w-full divide-y divide-gray-300">
@@ -99,8 +120,15 @@ export function EditTeamSettingsMembers({ onCancel, members, invites }: Props) {
                 </td>
 
                 <td className="whitespace-nowrap text-right px-3 py-3">
-                  <span className="bg-green-200 tracking-tight font-bold text-xs uppercase rounded-sm px-1.5 py-0.5 text-green-700">
-                    Admin
+                  <span
+                    className={cn(
+                      'tracking-tight font-bold text-xs uppercase rounded-sm px-1.5 py-0.5',
+                      member.role === 'admin' && 'bg-red-200 text-red-700',
+                      member.role === 'member' && 'bg-blue-200 text-blue-700',
+                      member.role === 'owner' && 'bg-purple-200 text-purple-700'
+                    )}
+                  >
+                    {member.role}
                   </span>
                 </td>
               </tr>
@@ -113,6 +141,14 @@ export function EditTeamSettingsMembers({ onCancel, members, invites }: Props) {
                   {invite.email}
                 </td>
                 <td className="whitespace-nowrap text-right px-3 py-4">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="inline-flex w-fit mr-4"
+                    onClick={() => handleCancelInvite(invite.id as string)}
+                  >
+                    Cancel invite
+                  </Button>
                   <span className="bg-yellow-300 tracking-tight font-bold text-xs uppercase rounded-sm px-1.5 py-0.5 text-yellow-800">
                     Invited
                   </span>

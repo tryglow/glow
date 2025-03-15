@@ -1,9 +1,9 @@
 'use client';
 
-import { authClient } from '@/app/lib/auth';
+import { auth } from '@/app/lib/auth';
 import { EditTeamSettingsGeneral } from '@/components/EditTeamSettingsDialog/EditTeamSettingsGeneralForm';
 import { EditTeamSettingsMembers } from '@/components/EditTeamSettingsDialog/EditTeamSettingsMembersForm';
-import { internalApiFetcher } from '@/lib/fetch';
+import { internalApiFetcher } from '@trylinky/common';
 import { Invitation, Organization, User } from '@trylinky/prisma';
 import {
   Dialog,
@@ -29,7 +29,7 @@ export function EditTeamSettingsDialog({ open, onOpenChange, onClose }: Props) {
   const [teamSettings, setTeamSettings] =
     useState<Partial<Organization> | null>(null);
   const [teamMembers, setTeamMembers] = useState<
-    { user: Partial<User> }[] | null
+    { user: Partial<User>; role: 'owner' | 'admin' | 'member' }[] | null
   >([]);
   const [teamInvites, setTeamInvites] = useState<Partial<Invitation>[] | null>(
     []
@@ -42,11 +42,16 @@ export function EditTeamSettingsDialog({ open, onOpenChange, onClose }: Props) {
 
   useEffect(() => {
     const getPageData = async () => {
-      const org = await authClient.organization.getFullOrganization();
+      const org = await auth.organization.getFullOrganization();
+
+      const filteredInvites = org.data?.invitations.filter(
+        (invite) =>
+          !['canceled', 'expired', 'accepted'].includes(invite.status as string)
+      );
 
       setTeamSettings(org.data ?? null);
       setTeamMembers(org.data?.members ?? []);
-      setTeamInvites(org.data?.invitations ?? []);
+      setTeamInvites(filteredInvites ?? []);
     };
 
     getPageData();
