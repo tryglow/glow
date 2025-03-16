@@ -12,6 +12,7 @@ import { prismaAdapter } from 'better-auth/adapters/prisma';
 import { admin, magicLink, organization } from 'better-auth/plugins';
 
 export const auth = betterAuth({
+  baseUrl: process.env.API_BASE_URL,
   rateLimit: {
     window: 10, // time window in seconds
     max: 100, // max requests in the window
@@ -105,6 +106,7 @@ export const auth = betterAuth({
     }),
     magicLink({
       sendMagicLink: async ({ email, url }) => {
+        console.log('URL', url);
         await sendMagicLinkEmail({ email, url });
       },
     }),
