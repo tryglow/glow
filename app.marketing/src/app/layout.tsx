@@ -10,7 +10,7 @@ import Script from 'next/script';
 import { ReactNode } from 'react';
 
 const seasonFont = localFont({
-  src: './season.woff2',
+  src: './ssn.woff2',
   display: 'swap',
 });
 

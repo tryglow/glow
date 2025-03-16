@@ -9,8 +9,8 @@ import localFont from 'next/font/local';
 import { headers } from 'next/headers';
 import Script from 'next/script';
 
-const saans = localFont({
-  src: './season.woff2',
+const seasonFont = localFont({
+  src: './ssn.woff2',
   display: 'swap',
 });
 
@@ -54,7 +54,7 @@ export default async function RootLayout({
   const { user } = sessionData ?? {};
 
   return (
-    <html lang="en" className={saans.className}>
+    <html lang="en" className={seasonFont.className}>
       <head>
         {process.env.NODE_ENV === 'production' && (
           <Script
