@@ -95,6 +95,7 @@ export const auth = betterAuth({
       allowUserToCreateOrganization: false,
       sendInvitationEmail: async (data) => {
         const inviteLink = `${process.env.APP_FRONTEND_URL}/invite/${data.id}`;
+
         sendOrganizationInvitationEmail({
           email: data.email,
           invitedByUsername: data.inviter.user.name,
@@ -106,8 +107,11 @@ export const auth = betterAuth({
     }),
     magicLink({
       sendMagicLink: async ({ email, url }) => {
-        console.log('URL', url);
-        await sendMagicLinkEmail({ email, url });
+        // There's a bug in better-auth where the invite link is not using
+        // the API_BASE_URL, so we need to clean it up
+        const cleanedUrl = url.replace('https://lin.ky', 'https://api.lin.ky');
+
+        await sendMagicLinkEmail({ email, url: cleanedUrl });
       },
     }),
   ],
