@@ -54,6 +54,8 @@ model Session {
   impersonatedBy       String?
 
   user User @relation(fields: [userId], references: [id])
+
+  @@index([userId, token])
 }
 
 model User {
@@ -77,6 +79,8 @@ model User {
   accounts             Account[]
   themesCreated        Theme[]
   UserFlag             UserFlag[]
+
+  @@index([email])
 }
 
 model Organization {
@@ -94,6 +98,8 @@ model Organization {
   members      Member[]
   isPersonal   Boolean       @default(true)
   subscription Subscription?
+
+  @@index([slug])
 }
 
 model Invitation {
@@ -108,6 +114,9 @@ model Invitation {
   expiresAt      DateTime
   createdAt      DateTime     @default(now())
   updatedAt      DateTime     @updatedAt
+
+  @@index([organizationId])
+  @@index([inviterId])
 }
 
 model Member {
@@ -119,6 +128,9 @@ model Member {
   role           String
   createdAt      DateTime     @default(now())
   updatedAt      DateTime     @updatedAt
+
+  @@index([organizationId])
+  @@index([userId])
 }
 
 model Subscription {
@@ -135,6 +147,8 @@ model Subscription {
   trialStart           DateTime?
   trialEnd             DateTime?
   organization         Organization? @relation(fields: [referenceId], references: [id])
+
+  @@index([referenceId])
 }
 
 model Page {
@@ -275,4 +289,6 @@ model UserFlag {
   updatedAt DateTime @updatedAt
 
   user User @relation(fields: [userId], references: [id])
+
+  @@index([userId])
 }
