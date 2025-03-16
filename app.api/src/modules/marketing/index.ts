@@ -5,6 +5,10 @@ import { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify';
 export default async function marketingRoutes(fastify: FastifyInstance) {
   fastify.get('/featured-pages', {
     handler: getFeaturedPagesHandler,
+    onRequest: (request, reply) => {
+      reply.header('Access-Control-Allow-Origin', '*');
+      reply.header('Access-Control-Allow-Methods', 'GET');
+    },
   });
 }
 
