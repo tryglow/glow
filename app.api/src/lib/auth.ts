@@ -25,6 +25,7 @@ export const auth = betterAuth({
     google: {
       clientId: process.env.AUTH_GOOGLE_CLIENT_ID as string,
       clientSecret: process.env.AUTH_GOOGLE_CLIENT_SECRET as string,
+      redirectURI: `${process.env.API_BASE_URL}/api/auth/callback/google`,
     },
     twitter: {
       clientId: process.env.AUTH_TWITTER_CLIENT_ID as string,
