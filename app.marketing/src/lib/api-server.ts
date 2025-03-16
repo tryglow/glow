@@ -7,7 +7,6 @@ export const apiServerFetch = async (
     string
   >) || {
     'Content-Type': 'application/json',
-    'x-api-key': process.env.INTERNAL_API_KEY,
   };
 
   return fetch(`https://api.lin.ky${path}`, {

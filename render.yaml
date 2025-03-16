@@ -86,8 +86,6 @@ services:
         sync: false
       - key: AUTH_SECRET
         sync: false
-      - key: INTERNAL_API_KEY
-        sync: false
       - key: TINYBIRD_API_KEY
         sync: false
       - key: SCREENSHOT_API_KEY

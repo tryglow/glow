@@ -46,18 +46,6 @@ async function handleRootDomain(req: NextRequest, path: string, baseUrl: URL) {
   const searchParams = req.nextUrl.searchParams.toString();
 
   if (path === '/') {
-    const session = await getToken({
-      req,
-      secret: process.env.NEXTAUTH_SECRET,
-    });
-
-    if (session)
-      if (req.nextUrl.searchParams.get('force') !== 'true') {
-        baseUrl.pathname = '/edit';
-        baseUrl.search = searchParams;
-        return NextResponse.redirect(baseUrl);
-      }
-
     return NextResponse.next();
   }
 
