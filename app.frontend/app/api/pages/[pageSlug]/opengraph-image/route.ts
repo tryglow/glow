@@ -75,7 +75,13 @@ export async function GET(
 
   let avatarSrc = headerBlockData?.avatar?.src;
 
-  if (avatarSrc !== headerBlockDefaults.avatar.src) {
+  if (
+    !avatarSrc.endsWith('.png') ||
+    !avatarSrc.endsWith('.webp') ||
+    !avatarSrc.endsWith('.jpeg') ||
+    !avatarSrc.endsWith('.jpg')
+  ) {
+    // Accounts for old avatar URLs that didn't have a file extension
     avatarSrc = `${avatarSrc}.png`;
   }
 
