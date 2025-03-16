@@ -73,15 +73,11 @@ export const createTeamInvite = async (values: TeamInviteFormValues) => {
     },
   });
 
-  console.log('ORG', org);
-
   try {
     const invite = await auth.organization.inviteMember({
       email: values.email,
       role: 'member',
     });
-
-    console.log('Invite', invite);
 
     return {
       success: true,

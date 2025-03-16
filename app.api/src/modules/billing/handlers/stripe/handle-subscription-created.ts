@@ -11,8 +11,6 @@ import Stripe from 'stripe';
 export async function handleSubscriptionCreated(event: Stripe.Event) {
   const subscription = event.data.object as Stripe.Subscription;
 
-  console.log('Subscription Created', subscription);
-
   const lineItems = subscription.items.data;
   if (lineItems.length === 0) {
     captureMessage(
@@ -31,8 +29,6 @@ export async function handleSubscriptionCreated(event: Stripe.Event) {
   const allPrices =
     env === 'development' ? prices.development : prices.production;
 
-  console.log('All Prices', allPrices);
-
   // Determine the plan based on the price ID
   let plan: 'premium' | 'team' | 'freeLegacy' | null = null;
 
@@ -43,13 +39,9 @@ export async function handleSubscriptionCreated(event: Stripe.Event) {
     }
   }
 
-  console.log('New Plan', plan);
-
   // Handle team plan creation separately
   if (plan === 'team') {
     const createdByUserId = subscription.metadata?.createdByUserId;
-
-    console.log('Created By User ID', createdByUserId);
 
     if (!createdByUserId) {
       captureMessage(

@@ -2,6 +2,7 @@
 
 import { internalApiFetcher } from '../api/fetch';
 import { InternalApi } from '../api/internal-api';
+import { auth } from '../auth/auth';
 import { LoginWidget } from '../auth/login-widget';
 import {
   ArrowTrendingDownIcon,
@@ -92,6 +93,7 @@ export function PricingTable({
   isLoggedIn: boolean;
   onComplete?: () => void;
 }) {
+  const session = auth.useSession();
   const [upgradeEligibility, setUpgradeEligibility] =
     useState<UpgradeEligibility | null>(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -105,7 +107,10 @@ export function PricingTable({
     status: string;
     isTeamPremium: boolean;
     periodEnd?: string;
-  }>('/billing/subscription/me', internalApiFetcher);
+  }>(
+    session.data?.session ? '/billing/subscription/me' : null,
+    internalApiFetcher
+  );
 
   useEffect(() => {
     const fetchUpgradeEligibility = async () => {
@@ -113,15 +118,17 @@ export function PricingTable({
         const res = await InternalApi.get('/billing/upgrade-eligibility');
 
         setUpgradeEligibility(res);
-
-        console.log(res);
       } catch (error) {
         console.error(error);
       }
     };
 
+    if (!session.data?.session) {
+      return;
+    }
+
     fetchUpgradeEligibility();
-  }, []);
+  }, [session]);
 
   const handleAddPaymentMethod = async () => {
     setIsLoading(true);
