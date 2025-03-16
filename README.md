@@ -33,7 +33,10 @@ https://github.com/user-attachments/assets/d2c04b21-eb96-459b-8751-0c2bcb904da8
 
 ## Self-Hosting
 
-You can self-host Linky if you would like to run it yourself. I haven't written up a guide yet, but watch this space! (or just get stuck in and try it out yourself!)
+You can self-host Linky if you would like to run it yourself.
+
+- [Local Development](./docs/local-development.md)
+- [Self-hosting](./docs/self-hosting.md)
 
 ## License
 
