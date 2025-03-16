@@ -1,3 +1,4 @@
+import { validateEmail } from '@/lib/email';
 import prisma from '@/lib/prisma';
 import { createNewStripeCustomer } from '@/modules/billing/utils/create-new-stripe-customer';
 import { createNewSubscription } from '@/modules/billing/utils/create-new-subscription';
@@ -56,14 +57,4 @@ export const createUserInitialFlags = async (userId: string) => {
       value: true,
     },
   });
-};
-
-const validateEmail = (email: string | null) => {
-  if (!email || email === '') {
-    return false;
-  }
-
-  return !!email.match(
-    /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-  );
 };

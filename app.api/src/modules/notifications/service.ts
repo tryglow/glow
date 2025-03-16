@@ -1,3 +1,4 @@
+import { validateEmail } from '@/lib/email';
 import { createLoopsClient } from '@/lib/loops';
 import { transactionalEmailIds } from '@/modules/notifications/constants';
 import { captureException } from '@sentry/node';
@@ -9,6 +10,12 @@ export async function sendSubscriptionCreatedEmail(
   const loops = createLoopsClient();
 
   if (!loops) {
+    return;
+  }
+
+  const isValidEmail = validateEmail(email);
+
+  if (!isValidEmail) {
     return;
   }
 
@@ -34,6 +41,12 @@ export async function sendSubscriptionCancelledEmail(email: string) {
     return;
   }
 
+  const isValidEmail = validateEmail(email);
+
+  if (!isValidEmail) {
+    return;
+  }
+
   try {
     await loops.sendTransactionalEmail({
       transactionalId: transactionalEmailIds.subscriptionCancelled,
@@ -51,6 +64,12 @@ export async function sendTrialReminderEmail(email: string) {
     return;
   }
 
+  const isValidEmail = validateEmail(email);
+
+  if (!isValidEmail) {
+    return;
+  }
+
   try {
     await loops.sendEvent({
       eventName: 'userFreeTrialExpiringSoon',
@@ -65,6 +84,12 @@ export async function sendTrialEndedEmail(email: string) {
   const loops = createLoopsClient();
 
   if (!loops) {
+    return;
+  }
+
+  const isValidEmail = validateEmail(email);
+
+  if (!isValidEmail) {
     return;
   }
 
@@ -97,6 +122,12 @@ export async function sendOrganizationInvitationEmail({
     return;
   }
 
+  const isValidEmail = validateEmail(email);
+
+  if (!isValidEmail) {
+    return;
+  }
+
   try {
     await loops.sendTransactionalEmail({
       transactionalId: 'cm32wb5yt01uyf362gulg1kjn',
@@ -120,6 +151,12 @@ export async function sendWelcomeEmail(email: string) {
     return;
   }
 
+  const isValidEmail = validateEmail(email);
+
+  if (!isValidEmail) {
+    return;
+  }
+
   try {
     await loops.sendEvent({
       email,
@@ -140,6 +177,12 @@ export async function sendMagicLinkEmail({
   const loops = createLoopsClient();
 
   if (!loops) {
+    return;
+  }
+
+  const isValidEmail = validateEmail(email);
+
+  if (!isValidEmail) {
     return;
   }
 
