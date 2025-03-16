@@ -45,7 +45,7 @@ export default async function LandingPage() {
             <div className="w-full max-w-lg text-center flex flex-col items-center">
               <h1
                 className={cn(
-                  'text-6xl font-black text-black tracking-tight justify-center',
+                  'text-5xl md:text-6xl font-black text-black tracking-tight justify-center',
                   styles.title
                 )}
               >

@@ -30,11 +30,13 @@ export const auth = betterAuth({
     twitter: {
       clientId: process.env.AUTH_TWITTER_CLIENT_ID as string,
       clientSecret: process.env.AUTH_TWITTER_CLIENT_SECRET as string,
+      redirectURI: `${process.env.API_BASE_URL}/api/auth/callback/twitter`,
     },
     tiktok: {
       clientId: process.env.AUTH_TIKTOK_CLIENT_ID as string,
       clientKey: process.env.AUTH_TIKTOK_CLIENT_KEY as string,
       clientSecret: process.env.AUTH_TIKTOK_CLIENT_SECRET as string,
+      redirectURI: `${process.env.API_BASE_URL}/api/auth/callback/tiktok`,
     },
   },
   advanced: {
