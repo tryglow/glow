@@ -87,6 +87,7 @@ export async function upgradeToTeamHandler(
               : prices.development.team,
         },
       ],
+      allow_promotion_codes: true,
       subscription_data: {
         metadata: {
           createdByUserId: currentUser.id, // This user will be the owner of the new team org
