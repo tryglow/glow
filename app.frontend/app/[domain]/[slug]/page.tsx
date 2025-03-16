@@ -55,12 +55,12 @@ export async function generateMetadata(
   return {
     openGraph: {
       images: [
-        `${process.env.NEXT_PUBLIC_BASE_URL}/${page?.slug}/opengraph-image`,
+        `${process.env.NEXT_PUBLIC_APP_URL}/${page?.slug}/opengraph-image`,
       ],
     },
     twitter: {
       images: [
-        `${process.env.NEXT_PUBLIC_BASE_URL}/${page?.slug}/opengraph-image`,
+        `${process.env.NEXT_PUBLIC_APP_URL}/${page?.slug}/opengraph-image`,
       ],
     },
     title: `${page?.metaTitle} - Linky` || parentMeta.title?.absolute,

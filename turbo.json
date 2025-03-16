@@ -48,7 +48,7 @@
         "NEXT_PUBLIC_BASE_URL",
         "NEXT_PUBLIC_ROOT_DOMAIN",
         "NEXT_PUBLIC_API_URL",
-
+        "NEXT_PUBLIC_APP_URL",
         "NEXT_PUBLIC_GOOGLE_MAPS_API_KEY",
         "NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN",
         "NEXT_PUBLIC_TINYBIRD_TRACKER_TOKEN",
@@ -64,7 +64,12 @@
       "inputs": ["$TURBO_DEFAULT$", ".env"]
     },
     "build:marketing": {
-      "env": ["NEXT_PUBLIC_API_URL", "INTERNAL_API_KEY", "NEXT_PUBLIC_APP_URL"],
+      "env": [
+        "NEXT_PUBLIC_API_URL",
+        "INTERNAL_API_KEY",
+        "NEXT_PUBLIC_APP_URL",
+        "NEXT_PUBLIC_BASE_URL"
+      ],
       "inputs": ["$TURBO_DEFAULT$", ".env"]
     },
     "build:api": {

@@ -33,7 +33,7 @@ export function LoggedInAcceptInviteUI({ inviteId }: { inviteId: string }) {
 export function LoggedOutAcceptInviteUI({ inviteId }: { inviteId: string }) {
   return (
     <LoginForm
-      redirectTo={`${process.env.NEXT_PUBLIC_BASE_URL}/invite/${inviteId}`}
+      redirectTo={`${process.env.NEXT_PUBLIC_APP_URL}/invite/${inviteId}`}
     />
   );
 }

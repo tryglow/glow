@@ -115,7 +115,7 @@ export function LoginProviderButton({
           await auth.signIn.social({
             provider,
             callbackURL:
-              redirectTo || `${process.env.NEXT_PUBLIC_BASE_URL}/edit`,
+              redirectTo || `${process.env.NEXT_PUBLIC_APP_URL}/edit`,
           });
         }
       }}
