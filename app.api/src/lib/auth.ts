@@ -109,7 +109,10 @@ export const auth = betterAuth({
       sendMagicLink: async ({ email, url }) => {
         // There's a bug in better-auth where the invite link is not using
         // the API_BASE_URL, so we need to clean it up
-        const cleanedUrl = url.replace('https://lin.ky', 'https://api.lin.ky');
+        const cleanedUrl = url.replace(
+          'https://lin.ky/api',
+          'https://api.lin.ky/api'
+        );
 
         await sendMagicLinkEmail({ email, url: cleanedUrl });
       },
