@@ -10,6 +10,7 @@ export const getCurrentUserSubscriptionSchema = {
         status: { type: 'string' },
         isTeamPremium: { type: 'boolean' },
         periodEnd: { type: 'string' },
+        trialDaysLeft: { type: 'number' },
       },
       additionalProperties: false,
     },
@@ -72,13 +73,26 @@ export async function getCurrentUserSubscriptionHandler(
     (org) => org.subscription?.plan === 'premium' && org.isPersonal
   );
 
-  if (premiumOrgs.length > 0) {
+  const premiumOrg = premiumOrgs[0];
+
+  const daysLeftOnTrial =
+    premiumOrg?.subscription?.status === 'trialing' &&
+    premiumOrg.subscription.trialEnd
+      ? Math.ceil(
+          (new Date(premiumOrg.subscription.trialEnd).getTime() -
+            new Date().getTime()) /
+            (1000 * 60 * 60 * 24)
+        )
+      : null;
+
+  if (premiumOrg) {
     return response.status(200).send({
       plan: 'premium',
-      status: premiumOrgs[0].subscription?.status,
+      status: premiumOrg.subscription?.status,
       isTeamPremium: false,
-      periodEnd: premiumOrgs[0].subscription?.cancelAtPeriodEnd
-        ? premiumOrgs[0].subscription?.periodEnd
+      trialDaysLeft: daysLeftOnTrial,
+      periodEnd: premiumOrg.subscription?.cancelAtPeriodEnd
+        ? premiumOrg.subscription?.periodEnd
         : null,
     });
   }

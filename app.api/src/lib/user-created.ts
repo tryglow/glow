@@ -2,10 +2,6 @@ import prisma from '@/lib/prisma';
 import { createNewStripeCustomer } from '@/modules/billing/utils/create-new-stripe-customer';
 import { createNewSubscription } from '@/modules/billing/utils/create-new-subscription';
 import { createNewOrganization } from '@/modules/organizations/utils';
-import {
-  sendNewUserSlackMessage,
-  sendSlackMessage,
-} from '@/modules/slack/service';
 
 export async function handleUserCreated({ userId }: { userId: string }) {
   const user = await prisma.user.findUnique({

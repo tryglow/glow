@@ -36,6 +36,9 @@ export async function createNewSubscription({
 
   let subscriptionId = stripeSubscriptionId;
 
+  let trialStart: Date | undefined;
+  let trialEnd: Date | undefined;
+
   // If the subscription ID is not provided, create a new one
   if (!subscriptionId) {
     const [stripeSubscriptionError, stripeSubscription] = await safeAwait(
@@ -55,6 +58,13 @@ export async function createNewSubscription({
       return;
     }
 
+    trialStart = stripeSubscription.trial_start
+      ? new Date(stripeSubscription.trial_start * 1000)
+      : undefined;
+    trialEnd = stripeSubscription.trial_end
+      ? new Date(stripeSubscription.trial_end * 1000)
+      : undefined;
+
     subscriptionId = stripeSubscription.id;
   }
 
@@ -71,8 +81,8 @@ export async function createNewSubscription({
         periodStart: periodStart,
         periodEnd: periodEnd,
         seats: DEFAULT_SEATS,
-        trialStart: isTrialing ? periodStart : undefined,
-        trialEnd: isTrialing ? periodEnd : undefined,
+        trialStart: isTrialing ? trialStart : undefined,
+        trialEnd: isTrialing ? trialEnd : undefined,
       },
     })
   );

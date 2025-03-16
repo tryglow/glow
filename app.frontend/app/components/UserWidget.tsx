@@ -4,6 +4,7 @@ import { ManageBillingDialog } from '@/app/components/ManageBillingDialog';
 import { auth, useSession } from '@/app/lib/auth';
 import { EditTeamSettingsDialog } from '@/components/EditTeamSettingsDialog/EditTeamSettingsDialog';
 import { NewPageDialog } from '@/components/NewPageDialog';
+import { internalApiFetcher } from '@trylinky/common';
 import { Organization } from '@trylinky/prisma';
 import {
   DropdownMenu,
@@ -19,10 +20,19 @@ import {
 } from '@trylinky/ui';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import useSWR from 'swr';
 
 interface Props {
   usersOrganizations?: Partial<Organization>[] | null;
 }
+
+type SubscriptionData = {
+  plan: string;
+  status: string;
+  isTeamPremium: boolean;
+  periodEnd?: string;
+  trialDaysLeft?: number;
+};
 
 export function UserWidget({ usersOrganizations }: Props) {
   const [showNewTeamDialog, setShowNewTeamDialog] = useState(false);
@@ -35,6 +45,11 @@ export function UserWidget({ usersOrganizations }: Props) {
   const searchParams = useSearchParams();
 
   const showBilling = searchParams.get('showBilling');
+
+  const { data: subscriptionData } = useSWR<SubscriptionData>(
+    '/billing/subscription/me',
+    internalApiFetcher
+  );
 
   useEffect(() => {
     if (showBilling) {
@@ -54,7 +69,12 @@ export function UserWidget({ usersOrganizations }: Props) {
   };
 
   return (
-    <>
+    <div className="flex items-center justify-end gap-4">
+      {subscriptionData && (
+        <button onClick={() => setShowManageBillingDialog(true)}>
+          <SubscriptionStatusBadge subscriptionData={subscriptionData} />
+        </button>
+      )}
       <DropdownMenu modal={false}>
         <DropdownMenuTrigger asChild>
           <Button variant="ghost" className="h-10 w-10 rounded-full">
@@ -121,6 +141,42 @@ export function UserWidget({ usersOrganizations }: Props) {
           onOpenChange={handleCloseManageBillingDialog}
         />
       )}
-    </>
+    </div>
   );
+}
+
+function SubscriptionStatusBadge({
+  subscriptionData,
+}: {
+  subscriptionData: SubscriptionData;
+}) {
+  if (
+    subscriptionData?.status === 'trialing' &&
+    subscriptionData.trialDaysLeft &&
+    subscriptionData.trialDaysLeft > 0
+  ) {
+    return (
+      <span className="inline-flex items-center rounded-full bg-orange-50 px-3 py-1.5 text-sm font-medium text-orange-700 ring-1 ring-inset ring-orange-600/10">
+        {subscriptionData.trialDaysLeft} days left on trial
+      </span>
+    );
+  }
+
+  if (subscriptionData?.status === 'inactive') {
+    return (
+      <span className="inline-flex items-center rounded-full bg-red-600 px-3 py-1 text-sm font-medium text-white ring-1 ring-inset ring-orange-600/10">
+        Account Inactive
+      </span>
+    );
+  }
+
+  if (subscriptionData?.plan === 'freeLegacy') {
+    return (
+      <span className="inline-flex items-center rounded-full bg-purple-50 px-3 py-1 text-sm font-medium text-purple-700 ring-1 ring-inset ring-purple-600/10">
+        Upgrade to Premium
+      </span>
+    );
+  }
+
+  return null;
 }
