@@ -13,7 +13,7 @@ services:
   - type: web
     name: glow-api
     runtime: node
-    repo: https://github.com/tryglow/glow
+    repo: https://github.com/trylinky/linky
     plan: starter
     envVars:
       - key: INSTAGRAM_CLIENT_SECRET
@@ -68,11 +68,11 @@ services:
         sync: false
       - key: DIRECT_URL
         fromDatabase:
-          name: glow-production
+          name: linky-production
           property: connectionString
       - key: DATABASE_URL
         fromDatabase:
-          name: glow-production
+          name: linky-production
           property: connectionString
       - key: SENTRY_DSN
         sync: false
