@@ -5,10 +5,6 @@ const nextConfig: NextConfig = {
   transpilePackages: ['@trylinky/ui', '@trylinky/common'],
   rewrites: async () => [
     {
-      source: '/new-api/:path*',
-      destination: 'http://localhost:3001/:path*',
-    },
-    {
       source: '/',
       destination: `${process.env.NEXT_PUBLIC_MARKETING_URL}/i`,
     },
