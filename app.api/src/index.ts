@@ -50,7 +50,7 @@ await fastify.register(fastifyMultipart, {
 });
 
 await fastify.register(cors, {
-  origin: trustedOrigins,
+  origin: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization', 'x-api-key'],
   exposedHeaders: ['Content-Length'], // Expose specific headers
