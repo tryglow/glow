@@ -95,8 +95,8 @@ export async function upgradeToTeamHandler(
         },
       },
       mode: 'subscription',
-      success_url: `${process.env.APP_FRONTEND_URL}/edit`,
-      cancel_url: `${process.env.APP_FRONTEND_URL}/edit`,
+      success_url: `${process.env.APP_FRONTEND_URL}/edit?showTeamOnboarding=true`,
+      cancel_url: `${process.env.APP_FRONTEND_URL}/edit?showBilling=true`,
     });
 
     return response.status(200).send({

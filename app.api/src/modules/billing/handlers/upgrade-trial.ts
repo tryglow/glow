@@ -53,8 +53,6 @@ export async function upgradeTrialHandler(
       }
     );
 
-    console.log('updatedSubscription', updatedSubscription);
-
     if (updatedSubscription.status === 'active') {
       await prisma.subscription.update({
         where: {

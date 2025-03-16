@@ -3,7 +3,11 @@ import prisma from '@/lib/prisma';
 import { headers } from 'next/headers';
 import { redirect } from 'next/navigation';
 
-export async function GET() {
+export async function GET(request: Request) {
+  const { searchParams } = new URL(request.url);
+  const showTeamOnboarding = searchParams.get('showTeamOnboarding');
+  const showPremiumOnboarding = searchParams.get('showPremiumOnboarding');
+
   const session = await getSession({
     fetchOptions: { headers: await headers() },
   });
@@ -32,5 +36,10 @@ export async function GET() {
     return redirect('/new');
   }
 
-  return redirect(`/${pages[0].slug}`);
+  const params = new URLSearchParams();
+  if (showTeamOnboarding) params.set('showTeamOnboarding', 'true');
+  if (showPremiumOnboarding) params.set('showPremiumOnboarding', 'true');
+
+  const queryString = params.toString();
+  return redirect(`/${pages[0].slug}${queryString ? `?${queryString}` : ''}`);
 }
