@@ -19,8 +19,10 @@ export async function handleUserCreated({ userId }: { userId: string }) {
     type: 'personal',
   });
 
+  const isValidEmail = validateEmail(user.email);
+
   const customer = await createNewStripeCustomer({
-    email: user.email ?? '',
+    email: isValidEmail ? (user.email as string) : '',
     name: user.name ?? '',
     userId: user.id,
     organizationId: newOrg.id,
@@ -54,4 +56,14 @@ export const createUserInitialFlags = async (userId: string) => {
       value: true,
     },
   });
+};
+
+const validateEmail = (email: string | null) => {
+  if (!email || email === '') {
+    return false;
+  }
+
+  return !!email.match(
+    /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+  );
 };

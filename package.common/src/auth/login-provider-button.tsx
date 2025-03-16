@@ -66,7 +66,7 @@ const providerConfigs: Record<
   },
   twitter: {
     id: 'twitter',
-    name: 'Twitter',
+    name: 'X / Twitter',
   },
   tiktok: {
     id: 'tiktok',

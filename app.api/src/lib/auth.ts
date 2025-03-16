@@ -72,7 +72,9 @@ export const auth = betterAuth({
         after: async (user) => {
           await handleUserCreated({ userId: user.id });
           await createUserInitialFlags(user.id);
-          await sendWelcomeEmail(user.email);
+          if (user.email) {
+            await sendWelcomeEmail(user.email);
+          }
           await sendNewUserSlackMessage(user);
         },
       },
