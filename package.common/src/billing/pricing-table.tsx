@@ -79,7 +79,7 @@ const getReturnUrl = () => {
     returnPath = window.location.pathname;
   }
 
-  const returnUrl = new URL(`${process.env.NEXT_PUBLIC_BASE_URL}${returnPath}`);
+  const returnUrl = new URL(`${process.env.NEXT_PUBLIC_APP_URL}${returnPath}`);
   returnUrl.searchParams.set('showBilling', 'true');
 
   return returnUrl.toString();
