@@ -4,7 +4,7 @@ export async function coreRoutes(fastify: FastifyInstance) {
   fastify.get('/', {
     handler: async (req: FastifyRequest, res: FastifyReply) => {
       return res.status(200).send({
-        message: 'Welcome to the Glow API',
+        message: 'Welcome to the Linky API',
       });
     },
   });
