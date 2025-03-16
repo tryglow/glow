@@ -93,9 +93,7 @@ fastify.addHook('onRequest', async (request, reply) => {
 fastify.addHook('onResponse', async (request, reply) => {
   if (request.startTime) {
     const responseTime = Date.now() - request.startTime;
-    if (responseTime > 400) {
-      console.log(`Request to ${request.raw.url} took ${responseTime}ms`);
-    }
+    console.log(`Request to ${request.raw.url} took ${responseTime}ms`);
   }
 });
 
