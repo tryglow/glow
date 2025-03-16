@@ -2,7 +2,7 @@
   "name": "@trylinky/linky",
   "version": "1.0.0",
   "private": true,
-  "repository": "https://github.com/tryglow/glow.git",
+  "repository": "https://github.com/trylinky/linky.git",
   "workspaces": [
     "app.*",
     "package.*"
