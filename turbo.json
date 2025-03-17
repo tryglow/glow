@@ -6,7 +6,7 @@
     },
     "dev": {
       "dependsOn": ["^prisma:generate"],
-      "inputs": ["$TURBO_DEFAULT$", ".env"],
+      "inputs": ["$TURBO_DEFAULT$", "app.api/.env.local"],
       "cache": false
     },
     "build:tracker": {

@@ -23,10 +23,12 @@ cd linky
 
 ## Step 2: Environment Setup
 
-1. Copy the example environment file:
+1. Copy the example environment file for each application:
 
 ```bash
-cp .env.example .env.local
+cd app.api && cp .env.example .env.local
+cd app.frontend && cp .env.example .env.local
+cd app.marketing && cp .env.example .env.local
 ```
 
 2. Fill in the required environment variables in `.env.local` (please see the env file for more details on what is required and what the variables are for).
