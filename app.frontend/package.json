@@ -14,8 +14,6 @@
     "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
   },
   "dependencies": {
-    "@auth/core": "^0.37.3",
-    "@auth/prisma-adapter": "^2.7.4",
     "@headlessui/react": "^2.2.0",
     "@heroicons/react": "^2.1.5",
     "@number-flow/react": "^0.4.2",
@@ -40,7 +38,6 @@
     "lucide-react": "^0.454.0",
     "mapbox-gl": "^3.10.0",
     "next": "15.2",
-    "next-auth": "^5.0.0-beta.25",
     "posthog-js": "^1.187.1",
     "react": "^19.0.0",
     "react-color": "^2.19.3",
@@ -73,7 +70,6 @@
     "typescript": "5.6.3"
   },
   "overrides": {
-    "@auth/core": "^0.37.3",
     "react-is": "^19.0.0-rc-69d4b800-20241021"
   }
 }
