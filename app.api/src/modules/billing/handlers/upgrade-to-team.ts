@@ -87,9 +87,6 @@ export async function upgradeToTeamHandler(
               : prices.development.team,
         },
       ],
-      automatic_tax: {
-        enabled: true,
-      },
       allow_promotion_codes: true,
       subscription_data: {
         metadata: {

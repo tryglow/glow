@@ -50,9 +50,6 @@ export async function createNewSubscription({
           },
         ],
         trial_period_days: DEFAULT_TRIAL_PERIOD_DAYS,
-        automatic_tax: {
-          enabled: true,
-        },
       })
     );
 
