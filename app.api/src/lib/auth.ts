@@ -120,9 +120,9 @@ export const auth = betterAuth({
         // );
 
         const cleanedPath = new URL(url).pathname;
+        const cleanedParams = new URL(url).searchParams;
 
-        // /api/auth/magic-link/verify?token=dlpkufmzwoaurkdyvgpakuuvgeoayooz&callbackURL=https://lin.ky/edit
-        const cleanedUrl = `https://api.lin.ky${cleanedPath}&callbackURL=https://lin.ky/edit`;
+        const cleanedUrl = `https://api.lin.ky${cleanedPath}?${cleanedParams.toString()}`;
 
         await sendMagicLinkEmail({ email, url: cleanedUrl });
       },
