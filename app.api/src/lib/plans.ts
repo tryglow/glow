@@ -6,8 +6,8 @@ export const prices = {
   },
   production: {
     freeLegacy: 'price_1QzlZJJKLsVNmaiRvRdmReAD',
-    premium: 'price_1QA7KRJKLsVNmaiRZg6VcoKT',
-    team: 'price_1R1OetJKLsVNmaiRaKuqiKPJ',
+    premium: 'price_1R3asyJKLsVNmaiRJft5GJrG',
+    team: 'price_1R3aueJKLsVNmaiR5EZ7pCg8',
   },
 };
 
