@@ -51,7 +51,7 @@ export default async function RootLayout({
         {process.env.NODE_ENV === 'production' && (
           <Script
             src="https://analytics.ahrefs.com/analytics.js"
-            data-key="eGiWH0Sy3k+uZwgupTFABw"
+            data-key="uOVisnglxzaKbI/UovGA7w"
             defer={true}
           />
         )}
