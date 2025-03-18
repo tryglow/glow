@@ -1,7 +1,10 @@
+import { MagicLinkEmail } from './emails/magic-link';
 import { validateEmail } from '@/lib/email';
 import { createLoopsClient } from '@/lib/loops';
+import { createResendClient } from '@/lib/resend';
 import { transactionalEmailIds } from '@/modules/notifications/constants';
 import { captureException } from '@sentry/node';
+import React from 'react';
 
 export async function sendSubscriptionCreatedEmail(
   email: string,
@@ -174,9 +177,9 @@ export async function sendMagicLinkEmail({
   email: string;
   url: string;
 }) {
-  const loops = createLoopsClient();
+  const resend = createResendClient();
 
-  if (!loops) {
+  if (!resend) {
     return;
   }
 
@@ -187,13 +190,16 @@ export async function sendMagicLinkEmail({
   }
 
   try {
-    await loops.sendTransactionalEmail({
-      transactionalId: 'cm32urz09030i14hjw3kjsmv4',
-      email,
-      dataVariables: {
-        url,
-      },
+    const { error } = await resend.emails.send({
+      from: 'Linky <team@notifications.lin.ky>',
+      to: [email],
+      subject: 'Verify your Linky login',
+      react: <MagicLinkEmail url={url} />,
     });
+
+    if (error) {
+      captureException(error);
+    }
   } catch (error) {
     captureException(error);
   }

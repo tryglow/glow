@@ -12,6 +12,8 @@
       "@/*": ["./src/*"], // Alias for local imports
       "local-packages/*": ["packages/*"] // Alias for monorepo local packages
     },
+    "jsx": "react-jsx",
+    "jsxImportSource": "react",
     "allowSyntheticDefaultImports": true, // Allow default imports for CommonJS modules
     "resolveJsonModule": true, // Enable importing JSON files
     "noEmit": true, // Disable emitting compiled JavaScript files

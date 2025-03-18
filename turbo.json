@@ -98,6 +98,8 @@
 
         "REACTIONS_TABLE_NAME",
 
+        "RESEND_API_KEY",
+
         "SCREENSHOT_API_KEY",
 
         "SENTRY_AUTH_TOKEN",
@@ -154,6 +156,7 @@
         "REACTIONS_TABLE_NAME",
         "POSTHOG_API_KEY",
         "STRIPE_API_SECRET_KEY",
+        "RESEND_API_KEY",
         "STRIPE_WEBHOOK_SECRET",
         "LOOPS_API_KEY",
         "BETTER_AUTH_URL",

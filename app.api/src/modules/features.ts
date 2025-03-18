@@ -11,4 +11,7 @@ export const config = {
   posthog: {
     enabled: true,
   },
+  resend: {
+    enabled: true,
+  },
 };
