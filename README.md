@@ -28,7 +28,7 @@ https://github.com/user-attachments/assets/d2c04b21-eb96-459b-8751-0c2bcb904da8
 - [TypeScript](https://www.typescriptlang.org/) – language
 - [Tailwind](https://tailwindcss.com/) – CSS
 - [NextAuth.js](https://next-auth.js.org/) – auth
-- [Loops](https://loops.so/) – emails
+- [Resend](https://resend.com/) – emails
 - [Vercel](https://vercel.com/) – deployments
 
 ## Self-Hosting

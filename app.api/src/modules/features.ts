@@ -5,9 +5,6 @@ export const config = {
   slack: {
     enabled: true,
   },
-  loops: {
-    enabled: true,
-  },
   posthog: {
     enabled: true,
   },

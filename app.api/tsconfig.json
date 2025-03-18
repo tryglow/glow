@@ -22,6 +22,12 @@
     "allowJs": true, // Allow JavaScript files in the project
     "forceConsistentCasingInFileNames": true // Ensure consistent file casing
   },
-  "include": ["src/**/*.ts", "src/**/*.d.ts", "types/**/*.d.ts"], // Include TypeScript files in the src directory
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.d.ts",
+    "types/**/*.d.ts",
+    "package.notifications/**/*.ts",
+    "@trylinky/notifications"
+  ], // Include TypeScript files in the src directory
   "exclude": ["node_modules", "dist", "build"] // Exclude unnecessary directories
 }

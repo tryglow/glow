@@ -1,0 +1,23 @@
+{
+  "name": "@trylinky/notifications",
+  "version": "1.0.0",
+  "description": "",
+  "type": "module",
+  "scripts": {
+    "dev": "email dev -p 3005"
+  },
+  "exports": {
+    ".": {
+      "types": "./emails/index.ts",
+      "default": "./emails/index.ts"
+    }
+  },
+  "dependencies": {
+    "@react-email/components": "0.0.34",
+    "react": "18.2.0",
+    "react-dom": "18.2.0"
+  },
+  "devDependencies": {
+    "react-email": "3.0.7"
+  }
+}

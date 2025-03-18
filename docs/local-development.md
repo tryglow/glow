@@ -65,8 +65,6 @@ You'll need to set up the following services and add their credentials:
   - `REACTIONS_TABLE_NAME`
 - Slack (for notifications):
   - `SLACK_TOKEN`
-- Loops (for emails):
-  - `LOOPS_API_KEY`
 
 #### Integrations
 

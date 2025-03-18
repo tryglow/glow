@@ -104,7 +104,7 @@ services:
         sync: false
       - key: AUTH_TWITTER_CLIENT_SECRET
         sync: false
-      - key: LOOPS_API_KEY
+      - key: RESEND_API_KEY
         sync: false
 
     region: frankfurt

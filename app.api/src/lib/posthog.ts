@@ -8,7 +8,7 @@ export const createPosthogClient = () => {
   }
 
   if (!process.env.POSTHOG_API_KEY) {
-    console.warn('LOOPS POSTHOG_API_KEY KEY is not set');
+    console.warn('POSTHOG_API_KEY KEY is not set');
     return null;
   }
 

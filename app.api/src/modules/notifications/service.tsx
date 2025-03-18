@@ -1,181 +1,25 @@
-import { MagicLinkEmail } from './emails/magic-link';
 import { validateEmail } from '@/lib/email';
-import { createLoopsClient } from '@/lib/loops';
 import { createResendClient } from '@/lib/resend';
-import { transactionalEmailIds } from '@/modules/notifications/constants';
 import { captureException } from '@sentry/node';
+import {
+  MagicLinkEmail,
+  OrganizationInviteEmail,
+  TrialEndingSoonEmail,
+  TrialFinishedEmail,
+  WelcomeEmail,
+} from '@trylinky/notifications';
 import React from 'react';
 
-export async function sendSubscriptionCreatedEmail(
-  email: string,
-  planType: 'premium' | 'team'
-) {
-  const loops = createLoopsClient();
-
-  if (!loops) {
-    return;
-  }
-
-  const isValidEmail = validateEmail(email);
-
-  if (!isValidEmail) {
-    return;
-  }
-
-  const transactionalId =
-    planType === 'premium'
-      ? transactionalEmailIds.subscriptionCreatedPremium
-      : transactionalEmailIds.subscriptionCreatedTeam;
-
-  try {
-    await loops.sendTransactionalEmail({
-      transactionalId,
-      email,
-    });
-  } catch (error) {
-    captureException(error);
-  }
-}
-
-export async function sendSubscriptionCancelledEmail(email: string) {
-  const loops = createLoopsClient();
-
-  if (!loops) {
-    return;
-  }
-
-  const isValidEmail = validateEmail(email);
-
-  if (!isValidEmail) {
-    return;
-  }
-
-  try {
-    await loops.sendTransactionalEmail({
-      transactionalId: transactionalEmailIds.subscriptionCancelled,
-      email,
-    });
-  } catch (error) {
-    captureException(error);
-  }
-}
-
-export async function sendTrialReminderEmail(email: string) {
-  const loops = createLoopsClient();
-
-  if (!loops) {
-    return;
-  }
-
-  const isValidEmail = validateEmail(email);
-
-  if (!isValidEmail) {
-    return;
-  }
-
-  try {
-    await loops.sendEvent({
-      eventName: 'userFreeTrialExpiringSoon',
-      email,
-    });
-  } catch (error) {
-    captureException(error);
-  }
-}
-
-export async function sendTrialEndedEmail(email: string) {
-  const loops = createLoopsClient();
-
-  if (!loops) {
-    return;
-  }
-
-  const isValidEmail = validateEmail(email);
-
-  if (!isValidEmail) {
-    return;
-  }
-
-  try {
-    await loops.sendEvent({
-      eventName: 'userFreeTrialExpired',
-      email,
-    });
-  } catch (error) {
-    captureException(error);
-  }
-}
-
-export async function sendOrganizationInvitationEmail({
+export async function sendEmail({
   email,
-  invitedByUsername,
-  invitedByEmail,
-  teamName,
-  inviteLink,
+  subject,
+  from = 'Linky <team@notifications.lin.ky>',
+  react,
 }: {
   email: string;
-  invitedByUsername: string;
-  invitedByEmail: string;
-  teamName: string;
-  inviteLink: string;
-}) {
-  const loops = createLoopsClient();
-
-  if (!loops) {
-    return;
-  }
-
-  const isValidEmail = validateEmail(email);
-
-  if (!isValidEmail) {
-    return;
-  }
-
-  try {
-    await loops.sendTransactionalEmail({
-      transactionalId: 'cm32wb5yt01uyf362gulg1kjn',
-      email,
-      dataVariables: {
-        inviteUrl: inviteLink,
-        invitedByUsername,
-        invitedByEmail,
-        teamName,
-      },
-    });
-  } catch (error) {
-    captureException(error);
-  }
-}
-
-export async function sendWelcomeEmail(email: string) {
-  const loops = createLoopsClient();
-
-  if (!loops) {
-    return;
-  }
-
-  const isValidEmail = validateEmail(email);
-
-  if (!isValidEmail) {
-    return;
-  }
-
-  try {
-    await loops.sendEvent({
-      email,
-      eventName: 'accountCreated',
-    });
-  } catch (error) {
-    captureException(error);
-  }
-}
-
-export async function sendMagicLinkEmail({
-  email,
-  url,
-}: {
-  email: string;
-  url: string;
+  subject: string;
+  from?: string;
+  react: React.ReactNode;
 }) {
   const resend = createResendClient();
 
@@ -191,10 +35,10 @@ export async function sendMagicLinkEmail({
 
   try {
     const { error } = await resend.emails.send({
-      from: 'Linky <team@notifications.lin.ky>',
+      from,
       to: [email],
-      subject: 'Verify your Linky login',
-      react: <MagicLinkEmail url={url} />,
+      subject,
+      react,
     });
 
     if (error) {
@@ -203,4 +47,62 @@ export async function sendMagicLinkEmail({
   } catch (error) {
     captureException(error);
   }
+
+  return;
+}
+
+export async function sendTrialReminderEmail(email: string) {
+  return await sendEmail({
+    email,
+    subject: 'Your Linky Premium trial is ending soon',
+    react: <TrialEndingSoonEmail />,
+  });
+}
+
+export async function sendTrialEndedEmail(email: string) {
+  return await sendEmail({
+    email,
+    subject: 'Your Linky Premium trial has ended',
+    react: <TrialFinishedEmail />,
+  });
+}
+
+export async function sendOrganizationInvitationEmail({
+  email,
+  inviteLink,
+}: {
+  email: string;
+  invitedByUsername: string;
+  invitedByEmail: string;
+  teamName: string;
+  inviteLink: string;
+}) {
+  return await sendEmail({
+    email,
+    subject: "You've been invited to join a team on Linky",
+    react: <OrganizationInviteEmail inviteUrl={inviteLink} />,
+  });
+}
+
+export async function sendWelcomeEmail(email: string) {
+  return await sendEmail({
+    from: 'Alex from Linky <alex@notifications.lin.ky>',
+    email,
+    subject: 'Welcome to Linky',
+    react: <WelcomeEmail />,
+  });
+}
+
+export async function sendMagicLinkEmail({
+  email,
+  url,
+}: {
+  email: string;
+  url: string;
+}) {
+  return await sendEmail({
+    email,
+    subject: 'Verify your Linky login',
+    react: <MagicLinkEmail url={url} />,
+  });
 }
