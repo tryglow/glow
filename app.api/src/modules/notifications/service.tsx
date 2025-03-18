@@ -24,12 +24,14 @@ export async function sendEmail({
   const resend = createResendClient();
 
   if (!resend) {
+    console.warn('Resend is not enabled, skipping email send');
     return;
   }
 
   const isValidEmail = validateEmail(email);
 
   if (!isValidEmail) {
+    console.warn('Invalid email, skipping email send');
     return;
   }
 
@@ -42,9 +44,11 @@ export async function sendEmail({
     });
 
     if (error) {
+      console.error('Error sending email', error);
       captureException(error);
     }
   } catch (error) {
+    console.error('Error sending email', error);
     captureException(error);
   }
 

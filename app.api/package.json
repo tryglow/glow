@@ -34,7 +34,7 @@
     "fastify-cli": "^7.0.1",
     "fastify-raw-body": "^5.0.0",
     "posthog-node": "^4.2.2",
-    "react": "^19.0.0",
+    "react": "18.2.0",
     "resend": "^4.1.2",
     "safe-await": "^2.0.0",
     "stripe": "^17.3.1",

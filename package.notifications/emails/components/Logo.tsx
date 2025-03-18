@@ -1,4 +1,5 @@
 import { Img } from '@react-email/components';
+import React from 'react';
 
 export default function Logo() {
   return (
