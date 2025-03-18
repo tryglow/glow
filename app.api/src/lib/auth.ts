@@ -13,7 +13,6 @@ import { admin, magicLink, organization } from 'better-auth/plugins';
 
 export const auth = betterAuth({
   baseUrl: process.env.API_BASE_URL,
-  basePath: '/auth',
   rateLimit: {
     window: 10, // time window in seconds
     max: 100, // max requests in the window
@@ -26,18 +25,18 @@ export const auth = betterAuth({
     google: {
       clientId: process.env.AUTH_GOOGLE_CLIENT_ID as string,
       clientSecret: process.env.AUTH_GOOGLE_CLIENT_SECRET as string,
-      // redirectURI: `${process.env.API_BASE_URL}/auth/callback/google`,
+      // redirectURI: `${process.env.API_BASE_URL}/api/auth/callback/google`,
     },
     twitter: {
       clientId: process.env.AUTH_TWITTER_CLIENT_ID as string,
       clientSecret: process.env.AUTH_TWITTER_CLIENT_SECRET as string,
-      // redirectURI: `${process.env.API_BASE_URL}/auth/callback/twitter`,
+      // redirectURI: `${process.env.API_BASE_URL}/api/auth/callback/twitter`,
     },
     tiktok: {
       clientId: process.env.AUTH_TIKTOK_CLIENT_ID as string,
       clientKey: process.env.AUTH_TIKTOK_CLIENT_KEY as string,
       clientSecret: process.env.AUTH_TIKTOK_CLIENT_SECRET as string,
-      // redirectURI: `${process.env.API_BASE_URL}/auth/callback/tiktok`,
+      // redirectURI: `${process.env.API_BASE_URL}/api/auth/callback/tiktok`,
     },
   },
   advanced: {
@@ -122,7 +121,7 @@ export const auth = betterAuth({
         );
 
         const magicLinkUrl = new URL(
-          `/auth/magic-link/verify?token=${token}&callbackURL=${callbackUrl.toString()}`,
+          `/api/auth/magic-link/verify?token=${token}&callbackURL=${callbackUrl.toString()}`,
           process.env.API_BASE_URL as string
         );
 
