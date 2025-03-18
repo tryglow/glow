@@ -29,7 +29,7 @@ export function TikTokLoginButton({
   const handleClick = async () => {
     const orchestrationId = await action();
 
-    const baseUrl = new URL('/api/auth/signin', window.location.origin);
+    const baseUrl = new URL('/auth/signin', window.location.origin);
     baseUrl.searchParams.set('redirectTo', `/i/tiktok/${orchestrationId}`);
     baseUrl.searchParams.set('provider', 'tiktok');
     window.location.href = baseUrl.toString();
