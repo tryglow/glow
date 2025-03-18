@@ -27,7 +27,7 @@
     "@tailwindcss/typography": "^0.5.15",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
-    "cmdk": "^0.2.0",
+    "cmdk": "^1.0.4",
     "lucide-react": "^0.454.0",
     "recharts": "^2.13.0",
     "tailwind-merge": "^2.5.4",

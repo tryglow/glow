@@ -12,6 +12,7 @@
   "dependencies": {
     "@headlessui/react": "^2.2.0",
     "@heroicons/react": "^2.1.5",
+    "@mdx-js/loader": "^3.1.0",
     "@next/mdx": "^15.1.7",
     "@trylinky/common": "*",
     "@trylinky/ui": "*",
