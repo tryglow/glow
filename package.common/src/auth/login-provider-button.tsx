@@ -97,6 +97,8 @@ export function LoginProviderButton({
 }: Props) {
   const prov = providerConfigs[provider];
 
+  console.log('NEXT_PUBLIC_APP_URL', process.env.NEXT_PUBLIC_APP_URL);
+
   return (
     <Button
       type="submit"

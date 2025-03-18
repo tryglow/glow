@@ -16,6 +16,8 @@ export function LoginForm({
 }: Props) {
   const [email, setEmail] = useState('');
 
+  console.log('redirectTo', redirectTo);
+
   const handleEmailSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
