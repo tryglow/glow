@@ -78,6 +78,8 @@
         "AWS_REGION",
         "AWS_SECRET_ACCESS_KEY",
 
+        "BETTER_AUTH_URL",
+
         "ENCRYPTION_KEY",
 
         "INSTAGRAM_CALLBACK_URL",
@@ -154,6 +156,7 @@
         "STRIPE_API_SECRET_KEY",
         "STRIPE_WEBHOOK_SECRET",
         "LOOPS_API_KEY",
+        "BETTER_AUTH_URL",
         "APP_ENV",
         "ENCRYPTION_KEY",
         "APP_FRONTEND_URL",
