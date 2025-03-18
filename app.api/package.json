@@ -23,8 +23,8 @@
     "@sindresorhus/slugify": "^2.2.1",
     "@slack/web-api": "^7.8.0",
     "@trylinky/blocks": "*",
-    "@trylinky/prisma": "*",
     "@trylinky/notifications": "*",
+    "@trylinky/prisma": "*",
     "better-auth": "^1.2.4",
     "cross-env": "^7.0.3",
     "dotenv": "^16.4.5",
@@ -37,6 +37,7 @@
     "react": "18.2.0",
     "resend": "^4.1.2",
     "safe-await": "^2.0.0",
+    "sharp": "^0.33.5",
     "stripe": "^17.3.1",
     "tsx": "^4.16.0",
     "zod": "^3.2"
