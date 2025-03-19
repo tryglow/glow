@@ -34,7 +34,6 @@ export async function disconnectIntegration(integrationId: string) {
     },
     data: {
       deletedAt: new Date(),
-      config: {},
       encryptedConfig: null,
     },
   });

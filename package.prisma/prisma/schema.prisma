@@ -200,7 +200,6 @@ model Integration {
   updatedAt       DateTime      @updatedAt
   type            String
   displayName     String?
-  config          Json
   encryptedConfig String?
   deletedAt       DateTime?
   blocks          Block[]

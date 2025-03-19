@@ -124,7 +124,6 @@ async function getInstagramCallbackHandler(
       data: {
         organizationId: session.activeOrganizationId,
         type: 'instagram',
-        config: {},
         encryptedConfig,
         displayName: `@${userInfoData.username}`,
       },
@@ -246,7 +245,6 @@ async function getInstagramLegacyCallbackHandler(
       data: {
         organizationId: session.activeOrganizationId,
         type: 'instagram',
-        config: {},
         encryptedConfig,
       },
     });

@@ -105,7 +105,6 @@ async function getThreadsCallbackHandler(
       data: {
         organizationId: session.activeOrganizationId,
         type: 'threads',
-        config: {},
         encryptedConfig,
         displayName: userInfoData.username || 'Threads',
       },

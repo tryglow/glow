@@ -88,8 +88,6 @@ async function getSpotifyCallbackHandler(
         organizationId: session.activeOrganizationId,
         type: 'spotify',
         encryptedConfig,
-        // TODO Remove this once we drop the old config field.
-        config: {},
         displayName: userInfoData.display_name || 'Spotify',
       },
     });

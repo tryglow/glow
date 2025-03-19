@@ -263,7 +263,6 @@ const createTiktokIntegration = async ({
         organizationId,
         type: 'tiktok',
         encryptedConfig,
-        config: {},
         displayName,
       },
     });

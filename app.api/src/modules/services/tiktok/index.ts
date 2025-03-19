@@ -139,7 +139,6 @@ async function getTiktokCallbackHandler(
       data: {
         organizationId: session.activeOrganizationId,
         type: 'tiktok',
-        config: {},
         encryptedConfig,
         displayName: userInfoData?.data?.user?.username || 'TikTok',
       },
