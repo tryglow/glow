@@ -24,13 +24,15 @@ import cors from '@fastify/cors';
 import fastifyExpress from '@fastify/express';
 import fastifyMultipart from '@fastify/multipart';
 import fastifySensible from '@fastify/sensible';
+import { TypeBoxTypeProvider } from '@fastify/type-provider-typebox';
 import * as Sentry from '@sentry/node';
 import 'dotenv/config';
 import Fastify, { FastifyInstance } from 'fastify';
 import FastifyBetterAuth from 'fastify-better-auth';
 import fastifyRawBody from 'fastify-raw-body';
 
-export const fastify: FastifyInstance = Fastify();
+export const fastify: FastifyInstance =
+  Fastify().withTypeProvider<TypeBoxTypeProvider>();
 
 await fastify.register(fastifyExpress);
 await fastify.register(fastifySensible);

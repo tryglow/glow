@@ -1,9 +1,7 @@
 import { PrismaClient } from '@trylinky/prisma';
 
 const prismaClientSingleton = () => {
-  return new PrismaClient({
-    log: ['query', 'info', 'warn', 'error'],
-  }).$extends({
+  return new PrismaClient().$extends({
     query: {
       async $allOperations({ model, operation, args, query }) {
         const before = Date.now();
