@@ -5,7 +5,21 @@ import 'server-only';
 
 const prismaClientSingleton = () => {
   if (!process.env.PRISMA_OPTIMIZE_API_KEY) {
-    return new PrismaClient().$extends(withAccelerate());
+    return new PrismaClient()
+      .$extends({
+        query: {
+          async $allOperations({ model, operation, args, query }) {
+            const before = Date.now();
+            const result = await query(args);
+            const after = Date.now();
+
+            console.log(`Query ${model}.${operation} took ${after - before}ms`);
+
+            return result;
+          },
+        },
+      })
+      .$extends(withAccelerate());
   }
 
   return new PrismaClient()
