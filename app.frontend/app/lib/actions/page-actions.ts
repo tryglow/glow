@@ -28,6 +28,9 @@ export async function getPageIdBySlugOrDomain(slug: string, domain: string) {
 export async function getPageLoadData(pageId: string) {
   const res = await apiServerFetch(`/pages/${pageId}/internal/load`, {
     method: 'GET',
+    headers: {
+      'x-api-key': process.env.INTERNAL_API_KEY as string,
+    },
   });
 
   const data = await res.json();

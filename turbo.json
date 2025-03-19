@@ -30,6 +30,8 @@
 
         "GITHUB_AUTH_TOKEN",
 
+        "INTERNAL_API_KEY",
+
         "NEXT_PUBLIC_APP_ENV",
         "NEXT_PUBLIC_BASE_URL",
         "NEXT_PUBLIC_ROOT_DOMAIN",
@@ -88,6 +90,8 @@
         "INSTAGRAM_LEGACY_CALLBACK_URL",
         "INSTAGRAM_LEGACY_CLIENT_ID",
         "INSTAGRAM_LEGACY_CLIENT_SECRET",
+
+        "INTERNAL_API_KEY",
 
         "NODE_ENV",
         "PORT",
@@ -159,6 +163,7 @@
         "RESEND_AUDIENCE_ID",
         "STRIPE_WEBHOOK_SECRET",
         "BETTER_AUTH_URL",
+        "INTERNAL_API_KEY",
         "APP_ENV",
         "ENCRYPTION_KEY",
         "APP_FRONTEND_URL",

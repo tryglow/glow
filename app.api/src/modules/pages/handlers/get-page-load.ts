@@ -34,7 +34,13 @@ export async function getPageLoadHandler(
 ): Promise<Static<(typeof getPageLoadSchema.response)[200]>> {
   const { pageId } = request.params;
 
-  // Check an API KEY here?
+  const headers = request.headers;
+
+  const apiKey = headers['x-api-key'];
+
+  if (!apiKey || apiKey !== process.env.INTERNAL_API_KEY) {
+    return response.forbidden();
+  }
 
   const page = await prisma.page.findUnique({
     where: {
