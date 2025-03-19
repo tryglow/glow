@@ -19,7 +19,8 @@ export const getPageLoadSchema = {
         Type.Object({
           id: Type.String(),
           type: Type.String(),
-          config: Type.Object({}),
+          config: Type.Object({}, { additionalProperties: true }),
+          data: Type.Object({}, { additionalProperties: true }),
         })
       ),
     }),
