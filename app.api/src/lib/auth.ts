@@ -1,5 +1,6 @@
 import { trustedOrigins } from '@/lib/origins';
 import prisma from '@/lib/prisma';
+import { createContact } from '@/lib/resend';
 import { createUserInitialFlags, handleUserCreated } from '@/lib/user-created';
 import {
   sendMagicLinkEmail,
@@ -73,6 +74,7 @@ export const auth = betterAuth({
           await handleUserCreated({ userId: user.id });
           await createUserInitialFlags(user.id);
           if (user.email) {
+            await createContact(user.email);
             await sendWelcomeEmail(user.email);
           }
           await sendNewUserSlackMessage(user);

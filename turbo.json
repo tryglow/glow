@@ -97,6 +97,7 @@
         "REACTIONS_TABLE_NAME",
 
         "RESEND_API_KEY",
+        "RESEND_AUDIENCE_ID",
 
         "SCREENSHOT_API_KEY",
 
@@ -155,6 +156,7 @@
         "POSTHOG_API_KEY",
         "STRIPE_API_SECRET_KEY",
         "RESEND_API_KEY",
+        "RESEND_AUDIENCE_ID",
         "STRIPE_WEBHOOK_SECRET",
         "BETTER_AUTH_URL",
         "APP_ENV",

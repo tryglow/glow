@@ -14,3 +14,22 @@ export const createResendClient = () => {
 
   return new Resend(process.env.RESEND_API_KEY);
 };
+
+export const createContact = async (email: string) => {
+  const resend = createResendClient();
+
+  if (!resend) {
+    return;
+  }
+
+  if (!process.env.RESEND_AUDIENCE_ID) {
+    console.warn('RESEND AUDIENCE ID is not set');
+    return;
+  }
+
+  return resend.contacts.create({
+    email,
+    unsubscribed: false,
+    audienceId: process.env.RESEND_AUDIENCE_ID as string,
+  });
+};
