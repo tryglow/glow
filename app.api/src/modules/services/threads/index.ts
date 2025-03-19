@@ -8,6 +8,21 @@ import prisma from '@/lib/prisma';
 import { captureException } from '@sentry/node';
 import { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify';
 
+interface TokenResponse {
+  access_token: string;
+  user_id: number;
+}
+
+interface LongLivedTokenResponse {
+  access_token: string;
+  expires_in: number;
+}
+
+interface ThreadsUserInfoResponse {
+  username: string;
+  id: string;
+}
+
 export default async function threadsServiceRoutes(
   fastify: FastifyInstance,
   opts: any
@@ -71,22 +86,20 @@ async function getThreadsCallbackHandler(
   try {
     const res = await requestToken({ code });
 
-    const data = (await res.json()) as {
-      access_token: string;
-      user_id: number;
-    };
+    const data = (await res.json()) as TokenResponse;
 
     const longLivedTokenResponse = await requestLongLivedToken({
       accessToken: data.access_token,
     });
 
-    const longLivedToken = await longLivedTokenResponse.json();
+    const longLivedToken =
+      (await longLivedTokenResponse.json()) as LongLivedTokenResponse;
 
     const userInfo = await getThreadsUserInfo({
       accessToken: longLivedToken.access_token,
     });
 
-    const userInfoData = await userInfo.json();
+    const userInfoData = (await userInfo.json()) as ThreadsUserInfoResponse;
 
     const encryptedConfig = await encrypt({
       accessToken: longLivedToken.access_token,

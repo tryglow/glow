@@ -4,6 +4,22 @@ import prisma from '@/lib/prisma';
 import { captureException } from '@sentry/node';
 import { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify';
 
+interface SpotifyTokenResponse {
+  access_token: string;
+  refresh_token: string;
+  token_type: string;
+  expires_in: number;
+  scope: string;
+}
+
+interface SpotifyUserInfoResponse {
+  display_name: string;
+  id: string;
+  images: { url: string }[];
+  uri: string;
+  [key: string]: any;
+}
+
 export default async function spotifyServiceRoutes(
   fastify: FastifyInstance,
   opts: any
@@ -69,7 +85,7 @@ async function getSpotifyCallbackHandler(
 
   try {
     const res = await requestToken({ code });
-    const json = await res.json();
+    const json = (await res.json()) as SpotifyTokenResponse;
 
     if (!json.access_token) {
       return Response.json({ error: 'Error getting access_token' });
@@ -81,7 +97,7 @@ async function getSpotifyCallbackHandler(
     });
 
     const userInfo = await getSpotifyUserInfo(json.access_token);
-    const userInfoData = await userInfo.json();
+    const userInfoData = (await userInfo.json()) as SpotifyUserInfoResponse;
 
     const integration = await prisma.integration.create({
       data: {

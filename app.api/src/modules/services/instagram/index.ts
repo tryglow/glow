@@ -10,6 +10,23 @@ import {
 import { captureException } from '@sentry/node';
 import { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify';
 
+interface InstagramTokenResponse {
+  access_token: string;
+  user_id?: number;
+}
+
+interface InstagramLongLivedTokenResponse {
+  access_token: string;
+  token_type: string;
+  expires_in: number;
+}
+
+interface InstagramUserInfoResponse {
+  user_id: string;
+  account_type: string;
+  username: string;
+}
+
 export default async function instagramServiceRoutes(
   fastify: FastifyInstance,
   opts: any
@@ -85,25 +102,20 @@ async function getInstagramCallbackHandler(
   try {
     const res = await requestToken({ code });
 
-    const data = (await res.json()) as {
-      access_token: string;
-    };
+    const data = (await res.json()) as InstagramTokenResponse;
 
     const longLivedTokenResponse = await requestLongLivedToken({
       accessToken: data.access_token,
     });
 
-    const longLivedToken = await longLivedTokenResponse.json();
+    const longLivedToken =
+      (await longLivedTokenResponse.json()) as InstagramLongLivedTokenResponse;
 
     const userInfo = await requestUserInfo({
       accessToken: longLivedToken.access_token,
     });
 
-    const userInfoData = (await userInfo.json()) as {
-      user_id: string;
-      account_type: string;
-      username: string;
-    };
+    const userInfoData = (await userInfo.json()) as InstagramUserInfoResponse;
 
     const encryptedConfig = await encrypt({
       accessToken: longLivedToken.access_token,
@@ -217,8 +229,7 @@ async function getInstagramLegacyCallbackHandler(
   try {
     const res = await requestTokenLegacy({ code });
 
-    const data = (await res.json()) as {
-      access_token: string;
+    const data = (await res.json()) as InstagramTokenResponse & {
       user_id: number;
     };
 
@@ -226,7 +237,8 @@ async function getInstagramLegacyCallbackHandler(
       accessToken: data.access_token,
     });
 
-    const longLivedToken = await longLivedTokenResponse.json();
+    const longLivedToken =
+      (await longLivedTokenResponse.json()) as InstagramLongLivedTokenResponse;
 
     const encryptedConfig = await encrypt({
       accessToken: longLivedToken.access_token,
