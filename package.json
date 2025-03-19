@@ -4,8 +4,15 @@
   "private": true,
   "repository": "https://github.com/trylinky/linky.git",
   "workspaces": [
-    "app.*",
-    "package.*"
+    "app.api",
+    "app.frontend",
+    "app.marketing",
+    "package.blocks",
+    "package.common",
+    "package.notifications",
+    "package.prisma",
+    "package.tinybird",
+    "package.ui"
   ],
   "devDependencies": {
     "@trivago/prettier-plugin-sort-imports": "^4.3.0",
