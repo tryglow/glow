@@ -25,6 +25,16 @@ export async function getPageIdBySlugOrDomain(slug: string, domain: string) {
   return page;
 }
 
+export async function getPageLoadData(pageId: string) {
+  const res = await apiServerFetch(`/pages/${pageId}/internal/load`, {
+    method: 'GET',
+  });
+
+  const data = await res.json();
+
+  return data;
+}
+
 export async function getPageTheme(pageId: string) {
   const res = await apiServerFetch(`/pages/${pageId}/theme`, {
     method: 'GET',

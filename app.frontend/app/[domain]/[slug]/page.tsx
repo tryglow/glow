@@ -2,12 +2,12 @@ import Grid, { PageConfig } from './grid';
 import {
   getPageIdBySlugOrDomain,
   getPageLayout,
+  getPageLoadData,
 } from '@/app/lib/actions/page-actions';
 import { getSession } from '@/app/lib/auth';
 import { renderBlock } from '@/lib/blocks/ui';
-import prisma from '@/lib/prisma';
 import { isUserAgentMobile } from '@/lib/user-agent';
-import { Integration } from '@trylinky/prisma';
+import { Block, Integration } from '@trylinky/prisma';
 import type { Metadata, ResolvingMetadata } from 'next';
 import { headers } from 'next/headers';
 import { notFound, redirect } from 'next/navigation';
@@ -15,20 +15,6 @@ import { notFound, redirect } from 'next/navigation';
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 export const dynamicParams = true;
-
-const getPageData = async (pageId: string) => {
-  const page = await prisma.page.findUnique({
-    where: {
-      deletedAt: null,
-      id: pageId,
-    },
-    include: {
-      blocks: true,
-    },
-  });
-
-  return page;
-};
 
 export async function generateMetadata(
   props: { params: Promise<{ slug: string; domain: string }> },
@@ -44,7 +30,7 @@ export async function generateMetadata(
     return {};
   }
 
-  const page = await getPageData(corePage.id);
+  const page = await getPageLoadData(corePage.id);
 
   if (!page || !page.publishedAt) {
     return {};
@@ -109,7 +95,7 @@ export default async function Page(props: { params: Promise<Params> }) {
   const dataFetchStartTime = performance.now();
   const [layout, page] = await Promise.all([
     getPageLayout(corePage.id),
-    getPageData(corePage.id),
+    getPageLoadData(corePage.id),
   ]);
   const dataFetchTime = performance.now() - dataFetchStartTime;
 
@@ -159,8 +145,8 @@ export default async function Page(props: { params: Promise<Params> }) {
       isLoggedIn={isLoggedIn}
     >
       {page.blocks
-        .filter((block) => mergedIds.includes(block.id))
-        .map((block) => {
+        .filter((block: Block) => mergedIds.includes(block.id))
+        .map((block: Block) => {
           return (
             <section
               key={block.id}

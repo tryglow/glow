@@ -24,6 +24,10 @@ import {
 } from './service';
 import { createPosthogClient } from '@/lib/posthog';
 import prisma from '@/lib/prisma';
+import {
+  getPageLoadHandler,
+  getPageLoadSchema,
+} from '@/modules/pages/handlers/get-page-load';
 import { FastifyInstance, FastifyReply } from 'fastify';
 import { FastifyRequest } from 'fastify';
 
@@ -66,6 +70,12 @@ export default async function pagesRoutes(fastify: FastifyInstance, opts: any) {
     '/:pageId/blocks',
     { schema: getPageBlocksSchema },
     getPageBlocksHandler
+  );
+
+  fastify.get(
+    '/:pageId/internal/load',
+    { schema: getPageLoadSchema },
+    getPageLoadHandler
   );
 
   fastify.post('/get-page-id', getPageIdHandler);
