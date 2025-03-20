@@ -1,6 +1,8 @@
 import prisma from '@/lib/prisma';
+import { sendSubscriptionDeletedEmail } from '@/modules/notifications/service';
 import { sendSlackMessage } from '@/modules/slack/service';
-import { captureMessage } from '@sentry/node';
+import { captureException, captureMessage } from '@sentry/node';
+import safeAwait from 'safe-await';
 import Stripe from 'stripe';
 
 /**
@@ -9,19 +11,40 @@ import Stripe from 'stripe';
 export async function handleSubscriptionDeleted(event: Stripe.Event) {
   const subscription = event.data.object as Stripe.Subscription;
 
-  const dbSubscription = await prisma.subscription.findFirst({
-    where: {
-      stripeSubscriptionId: subscription.id,
-    },
-    select: {
-      id: true,
-      organization: {
-        select: {
-          id: true,
+  const [error, dbSubscription] = await safeAwait(
+    prisma.subscription.findFirst({
+      where: {
+        stripeCustomerId: subscription.customer as string,
+        stripeSubscriptionId: subscription.id,
+      },
+      select: {
+        id: true,
+        organization: {
+          select: {
+            id: true,
+            members: {
+              select: {
+                user: {
+                  select: {
+                    email: true,
+                  },
+                },
+              },
+            },
+          },
         },
       },
-    },
-  });
+    })
+  );
+
+  if (error) {
+    captureException('Error retrieving subscription', {
+      extra: {
+        error,
+      },
+    });
+    return;
+  }
 
   if (!dbSubscription) {
     captureMessage(
@@ -30,16 +53,35 @@ export async function handleSubscriptionDeleted(event: Stripe.Event) {
     return;
   }
 
-  // For non-team subscriptions, simply update the status and plan
-  await prisma.subscription.update({
-    where: {
-      id: dbSubscription.id,
-    },
-    data: {
-      status: 'canceled',
-      plan: 'freeLegacy',
-      periodEnd: new Date(),
-    },
+  const [updateError] = await safeAwait(
+    prisma.subscription.update({
+      where: {
+        id: dbSubscription.id,
+      },
+      data: {
+        status: 'canceled',
+        plan: 'freeLegacy',
+        periodEnd: new Date(),
+      },
+    })
+  );
+
+  if (updateError) {
+    captureException(updateError);
+  }
+
+  const orgUsers = dbSubscription.organization?.members.map(
+    (member) => member.user
+  );
+
+  if (!orgUsers) {
+    return;
+  }
+
+  orgUsers.forEach(async (user) => {
+    if (user.email) {
+      await sendSubscriptionDeletedEmail(user.email);
+    }
   });
 
   await sendSlackMessage({

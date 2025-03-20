@@ -1,5 +1,4 @@
-import { EmailHeader, EmailFooter, styles } from './components';
-import Logo from './components/Logo';
+import { EmailHeader, EmailFooter, styles, Logo, SignOff } from './components';
 import {
   Body,
   Container,
@@ -60,7 +59,7 @@ const WelcomeEmail = () => (
               email!
             </Text>
 
-            <Text style={styles.signoff}>Alex</Text>
+            <SignOff label="Alex" />
           </Section>
 
           <EmailFooter />

@@ -4,6 +4,7 @@ import { captureException } from '@sentry/node';
 import {
   MagicLinkEmail,
   OrganizationInviteEmail,
+  SubscriptionCancelledEmail,
   TrialEndingSoonEmail,
   TrialFinishedEmail,
   WelcomeEmail,
@@ -15,10 +16,12 @@ export async function sendEmail({
   subject,
   from = 'Linky <team@notifications.lin.ky>',
   react,
+  replyTo = 'team@lin.ky',
 }: {
   email: string;
   subject: string;
   from?: string;
+  replyTo?: string;
   react: React.ReactNode;
 }) {
   const resend = createResendClient();
@@ -39,6 +42,7 @@ export async function sendEmail({
     const { error } = await resend.emails.send({
       from,
       to: [email],
+      replyTo,
       subject,
       react,
     });
@@ -71,6 +75,14 @@ export async function sendTrialEndedEmail(email: string) {
   });
 }
 
+export async function sendSubscriptionDeletedEmail(email: string) {
+  return await sendEmail({
+    email,
+    subject: 'Your Linky subscription has been cancelled',
+    react: <SubscriptionCancelledEmail />,
+  });
+}
+
 export async function sendOrganizationInvitationEmail({
   email,
   inviteLink,
@@ -91,6 +103,7 @@ export async function sendOrganizationInvitationEmail({
 export async function sendWelcomeEmail(email: string) {
   return await sendEmail({
     from: 'Alex from Linky <alex@notifications.lin.ky>',
+    replyTo: 'alex@lin.ky',
     email,
     subject: 'Welcome to Linky',
     react: <WelcomeEmail />,

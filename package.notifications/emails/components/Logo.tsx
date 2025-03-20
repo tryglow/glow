@@ -1,7 +1,7 @@
 import { Img } from '@react-email/components';
 import React from 'react';
 
-export default function Logo() {
+export function Logo() {
   return (
     <Img
       src="https://lin.ky/assets/logo.png"

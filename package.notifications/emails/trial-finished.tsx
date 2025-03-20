@@ -1,5 +1,4 @@
-import { EmailHeader, EmailFooter, styles } from './components';
-import Logo from './components/Logo';
+import { EmailHeader, EmailFooter, styles, SignOff, Logo } from './components';
 import {
   Body,
   Container,
@@ -36,10 +35,7 @@ export default function TrialFinishedEmail() {
                 Login to the Linky dashboard at any point to choose a new plan,
                 and carry on where you left off!
               </Text>
-              <Text style={styles.signoff}>
-                Thanks,
-                <br /> The Linky Team
-              </Text>
+              <SignOff />
             </Section>
 
             <EmailFooter />

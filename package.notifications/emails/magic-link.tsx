@@ -1,5 +1,4 @@
-import { EmailFooter, EmailHeader, styles } from './components';
-import Logo from './components/Logo';
+import { EmailFooter, EmailHeader, styles, Logo } from './components';
 import {
   Body,
   Button,

@@ -7,7 +7,7 @@ import safeAwait from 'safe-await';
 import Stripe from 'stripe';
 
 export async function handleTrialExpired(event: Stripe.Event) {
-  if (event.type !== 'customer.subscription.trial_will_end') {
+  if (event.type !== 'customer.subscription.updated') {
     return;
   }
 

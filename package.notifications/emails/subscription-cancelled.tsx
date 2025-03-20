@@ -11,30 +11,35 @@ import {
 } from '@react-email/components';
 import * as React from 'react';
 
-export default function TrialEndingSoonEmail() {
+export default function SubscriptionCancelledEmail() {
   return (
     <Html>
       <Head />
-      <Preview>Your Premium Linky trial is ending soon</Preview>
+      <Preview>Your Linky subscription has been cancelled</Preview>
       <Tailwind>
         <Body style={styles.main}>
           <Container style={styles.container}>
             <Logo />
             <EmailHeader
-              title="Your trial is ending soon"
-              subtitle="You've got 3 days left of Linky Premium"
+              title="Subscription cancelled"
+              subtitle="We're sorry to see you go"
             />
 
             <Section>
               <Text style={styles.paragraph}>
-                How are you finding it so far? If there's anything we can do to
-                help you get your page setup, feel free to reply to this email
-                and we'll reach out as soon as possible.
+                This email is to confirm that your subscription has been
+                cancelled.
               </Text>
 
               <Text style={styles.paragraph}>
-                Please note, that if you don't extend your trial within 3 days
-                you will lose access to your Linky Premium faetures.
+                If you would like to re-subscribe, you can do so at any time via
+                the Linky app.
+              </Text>
+
+              <Text style={styles.paragraph}>
+                If you have any questions, or if you don't think this was
+                intentional, please reply to this email and we'll be happy to
+                help.
               </Text>
               <SignOff />
             </Section>

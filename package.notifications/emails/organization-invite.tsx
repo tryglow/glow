@@ -1,5 +1,11 @@
-import { EmailHeader, EmailFooter, styles, Button } from './components';
-import Logo from './components/Logo';
+import {
+  EmailHeader,
+  EmailFooter,
+  styles,
+  Button,
+  SignOff,
+  Logo,
+} from './components';
 import {
   Body,
   Container,
@@ -40,10 +46,7 @@ export default function OrganizationInviteEmail({
                 If you weren't expecting to receive this email, please ignore
                 it.
               </Text>
-              <Text style={styles.signoff}>
-                Thanks,
-                <br /> The Linky Team{' '}
-              </Text>
+              <SignOff />
             </Section>
 
             <EmailFooter />
