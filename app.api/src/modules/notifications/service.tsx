@@ -5,6 +5,7 @@ import {
   MagicLinkEmail,
   OrganizationInviteEmail,
   SubscriptionCancelledEmail,
+  SubscriptionUpgradedEmail,
   TrialEndingSoonEmail,
   TrialFinishedEmail,
   WelcomeEmail,
@@ -121,5 +122,29 @@ export async function sendMagicLinkEmail({
     email,
     subject: 'Verify your Linky login',
     react: <MagicLinkEmail url={url} />,
+  });
+}
+
+export async function sendSubscriptionUpgradedTeamEmail({
+  email,
+}: {
+  email: string;
+}) {
+  return await sendEmail({
+    email,
+    subject: 'Your Linky subscription has been upgraded',
+    react: <SubscriptionUpgradedEmail planName="team" />,
+  });
+}
+
+export async function sendSubscriptionUpgradedPremiumEmail({
+  email,
+}: {
+  email: string;
+}) {
+  return await sendEmail({
+    email,
+    subject: 'Your Linky subscription has been upgraded',
+    react: <SubscriptionUpgradedEmail planName="premium" />,
   });
 }

@@ -1,6 +1,8 @@
 import prisma from '@/lib/prisma';
 import { stripeClient } from '@/lib/stripe';
+import { sendSubscriptionUpgradedPremiumEmail } from '@/modules/notifications/service';
 import { FastifyRequest, FastifyReply } from 'fastify';
+import safeAwait from 'safe-await';
 
 export const upgradeTrialSchema = {
   response: {
@@ -26,6 +28,23 @@ export async function upgradeTrialHandler(
   response: FastifyReply
 ) {
   const session = await request.server.authenticate(request, response);
+
+  const [currentUserError, currentUser] = await safeAwait(
+    prisma.user.findUnique({
+      where: {
+        id: session?.user.id,
+      },
+      select: {
+        email: true,
+      },
+    })
+  );
+
+  if (currentUserError || !currentUser) {
+    return response.status(400).send({
+      error: 'Failed to get current user',
+    });
+  }
 
   const subscription = await prisma.subscription.findFirst({
     where: {
@@ -64,6 +83,12 @@ export async function upgradeTrialHandler(
           trialEnd: null,
         },
       });
+
+      if (currentUser.email) {
+        await sendSubscriptionUpgradedPremiumEmail({
+          email: currentUser.email,
+        });
+      }
 
       return response.status(200).send({
         success: true,

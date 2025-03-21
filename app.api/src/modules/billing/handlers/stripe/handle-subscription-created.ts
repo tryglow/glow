@@ -1,8 +1,15 @@
 import { prices } from '@/lib/plans';
+import prisma from '@/lib/prisma';
+import { stripeClient } from '@/lib/stripe';
 import { createNewSubscription } from '@/modules/billing/utils/create-new-subscription';
+import {
+  sendMagicLinkEmail,
+  sendSubscriptionUpgradedTeamEmail,
+} from '@/modules/notifications/service';
 import { createNewOrganization } from '@/modules/organizations/utils';
 import { sendSlackMessage } from '@/modules/slack/service';
 import { captureMessage } from '@sentry/node';
+import safeAwait from 'safe-await';
 import Stripe from 'stripe';
 
 /**
@@ -66,6 +73,23 @@ export async function handleSubscriptionCreated(event: Stripe.Event) {
       periodEnd: new Date(subscription.current_period_end * 1000),
     });
 
+    await cancelOwnerPremiumSubscription(createdByUserId);
+
+    const owner = await prisma.user.findUnique({
+      where: {
+        id: createdByUserId,
+      },
+      select: {
+        email: true,
+      },
+    });
+
+    if (owner?.email) {
+      await sendSubscriptionUpgradedTeamEmail({
+        email: owner.email,
+      });
+    }
+
     await sendSlackMessage({
       text: `Team subscription created for ${newTeamOrg.id} (Subscription: ${subscription.id})`,
     });
@@ -99,3 +123,40 @@ export async function handleSubscriptionCreated(event: Stripe.Event) {
     };
   }
 }
+
+const cancelOwnerPremiumSubscription = async (ownerId: string) => {
+  const ownerSubscription = await prisma.subscription.findFirst({
+    where: {
+      status: {
+        in: ['active', 'trialing'],
+      },
+      organization: {
+        isPersonal: true,
+        members: {
+          some: {
+            userId: ownerId,
+            role: 'owner',
+          },
+        },
+      },
+    },
+  });
+
+  if (!ownerSubscription || !ownerSubscription.stripeSubscriptionId) {
+    return;
+  }
+
+  const [cancelSubError] = await safeAwait(
+    stripeClient.subscriptions.cancel(ownerSubscription.stripeSubscriptionId, {
+      cancellation_details: {
+        comment: 'LINKY_AUTO_UPGRADED_TO_TEAM',
+      },
+    })
+  );
+
+  if (cancelSubError) {
+    captureMessage(
+      `Error cancelling owner subscription ${ownerSubscription.stripeSubscriptionId}: ${cancelSubError}`
+    );
+  }
+};

@@ -1,6 +1,7 @@
 import { prices } from '@/lib/plans';
 import prisma from '@/lib/prisma';
 import { stripeClient } from '@/lib/stripe';
+import { sendSubscriptionUpgradedPremiumEmail } from '@/modules/notifications/service';
 import { FastifyReply, FastifyRequest } from 'fastify';
 import safeAwait from 'safe-await';
 
@@ -102,6 +103,12 @@ export async function upgradeToPremiumHandler(
     if (updatedSubscriptionError) {
       return response.status(400).send({
         error: 'Failed to upgrade to premium',
+      });
+    }
+
+    if (currentUser.email) {
+      await sendSubscriptionUpgradedPremiumEmail({
+        email: currentUser.email,
       });
     }
 

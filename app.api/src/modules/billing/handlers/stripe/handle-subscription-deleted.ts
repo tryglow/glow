@@ -70,19 +70,25 @@ export async function handleSubscriptionDeleted(event: Stripe.Event) {
     captureException(updateError);
   }
 
-  const orgUsers = dbSubscription.organization?.members.map(
-    (member) => member.user
-  );
+  // We should skip sending the cancellation email if the subscription was
+  // upgraded to team - we will send a different email in that case
+  if (
+    subscription.cancellation_details?.comment !== 'LINKY_AUTO_UPGRADED_TO_TEAM'
+  ) {
+    const orgUsers = dbSubscription.organization?.members.map(
+      (member) => member.user
+    );
 
-  if (!orgUsers) {
-    return;
-  }
-
-  orgUsers.forEach(async (user) => {
-    if (user.email) {
-      await sendSubscriptionDeletedEmail(user.email);
+    if (!orgUsers) {
+      return;
     }
-  });
+
+    orgUsers.forEach(async (user) => {
+      if (user.email) {
+        await sendSubscriptionDeletedEmail(user.email);
+      }
+    });
+  }
 
   await sendSlackMessage({
     text: `Subscription deleted for ${dbSubscription.organization?.id} (Subscription: ${dbSubscription.id})`,
