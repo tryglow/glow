@@ -28,6 +28,8 @@ import {
   getPageLoadHandler,
   getPageLoadSchema,
 } from '@/modules/pages/handlers/get-page-load';
+import { getPageBySlugOrDomainSchema } from '@/modules/pages/handlers/get-page-slug-or-domain';
+import { getPageBySlugOrDomainHandler } from '@/modules/pages/handlers/get-page-slug-or-domain';
 import { FastifyInstance, FastifyReply } from 'fastify';
 import { FastifyRequest } from 'fastify';
 
@@ -76,6 +78,12 @@ export default async function pagesRoutes(fastify: FastifyInstance, opts: any) {
     '/:pageId/internal/load',
     { schema: getPageLoadSchema },
     getPageLoadHandler
+  );
+
+  fastify.get(
+    '/internal/slug-or-domain',
+    { schema: getPageBySlugOrDomainSchema },
+    getPageBySlugOrDomainHandler
   );
 
   fastify.post('/get-page-id', getPageIdHandler);

@@ -1,28 +1,19 @@
 import { apiServerFetch } from '@/app/lib/api-server';
-import prisma from '@/lib/prisma';
 
 export async function getPageIdBySlugOrDomain(slug: string, domain: string) {
-  const customDomain =
-    decodeURIComponent(domain) !== process.env.NEXT_PUBLIC_ROOT_DOMAIN;
+  const res = await apiServerFetch(
+    `/pages/internal/slug-or-domain?slug=${slug}&domain=${domain}`,
+    {
+      method: 'GET',
+      headers: {
+        'x-api-key': process.env.INTERNAL_API_KEY as string,
+      },
+    }
+  );
 
-  const page = await prisma.page.findFirst({
-    where: {
-      deletedAt: null,
-      slug: customDomain ? undefined : slug,
-      customDomain: customDomain ? decodeURIComponent(domain) : undefined,
-    },
-    select: {
-      id: true,
-      organizationId: true,
-      publishedAt: true,
-      slug: true,
-    },
-    cacheStrategy: {
-      swr: 60, // 1 minute
-    },
-  });
+  const data = await res.json();
 
-  return page;
+  return data;
 }
 
 export async function getPageLoadData(pageId: string) {
