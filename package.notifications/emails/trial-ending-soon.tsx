@@ -34,7 +34,7 @@ export default function TrialEndingSoonEmail() {
 
               <Text style={styles.paragraph}>
                 Please note, that if you don't extend your trial within 3 days
-                you will lose access to your Linky Premium faetures.
+                you will lose access to your Linky Premium features.
               </Text>
               <SignOff />
             </Section>

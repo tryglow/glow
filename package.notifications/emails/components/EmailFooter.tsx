@@ -11,7 +11,7 @@ import * as React from 'react';
 
 const socialLinks: SocialLink[] = [
   {
-    href: 'https://twitter.com/trylinky',
+    href: 'https://x.com/trylinky',
     icon: 'https://cdn.lin.ky/email-assets/icons/x.png',
     alt: 'Twitter',
   },
