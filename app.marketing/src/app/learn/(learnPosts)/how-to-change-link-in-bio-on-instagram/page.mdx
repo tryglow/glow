@@ -1,0 +1,24 @@
+import { ArticleTemplate } from '../../learn-template';
+
+export const metadata = {
+  title: 'How to change link in bio on Instagram?',
+  publishDate: '2025-03-22',
+  category: 'link-in-bio',
+};
+
+Updating the link in your Instagram bio is quick and straightforward:
+
+1. Open the Instagram app and go to your profile by tapping on your profile picture in the bottom right corner.
+
+2. Tap the "Edit Profile" button located just beneath your follower count.
+
+3. Locate the "Website" field and enter your new desired link or update the existing one.
+
+4. Once you've entered the correct URL, tap "Done" (or the checkmark) in the upper right corner to save your changes.
+
+Your bio will now display the updated link to your followers.
+
+export default function MDXArticle(props) {
+return <ArticleTemplate meta={metadata}>{props.children}</ArticleTemplate>;
+
+}
