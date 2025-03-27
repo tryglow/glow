@@ -24,8 +24,13 @@ const nextConfig: NextConfig = {
       permanent: true,
     },
     {
-      source: '/explore',
-      destination: '/i/explore',
+      source: '/i/learn/what-is-glow',
+      destination: '/i/learn/what-is-linky',
+      permanent: true,
+    },
+    {
+      source: '/i/learn/is-glow-free',
+      destination: '/i/learn/is-linky-free',
       permanent: true,
     },
   ],
