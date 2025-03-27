@@ -132,7 +132,7 @@ export default function MarketingFooter() {
                   creators create.
                 </p>
                 <p className="text-sm leading-5 text-white/50">
-                  © 2023 - {new Date().getFullYear()} Linky
+                  © 2023 - {new Date().getFullYear()} Linky - Hyperdusk Ltd
                 </p>
                 <div className="flex items-center space-x-3">
                   {socialLinks.map((link) => (

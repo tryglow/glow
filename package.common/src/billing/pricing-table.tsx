@@ -15,6 +15,8 @@ import {
   UsersIcon,
   LockClosedIcon,
   GlobeAltIcon,
+  PuzzlePieceIcon,
+  PaintBrushIcon,
 } from '@heroicons/react/24/outline';
 import { ArrowTrendingUpIcon } from '@heroicons/react/24/outline';
 import {
@@ -31,10 +33,33 @@ import useSWR from 'swr';
 
 const tiers = [
   {
+    name: 'Free',
+    id: 'free',
+    description: 'The best way to get started',
+    priceMonthly: '0',
+    billingPeriod: 'free forever',
+    highlights: [
+      { description: 'Your own page', icon: GlobeAltIcon },
+      { description: 'Add up to 5 blocks', icon: CubeIcon },
+      {
+        description: 'Instagram integration',
+        icon: PuzzlePieceIcon,
+      },
+      {
+        description: 'Spotify integration',
+        icon: PuzzlePieceIcon,
+      },
+      {
+        description: 'Custom themes',
+        icon: PaintBrushIcon,
+      },
+    ],
+  },
+  {
     name: 'Premium',
     id: 'premium',
     badge: 'Popular',
-    description: 'The best way to get started',
+    description: 'For creators and creatives',
     priceMonthly: '4',
     billingPeriod: 'per month',
     highlights: [
@@ -340,7 +365,7 @@ export function PricingTable({
   };
 
   return (
-    <div className="mx-auto relative z-[2] max-w-2xl">
+    <div className="mx-auto relative z-[2] max-w-4xl">
       {subscriptionData?.periodEnd && (
         <Alert className="rounded-2xl border-none shadow-sm ring-1 ring-gray-200 mb-8">
           <AlertTitle className="text-lg font-medium">
@@ -386,14 +411,14 @@ export function PricingTable({
             </AlertDescription>
           </Alert>
         )}
-      <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
+      <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
         {tiers.map((tier) => {
           const tierButton = getTierButton(tier);
           return (
             <div
               key={tier.name}
               className={cn(
-                'rounded-2xl bg-transparent p-8 shadow-sm ring-1 ring-gray-200',
+                'rounded-2xl bg-white/50 p-8 shadow-sm ring-1 ring-gray-200/50',
                 tier.id === 'premium' && 'bg-white ring-0'
               )}
             >
